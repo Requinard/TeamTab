@@ -10,6 +10,10 @@ public class Main{
      * Handles project initialization. Add hooks here!
      */
     public static void main(String[] args) {
+        initializeMainForm(args);
+    }
+
+    private static void initializeMainForm(String[] args) {
         MainForm form = new MainForm();
 
         form.main(args);
