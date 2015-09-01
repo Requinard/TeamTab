@@ -1,8 +1,17 @@
+import gui.MainForm;
+
 /**
- * Created by david on 31-8-15.
+ * Created by david on 1-9-15.
  */
-public class Main {
+public class Main{
+
+    /**
+     * @param args
+     * Handles project initialization. Add hooks here!
+     */
     public static void main(String[] args) {
-        System.out.println("test");
+        MainForm form = new MainForm();
+
+        form.main(args);
     }
 }
