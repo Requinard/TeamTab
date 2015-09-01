@@ -3,3 +3,5 @@ install:
 - mvn install -DskipTests=true
 script:
 - mvn test -Dmaven.javadoc.skip=true
+notifications:
+  slack: s31a:zh1UThYC3YUumqVzaPrPwkRj
