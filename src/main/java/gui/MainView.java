@@ -11,8 +11,10 @@ import java.net.URL;
  * Created by david on 6-10-15.
  */
 public class MainView extends AbstractView implements IView {
+    private MainController mainController;
     public MainView(StageController stageController) {
         super(stageController);
+        mainController = new MainController();
     }
 
     public boolean load() {
