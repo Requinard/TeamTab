@@ -18,14 +18,14 @@ public class MainView extends AbstractView implements IView {
     public boolean load() {
         Parent root = null;
         try {
-            URL location = System.class.getResource("../../../resources/MainView.fxml");
+            URL location = this.getClass().getClassLoader().getResource("MainView.fxml");
             root = FXMLLoader.load(location);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
 
-        scene = new Scene(root, 1080, 1024);
+        scene = new Scene(root, 100, 100);
 
         stageController.loadScene(scene);
 

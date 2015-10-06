@@ -12,6 +12,7 @@ public class StageController {
     @NotNull
     Stage stage;
 
+    @NotNull
     IView currentView;
 
     public StageController(Stage primaryStage) {
@@ -20,15 +21,6 @@ public class StageController {
         currentView = new MainView(this);
 
         currentView.load();
-
-        setUpStage();
-    }
-
-    private void setUpStage() {
-        stage.setTitle("AEX banner");
-        //primaryStage.setScene(scene);
-        stage.show();
-        stage.toFront();
     }
 
     public void loadScene(IView nextView) {
@@ -36,6 +28,7 @@ public class StageController {
     }
 
     public void loadScene(Scene scene) {
+        stage.setTitle("Test");
         stage.setScene(scene);
         stage.show();
         stage.toFront();
