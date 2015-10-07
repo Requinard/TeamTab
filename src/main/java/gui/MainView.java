@@ -27,7 +27,7 @@ public class MainView extends AbstractView implements IView {
             return false;
         }
 
-        scene = new Scene(root, 100, 100);
+        scene = new Scene(root, 1280, 1024);
 
         stageController.loadScene(scene);
 
