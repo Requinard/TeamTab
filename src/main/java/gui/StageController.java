@@ -32,13 +32,11 @@ public class StageController {
     }
 
     public void loadScene(Scene scene) {
-        stage.setTitle("Test");
-        stage.close();
-        stage.setScene(scene);
-        if(!stage.isShowing()){
+
+            stage.setTitle("Test");
+            stage.setScene(scene);
             stage.show();
-        }
-        stage.toFront();
+            stage.toFront();
     }
 
     public void refreshView() {

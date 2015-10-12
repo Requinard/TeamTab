@@ -28,7 +28,7 @@ public class ScoreView extends AbstractView implements IView{
         }
         scene = new Scene(root, 100, 100);
 
-        stageController.loadScene(scene);
+        //stageController.loadScene(scene);
 
         return true;
     }

@@ -1,6 +1,8 @@
 package gui;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -9,12 +11,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
  */
 public class LobbyView extends AbstractView implements IView {
     private LobbyViewController lobbyViewController;
+
+    private AnchorPane anchCmdController;
 
     public LobbyView(StageController stageController){
         super(stageController);
@@ -28,9 +33,11 @@ public class LobbyView extends AbstractView implements IView {
         URL location = this.getClass().getResource("/LobbyView.fxml");
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new LobbyViewController());
+
         try {
             Pane myPane = (Pane)loader.load();
             Scene scene = new Scene(myPane);
+
             stage.setScene(scene);
             passScene(scene);
             //stage.show();

@@ -2,11 +2,16 @@ package gui;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,6 +24,7 @@ public class MainController implements Initializable {
     private Button buttonJoin;
 
     private MainView view;
+
 
     /**
      * Called to initialize a controller after its root element has been
@@ -45,6 +51,21 @@ public class MainController implements Initializable {
     {
         LobbyView lobbyView = new LobbyView(view.stageController);
         view.pass(lobbyView);
+
+//        URL location = this.getClass().getResource("LobbyView.fxml");
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LobbyView.fxml"));
+//        Pane cmdPane = (Pane) fxmlLoader.load();
+//        try {
+///* NEED TO DECLARE ANCHOR PANE" */
+//            anchCmdController.getChildren().clear();
+//            anchCmdController.getChildren().add(cmdPane);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
+
+
+
+
 
 }
