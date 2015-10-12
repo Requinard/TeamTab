@@ -48,5 +48,7 @@ public class MainView extends AbstractView implements IView {
 
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
+
+        return true;
     }
 }
