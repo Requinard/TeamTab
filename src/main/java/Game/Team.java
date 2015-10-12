@@ -50,9 +50,17 @@ public class Team {
     public void removePlayer(Player p){
         players.remove(p);
     }
-    public void addCorrectInstruction(Instruction doneInstruction){
+    public void addCorrectInstruction(Panel donePanel){
+        int currentCorrect = correctInstruction;
         for (Player p : players){
-            //player instruction controleren op doorgegeven instructie
+
+            if (p.instructions.getPanel() == donePanel) {
+                correctInstruction++;
+            }
+            //player instruction controleren op doorgegeven Paneel
+        }
+        if (!(currentCorrect < correctInstruction)){
+            correctInstruction = 0;
         }
     }
     public void reset(){

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Qun on 12-10-2015.
  */
 public class Instruction {
-    Panel panel;
+    private Panel panel;
     String commando;
     int newValue;
     ArrayList<Instruction> instructions;
@@ -16,8 +16,14 @@ public class Instruction {
     }
 
 
+
+
     @Override
     public String toString() {
         return "Voer het commando : " + commando + " uit ";
+    }
+
+    public Panel getPanel() {
+        return panel;
     }
 }

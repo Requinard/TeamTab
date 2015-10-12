@@ -11,13 +11,13 @@ public class Player {
     String name;
     int score;
     ArrayList<Panel> panels;
-    ArrayList<Instruction> instructions;
+    Instruction instructions;
 
 
 
     public Player() {
         panels = new ArrayList<Panel>();
-        instructions = new ArrayList<Instruction>();
+        //instructions = new ArrayList<Instruction>();
     }
 
     public void getPanel() {

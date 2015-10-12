@@ -57,4 +57,8 @@ public class Game {
             teams.get(1).addPlayer(p);
         }
     }
+
+    public  void changeTeam(Player p){
+
+    }
 }
