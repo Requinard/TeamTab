@@ -16,7 +16,7 @@
       <Image url="@images/Background.jpg" />
     </image>
   </ImageView>
-  <Button ellipsisString="..." layoutX="115.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+  <Button ellipsisString="..." layoutX="393.0" layoutY="479.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
     <graphic>
       <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
         <image>
@@ -25,7 +25,7 @@
       </ImageView>
     </graphic>
   </Button>
-  <Button ellipsisString="..." layoutX="649.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+  <Button ellipsisString="..." layoutX="393.0" layoutY="279.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
     <graphic>
       <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
         <image>
