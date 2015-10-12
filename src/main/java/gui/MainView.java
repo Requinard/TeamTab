@@ -1,12 +1,10 @@
 package gui;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +39,7 @@ public class MainView extends AbstractView implements IView {
 
         mainController = (MainController)loader.getController();
 
-        return true;
+        return (mainController != null && root != null);
     }
 
     public boolean deload() {
@@ -49,6 +47,8 @@ public class MainView extends AbstractView implements IView {
     }
 
     public boolean pass(IView nextView) {
-        return false;
+        stageController.loadScene(nextView);
+
+        return true;
     }
 }
