@@ -9,4 +9,9 @@ public class Panel {
     String text;
     int min;
     int max;
+
+    public Panel() {
+
+
+    }
 }
