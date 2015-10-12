@@ -4,9 +4,9 @@ package gui;
  * Created by david on 6-10-15.
  */
 public interface IView {
-    public boolean load();
+    boolean load();
 
-    public boolean deload();
+    boolean deload();
 
-    public boolean pass(IView nextView);
+    boolean pass(IView nextView);
 }

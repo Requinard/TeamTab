@@ -2,6 +2,7 @@ package gui;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -21,7 +22,7 @@ public class StageController {
         currentView.load();
     }
 
-    public void loadScene(IView nextView) {
+    public void loadScene(@NotNull IView nextView) {
         currentView.deload();
 
         nextView.load();

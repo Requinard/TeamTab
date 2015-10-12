@@ -27,7 +27,7 @@ public class MainView extends AbstractView implements IView {
         FXMLLoader loader = new FXMLLoader();
         try {
             URL location = this.getClass().getClassLoader().getResource("MainView.fxml");
-            root = loader.load(location);
+            root = FXMLLoader.load(location);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -37,7 +37,7 @@ public class MainView extends AbstractView implements IView {
 
         stageController.loadScene(scene);
 
-        mainController = (MainController)loader.getController();
+        mainController = loader.getController();
 
         return (mainController != null && root != null);
     }
