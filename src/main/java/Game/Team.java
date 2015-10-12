@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Team {
     private ArrayList<Player> players;
+    private ArrayList<Panel> playerPanels;
 
     private int time = 9;
     private int lives;
@@ -35,13 +36,19 @@ public class Team {
     public void removePlayer(){
 
     }
-    public void addCorrectInstruction(){
-
+    public void addCorrectInstruction(Instruction doneInstruction){
+        for (Player p : players){
+            
+        }
     }
     public void reset(){
 
     }
     public void getPlayerPanels(){
-        
+        for (Player p : players){
+            for (Panel pan : p.panels){
+                playerPanels.add(pan);
+            }
+        }
     }
 }
