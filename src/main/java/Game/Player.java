@@ -14,6 +14,7 @@ public class Player {
     ArrayList<Instruction> instructions;
 
 
+
     public Player() {
         panels = new ArrayList<Panel>();
         instructions = new ArrayList<Instruction>();

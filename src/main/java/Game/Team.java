@@ -13,36 +13,52 @@ public class Team {
     private int lives;
     private int correctInstruction;
 
+    //get
+
+    public ArrayList<Player> getPlayers() {return players;}
+
+
+
+
     public Team(){
         players = new ArrayList<Player>();
     }
 
     public void addTime(){
-
+        // ook nog met timer tijd aftrek
+        if (correctInstruction > 3){
+            time++;
+        }
     }
 
-    public void addLives(){
-
-    }
     public void subtractLives(){
-
+        if (this.time == 3){
+            lives--;
+        }
+        //new round start
     }
-    public void subtractTime(){
 
+    public void subtractTime(Team otherTeam){
+        //voorbeeld van time correctie op goede otherteam
+        if (otherTeam.correctInstruction > 6){
+            time--;
+        }
     }
-    public void addPlayer(){
-
+    public void addPlayer(Player p){
+        players.add(p);
     }
-    public void removePlayer(){
-
+    public void removePlayer(Player p){
+        players.remove(p);
     }
     public void addCorrectInstruction(Instruction doneInstruction){
         for (Player p : players){
-            
+            //player instruction controleren op doorgegeven instructie
         }
     }
     public void reset(){
-
+        lives = 3;
+        time = 9;
+        correctInstruction = 0;
     }
     public void getPlayerPanels(){
         for (Player p : players){
@@ -51,4 +67,6 @@ public class Team {
             }
         }
     }
+
+
 }
