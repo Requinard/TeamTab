@@ -16,7 +16,7 @@ public class StageController {
     public StageController(Stage primaryStage) {
         stage = primaryStage;
 
-        currentView = new GameView(this);
+        currentView = new MainView(this);
 
         currentView.load();
     }
