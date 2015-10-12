@@ -39,7 +39,7 @@ public class MainView extends AbstractView implements IView {
 
         mainController = (MainController)loader.getController();
 
-        return true;
+        return (mainController != null && root != null);
     }
 
     public boolean deload() {
