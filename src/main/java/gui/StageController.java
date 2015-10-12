@@ -22,7 +22,11 @@ public class StageController {
     }
 
     public void loadScene(IView nextView) {
-        throw new NotImplementedException();
+        currentView.deload();
+
+        nextView.load();
+
+        refreshView();
     }
 
     public void loadScene(Scene scene) {
@@ -33,7 +37,7 @@ public class StageController {
     }
 
     public void refreshView() {
-        throw new NotImplementedException();
+        return;
     }
 
 }

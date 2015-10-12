@@ -16,6 +16,8 @@ public class MainController implements Initializable {
     @FXML
     private Button buttonJoin;
 
+    private MainView view;
+
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -30,5 +32,17 @@ public class MainController implements Initializable {
                 System.out.println("test");
             }
         });
+    }
+
+    public void setView(MainView mainView)
+    {
+        view = mainView;
+    }
+
+    public void buttonJoinOnClick(MouseEvent mouseEvent)
+    {
+        LobbyView lobbyView = new LobbyView(view.stageController);
+
+        view.pass(lobbyView);
     }
 }
