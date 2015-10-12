@@ -1,6 +1,8 @@
 package gui;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -10,10 +12,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class StageController {
 
     Stage stage;
-
     IView currentView;
 
     public StageController(Stage primaryStage) {
+
         stage = primaryStage;
 
         currentView = new MainView(this);
@@ -31,8 +33,11 @@ public class StageController {
 
     public void loadScene(Scene scene) {
         stage.setTitle("Test");
+        stage.close();
         stage.setScene(scene);
-        stage.show();
+        if(!stage.isShowing()){
+            stage.show();
+        }
         stage.toFront();
     }
 

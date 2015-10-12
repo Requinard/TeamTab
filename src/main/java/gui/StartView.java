@@ -39,4 +39,9 @@ public class StartView extends AbstractView implements IView {
     public boolean pass(IView nextView) {
         return false;
     }
+
+    public boolean passScene(Scene scene) {
+        return false;
+    }
+
 }

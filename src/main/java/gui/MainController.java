@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Created by david on 6-10-15.
  */
+
 public class MainController implements Initializable {
     @FXML
     private Button buttonJoin;
@@ -29,7 +31,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonJoin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                System.out.println("test");
+                buttonJoinOnClick(event);
             }
         });
     }
@@ -42,7 +44,6 @@ public class MainController implements Initializable {
     public void buttonJoinOnClick(MouseEvent mouseEvent)
     {
         LobbyView lobbyView = new LobbyView(view.stageController);
-
         view.pass(lobbyView);
     }
 

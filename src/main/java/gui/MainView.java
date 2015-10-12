@@ -36,7 +36,8 @@ public class MainView extends AbstractView implements IView {
             Pane myPane = (Pane)loader.load();
             Scene scene = new Scene(myPane);
             stage.setScene(scene);
-            stage.show();
+            passScene(scene);
+            //stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,6 +45,7 @@ public class MainView extends AbstractView implements IView {
 
        mainController = (MainController)loader.getController();
 
+       mainController.setView(this);
 
         return true;
     }
@@ -55,6 +57,16 @@ public class MainView extends AbstractView implements IView {
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
 
+        return true;
+    }
+
+    public boolean passScene(IView nextView) {
+
+        return true;
+    }
+
+    public boolean passScene(Scene scene) {
+        stageController.loadScene(scene);
         return true;
     }
 }

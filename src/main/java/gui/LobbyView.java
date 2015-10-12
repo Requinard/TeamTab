@@ -3,6 +3,9 @@ package gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,22 +15,32 @@ import java.net.URL;
  */
 public class LobbyView extends AbstractView implements IView {
     private LobbyViewController lobbyViewController;
+
     public LobbyView(StageController stageController){
         super(stageController);
         lobbyViewController = new LobbyViewController();
     }
+
     public boolean load() {
-        Parent root = null;
+
+        Stage stage = new Stage();
+        stage.setTitle("LobbyView");
+        URL location = this.getClass().getResource("/LobbyView.fxml");
+        FXMLLoader loader = new FXMLLoader(location);
+        loader.setController(new LobbyViewController());
         try {
-            URL location = this.getClass().getClassLoader().getResource("LobbyView.fxml");
-            root = FXMLLoader.load(location);
+            Pane myPane = (Pane)loader.load();
+            Scene scene = new Scene(myPane);
+            stage.setScene(scene);
+            passScene(scene);
+            //stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        scene = new Scene(root, 100, 100);
 
-        stageController.loadScene(scene);
+        lobbyViewController = (LobbyViewController)loader.getController();
+        lobbyViewController.setView(this);
 
         return true;
     }
@@ -37,6 +50,17 @@ public class LobbyView extends AbstractView implements IView {
     }
 
     public boolean pass(IView nextView) {
-        return false;
+        stageController.loadScene(nextView);
+        return true;
+    }
+
+    public boolean passScene(IView nextView) {
+
+        return true;
+    }
+
+    public boolean passScene(Scene scene) {
+        stageController.loadScene(scene);
+        return true;
     }
 }
