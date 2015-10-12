@@ -2,8 +2,33 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" />
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <ImageView>
+    <image>
+      <Image url="@images/Start-Background.jpg" />
+    </image>
+  </ImageView>
+  <Button ellipsisString="..." layoutX="133.0" layoutY="503.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+  <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="120.0" layoutY="489.0" smooth="true" visible="true">
+    <image>
+      <Image url="@images/ButtonBack.jpg" />
+    </image>
+  </ImageView>
+  <Button ellipsisString="..." layoutX="640.0" layoutY="486.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+    <graphic>
+      <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
+        <image>
+          <Image url="@images/ButtonStartGame.jpg" />
+        </image>
+      </ImageView>
+    </graphic>
+  </Button>
+</AnchorPane>
