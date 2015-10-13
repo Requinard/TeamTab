@@ -15,8 +15,8 @@ public class Game {
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
 
-    Team team1 = new Team();
-    Team team2 = new Team();
+    Team team1;
+    Team team2;
     private int timeRound;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
@@ -26,6 +26,9 @@ public class Game {
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
         panels = new ArrayList<Panel>();
+
+        team1 = new Team();
+        team2 = new Team();
 
         teams.add(team1);
         teams.add(team2);
@@ -47,6 +50,8 @@ public class Game {
             // Geeft de teams die meedoen panels
             getAllPlayerPanels(team1);
             getAllPlayerPanels(team2);
+        }else {
+            throw new IllegalArgumentException ("wrong sizes");
         }
 
     }
@@ -69,7 +74,7 @@ public class Game {
         // Sorteren van de spelers op score
         try {
             Collections.sort(players, new Comparator<Player>() {
-                @Override
+                //@Override
                 // Logica achter het sorteren
                 public int compare(Player o1, Player o2) {
                     return Integer.compare(o1.getScore(), o2.getScore());
@@ -183,11 +188,15 @@ public class Game {
      * @param t
      */
     public void addPlayer(Player p, Team t){
-        t.getPlayers().add(p);
+        p.setTeam(t); //aanpassing team set
+        ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
+        excitingPlayers.add(p);
+        t.setPlayers(excitingPlayers);
     }
 
+    //Mist Text
     // NOG OP VERANDERING WACHTEN VAN QUNFONG
-    public void addCorrectInstruction(Panel donePanel, Player player){
+    public void addCorrectInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
         int currentCorrect = t.getCorrectInstruction();
 
@@ -233,9 +242,11 @@ public class Game {
      * @param t het team waarvoor de panels opgehaald moeten worden
      */
     public void getAllPlayerPanels(Team t){
-        ArrayList<Panel> tempPanels = new ArrayList<>();
-        for (Player p : t.getPlayers()){
-            tempPanels.add(p.getPanel());
+        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
+        for (Player p : t.getPlayers()){ //niet alle pannels aangepast
+            for (Panel pan : p.getPanels()){
+                tempPanels.add(pan);
+            }
         }
         t.setPlayerPanels(tempPanels);
 
@@ -250,7 +261,7 @@ public class Game {
         int maxSize = playerTeam.getPlayerPanels().size();
         Random random = new Random();
         // Panels die in gebruik zijn
-        ArrayList<Panel> usedPanelNumbers = new ArrayList<>();
+        ArrayList<Panel> usedPanelNumbers = new ArrayList<Panel>();
         // Panels die niet in gebruik zijn en waar dus uit gekozen mag worden
         ArrayList<Panel> unusedPanelNumbers = playerTeam.getPlayerPanels();
 

@@ -15,11 +15,13 @@ public class Player {
     private Game game;
     private Team team;
 
-    public Player(String ipAdress, String name, int score, ArrayList<Panel> panels, Game game, Team team) {
+    public Player(String ipAdress, String name, int score, ArrayList<Panel> panels, Instruction instruction, Game game, Team team) {
         this.panels = panels;
         this.ipAdress = ipAdress;
         this.name = name;
         this.score = score;
+        this.panels = panels;
+        this.instructions = instruction;
         this.game = game;
         this.team = team;
         //instructions = new ArrayList<Instruction>();
@@ -29,13 +31,7 @@ public class Player {
     * After that is creates a random number between 0 and the listlength
     * After that it selects the panel
     * */
-    public Panel getPanel() {
-        //random panels getten uit de lijst
-        Random r = new Random();
-        int random = r.nextInt(panels.size());
-        return panels.get(random);
 
-    }
 
     /**
     * Return the ip adress that is linked to the player
@@ -70,9 +66,7 @@ public class Player {
     /**
     * Returns the team the player is in
     */
-    public Team getTeam() {
-        return team;
-    }
+
 
     public Instruction getInstructions() {
         return instructions;
@@ -80,5 +74,21 @@ public class Player {
 
     public void setInstructions(Instruction instructions) {
         this.instructions = instructions;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public ArrayList<Panel> getPanels() {
+        return panels;
+    }
+
+    public void setPanels(ArrayList<Panel> panels) {
+        this.panels = panels;
     }
 }

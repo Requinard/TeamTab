@@ -11,17 +11,9 @@ import static org.junit.Assert.*;
  */
 public class TeamTest {
 
-    private Team t;
-    private Player p1;
-    private Player p2;
-
     @Before
     public void setUp() throws Exception {
-        t = new Team();
-        //p1 = new Player("aa", "aa")
-        //p2 = new Player();
-        t.addPlayer(p1);
-        t.addPlayer(p2);
+
     }
 
     @After
@@ -29,50 +21,5 @@ public class TeamTest {
 
     }
 
-    @Test
-    public void testGetPlayers() throws Exception {
 
-    }
-
-    @Test
-    public void testAddTime() throws Exception {
-
-    }
-
-    @Test
-    public void testSubtractLives() throws Exception {
-
-    }
-
-    @Test
-    public void testSubtractTime() throws Exception {
-
-    }
-
-    @Test
-    public void testAddPlayer() throws Exception {
-
-    }
-
-    @Test
-    public void testRemovePlayer() throws Exception {
-
-    }
-
-    @Test
-    public void testAddCorrectInstruction() throws Exception {
-
-    }
-
-    @Test
-    public void testReset() throws Exception {
-
-    }
-
-    @Test
-    public void testGetAllPlayerPanels() throws Exception {
-        assertEquals("not empty", 0, t.getPlayerPanels().size());
-        t.getAllPlayerPanels();
-        assertEquals("not all panels have been added", 3, t.getPlayerPanels());
-    }
 }

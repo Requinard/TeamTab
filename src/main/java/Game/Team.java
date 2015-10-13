@@ -15,7 +15,6 @@ public class Team {
 
     //get
 
-    public ArrayList<Player> getPlayers() {return players;}
 
 
 
@@ -59,5 +58,13 @@ public class Team {
 
     public void setPlayerPanels(ArrayList<Panel> playerPanels) {
         this.playerPanels = playerPanels;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 }
