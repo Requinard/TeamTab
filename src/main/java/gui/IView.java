@@ -13,9 +13,8 @@ public interface IView {
      */
     boolean load();
 
-    public boolean pass(IView nextView);
+    boolean passScene(Scene scene);
 
-    public boolean passScene(Scene scene);
     /**
      * Attempts to deload a scene.
      * @return Whether the operations was successfull

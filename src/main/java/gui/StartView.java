@@ -33,7 +33,9 @@ public class StartView extends AbstractView implements IView {
 
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        scene = new Scene(root, 100, 100);
 
         startViewController = (StartViewController)loader.getController();
         startViewController.setView(this);
