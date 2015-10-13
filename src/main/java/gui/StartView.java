@@ -3,6 +3,7 @@ package gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
@@ -11,7 +12,11 @@ import java.net.URL;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class StartView extends AbstractView implements IView {
+    @NotNull
+    private final URL location = this.getClass().getClassLoader().getResource("StartView.fxml");
+
     private StartViewController startViewController;
+
     public StartView(StageController stageController){
         super(stageController);
         startViewController = new StartViewController();
@@ -19,7 +24,6 @@ public class StartView extends AbstractView implements IView {
     public boolean load() {
         Parent root = null;
         try {
-            URL location = this.getClass().getClassLoader().getResource("StartView.fxml");
             root = FXMLLoader.load(location);
         } catch (IOException e) {
             e.printStackTrace();
