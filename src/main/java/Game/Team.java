@@ -9,7 +9,7 @@ public class Team {
     private ArrayList<Player> players;
     private ArrayList<Panel> playerPanels;
 
-    private int time = 9;
+    private int time;
     private int lives;
     private int correctInstruction;
 
@@ -17,11 +17,17 @@ public class Team {
 
     public ArrayList<Player> getPlayers() {return players;}
 
+    public ArrayList<Panel> getPlayerPanels() {return playerPanels;}
 
+    public int getLives() {return lives;}
 
 
     public Team(){
+        time = 9;
+        lives = 3;
+        correctInstruction = 0;
         players = new ArrayList<Player>();
+        playerPanels = new ArrayList<Panel>();
     }
 
     public void addTime(){
@@ -68,7 +74,7 @@ public class Team {
         time = 9;
         correctInstruction = 0;
     }
-    public void getPlayerPanels(){
+    public void getAllPlayerPanels(){
         for (Player p : players){
             for (Panel pan : p.panels){
                 playerPanels.add(pan);

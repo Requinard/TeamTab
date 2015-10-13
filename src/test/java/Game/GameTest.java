@@ -32,6 +32,10 @@ public class GameTest {
     @Test
     public void testNewRound() throws Exception {
 
+
+        assertEquals("Geen leven minder", 2, g.team1.getLives());
+        g.newRound();
+        assertEquals("levens niet gereset", 3, g.team1.getLives());
     }
 
     @Test
@@ -45,9 +49,9 @@ public class GameTest {
         Player p2 = new Player();
         g.addPlayerToTeam(p1);
 
-        Assert.assertEquals("add to wrong team", 1, g.team1.getPlayers().size());
-        Assert.assertEquals("add to wrong team", 0, g.team2.getPlayers().size());
+        assertEquals("add to wrong team", 1, g.team1.getPlayers().size());
+        assertEquals("add to wrong team", 0, g.team2.getPlayers().size());
         g.addPlayerToTeam(p2);
-        Assert.assertEquals("add to wrong team", 1, g.team2.getPlayers().size());
+        assertEquals("add to wrong team", 1, g.team2.getPlayers().size());
     }
 }

@@ -11,9 +11,17 @@ import static org.junit.Assert.*;
  */
 public class TeamTest {
 
+    private Team t;
+    private Player p1;
+    private Player p2;
+
     @Before
     public void setUp() throws Exception {
-
+        t = new Team();
+        p1 = new Player();
+        p2 = new Player();
+        t.addPlayer(p1);
+        t.addPlayer(p2);
     }
 
     @After
@@ -62,7 +70,9 @@ public class TeamTest {
     }
 
     @Test
-    public void testGetPlayerPanels() throws Exception {
-
+    public void testGetAllPlayerPanels() throws Exception {
+        assertEquals("not empty", 0, t.getPlayerPanels().size());
+        t.getAllPlayerPanels();
+        assertEquals("not all panels have been added", 3, t.getPlayerPanels());
     }
 }
