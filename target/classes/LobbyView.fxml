@@ -14,24 +14,30 @@
    <children>
      <ImageView>
        <image>
-         <Image url="@images/Lobby-Background.jpg" />
+         <Image url="@images/Lobby/Background.jpg" />
        </image>
      </ImageView>
      <TextField layoutX="282.0" layoutY="183.0" opacity="0.22" prefHeight="58.0" prefWidth="340.0" text="Naam team 1" />
      <TextField layoutX="872.0" layoutY="183.0" opacity="0.22" prefHeight="58.0" prefWidth="340.0" text="Naam team 2" />
-     <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="706.0" layoutY="848.0" smooth="true" visible="true">
+
+
+     <Button fx:id="buttonBack" ellipsisString="..." layoutX="114.0" layoutY="862.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+       <graphic>
+<ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="119.0" layoutY="848.0" smooth="true" visible="true">
+<image>
+ <Image url="@images/Lobby/ButtonBack.jpg" />
+</image>
+</ImageView>
+         </graphic>
+      </Button>
+       <Button fx:id="buttonReady" ellipsisString="..." layoutX="697.0" layoutY="874.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="READYREADY" visible="true" >
+           <graphic>
+ <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="697.0" layoutY="868.0" smooth="true" visible="true">
        <image>
-         <Image url="@images/ButtonReady.jpg" />
-       </image>
-     </ImageView>
-     <Button fx:id="buttonBack" ellipsisString="..." layoutX="114.0" layoutY="862.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" >
-    <graphic>
-     <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="114.0" layoutY="853.0" smooth="true" visible="true">
-     <image>
-       <Image url="@images/ButtonBack.jpg" />
-     </image>
-   </ImageView>
-       </graphic>
-     </Button>
+      <Image url="@images/Lobby/ButtonReady.jpg" />
+</image>
+</ImageView>
+           </graphic>
+       </Button>
    </children>
 </AnchorPane>
