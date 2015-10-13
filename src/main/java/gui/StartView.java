@@ -27,7 +27,7 @@ public class StartView extends AbstractView implements IView {
         }
         scene = new Scene(root, 100, 100);
 
-        stageController.loadScene(scene);
+        //stageController.loadScene(scene);
 
         return true;
     }
@@ -39,4 +39,9 @@ public class StartView extends AbstractView implements IView {
     public boolean pass(IView nextView) {
         return false;
     }
+
+    public boolean passScene(Scene scene) {
+        return false;
+    }
+
 }

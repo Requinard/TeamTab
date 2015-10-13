@@ -10,34 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<<<<<<< HEAD
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <ImageView>
-    <image>
-      <Image url="@images/Background.jpg" />
-    </image>
-  </ImageView>
-  <Button ellipsisString="..." layoutX="393.0" layoutY="479.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
-    <graphic>
-      <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
-        <image>
-          <Image url="@images/ButtonJoin.jpg" />
-        </image>
-      </ImageView>
-    </graphic>
-  </Button>
-  <Button ellipsisString="..." layoutX="393.0" layoutY="279.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
-    <graphic>
-      <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
-        <image>
-          <Image url="@images/ButtonStart.jpg" />
-        </image>
-      </ImageView>
-    </graphic>
-  </Button>
-  <TextField layoutX="415.0" layoutY="905.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" text="Username" visible="true" />
-=======
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
      <ImageView layoutX="3.0">
        <image>

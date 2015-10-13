@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,23 +26,27 @@ public class MainView extends AbstractView implements IView {
     }
 
     public boolean load() {
-        Parent root = null;
-        FXMLLoader loader = new FXMLLoader();
+
+        Stage stage = new Stage();
+        stage.setTitle("MainView");
+        URL location = this.getClass().getResource("/MainView.fxml");
+        FXMLLoader loader = new FXMLLoader(location);
+        loader.setController(new MainController());
         try {
-            URL location = this.getClass().getClassLoader().getResource("MainView.fxml");
-            root = FXMLLoader.load(location);
+            Pane myPane = (Pane)loader.load();
+            Scene scene = new Scene(myPane);
+            stage.setScene(scene);
+            passScene(scene);
+
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
 
-        scene = new Scene(root, 1280, 1024);
+       mainController = (MainController)loader.getController();
 
-        stageController.loadScene(scene);
+       mainController.setView(this);
 
-        mainController = loader.getController();
-
-        return (mainController != null && root != null);
+        return true;
     }
 
     public boolean deload() {
@@ -49,6 +56,16 @@ public class MainView extends AbstractView implements IView {
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
 
+        return true;
+    }
+
+    public boolean passScene(IView nextView) {
+
+        return true;
+    }
+
+    public boolean passScene(Scene scene) {
+        stageController.loadScene(scene);
         return true;
     }
 }

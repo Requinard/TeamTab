@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.scene.Scene;
+
 /**
  * Created by david on 6-10-15.
  */
@@ -11,6 +13,9 @@ public interface IView {
      */
     boolean load();
 
+    public boolean pass(IView nextView);
+
+    public boolean passScene(Scene scene);
     /**
      * Attempts to deload a scene.
      * @return Whether the operations was successfull
