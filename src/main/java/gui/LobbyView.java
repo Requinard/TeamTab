@@ -19,7 +19,6 @@ import java.util.Collection;
 public class LobbyView extends AbstractView implements IView {
     private LobbyViewController lobbyViewController;
 
-    private AnchorPane anchCmdController;
 
     public LobbyView(StageController stageController){
         super(stageController);
@@ -37,10 +36,8 @@ public class LobbyView extends AbstractView implements IView {
         try {
             Pane myPane = (Pane)loader.load();
             Scene scene = new Scene(myPane);
-
             stage.setScene(scene);
             passScene(scene);
-            //stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +59,6 @@ public class LobbyView extends AbstractView implements IView {
     }
 
     public boolean passScene(IView nextView) {
-
         return true;
     }
 

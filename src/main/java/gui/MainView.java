@@ -37,7 +37,6 @@ public class MainView extends AbstractView implements IView {
             Scene scene = new Scene(myPane);
             stage.setScene(scene);
             passScene(scene);
-            //stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
