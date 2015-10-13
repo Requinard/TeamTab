@@ -12,34 +12,65 @@ public class Player {
     private int score;
     private ArrayList<Panel> panels;
     private Instruction instructions;
+    private Game game;
+    private Team team;
 
-    public Player(String Ipadress, String Name, int Score, ArrayList<Panel> Panel) {
+    public Player(String Ipadress, String Name, int Score, ArrayList<Panel> Panel, Game Game, Team Team) {
         this.panels = Panel;
         this.ipAdress = Ipadress;
         this.name = Name;
         this.score = Score;
-
+        this.game = Game;
+        this.team = Team;
         //instructions = new ArrayList<Instruction>();
     }
-
-    public void getPanel() {
+    /*
+    * This first creates a random
+    * After that is creates a random number between 0 and the listlength
+    * After that it selects the panel
+    * */
+    public Panel getPanel() {
         //random panels getten uit de lijst
         Random r = new Random();
         int random = r.nextInt(panels.size());
-        panels.get(random);
+        return panels.get(random);
 
     }
 
-    public String getipAdress() {
+    /*
+    * Return the ip adress that is linked to the player
+    **/
+
+    public String getIpAdress() {
         return ipAdress;
     }
 
-    public String name(){
+    /*
+    * Return the name of the player
+    **/
+    public String getName(){
         return name;
     }
-    public int score(){
+
+    /*
+    * Returns the score of the current player
+    **/
+    public int getScore(){
         return score;
     }
 
+    /*
+     *return the game the player is assigned to
+     **/
 
+    public Game getGame(){
+        return game;
+    }
+
+    /*
+    * Returns the team the player is in
+    **/
+    public Team getTeam() {
+        return team;
+    }
 }

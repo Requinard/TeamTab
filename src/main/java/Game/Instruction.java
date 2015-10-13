@@ -11,11 +11,26 @@ public class Instruction {
     private int newValue;
     private ArrayList<Instruction> instructions;
 
-    public Instruction() {
+    public Instruction(Panel Panel, String Commando, int NewValue) {
         instructions = new ArrayList<Instruction>();
+        this.panel = Panel;
+        this.commando = Commando;
+        this.newValue = NewValue;
     }
 
+    /*
+    * Returns the panel which*/
+    public Panel getPanel() {
+        return panel;
+    }
+    public String getCommando() {
+        return commando;
+    }
+    public int getNewValue() {return newValue;}
 
+    public ArrayList<Instruction> getInstructions() {
+        return instructions;
+    }
 
 
     @Override
@@ -23,7 +38,5 @@ public class Instruction {
         return "Voer het commando : " + commando + " uit ";
     }
 
-    public Panel getPanel() {
-        return panel;
-    }
+
 }
