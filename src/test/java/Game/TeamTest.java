@@ -18,8 +18,8 @@ public class TeamTest {
     @Before
     public void setUp() throws Exception {
         t = new Team();
-        p1 = new Player();
-        p2 = new Player();
+        //p1 = new Player("aa", "aa")
+        //p2 = new Player();
         t.addPlayer(p1);
         t.addPlayer(p2);
     }
