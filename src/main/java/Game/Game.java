@@ -1,11 +1,9 @@
 package Game;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
+import java.util.Random;
 
 /**
  * Created by HP user on 12-10-2015.
@@ -20,6 +18,8 @@ public class Game {
     Team team1 = new Team();
     Team team2 = new Team();
     private int timeRound;
+    private int bonusCorrectInstructions;
+    private int substractCorrectInstructions;
 
     public Game(){
         teams = new ArrayList<Team>();
@@ -32,11 +32,18 @@ public class Game {
 
         // Standaard tijd voor een ronde
         timeRound = 9;
+        bonusCorrectInstructions = 3;
+        substractCorrectInstructions = 5;
 
     }
 
     public void startGame(){
         //? maak instucties voor players ?
+        // Kijkt of beide teams evenveel spelers hebben
+        if (team1.getPlayers().size() == team2.getPlayers().size()) {
+            getAllPlayerPanels(team1);
+            getAllPlayerPanels(team2);
+        }
 
     }
 
@@ -96,46 +103,65 @@ public class Game {
     }
 
     // TEAM METHODS
-    public void addTime(){
+
+    private void addTime(Team t){
         // ook nog met timer tijd aftrek
-        if (correctInstruction > 3){
-            time++;
+        if (t.getCorrectInstruction() == bonusCorrectInstructions){
+            t.setTime(t.getTime() + 1);
+            resetCorrectInstruction(t);
         }
     }
 
-    public void subtractLives(){
-        if (this.time == 3){
-            lives--;
+    public void subtractLives(Team losingTeam){
+        if (losingTeam.getTime() <= 3){
+            losingTeam.setLives(losingTeam.getLives() - 1);
+            if (losingTeam.getLives() <= 0)
+                endGame();
+            else
+                newRound();
         }
         //new round start
     }
 
-    public void subtractTime(Team otherTeam){
+    public void subtractTime(Team currentTeam){
         //voorbeeld van time correctie op goede otherteam
-        if (otherTeam.correctInstruction > 6){
-            time--;
+        for (Team t : teams) {
+            if (!t.equals(currentTeam) && currentTeam.getCorrectInstruction() == substractCorrectInstructions){
+                Team otherTeam = t;
+                otherTeam.setTime(otherTeam.getTime() - 1);
+                subtractLives(otherTeam);
+                break;
+            }
         }
+
     }
     public void addPlayer(Player p, Team t){
         t.getPlayers().add(p);
     }
 
+    // NOG OP VERANDERING WACHTEN VAN QUNFONG
+    public void addCorrectInstruction(Panel donePanel, Player player){
+        Team t = player.getTeam();
+        int currentCorrect = t.getCorrectInstruction();
 
-    public void removePlayer(Player p){
-        players.remove(p);
-    }
-    public void addCorrectInstruction(Panel donePanel){
-        int currentCorrect = correctInstruction;
-        for (Player p : players){
 
-            if (p.instructions.getPanel() == donePanel) {
-                correctInstruction++;
+        for (Player p : t.getPlayers()){
+
+            if (p.getInstructions().getPanel() == donePanel) {
+                t.setCorrectInstruction(currentCorrect + 1);
+                givePlayerInstructions(p);
+                addTime(t);
             }
             //player instruction controleren op doorgegeven Paneel
         }
-        if (!(currentCorrect < correctInstruction)){
-            correctInstruction = 0;
+        if (!(currentCorrect < t.getCorrectInstruction())){
+            resetCorrectInstruction(t);
         }
+    }
+
+    private void resetCorrectInstruction(Team t) {
+        if (t.getCorrectInstruction() >= substractCorrectInstructions)
+            t.setCorrectInstruction(0);
     }
 
     private void reset(){
@@ -146,13 +172,35 @@ public class Game {
             // Het aantal correcte instructies terugzetten op 0
             t.setCorrectInstruction(0);
         }
+    }
+    public void getAllPlayerPanels(Team t){
+        ArrayList<Panel> tempPanels = new ArrayList<>();
+        for (Player p : t.getPlayers()){
+            tempPanels.add(p.getPanel());
+        }
+        t.setPlayerPanels(tempPanels);
 
     }
-    public void getAllPlayerPanels(){
-        for (Player p : players){
-            for (Panel pan : p.panels){
-                playerPanels.add(pan);
-            }
+
+    private void givePlayerInstructions(Player player) {
+        Team playerTeam = player.getTeam();
+        int maxSize = playerTeam.getPlayerPanels().size();
+        Random random = new Random();
+        ArrayList<Panel> usedPanelNumbers = new ArrayList<>();
+        ArrayList<Panel> unusedPanelNumbers = playerTeam.getPlayerPanels();
+
+
+        for (Player p : playerTeam.getPlayers()) {
+            usedPanelNumbers.add(p.getInstructions().getPanel());
         }
+
+        for (Panel p : usedPanelNumbers) {
+            unusedPanelNumbers.remove(p);
+        }
+
+        Panel panel = unusedPanelNumbers.get(random.nextInt(maxSize));
+
+        player.setInstructions(panel.getInstruction());
+
     }
 }

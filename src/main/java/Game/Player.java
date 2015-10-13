@@ -73,4 +73,12 @@ public class Player {
     public Team getTeam() {
         return team;
     }
+
+    public Instruction getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(Instruction instructions) {
+        this.instructions = instructions;
+    }
 }

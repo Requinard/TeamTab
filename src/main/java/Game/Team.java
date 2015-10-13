@@ -17,9 +17,7 @@ public class Team {
 
     public ArrayList<Player> getPlayers() {return players;}
 
-    public ArrayList<Panel> getPlayerPanels() {return playerPanels;}
 
-    public int getLives() {return lives;}
 
 
     public Team(){
@@ -45,5 +43,21 @@ public class Team {
 
     public void setCorrectInstruction(int correctInstruction) {
         this.correctInstruction = correctInstruction;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public ArrayList<Panel> getPlayerPanels() {
+        return playerPanels;
+    }
+
+    public void setPlayerPanels(ArrayList<Panel> playerPanels) {
+        this.playerPanels = playerPanels;
     }
 }
