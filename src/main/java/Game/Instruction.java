@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 public class Instruction {
     private Panel panel;
-    String commando;
-    int newValue;
-    ArrayList<Instruction> instructions;
+    private String commando;
+    private int newValue;
+    private ArrayList<Instruction> instructions;
 
     public Instruction() {
         instructions = new ArrayList<Instruction>();

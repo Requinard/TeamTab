@@ -7,16 +7,18 @@ import java.util.Random;
  * Created by Qun on 12-10-2015.
  */
 public class Player {
-    String ipAdress;
-    String name;
-    int score;
-    ArrayList<Panel> panels;
-    Instruction instructions;
+    private String ipAdress;
+    private String name;
+    private int score;
+    private ArrayList<Panel> panels;
+    private Instruction instructions;
 
+    public Player(String Ipadress, String Name, int Score, ArrayList<Panel> Panel) {
+        this.panels = Panel;
+        this.ipAdress = Ipadress;
+        this.name = Name;
+        this.score = Score;
 
-
-    public Player() {
-        panels = new ArrayList<Panel>();
         //instructions = new ArrayList<Instruction>();
     }
 
@@ -27,5 +29,17 @@ public class Player {
         panels.get(random);
 
     }
+
+    public String getipAdress() {
+        return ipAdress;
+    }
+
+    public String name(){
+        return name;
+    }
+    public int score(){
+        return score;
+    }
+
 
 }
