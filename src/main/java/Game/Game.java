@@ -1,5 +1,6 @@
 package Game;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,38 +47,51 @@ public class Game {
         //nieuw panels voor players
     }
 
+    // RETURN DE LIJST MET SCORES?
     public void endGame(){
 
-        Collections.sort(players, new Comparator<Player>() {
-            @Override
-            public int compare(Player o1, Player o2) {
-                return Integer.compare(o1.getScore, o2.getScore);
-            }
-        });
+        // Sorteren van de spelers op score
+        try {
+            Collections.sort(players, new Comparator<Player>() {
+                @Override
+                public int compare(Player o1, Player o2) {
+                    return Integer.compare(o1.getScore(), o2.getScore());
+                }
+            });
+        }
+
+        catch (Exception ex) {
+            // Geef een messagebox met een error
+        }
 
         for (Player p : players){
-
-            //p.score;
-            //add score to scoreview
-
+            // Scores opslaan in een lijst met namen + de score
+            playerScores.add(p.getName() + ": " + p.getScore());
         }
-        for (Player p : team2.getPlayers()){
-            //p.score;
-            //add score to scoreview
-        }
-        //show scoreboard
     }
 
     public void addPlayerToTeam(Player p){
+        // Automatisch toevoegen van spelers aan een team wanneer ze de lobby joinen
         if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
         {
-            teams.get(0).addPlayer(p);
+            addPlayer(p, team1);
         }else {
-            teams.get(1).addPlayer(p);
+            addPlayer(p, team2);
         }
     }
 
     public  void changeTeam(Player p){
+        // Veranderen van de speler van het een naar het andere team
+        if (team1.getPlayers().contains(p)) {
+            team1.getPlayers().remove(p);
+            team2.getPlayers().add(p);
+        }
+
+        else {
+            team2.getPlayers().remove(p);
+            team1.getPlayers().add(p);
+        }
+
 
     }
 
@@ -102,9 +116,11 @@ public class Game {
             time--;
         }
     }
-    public void addPlayer(Player p){
-        players.add(p);
+    public void addPlayer(Player p, Team t){
+        t.getPlayers().add(p);
     }
+
+
     public void removePlayer(Player p){
         players.remove(p);
     }
