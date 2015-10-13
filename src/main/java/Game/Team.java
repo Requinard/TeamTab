@@ -30,57 +30,20 @@ public class Team {
         playerPanels = new ArrayList<Panel>();
     }
 
-    public void addTime(){
-        // ook nog met timer tijd aftrek
-        if (correctInstruction > 3){
-            time++;
-        }
+
+    public int getTime() {
+        return time;
     }
 
-    public void subtractLives(){
-        if (this.time == 3){
-            lives--;
-        }
-        //new round start
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public void subtractTime(Team otherTeam){
-        //voorbeeld van time correctie op goede otherteam
-        if (otherTeam.correctInstruction > 6){
-            time--;
-        }
-    }
-    public void addPlayer(Player p){
-        players.add(p);
-    }
-    public void removePlayer(Player p){
-        players.remove(p);
-    }
-    public void addCorrectInstruction(Panel donePanel){
-        int currentCorrect = correctInstruction;
-        for (Player p : players){
-
-            if (p.instructions.getPanel() == donePanel) {
-                correctInstruction++;
-            }
-            //player instruction controleren op doorgegeven Paneel
-        }
-        if (!(currentCorrect < correctInstruction)){
-            correctInstruction = 0;
-        }
-    }
-    public void reset(){
-        lives = 3;
-        time = 9;
-        correctInstruction = 0;
-    }
-    public void getAllPlayerPanels(){
-        for (Player p : players){
-            for (Panel pan : p.panels){
-                playerPanels.add(pan);
-            }
-        }
+    public int getCorrectInstruction() {
+        return correctInstruction;
     }
 
-
+    public void setCorrectInstruction(int correctInstruction) {
+        this.correctInstruction = correctInstruction;
+    }
 }
