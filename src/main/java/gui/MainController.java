@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     @FXML
     private Button buttonJoin;
+    @FXML
+    private Button buttonStart;
 
     private MainView view;
 
@@ -35,9 +37,16 @@ public class MainController implements Initializable {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     public void initialize(URL location, ResourceBundle resources) {
+
         buttonJoin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonJoinOnClick(event);
+            }
+        });
+
+        buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                buttonStartOnClick(event);
             }
         });
     }
@@ -49,19 +58,14 @@ public class MainController implements Initializable {
 
     public void buttonJoinOnClick(MouseEvent mouseEvent)
     {
-        LobbyView lobbyView = new LobbyView(view.stageController);
-        view.pass(lobbyView);
+        JoinView joinView = new JoinView(view.stageController);
+        view.pass(joinView);
+    }
 
-//        URL location = this.getClass().getResource("LobbyView.fxml");
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LobbyView.fxml"));
-//        Pane cmdPane = (Pane) fxmlLoader.load();
-//        try {
-///* NEED TO DECLARE ANCHOR PANE" */
-//            anchCmdController.getChildren().clear();
-//            anchCmdController.getChildren().add(cmdPane);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+    public void buttonStartOnClick(MouseEvent mouseEvent)
+    {
+        StartView startView = new StartView(view.stageController);
+        view.pass(startView);
     }
 
 

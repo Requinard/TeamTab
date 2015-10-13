@@ -16,6 +16,8 @@ public class LobbyViewController implements Initializable {
 
     @FXML
     private Button buttonBack;
+    @FXML
+    private Button buttonReady;
 
     private LobbyView view;
 
@@ -25,6 +27,12 @@ public class LobbyViewController implements Initializable {
                 buttonBackOnClick(event);
             }
         });
+        buttonReady.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                buttonReadyOnClick(event);
+            }
+        });
+
     }
 
     public void setView(LobbyView lobbyView)
@@ -32,9 +40,17 @@ public class LobbyViewController implements Initializable {
         view = lobbyView;
     }
 
+    public void buttonReadyOnClick(MouseEvent mouseEvent)
+    {
+        GameView gameView = new GameView((view.stageController));
+        view.pass(gameView);
+    }
+
     public void buttonBackOnClick(MouseEvent mouseEvent)
     {
-        MainView mainView = new MainView((view.stageController));
-        view.pass(mainView);
+        JoinView joinView = new JoinView((view.stageController));
+        view.pass(joinView);
     }
+
+
 }

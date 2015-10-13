@@ -27,5 +27,5 @@ public interface IView {
      * @param nextView Next view that needs to be loaded
      * @return Success of the operations
      */
-    boolean pass(IView nextView);
+    //boolean pass(IView nextView);
 }

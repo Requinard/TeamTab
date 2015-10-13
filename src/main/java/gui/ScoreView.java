@@ -3,6 +3,8 @@ package gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,17 +20,23 @@ public class ScoreView extends AbstractView implements IView{
         scoreViewController = new ScoreViewController();
     }
     public boolean load() {
-        Parent root = null;
+        Stage stage = new Stage();
+        stage.setTitle("ScoreView");
+        URL location = this.getClass().getResource("/ScoreView.fxml");
+        FXMLLoader loader = new FXMLLoader(location);
+        loader.setController(new ScoreViewController());
         try {
-            URL location = this.getClass().getClassLoader().getResource("ScoreView.fxml");
-            root = FXMLLoader.load(location);
+            Pane myPane = (Pane)loader.load();
+            Scene scene = new Scene(myPane);
+            stage.setScene(scene);
+            passScene(scene);
+
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        scene = new Scene(root, 100, 100);
 
-        //stageController.loadScene(scene);
+        scoreViewController = (ScoreViewController)loader.getController();
+        scoreViewController.setView(this);
 
         return true;
     }
@@ -38,10 +46,12 @@ public class ScoreView extends AbstractView implements IView{
     }
 
     public boolean pass(IView nextView) {
-        return false;
+        stageController.loadScene(nextView);
+        return true;
     }
 
     public boolean passScene(Scene scene) {
-        return false;
+        stageController.loadScene(scene);
+        return true;
     }
 }

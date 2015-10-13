@@ -14,27 +14,30 @@
    <children>
      <ImageView layoutX="3.0">
        <image>
-         <Image url="@images/Background.jpg" />
+         <Image url="@images/MainScreen/Background.jpg" />
        </image>
      </ImageView>
+
      <Button fx:id="buttonJoin" ellipsisString="..." layoutX="115.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
        <graphic>
          <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
            <image>
-             <Image url="@images/ButtonJoin.jpg" />
+             <Image url="@images/MainScreen/ButtonJoin.jpg" />
            </image>
          </ImageView>
        </graphic>
      </Button>
-     <Button ellipsisString="..." layoutX="649.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+
+     <Button fx:id="buttonStart" ellipsisString="..." layoutX="649.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
        <graphic>
          <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
            <image>
-             <Image url="@images/ButtonStart.jpg" />
+             <Image url="@images/MainScreen/ButtonStart.jpg" />
            </image>
          </ImageView>
        </graphic>
      </Button>
+
      <TextField layoutX="415.0" layoutY="905.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" text="Username" visible="true" />
    </children>
 </AnchorPane>

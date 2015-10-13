@@ -17,8 +17,7 @@ import java.net.URL;
  */
 public class MainView extends AbstractView implements IView {
     private MainController mainController;
-    @FXML
-    private Button buttonJoin;
+
 
     public MainView(StageController stageController) {
         super(stageController);
@@ -43,7 +42,6 @@ public class MainView extends AbstractView implements IView {
         }
 
        mainController = (MainController)loader.getController();
-
        mainController.setView(this);
 
         return true;
@@ -55,11 +53,6 @@ public class MainView extends AbstractView implements IView {
 
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
-
-        return true;
-    }
-
-    public boolean passScene(IView nextView) {
 
         return true;
     }

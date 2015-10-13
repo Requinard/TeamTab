@@ -2,6 +2,7 @@ package gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,30 +18,37 @@ public class GameView extends AbstractView implements IView {
             gameController = new GameController();
         }
     public boolean load() {
-        Parent root = null;
+        Stage stage = new Stage();
+        stage.setTitle("GameView");
+        URL location = this.getClass().getResource("/GameView.fxml");
+        FXMLLoader loader = new FXMLLoader(location);
+        loader.setController(new GameController());
         try {
-            URL location = this.getClass().getClassLoader().getResource("GameView.fxml");
-            root = FXMLLoader.load(location);
+            Pane myPane = (Pane)loader.load();
+            Scene scene = new Scene(myPane);
+            stage.setScene(scene);
+            passScene(scene);
+
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        scene = new Scene(root, 100, 100);
 
-        //stageController.loadScene(scene);
+        gameController = (GameController)loader.getController();
+        gameController.setView(this);
 
         return true;
     }
+    public boolean deload() {
+        return false;
+    }
 
-        public boolean deload() {
-            return false;
-        }
-
-        public boolean pass(IView nextView) {
-            return false;
-        }
+    public boolean pass(IView nextView) {
+        stageController.loadScene(nextView);
+        return true;
+    }
 
     public boolean passScene(Scene scene) {
-        return false;
+        stageController.loadScene(scene);
+        return true;
     }
 }
