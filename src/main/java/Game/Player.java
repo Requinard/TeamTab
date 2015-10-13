@@ -15,13 +15,13 @@ public class Player {
     private Game game;
     private Team team;
 
-    public Player(String Ipadress, String Name, int Score, ArrayList<Panel> Panel, Game Game, Team Team) {
-        this.panels = Panel;
-        this.ipAdress = Ipadress;
-        this.name = Name;
-        this.score = Score;
-        this.game = Game;
-        this.team = Team;
+    public Player(String ipAdress, String name, int score, ArrayList<Panel> panels, Game game, Team team) {
+        this.panels = panels;
+        this.ipAdress = ipAdress;
+        this.name = name;
+        this.score = score;
+        this.game = game;
+        this.team = team;
         //instructions = new ArrayList<Instruction>();
     }
     /*

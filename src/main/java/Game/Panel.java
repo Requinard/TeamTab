@@ -9,13 +9,15 @@ public class Panel {
     private String text;
     private int min;
     private int max;
+    private Instruction instruction;
 
-    public Panel(int Id, int Type, String Text, int Min, int Max) {
-        this.id = Id;
-        this.type = Type;
-        this.text = Text;
-        this.min = Min;
-        this.max = Max;
+    public Panel(int id, int type, String text, int min, int max, Instruction instruction) {
+        this.id = id;
+        this.type = type;
+        this.text = text;
+        this.min = min;
+        this.max = max;
+        this.instruction = instruction;
     }
 
     /*
@@ -57,4 +59,10 @@ public class Panel {
         return max;
     }
 
+    /*
+    * Returns the instruction on the panel
+    * */
+    public Instruction getInstruction() {
+        return instruction;
+    }
 }
