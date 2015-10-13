@@ -37,4 +37,5 @@
      </Button>
      <TextField layoutX="415.0" layoutY="905.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" text="Username" visible="true" />
    </children>
+>>>>>>> origin/gui-impl
 </AnchorPane>

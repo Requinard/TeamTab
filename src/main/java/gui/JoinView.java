@@ -10,13 +10,15 @@ import java.net.URL;
 /**
  * Created by Vito Corleone on 6-10-2015.
  */
-public class JoinView extends AbstractView implements IView{
+public class JoinView extends AbstractView implements IView {
     private JoinViewController joinViewController;
-    public JoinView(StageController stageController){
+
+    public JoinView(StageController stageController) {
         super(stageController);
         joinViewController = new JoinViewController();
 
     }
+
     public boolean load() {
         Parent root = null;
         try {
