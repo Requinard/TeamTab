@@ -24,7 +24,7 @@ public class Player {
         this.team = team;
         //instructions = new ArrayList<Instruction>();
     }
-    /*
+    /**
     * This first creates a random
     * After that is creates a random number between 0 and the listlength
     * After that it selects the panel
@@ -37,39 +37,39 @@ public class Player {
 
     }
 
-    /*
+    /**
     * Return the ip adress that is linked to the player
-    **/
+    */
 
     public String getIpAdress() {
         return ipAdress;
     }
 
-    /*
+    /**
     * Return the name of the player
-    **/
+    */
     public String getName(){
         return name;
     }
 
-    /*
+    /**
     * Returns the score of the current player
-    **/
+    */
     public int getScore(){
         return score;
     }
 
-    /*
+    /**
      *return the game the player is assigned to
-     **/
+     */
 
     public Game getGame(){
         return game;
     }
 
-    /*
+    /**
     * Returns the team the player is in
-    **/
+    */
     public Team getTeam() {
         return team;
     }

@@ -17,24 +17,25 @@ public class Instruction {
         this.newValue = newValue;
     }
 
-    /*
+    /**
     * Returns the panel which is linked to the instruction
     * */
     public Panel getPanel() {
         return panel;
     }
 
-    /*
-    * Returns the commando the player has to execute
-    * */
+    /**
+     * Returns the commando the player has to execute
+     */
+
     public String getCommando() {
         return commando;
     }
 
-    /*
+    /**
     * Returns the value of the instruction
     * it checks if it is true or false
-    * */
+     */
     public int getNewValue() {return newValue;}
 
 
