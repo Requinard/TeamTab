@@ -105,6 +105,7 @@ public class GameTest {
 
     }
 
+    //Vanaf hier doet Frank
     @Test
     public void testRemovePlayer() throws Exception {
 
