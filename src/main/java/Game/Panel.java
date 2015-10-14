@@ -20,29 +20,28 @@ public class Panel {
         this.instruction = instruction;
     }
     /**
-    * Returns the id of the Panel
+    * @Returns the id of the Panel
     */
     public int getId() {
         return id;
     }
 
     /**
-    * Returns the type of the panel
+    * @Returns the type of the panel
     */
-
     public int getType(){
         return type;
     }
 
     /**
-    Return the text that it set on the Panel
+    * @Return the text that it set on the Panel
     */
     public String getText(){
         return text;
     }
 
     /**
-    * Returns the min value of the control
+    * @Returns the min value of the control
     * For example if you have a slidercontrol
     * between 0-5 it returns 0
     */
@@ -51,7 +50,7 @@ public class Panel {
     }
 
     /**
-    * Returns the max value of the control
+    * @Returns the max value of the control
     * For example if you have a slidercontrol
     * between 0-5 it returns 5
     */
@@ -60,7 +59,7 @@ public class Panel {
     }
 
     /**
-    * Returns the instruction on the panel
+    * @Returns the instruction on the panel
     */
     public Instruction getInstruction() {
         return instruction;

@@ -9,7 +9,6 @@ public class Instruction {
     private Panel panel;
     private String commando;
     private int newValue;
-    private ArrayList<Instruction> instructions;
 
     public Instruction(Panel panel, String commando, int newValue) {
         this.panel = panel;
@@ -18,14 +17,14 @@ public class Instruction {
     }
 
     /**
-    * Returns the panel which is linked to the instruction
+    * @Returns the panel which is linked to the instruction
     * */
     public Panel getPanel() {
         return panel;
     }
 
     /**
-     * Returns the commando the player has to execute
+     * @Returns the commando the player has to execute
      */
 
     public String getCommando() {
@@ -33,7 +32,7 @@ public class Instruction {
     }
 
     /**
-    * Returns the value of the instruction
+    * @Returns the value of the instruction
     * it checks if it is true or false
      */
     public int getNewValue() {return newValue;}
