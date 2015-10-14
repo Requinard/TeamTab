@@ -1,7 +1,6 @@
 package gui;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,7 +25,7 @@ public class StartView extends AbstractView implements IView {
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new StartViewController());
         try {
-            Pane myPane = (Pane)loader.load();
+            Pane myPane = loader.load();
             Scene scene = new Scene(myPane);
             stage.setScene(scene);
             passScene(scene);
@@ -36,7 +35,7 @@ public class StartView extends AbstractView implements IView {
             return false;
         }
 
-        startViewController = (StartViewController)loader.getController();
+        startViewController = loader.getController();
         startViewController.setView(this);
 
         return true;
