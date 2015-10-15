@@ -41,15 +41,15 @@ public class Game {
     }
 
     /**
-     * Het starten van de game wordt aan het begin van het spel aangeroepen
-     * Beide teams krijgen vanaf hier ook panels aangewezen
+     * Is called at the beginning of the game
+     * Check if both teams have the same amount of players
+     * @return true if they are the same
      */
-    public void startGame(){
-        // Kijkt of beide teams even veel spelers hebben
+    public boolean startGame(){
+        // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Geeft de teams die meedoen panels
-            getAllPlayerPanels(team1);
-            getAllPlayerPanels(team2);
+            return true;
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
@@ -66,115 +66,121 @@ public class Game {
     }
 
     /**
-     * Nog te maken: Het returnen van een lijst me alle scores
-     * Aan het einde van een game worden de spelers gesorteerd op score die ze behaald hebben
+     *
+     * @param winningTeam The team that won the game
+     * @return a list of players from the winning team + there score
      */
-    public void endGame(){
+    public ArrayList<String> endGame(Team winningTeam){
 
         // Sorteren van de spelers op score
-        try {
-            Collections.sort(players, new Comparator<Player>() {
-                //@Override
-                // Logica achter het sorteren
-                public int compare(Player o1, Player o2) {
-                    return Integer.compare(o1.getScore(), o2.getScore());
-                }
-            });
+        ArrayList<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
+        if (sortedWinningTeam != null) {
+            for (Player p : sortedWinningTeam) {
+                playerScores.add(p.getName() + ": " + p.getScore());
+            }
+            return playerScores;
         }
 
-        catch (Exception ex) {
-            // Geef een messagebox met een error
-        }
-
-        // Lijst met spelers + de score wordt gevuld
-        for (Player p : players){
-            // Scores opslaan in een lijst met namen + de score
-            playerScores.add(p.getName() + ": " + p.getScore());
-        }
+        else
+            return null;
     }
 
     /**
-     * Tijdens het joinen van een game wordt de speler in het team gezet waar de minste spelers in zitten
-     * Wanneer dit gelijk is wordt hij in het tweede team gezet
-     * @param player De speler waarvan het team bepaald moet worden
+     * When joinin a lobby the joinen player is set into the team with the least amount of players
+     *
+     * @param player De player that is joining the lobby
+     *
      */
     public void addPlayerToTeam(Player player){
         // Automatisch toevoegen van spelers aan een team wanneer ze de lobby joinen
         if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
         {
-            addPlayer(player, team1);
+            team1.addPlayerToTeam(player);
         }else {
-            addPlayer(player, team2);
+            team2.addPlayerToTeam(player);
         }
     }
 
     /**
-     * Wanneer de speler van team wilt veranderen wordt hij van het team waar hij nu in zit verplaats naar het andere team
-     * @param player De speler waarvan het team verandert moet worden
+     * Changing the player to the other team
+     * @param player The player that wants to join the other team
      */
     public  void changeTeam(Player player){
 
         if (team1.getPlayers().contains(player)) {
             // Speler wordt toegevoegd aan team 2
-            team1.getPlayers().remove(player);
-            team2.getPlayers().add(player);
+            if (team1.removePlayer(player)) {
+                team2.addPlayerToTeam(player);
+            }
+
+            else
+                throw new IllegalArgumentException("Player is not able to join other team");
+
         }
 
         else {
             // Speler wordt toegevoegd aan team 1
-            team2.getPlayers().remove(player);
-            team1.getPlayers().add(player);
-        }
+            if (team2.removePlayer(player)) {
+                team1.addPlayerToTeam(player);
+            }
+            else
+                throw new IllegalArgumentException("Player is not able to join other team");
 
+        }
 
     }
 
-    // TEAM METHODS
-    // Alle functionaliteit van een Team is verplaats naar de game
-    // Onderstaande methodes bevat functionaliteit die over gezet is
 
 
     /**
-     * Wanneer een team een bepaalde winstreak behaald heeft krijgt het een seconden extra voor de volgende instructies
-     * @param tm Het team waar tijd aan toegevoegd dient te worden
+     * When a team reaches a certain winstreak the game checks if they should recieve bonus time
+     * @param tm The team that gets checked
      */
     private void addTime(Team tm){
 
         if (tm.getCorrectInstruction() == bonusCorrectInstructions){
-            // Toevoegen van een seconden
+
             tm.setTime(tm.getTime() + 1);
-            resetCorrectInstruction(tm);
         }
     }
 
     /**
-     * Wanneer een team minder dan 3 seconden heeft om instructies uit te voeren heeft het team verloren
-     * @param losingTeam het team waarvan er gekeken wordt of ze nog genoeg tijd hebben
+     * When the team has las then 3 seconds it should lose a life
+     * @param losingTeam The team that gets a check if the should lose a life
      */
     public void subtractLives(Team losingTeam){
         if (losingTeam.getTime() <= 3){
             losingTeam.setLives(losingTeam.getLives() - 1);
+
             if (losingTeam.getLives() <= 0)
-                // Spel is voorbij een team heeft geen levens meer over
-                endGame();
+                // Game is over
+                if (losingTeam.equals(team1)) {
+                    endGame(team2);
+                }
+                else
+                    endGame(team1);
             else
-                // Team heeft een leven verloren er moet een nieuwe ronde gestart worden
+                // Team lost the round a new round should be started
                 newRound();
         }
     }
 
     /**
-     * Het team dat een bepaalde hoeveelheid instructies voltooid heeft zorgt ervoor dat de tegenstanders minder tijd hebben voor de volgende ronde
-     * @param currentTeam het team dat genoeg correcte instructies zou hebben
+     * If the team has a certain winstreak the other them should get less time for there upcomming instructions
+     * @param currentTeam The team that gets checked
      */
     public void subtractTime(Team currentTeam){
 
         for (Team t : teams) {
             // Checken of het teamm genoeg correcte antwoorden behaald heeft
-            if (!t.equals(currentTeam) && currentTeam.getCorrectInstruction() == substractCorrectInstructions){
+            if (!t.equals(currentTeam) && currentTeam.getCorrectInstruction() >= substractCorrectInstructions){
                 Team otherTeam = t;
+                // Other team gets a time penalty
                 otherTeam.setTime(otherTeam.getTime() - 1);
+                // Check if it is game over for the other team
                 subtractLives(otherTeam);
+                // Reset correct constructions to 0
+                currentTeam.setCorrectInstruction(0);
                 break;
             }
         }
@@ -182,78 +188,55 @@ public class Game {
     }
 
     /**
-     * Het toevoegen van een speler aan een team
-     * IS DEZE NOG RELEVANT????????????????????????
+     * Adding a player to a team
      * @param p
      * @param t
      */
-    public void addPlayer(Player p, Team t){
-        p.setTeam(t); //aanpassing team set
-        ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
-        excitingPlayers.add(p);
-        t.setPlayers(excitingPlayers);
+    public void addPlayerToTeam(Player p, Team t){
+        if (!t.addPlayerToTeam(p)){
+            throw new IllegalArgumentException("Player can not be added to the team");
+        }
+        //p.setTeam(t); //aanpassing team set
+        //ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
+        players.add(p);
+        //t.setPlayers(excitingPlayers);
     }
 
-    //Mist Text
-    // NOG OP VERANDERING WACHTEN VAN QUNFONG
+
+    /**
+     * Check if the executed instrucctions was correct and give the player a new one
+     * @param donePanel The panel that has been pressed
+     * @param player The player that gets checked
+     */
     public void addCorrectInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
         int currentCorrect = t.getCorrectInstruction();
 
 
-        for (Player p : t.getPlayers()){
+        for (Player p : t.getPlayers()) {
 
-            if (p.getInstructions().getPanel() == donePanel) {
+            if (p.checkCorrectPanel(donePanel)) {
+
                 t.setCorrectInstruction(currentCorrect + 1);
                 givePlayerInstructions(p);
                 addTime(t);
-            }
-            //player instruction controleren op doorgegeven Paneel
-        }
-        if (!(currentCorrect < t.getCorrectInstruction())){
-            resetCorrectInstruction(t);
+            } else
+                t.setCorrectInstruction(0);
         }
     }
 
     /**
-     * Wanneer de instructies een bepaalde hoeveelheid behaald hebben dienen ze gerest te worden
-     * @param t Het team waarvan het gecontroleerd dient te worden
-     */
-    private void resetCorrectInstruction(Team t) {
-        if (t.getCorrectInstruction() >= substractCorrectInstructions)
-            t.setCorrectInstruction(0);
-    }
-
-    /**
-     * Zet voor beide teams alles terug op de standaard waarde
+     * Reset values from both teams
      */
     private void reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
-            // Resetten van de tijd naar 9 seconden
-            t.setTime(timeRound);
-            // Het aantal correcte instructies terugzetten op 0
-            t.setCorrectInstruction(0);
+            t.resetTeam();
         }
     }
 
     /**
-     * Haalt per team alle panels op die bij de spelers van dat team horen
-     * @param t het team waarvoor de panels opgehaald moeten worden
-     */
-    public void getAllPlayerPanels(Team t){
-        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
-        for (Player p : t.getPlayers()){ //niet alle pannels aangepast
-            for (Panel pan : p.getPanels()){
-                tempPanels.add(pan);
-            }
-        }
-        t.setPlayerPanels(tempPanels);
-
-    }
-
-    /**
-     * Het geven van een random instructie aan een speler
+     * FRANK: SAMEN MET KAMIL NAAR KIJKEN
      * @param player De speler die een nieuwe instructie moet krijgen
      */
     private void givePlayerInstructions(Player player) {

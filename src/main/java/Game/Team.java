@@ -74,6 +74,7 @@ public class Team {
         for(Player p : players){
             if(!p.equals(player)){
                 players.add(player);
+                refreshPlayerPanels();
                 return true;
             }
         }
@@ -89,6 +90,7 @@ public class Team {
         for(Player p : players){
             if(p.equals(player)){
                 players.remove(player);
+                refreshPlayerPanels();
                 return true;
             }
         }
@@ -117,6 +119,7 @@ public class Team {
      * @return the sorted list
      */
     public ArrayList<Player> sortedPlayerByScore(){
+        //Frank: Ik denk dat we hier een nieuwe lijst voor moeten returnen
          Collections.sort(players);
         return this.players;
     }
@@ -134,6 +137,18 @@ public class Team {
             }
         }
         return false;
+    }
+
+    private void refreshPlayerPanels() {
+        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
+
+
+        for (Player player : players) {
+            for (Panel p : player.getPanels()) {
+                tempPanels.add(p);
+            }
+        }
+        playerPanels = tempPanels;
     }
 
 

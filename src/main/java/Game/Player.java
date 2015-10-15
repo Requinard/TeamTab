@@ -88,6 +88,15 @@ public class Player implements Comparable<Player>{
         this.panels = panels;
     }
 
+    public boolean checkCorrectPanel(Panel panel) {
+        if (instructions.getPanel().equals(panel)) {
+            return true;
+        }
+
+        else
+            return false;
+    }
+
 
     /***
      * this is the implementation of the Comparable interface. Based on the DESCENDING compare
