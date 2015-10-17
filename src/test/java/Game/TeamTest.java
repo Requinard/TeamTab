@@ -21,48 +21,5 @@ public class TeamTest {
 
     }
 
-    @Test
-    public void testGetPlayers() throws Exception {
 
-    }
-
-    @Test
-    public void testAddTime() throws Exception {
-
-    }
-
-    @Test
-    public void testSubtractLives() throws Exception {
-
-    }
-
-    @Test
-    public void testSubtractTime() throws Exception {
-
-    }
-
-    @Test
-    public void testAddPlayer() throws Exception {
-
-    }
-
-    @Test
-    public void testRemovePlayer() throws Exception {
-
-    }
-
-    @Test
-    public void testAddCorrectInstruction() throws Exception {
-
-    }
-
-    @Test
-    public void testReset() throws Exception {
-
-    }
-
-    @Test
-    public void testGetPlayerPanels() throws Exception {
-
-    }
 }
