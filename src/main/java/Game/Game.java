@@ -1,22 +1,19 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Random;
 
 /**
  * Created by HP user on 12-10-2015.
  */
 public class Game {
+    Team team1;
+    Team team2;
     private ArrayList<Team> teams;
     private ArrayList<Player> players;
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
-
-    Team team1;
-    Team team2;
     private int timeRound;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
@@ -27,8 +24,8 @@ public class Game {
         instructions = new ArrayList<Instruction>();
         panels = new ArrayList<Panel>();
 
-        team1 = new Team();
-        team2 = new Team();
+        team1 = new Team(0, 0, 0);
+        team2 = new Team(0, 0, 0);
 
         teams.add(team1);
         teams.add(team2);
