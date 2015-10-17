@@ -1,20 +1,21 @@
 package gui.panel;
 
+import Game.Panel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 /**
  * Created by Kevin on 12-10-2015.
  */
-public class PanelButtonControl extends AbstractPanelControl {
+public class PanelButtonControl extends AbstractPanelControl implements IPanel {
 
     @FXML private TextField textField;
 
-    public PanelButtonControl() {
+    public PanelButtonControl(Panel panel) {
+        super(panel);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "panels/PanelButtonControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -35,5 +36,17 @@ public class PanelButtonControl extends AbstractPanelControl {
     }
     public void setTextField(String txt){
         textField.setText(txt);
+    }
+
+    public void update() {
+
+    }
+
+    public void draw() {
+
+    }
+
+    public void remove() {
+
     }
 }
