@@ -27,16 +27,18 @@ public class Game {
         instructions = new ArrayList<Instruction>();
         panels = new ArrayList<Panel>();
 
-        team1 = new Team();
-        team2 = new Team();
+        timeRound = 9;
+        bonusCorrectInstructions = 3;
+        substractCorrectInstructions = 5;
+
+        team1 = new Team(timeRound, 3, 0);
+        team2 = new Team(timeRound, 3, 0);
 
         teams.add(team1);
         teams.add(team2);
 
         // Standaard tijd voor een ronde
-        timeRound = 9;
-        bonusCorrectInstructions = 3;
-        substractCorrectInstructions = 5;
+
 
     }
 
@@ -73,6 +75,7 @@ public class Game {
     public ArrayList<String> endGame(Team winningTeam){
 
         // Sorteren van de spelers op score
+        playerScores = new ArrayList<String>();
         ArrayList<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
         if (sortedWinningTeam != null) {
             for (Player p : sortedWinningTeam) {

@@ -103,7 +103,7 @@ public class Player implements Comparable<Player>{
      * @param p
      * @return
      */
-    @Override
+    //@Override gaf een error
     public int compareTo(Player p) {
         int compareScore = ((Player)p).getScore();
         return compareScore - this.score;

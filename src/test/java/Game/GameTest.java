@@ -23,6 +23,8 @@ public class GameTest {
     Instruction in1;
     Instruction in2;
 
+    Panel pan3;
+    Instruction in3;
     @Before
     public void setUp() throws Exception {
         g  = new Game();
@@ -34,7 +36,7 @@ public class GameTest {
         pp1.add(pan1);
         pp1.add(pan2);
         p1 = new Player("1.1.1.1", "Kaj", 0, pp1, in1, g, null); //team later toevoegen
-        p2 = new Player("2.2.2.2", "Frank", 0, new ArrayList<Panel>(), null, g, null);
+        p2 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, g, null);
     }
 
     @After
@@ -61,13 +63,26 @@ public class GameTest {
 
     @Test
     public void testNewRound() throws Exception {
-
-
+        g.newRound();
+        //mogelijk nog uitgebreid
     }
 
     @Test
     public void testEndGame() throws Exception {
+        g.addPlayerToTeam(p1);
+        g.addPlayerToTeam(p2);
+        assertEquals("Gives the wrong score", "Kaj: 0", g.endGame(g.team1).get(0));
+        assertEquals("Gives the wrong score", "Frank: 3", g.endGame(g.team2).get(0));
 
+        pan3 = new Panel(2, 1, "c", 0, 1, in3);
+        in3 = new Instruction(pan3, "Click on", 0);
+        ArrayList<Panel> pal = new ArrayList<Panel>();
+        pal.add(pan3);
+        Player p3 = new Player("1.2.3.4","Bas",5,pal, null, g,null);
+        g.addPlayerToTeam(p3);
+
+        assertEquals("Wrong order", "Bas: 5", g.endGame(g.team1).get(0));
+        assertEquals("Not everyone added", 2, g.endGame(g.team1).size());
     }
 
     @Test

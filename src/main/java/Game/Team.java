@@ -71,7 +71,10 @@ public class Team {
      * @return true when player is added to the list
      */
     public boolean addPlayerToTeam(Player player){
-        for(Player p : players){
+        if (players.size() == 0){
+            players.add(player);
+        }
+        for(Player p : players){ //eerst add voor het conroleren
             if(!p.equals(player)){
                 players.add(player);
                 refreshPlayerPanels();
