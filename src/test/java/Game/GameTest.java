@@ -28,10 +28,12 @@ public class GameTest {
     @Before
     public void setUp() throws Exception {
         g  = new Game();
-        pan1 = new Panel(1, 1, "a", 0, 1, in1);
-        pan2 = new Panel(2, 1, "b", 0, 1, in2);
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
+        pan1 = new Panel(1, 1, "a", 0, 1, in1);
+        pan2 = new Panel(2, 1, "b", 0, 1, in2);
+        in1.setPanel(pan1);
+        in2.setPanel(pan2);
         pp1 = new ArrayList<Panel>();
         pp1.add(pan1);
         pp1.add(pan2);
@@ -91,6 +93,9 @@ public class GameTest {
         assertEquals("added to wrong team", g.team1.getPlayers().get(0), p1);
         g.addPlayerToTeam(p2);
         assertEquals("added to wrong team", g.team2.getPlayers().get(0), p2);
+        Player p3 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, g, null);
+        g.addPlayerToTeam(p3);
+        assertEquals("added to wrong team", g.team1.getPlayers().get(1), p3);
     }
 
     @Test
@@ -107,17 +112,38 @@ public class GameTest {
 
     @Test
     public void testAddTime() throws Exception {
-
+        g.addPlayerToTeam(p1);
+        g.addPlayerToTeam(p2);
+        g.team1.setCorrectInstruction(2);
+        assertEquals("gives incorrect time", 9, g.team1.getTime());
+        g.addCorrectInstruction(p1.getPanels().get(0), p1);
+        assertEquals("gives incorrect time", 10, g.team1.getTime());
     }
 
     @Test
     public void testSubtractLives() throws Exception {
-
+        g.addPlayerToTeam(p1);
+        g.addPlayerToTeam(p2);
+        assertEquals("gives the incorrect lives", 3, g.team1.getLives());
+        g.team1.setTime(3);
+        g.subtractLives(g.team1);
+        assertEquals("gives the incorrect lives", 2, g.team1.getLives());
+        assertEquals("newRound not started", 9, g.team1.getTime());
+        g.team1.setTime(3);
+        g.team1.setLives(1);
+        g.subtractLives(g.team1);
+        assertEquals("EndGame not started", 3, g.team1.getTime());
     }
 
     @Test
     public void testSubtractTime() throws Exception {
-
+        g.addPlayerToTeam(p1);
+        g.addPlayerToTeam(p2);
+        g.team1.setCorrectInstruction(5);
+        assertEquals("gives incorrect time", 9, g.team2.getTime());
+        g.subtractTime(g.team1);
+        assertEquals("gives incorrect time", 9, g.team1.getTime());
+        assertEquals("gives incorrect time", 8, g.team2.getTime());
     }
 
     //Vanaf hier doet Frank

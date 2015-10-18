@@ -73,6 +73,7 @@ public class Team {
     public boolean addPlayerToTeam(Player player){
         if (players.size() == 0){
             players.add(player);
+            refreshPlayerPanels();
         }
         for(Player p : players){ //eerst add voor het conroleren
             if(!p.equals(player)){
@@ -106,7 +107,6 @@ public class Team {
      */
     public boolean resetTeam(){
         time = 9;
-        lives = 3;
         correctInstruction = 0;
         players.clear();
         playerPanels.clear();
