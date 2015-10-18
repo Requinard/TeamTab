@@ -19,6 +19,10 @@ public class Instruction {
     /**
     * @Returns the panel which is linked to the instruction
     * */
+    public void setPanel(Panel panel) {
+        this.panel = panel;
+    }
+
     public Panel getPanel() {
         return panel;
     }

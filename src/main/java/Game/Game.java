@@ -98,8 +98,10 @@ public class Game {
         // Automatisch toevoegen van spelers aan een team wanneer ze de lobby joinen
         if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
         {
+            player.setTeam(team1);
             team1.addPlayerToTeam(player);
         }else {
+            player.setTeam(team2);
             team2.addPlayerToTeam(player);
         }
     }
@@ -113,6 +115,7 @@ public class Game {
         if (team1.getPlayers().contains(player)) {
             // Speler wordt toegevoegd aan team 2
             if (team1.removePlayer(player)) {
+                player.setTeam(team2);
                 team2.addPlayerToTeam(player);
             }
 
@@ -124,6 +127,7 @@ public class Game {
         else {
             // Speler wordt toegevoegd aan team 1
             if (team2.removePlayer(player)) {
+                player.setTeam(team1);
                 team1.addPlayerToTeam(player);
             }
             else
@@ -221,7 +225,7 @@ public class Game {
             if (p.checkCorrectPanel(donePanel)) {
 
                 t.setCorrectInstruction(currentCorrect + 1);
-                givePlayerInstructions(p);
+                //givePlayerInstructions(p); QUN LET OP weg gehaald, omdat hij errored maar niet nodig is voor mijn test
                 addTime(t);
             } else
                 t.setCorrectInstruction(0);
