@@ -127,7 +127,7 @@ public class Team {
      * @return the unmodifiableList with the sorted players
      */
     public List<Player> sortedPlayerByScore(){
-        List<Player> sortedPlayers = new ArrayList<>(players);
+        List<Player> sortedPlayers = new ArrayList<Player>(players);
         Collections.sort(sortedPlayers);
         return Collections.unmodifiableList(sortedPlayers);
     }
