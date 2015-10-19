@@ -19,10 +19,10 @@ public class Team {
     private int correctInstruction;
 
 
-    public Team(int time, int lives, int correctInstructions){
+    public Team(int time, int lives){
         this.time =time;
         this.lives = lives;
-        this.correctInstruction =correctInstructions;
+        this.correctInstruction = 0;
         players = new ArrayList<Player>();
         playerPanels = new ArrayList<Panel>();
     }
