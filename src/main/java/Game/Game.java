@@ -35,10 +35,6 @@ public class Game {
 
         teams.add(team1);
         teams.add(team2);
-
-        // Standaard tijd voor een ronde
-
-
     }
 
     /**
@@ -49,7 +45,7 @@ public class Game {
     public boolean startGame(){
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
-            // Geeft de teams die meedoen panels
+            // Panels are given to the teams that compete
             return true;
         }else {
             throw new IllegalArgumentException ("wrong sizes");
@@ -61,9 +57,10 @@ public class Game {
      * Call this method to start a new round
      * Every value in the game gets a reset
      */
-    public void newRound(){
-        // Terug zetten van standaard waardes
+    public boolean newRound(){
+        // returns default values
         reset();
+        return false;
     }
 
     /**
@@ -72,8 +69,7 @@ public class Game {
      * @return a list of players from the winning team + there score
      */
     public ArrayList<String> endGame(Team winningTeam){
-
-        // Sorteren van de spelers op score
+        // Sorts the players by score
         playerScores = new ArrayList<String>();
         List<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
         if (sortedWinningTeam != null) {
@@ -94,7 +90,7 @@ public class Game {
      *
      */
     public boolean addPlayerToTeam(Player player){
-        // Automatisch toevoegen van spelers aan een team wanneer ze de lobby joinen
+        // Adds players automaticly to a team when they join a lobby
         if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
         {
             player.setTeam(team1);
@@ -112,7 +108,7 @@ public class Game {
     public boolean changeTeam(Player player){
 
         if (team1.getPlayers().contains(player)) {
-            // Speler wordt toegevoegd aan team 2
+            // Player gets added to team 2
             if (team1.removePlayer(player)) {
                 player.setTeam(team2);
                 return team2.addPlayerToTeam(player);
@@ -120,7 +116,7 @@ public class Game {
         }
 
         else {
-            // Speler wordt toegevoegd aan team 1
+            // Player gets added to team 1
             if (team2.removePlayer(player)) {
                 player.setTeam(team1);
                 return team1.addPlayerToTeam(player);
@@ -172,10 +168,10 @@ public class Game {
      * If the team has a certain winstreak the other them should get less time for there upcomming instructions
      * @param currentTeam The team that gets checked
      */
-    public void subtractTime(Team currentTeam){
+    public boolean subtractTime(Team currentTeam){
 
         for (Team t : teams) {
-            // Checken of het teamm genoeg correcte antwoorden behaald heeft
+            // Check if the team has got enough correct awnsers
             if (!t.equals(currentTeam) && currentTeam.getCorrectInstruction() >= substractCorrectInstructions){
                 Team otherTeam = t;
                 // Other team gets a time penalty
@@ -187,7 +183,7 @@ public class Game {
                 break;
             }
         }
-
+        return true;
     }
 
     /**
@@ -195,13 +191,14 @@ public class Game {
      * @param p
      * @param t
      */
-    public void addPlayerToTeam(Player p, Team t){
+    public boolean addPlayerToTeam(Player p, Team t){
         if (!t.addPlayerToTeam(p)){
             throw new IllegalArgumentException("Player can not be added to the team");
         }
         //p.setTeam(t); //aanpassing team set
         //ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
         players.add(p);
+        return true;
         //t.setPlayers(excitingPlayers);
     }
 
@@ -211,21 +208,23 @@ public class Game {
      * @param donePanel The panel that has been pressed
      * @param player The player that gets checked
      */
-    public void checkInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
+    public boolean checkInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
         int currentCorrect = t.getCorrectInstruction();
-
+        boolean instructionCorrect = false;
 
         for (Player p : t.getPlayers()) {
 
             if (p.checkCorrectPanel(donePanel)) {
 
                 t.setCorrectInstruction(currentCorrect + 1);
-                //givePlayerInstructions(p); QUN LET OP weg gehaald, omdat hij errored maar niet nodig is voor mijn test
                 addTime(t);
-            } else
+                instructionCorrect = true;
+            } else {
                 t.setCorrectInstruction(0);
+            }
         }
+        return instructionCorrect;
     }
 
     /**
@@ -243,32 +242,35 @@ public class Game {
 
     /**
      * Gives a player a new instruction
-     * @param player De speler die een nieuwe instructie moet krijgen
+     * @param player The player that needs a new instruction
      */
-    private void givePlayerInstructions(Player player) {
+    private Instruction givePlayerInstructions(Player player) {
         Team playerTeam = player.getTeam();
         int maxSize = playerTeam.getPlayerPanels().size();
         Random random = new Random();
-        // Panels die in gebruik zijn
+        // Panels that are in use
         ArrayList<Panel> usedPanelNumbers = new ArrayList<Panel>();
-        // Panels die niet in gebruik zijn en waar dus uit gekozen mag worden
+        // Panels that are not in use and that cannot be chosen
         ArrayList<Panel> unusedPanelNumbers = playerTeam.getPlayerPanels();
 
-        // Haalt alle panels op die op dit moment gebruikt worden door de speler uit het team
+        // Gets all the panels wich are used by the team of the player
         for (Player p : playerTeam.getPlayers()) {
             usedPanelNumbers.add(p.getInstructions().getPanel());
         }
 
-        // Verwijdert de panels die gebruikt worden zodat alleen de panels overblijven die nog niet gebruikt worden
+        // Removes all the panels that are in use so only the available panels remain
         for (Panel p : usedPanelNumbers) {
             unusedPanelNumbers.remove(p);
         }
 
-        // Een random panel wordt gekozen uit de lijst met panels
+        // gets a random panel from the list of panels
         Panel panel = unusedPanelNumbers.get(random.nextInt(maxSize));
 
-        // Voegt de random instructie toe aan de speler
-        player.setInstructions(panel.getInstruction());
+        // Add the random instruction to the player
+        Instruction instuction = panel.getInstruction();
+        player.setInstructions(instuction);
 
+        // Returns the instruction
+        return instuction;
     }
 }
