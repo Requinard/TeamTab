@@ -20,17 +20,18 @@ public class Game {
 
     public Game(){
         final int STARTLEVENS = 3;
+        final int STARTTIMEROUND = 9;
+
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
         panels = new ArrayList<Panel>();
 
-        timeRound = 9;
         bonusCorrectInstructions = 3;
         substractCorrectInstructions = 5;
 
-        team1 = new Team(timeRound, STARTLEVENS, 0);
-        team2 = new Team(timeRound, STARTLEVENS, 0);
+        team1 = new Team(STARTTIMEROUND, STARTLEVENS);
+        team2 = new Team(STARTTIMEROUND, STARTLEVENS);
 
         teams.add(team1);
         teams.add(team2);
