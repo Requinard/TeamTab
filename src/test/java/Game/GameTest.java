@@ -22,9 +22,12 @@ public class GameTest {
     Panel pan2;
     Instruction in1;
     Instruction in2;
-
+    Team t1;
+    int time;
     Panel pan3;
     Instruction in3;
+    Panel p3;
+
     @Before
     public void setUp() throws Exception {
         g  = new Game();
@@ -39,6 +42,9 @@ public class GameTest {
         pp1.add(pan2);
         p1 = new Player("1.1.1.1", "Kaj", 0, pp1, in1, g, null); //team later toevoegen
         p2 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, g, null);
+        //t1 = new Team(1, 1, 1);
+        time= 0;
+        p3 = new Panel(3, 1, "Press it down", 0, 1, null);
     }
 
     @After
@@ -149,21 +155,52 @@ public class GameTest {
     //Vanaf hier doet Frank
     @Test
     public void testRemovePlayer() throws Exception {
-
+        
     }
 
+    /**
+     * @Author Qun
+     * nog niet kunnen testen omdat de code nog moet worden
+     * @throws Exception
+     * Moet nog worden aangepast nadat code is aangepast
+     */
     @Test
     public void testAddCorrectInstruction() throws Exception {
+        g.addPlayerToTeam(p1);
+        g.addPlayerToTeam(p2);
+        g.addCorrectInstruction(p1.getPanels().get(0), p1);
 
+        assertEquals("Amount of correct instructions is not 1", 1, g.team1.getCorrectInstruction());
+        assertEquals("Amount of time isn't raised by 1",9 , g.team1.getTime());
+        assertNotEquals("Player didn't get a new panel", pan1 , p1.getPanels().get(1));
+        g.addCorrectInstruction(p1.getPanels().get(1), p1);
+        assertEquals("Amount of correct instructions is not 0", 0, g.team1.getCorrectInstruction());
     }
 
+    /**
+     * @Author Qun
+     * Test reset values from both teams
+     * @throws Exception
+     */
     @Test
     public void testReset() throws Exception {
-
+        g.addPlayerToTeam(p1);
+        g.team1.resetTeam();
+        assertEquals("Time is not 9", 9, g.team1.getTime());
+        assertEquals("Amount of correct instructions is not 0", 0, g.team1.getCorrectInstruction());
+        assertEquals("Amount of playerpanels is not 0", 0, g.team1.getPlayerPanels().size());
+        assertEquals("Amount of players is not 0", 0, g.team1.getPlayers().size());
     }
 
+    /**
+     * @Author Qun
+     * De speler die een nieuwe instructie moet krijgen
+     * @throws Exception
+     */
     @Test
-    public void testGetAllPlayerPanels() throws Exception {
-
+    public void testGivePlayerInstructions() throws Exception {
+        //Internet advices not to test private methodes several times
+        //Have to ask the teacher about this first before testing it
     }
+
 }

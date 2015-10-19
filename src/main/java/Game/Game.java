@@ -110,31 +110,24 @@ public class Game {
      * Changing the player to the other team
      * @param player The player that wants to join the other team
      */
-    public  void changeTeam(Player player){
+    public boolean changeTeam(Player player){
 
         if (team1.getPlayers().contains(player)) {
             // Speler wordt toegevoegd aan team 2
             if (team1.removePlayer(player)) {
                 player.setTeam(team2);
-                team2.addPlayerToTeam(player);
+                return team2.addPlayerToTeam(player);
             }
-
-            else
-                throw new IllegalArgumentException("Player is not able to join other team");
-
         }
 
         else {
             // Speler wordt toegevoegd aan team 1
             if (team2.removePlayer(player)) {
                 player.setTeam(team1);
-                team1.addPlayerToTeam(player);
+                return team1.addPlayerToTeam(player);
             }
-            else
-                throw new IllegalArgumentException("Player is not able to join other team");
-
         }
-
+        return false;
     }
 
 
@@ -155,7 +148,7 @@ public class Game {
      * When the team has las then 3 seconds it should lose a life
      * @param losingTeam The team that gets a check if the should lose a life
      */
-    public void subtractLives(Team losingTeam){
+    public boolean subtractLives(Team losingTeam){
         if (losingTeam.getTime() <= 3){
             losingTeam.setLives(losingTeam.getLives() - 1);
 
@@ -166,10 +159,13 @@ public class Game {
                 }
                 else
                     endGame(team1);
-            else
+            else{
                 // Team lost the round a new round should be started
                 newRound();
+            }
+            return true;
         }
+        return false;
     }
 
     /**
