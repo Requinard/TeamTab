@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+     <ImageView>
+       <image>
+         <Image url="@images/GameScreen/GameScreen.jpg" />
+       </image>
+     </ImageView>
+<ImageView fitHeight="115.0" fitWidth="378.0" focusTraversable="false" layoutX="442.0" layoutY="785.0" smooth="true" visible="true">
+ <image>
+   <Image url="@images/GameScreen/Start.jpg" />
+ </image>
+</ImageView>
+     <Button fx:id="buttonStart" ellipsisString="..." layoutX="394.0" layoutY="798.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+   </children>
+</AnchorPane>
