@@ -57,8 +57,8 @@ public class Game {
     }
 
     /**
-     * Een nieuwe ronde dient gestart te worden wanneer een van de twee teams een leven verliest
-     * Alle waardes in de game worden dan vervolgens gereset
+     * Call this method to start a new round
+     * Every value in the game gets a reset
      */
     public void newRound(){
         // Terug zetten van standaard waardes
