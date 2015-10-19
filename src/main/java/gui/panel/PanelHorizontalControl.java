@@ -19,7 +19,7 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     public PanelHorizontalControl(Panel panel) {
         super(panel);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                "panels/PanelHorizontalControl.fxml"));
+                "/panels/PanelHorizontalControl.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -34,6 +34,9 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     }
     public void setTextField(String txt){
         textField.setText(txt);
+    }
+    public void setHorizontalSlider(double sliderValue){
+        horizontalSlider.setValue(sliderValue);
     }
     public double getSlidervalue(){
         return horizontalSlider.getValue();

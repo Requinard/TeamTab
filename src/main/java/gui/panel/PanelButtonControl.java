@@ -17,7 +17,7 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
     public PanelButtonControl(Panel panel) {
         super(panel);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                "panels/PanelButtonControl.fxml"));
+                "/panels/PanelButtonControl.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -28,7 +28,7 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
         }
     }
 
-    @FXML protected void btnClick() {
+    @FXML public void btnClick() {
         System.out.println("The button was clicked!");
     }
     public String getText(){

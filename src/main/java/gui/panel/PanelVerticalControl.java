@@ -18,7 +18,7 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     public PanelVerticalControl(Panel panel) {
         super(panel);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                "panels/PanelVerticalControl.fxml"));
+                "/panels/PanelVerticalControl.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -33,6 +33,9 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     }
     public void setTextField(String txt){
         textField.setText(txt);
+    }
+    public void setVerticalSlider(double sliderValue){
+        verticalSlider.setValue(sliderValue);
     }
     public double getSlidervalue(){
         return verticalSlider.getValue();
