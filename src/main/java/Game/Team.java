@@ -80,12 +80,14 @@ public class Team {
     public boolean addPlayerToTeam(Player player){
         if (players.size() == 0){
             players.add(player);
+            player.setTeam(this);
             refreshPlayerPanels();
             return true;
         }
         for(Player p : players){ //eerst add voor het conroleren
             if(!p.equals(player)){
                 players.add(player);
+                player.setTeam(this);
                 refreshPlayerPanels();
                 return true;
             }
