@@ -10,7 +10,7 @@ public class Panel {
     private int min;
     private int max;
 
-    public Panel(int id, int type, String text, int min, int max, Instruction instruction) {
+    public Panel(int id, int type, String text, int min, int max) {
         this.id = id;
         this.type = type;
         this.text = text;

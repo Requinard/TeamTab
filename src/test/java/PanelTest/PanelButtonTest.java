@@ -11,7 +11,7 @@ public class PanelButtonTest {
     @Test
     public void TestConstructor()
     {
-      //  Panel panel = new Panel()
-       // PanelButtonControl panelButtonControl = new PanelButtonControl();
+      //  Panel mainPanel = new Panel()
+      //  PanelButtonControl panelButtonControl = new PanelButtonControl
     }
 }
