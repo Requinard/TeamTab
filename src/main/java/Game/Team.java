@@ -159,6 +159,8 @@ public class Team {
     }
 
     /***
+     * @Author Qun
+     * Removed if-statement
      * sets all the variables to their default values and clears the Player & playerPanels List
      * @author Frank Hartman
      * @return true when all the values are checked for their default values and the above mentioned list's are empty
@@ -168,11 +170,7 @@ public class Team {
         correctInstruction = 0;
         players.clear();
         playerPanels.clear();
-
-        if(time == 9 && correctInstruction == 0 && players.size() == 0 && playerPanels.size() == 0){
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /***
