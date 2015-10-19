@@ -14,13 +14,17 @@ public class Team {
     private ArrayList<Player> players;
     private ArrayList<Panel> playerPanels;
 
+
     private int time;
+    private int startTime;
+
     private int lives;
     private int correctInstruction;
 
 
     public Team(int time, int lives){
         this.time =time;
+        this.startTime = time;
         this.lives = lives;
         this.correctInstruction = 0;
         players = new ArrayList<Player>();
@@ -107,10 +111,11 @@ public class Team {
 
     /***
      * sets all the variables to their default values and clears the Player & playerPanels List
+     * @author Frank Hartman
      * @return true when all the values are checked for their default values and the above mentioned list's are empty
      */
     public boolean resetTeam(){
-        time = 9;
+        time = startTime;
         correctInstruction = 0;
         players.clear();
         playerPanels.clear();
