@@ -259,7 +259,7 @@ public class Game {
         Panel panel = unusedPanelNumbers.get(random.nextInt(maxSize));
 
         // Voegt de random instructie toe aan de speler
-        player.setInstructions(panel.getInstruction());
+    //    player.setInstructions(panel.getInstruction());
 
     }
 }
