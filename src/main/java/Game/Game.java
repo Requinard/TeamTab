@@ -132,14 +132,15 @@ public class Game {
 
     /**
      * When a team reaches a certain winstreak the game checks if they should recieve bonus time
-     * @param tm The team that gets checked
+     * @param team The team that gets checked
      */
-    private void addTime(Team tm){
+    private boolean addTime(Team team){
+        if (team.getCorrectInstruction() == bonusCorrectInstructions){
 
-        if (tm.getCorrectInstruction() == bonusCorrectInstructions){
-
-            tm.setTime(tm.getTime() + 1);
+            team.setTime(team.getTime() + 1);
+            return true;
         }
+        return false;
     }
 
     /**
