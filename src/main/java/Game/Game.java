@@ -65,7 +65,7 @@ public class Game {
 
     /**
      *
-     * @param winningTeam The team that won the game
+     * @param team The team that won the game
      * @return a list of players from the winning team + there score
      */
     public ArrayList<String> endGame(Team team){
