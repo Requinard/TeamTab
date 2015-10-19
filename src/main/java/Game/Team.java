@@ -1,7 +1,10 @@
 package Game;
 
+import com.sun.javafx.UnmodifiableArrayList;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by HP user on 12-10-2015.
@@ -119,12 +122,13 @@ public class Team {
 
     /***
      * calls the comparable method on the Players list and sorts them DESCENDING
-     * @return the sorted list
+     * @author Frank Hartman
+     * @return the unmodifiableList with the sorted players
      */
-    public ArrayList<Player> sortedPlayerByScore(){
-        //Frank: Ik denk dat we hier een nieuwe lijst voor moeten returnen
-         Collections.sort(players);
-        return this.players;
+    public List<Player> sortedPlayerByScore(){
+        List<Player> sortedPlayers = new ArrayList<>(players);
+        Collections.sort(sortedPlayers);
+        return Collections.unmodifiableList(sortedPlayers);
     }
 
     /***
