@@ -1,6 +1,5 @@
 package Game;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,7 +121,7 @@ public class GameTest {
         g.addPlayerToTeam(p2);
         g.team1.setCorrectInstruction(2);
         assertEquals("gives incorrect time", 9, g.team1.getTime());
-        g.addCorrectInstruction(p1.getPanels().get(0), p1);
+        g.checkInstruction(p1.getPanels().get(0), p1);
         assertEquals("gives incorrect time", 10, g.team1.getTime());
     }
 

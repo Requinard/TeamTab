@@ -1,9 +1,6 @@
 package Game;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by HP user on 12-10-2015.
@@ -22,6 +19,7 @@ public class Game {
     private int substractCorrectInstructions;
 
     public Game(){
+        final int STARTLEVENS = 3;
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
@@ -31,8 +29,8 @@ public class Game {
         bonusCorrectInstructions = 3;
         substractCorrectInstructions = 5;
 
-        team1 = new Team(timeRound, 3, 0);
-        team2 = new Team(timeRound, 3, 0);
+        team1 = new Team(timeRound, STARTLEVENS, 0);
+        team2 = new Team(timeRound, STARTLEVENS, 0);
 
         teams.add(team1);
         teams.add(team2);
@@ -76,7 +74,7 @@ public class Game {
 
         // Sorteren van de spelers op score
         playerScores = new ArrayList<String>();
-        ArrayList<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
+        List<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
         if (sortedWinningTeam != null) {
             for (Player p : sortedWinningTeam) {
                 playerScores.add(p.getName() + ": " + p.getScore());
@@ -211,7 +209,7 @@ public class Game {
      * @param donePanel The panel that has been pressed
      * @param player The player that gets checked
      */
-    public void addCorrectInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
+    public void checkInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
         int currentCorrect = t.getCorrectInstruction();
 
@@ -239,7 +237,7 @@ public class Game {
     }
 
     /**
-     * FRANK: SAMEN MET KAMIL NAAR KIJKEN
+     * Gives a player a new instruction
      * @param player De speler die een nieuwe instructie moet krijgen
      */
     private void givePlayerInstructions(Player player) {
