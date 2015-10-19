@@ -110,31 +110,24 @@ public class Game {
      * Changing the player to the other team
      * @param player The player that wants to join the other team
      */
-    public  void changeTeam(Player player){
+    public boolean changeTeam(Player player){
 
         if (team1.getPlayers().contains(player)) {
             // Speler wordt toegevoegd aan team 2
             if (team1.removePlayer(player)) {
                 player.setTeam(team2);
-                team2.addPlayerToTeam(player);
+                return team2.addPlayerToTeam(player);
             }
-
-            else
-                throw new IllegalArgumentException("Player is not able to join other team");
-
         }
 
         else {
             // Speler wordt toegevoegd aan team 1
             if (team2.removePlayer(player)) {
                 player.setTeam(team1);
-                team1.addPlayerToTeam(player);
+                return team1.addPlayerToTeam(player);
             }
-            else
-                throw new IllegalArgumentException("Player is not able to join other team");
-
         }
-
+        return false;
     }
 
 
