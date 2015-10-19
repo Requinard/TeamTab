@@ -14,13 +14,13 @@ public class PanelFactory {
         IPanel ret;
 
         switch (panel.getType()) {
-            case 1:
+            case Button:
                 ret = new PanelButtonControl(panel);
                 break;
-            case 2:
+            case HorizontalSlider:
                 ret = new PanelHorizontalControl(panel);
                 break;
-            case 3:
+            case VerticalSlider:
                 ret = new PanelVerticalControl(panel);
                 break;
             default:
