@@ -231,11 +231,14 @@ public class Game {
     /**
      * Reset values from both teams
      */
-    private void reset(){
+    private boolean reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
-            t.resetTeam();
+            if (!t.resetTeam()){
+                return false;
+            }
         }
+        return true;
     }
 
     /**

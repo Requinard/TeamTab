@@ -115,7 +115,7 @@ public class Team {
         players.clear();
         playerPanels.clear();
 
-        if(time == 9 && lives == 3 && correctInstruction == 0 && players.size() == 0 && playerPanels.size() == 0){
+        if(time == 9 && correctInstruction == 0 && players.size() == 0 && playerPanels.size() == 0){
             return true;
         }
         return false;
