@@ -1,5 +1,7 @@
 package Game;
 
+import gui.StageController;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,8 +19,9 @@ public class Game {
     private int timeRound;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
-
-    public Game(){
+    private StageController stageController;
+    
+    public Game( StageController stageController){
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
@@ -34,7 +37,7 @@ public class Game {
         timeRound = 9;
         bonusCorrectInstructions = 3;
         substractCorrectInstructions = 5;
-
+        this.stageController = stageController;
     }
 
     /**
