@@ -155,7 +155,7 @@ public class Game {
      * When the team has las then 3 seconds it should lose a life
      * @param losingTeam The team that gets a check if the should lose a life
      */
-    public void subtractLives(Team losingTeam){
+    public boolean subtractLives(Team losingTeam){
         if (losingTeam.getTime() <= 3){
             losingTeam.setLives(losingTeam.getLives() - 1);
 
@@ -166,10 +166,13 @@ public class Game {
                 }
                 else
                     endGame(team1);
-            else
+            else{
                 // Team lost the round a new round should be started
                 newRound();
+            }
+            return true;
         }
+        return false;
     }
 
     /**
