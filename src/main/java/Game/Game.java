@@ -92,15 +92,15 @@ public class Game {
      * @param player De player that is joining the lobby
      *
      */
-    public void addPlayerToTeam(Player player){
+    public boolean addPlayerToTeam(Player player){
         // Automatisch toevoegen van spelers aan een team wanneer ze de lobby joinen
         if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
         {
             player.setTeam(team1);
-            team1.addPlayerToTeam(player);
+            return team1.addPlayerToTeam(player);
         }else {
             player.setTeam(team2);
-            team2.addPlayerToTeam(player);
+            return team2.addPlayerToTeam(player);
         }
     }
 
