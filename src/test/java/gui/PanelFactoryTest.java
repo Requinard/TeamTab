@@ -18,6 +18,13 @@ public class PanelFactoryTest {
 
     Panel panel;
 
+    /**
+     * Sets up the test class
+     *
+     * @throws Exception
+     * @author David
+     * @note removed null in panel init
+     */
     @Before
     public void setUp() throws Exception {
         this.panel = new Panel(1, 1, "Red Wire", 0, 1);
@@ -28,6 +35,12 @@ public class PanelFactoryTest {
 
     }
 
+    /**
+     * Tests getting panels from a factory
+     * @author David
+     * @note removed null from panel init
+     * @throws Exception
+     */
     @Test
     public void testGetPanel() throws Exception {
         // Test button
