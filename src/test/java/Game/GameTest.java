@@ -167,12 +167,12 @@ public class GameTest {
     public void testAddCorrectInstruction() throws Exception {
         g.addPlayerToTeam(p1);
         g.addPlayerToTeam(p2);
-        g.addCorrectInstruction(p1.getPanels().get(0), p1);
+        g.checkInstruction(p1.getPanels().get(0), p1);
 
         assertEquals("Amount of correct instructions is not 1", 1, g.team1.getCorrectInstruction());
         assertEquals("Amount of time isn't raised by 1",9 , g.team1.getTime());
         assertNotEquals("Player didn't get a new panel", pan1 , p1.getPanels().get(1));
-        g.addCorrectInstruction(p1.getPanels().get(1), p1);
+        g.checkInstruction(p1.getPanels().get(1), p1);
         assertEquals("Amount of correct instructions is not 0", 0, g.team1.getCorrectInstruction());
     }
 
