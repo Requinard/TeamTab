@@ -76,6 +76,7 @@ public class Game {
         // Sorteren van de spelers op score
         playerScores = new ArrayList<String>();
         List<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
+
         if (sortedWinningTeam != null) {
             for (Player p : sortedWinningTeam) {
                 playerScores.add(p.getName() + ": " + p.getScore());
@@ -146,26 +147,27 @@ public class Game {
 
     /**
      * When the team has las then 3 seconds it should lose a life
-     * @param losingTeam The team that gets a check if the should lose a life
+     * @param losingTeam The team that gets a check if they should lose a life
+     * @return true if the given time had less then 3 seconds
      */
     public boolean subtractLives(Team losingTeam){
-        if (losingTeam.getTime() <= 3){
-            losingTeam.setLives(losingTeam.getLives() - 1);
+        if (losingTeam.getTime() <= 3) {
+            losingTeam.substractLives();
 
-            if (losingTeam.getLives() <= 0)
-                // Game is over
-                if (losingTeam.equals(team1)) {
-                    endGame(team2);
-                }
-                else
-                    endGame(team1);
+            if (losingTeam.getLives() <= 0) {
+                // Remove the team from the teams in the game
+                teams.remove(losingTeam);
+                // End the game for the given team
+                endGame(losingTeam);
+            }
             else{
-                // Team lost the round a new round should be started
                 newRound();
             }
             return true;
         }
-        return false;
+
+        else
+            return false;
     }
 
     /**

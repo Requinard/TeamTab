@@ -199,6 +199,14 @@ public class Team {
         return false;
     }
 
+    /**
+     * decrease the lives of the times with 1
+     * @author Frank Hartman
+     */
+    public void substractLives() {
+        lives--;
+    }
+
     private void refreshPlayerPanels() {
         ArrayList<Panel> tempPanels = new ArrayList<Panel>();
 
