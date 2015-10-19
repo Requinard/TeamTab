@@ -193,21 +193,6 @@ public class Game {
         return true;
     }
 
-    /**
-     * Adding a player to a team
-     * @param p
-     * @param t
-     */
-    public boolean addPlayerToTeam(Player p, Team t){
-        if (!t.addPlayerToTeam(p)){
-            throw new IllegalArgumentException("Player can not be added to the team");
-        }
-        //p.setTeam(t); //aanpassing team set
-        //ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
-        players.add(p);
-        return true;
-        //t.setPlayers(excitingPlayers);
-    }
 
 
     /**
