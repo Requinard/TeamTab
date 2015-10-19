@@ -29,20 +29,22 @@ public class Player implements Comparable<Player>{
     /**
      * @return IpAdress of the user
      */
-
     public String getIpAdress() {
         return this.ipAdress;
     }
 
     /**
-     * @Return the name of the player
+     *
+     * @return the name of the player
      */
     public String getName() {
         return this.name;
     }
 
+
     /**
-     * @Returns the score of the current player
+     *
+     * @return the score of the current player
      */
     public int getScore() {
         return this.score;
@@ -62,48 +64,65 @@ public class Player implements Comparable<Player>{
         return this.instructions;
     }
 
+    /**
+     *
+     * @param instructions Sets the instructions for the player
+     */
     public void setInstructions(Instruction instructions) {
         this.instructions = instructions;
     }
 
     /**
-     * @Returns the team the player is in
+     *
+     * @return  the team the player is in
      */
     public Team getTeam() {
         return this.team;
     }
 
+    /**
+     *
+     * @param team Sets the team
+     */
     public void setTeam(Team team) {
         this.team = team;
     }
 
     /**
-     * @return the panels for the player
+     *
+     * @return the panels from the player
      */
     public ArrayList<Panel> getPanels() {
         return this.panels;
     }
 
+    /**
+     *
+     * @param panels Sets the panels
+     */
     public void setPanels(ArrayList<Panel> panels) {
         this.panels = panels;
     }
 
+    /**
+     * @param panel
+     * @return true or false
+     * Check if the panel that is given is correct
+     */
     public boolean checkCorrectPanel(Panel panel) {
         if (instructions.getPanel().equals(panel)) {
             return true;
         }
-
         else
             return false;
     }
 
 
-    /***
+    /**
      * this is the implementation of the Comparable interface. Based on the DESCENDING compare
-     * @param p
+     * @param p player
      * @return
      */
-    //@Override gaf een error
     public int compareTo(Player p) {
         int compareScore = ((Player)p).getScore();
         return compareScore - this.score;
