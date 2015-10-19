@@ -56,7 +56,4 @@ public class Panel {
         return max;
     }
 
-    /**
-    * @Returns the instruction on the panel
-    */
 }
