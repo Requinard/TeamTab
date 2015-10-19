@@ -49,6 +49,7 @@ public class TeamTest {
     @Test
     public void testAddPlayerToTeam() throws Exception {
         assertEquals("Player isn't added", true, t.addPlayerToTeam(p1));
+        t.addPlayerToTeam(p1);
         assertEquals("Player is added to the list ", false, t.addPlayerToTeam(p1));
     }
 
