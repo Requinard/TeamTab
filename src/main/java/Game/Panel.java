@@ -17,10 +17,8 @@ public class Panel {
      * @param text        Text that gives a description
      * @param min         Minimum value a panel ccan have
      * @param max         Maximum value a panel can have
-     * @param instruction
      * @author David
      */
-    public Panel(int id, int type, String text, int min, int max, Instruction instruction) {
     public Panel(int id, int type, String text, int min, int max) {
         this.id = id;
         this.type = PanelTypeEnum.values()[type];

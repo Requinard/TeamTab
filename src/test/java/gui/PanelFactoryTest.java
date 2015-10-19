@@ -18,9 +18,16 @@ public class PanelFactoryTest {
 
     Panel panel;
 
+    /**
+     * Sets up the test class
+     *
+     * @throws Exception
+     * @author David
+     * @note removed null in panel init
+     */
     @Before
     public void setUp() throws Exception {
-        this.panel = new Panel(1, 1, "Red Wire", 0, 1, null);
+        this.panel = new Panel(1, 1, "Red Wire", 0, 1);
     }
 
     @After
@@ -28,6 +35,12 @@ public class PanelFactoryTest {
 
     }
 
+    /**
+     * Tests getting panels from a factory
+     * @author David
+     * @note removed null from panel init
+     * @throws Exception
+     */
     @Test
     public void testGetPanel() throws Exception {
         // Test button
@@ -39,7 +52,7 @@ public class PanelFactoryTest {
 
         // Test horizontal slider
 
-        Panel panel_horizontal = new Panel(1, 2, "slide", 1, 10, null);
+        Panel panel_horizontal = new Panel(1, 2, "slide", 1, 10);
 
         ipanel = PanelFactory.getPanel(panel_horizontal);
 
@@ -49,7 +62,7 @@ public class PanelFactoryTest {
 
         // Test vertical
 
-        Panel panel_vertical = new Panel(1, 3, "vertial", 1, 10, null);
+        Panel panel_vertical = new Panel(1, 3, "vertial", 1, 10);
 
         ipanel = PanelFactory.getPanel(panel_vertical);
 
@@ -59,7 +72,7 @@ public class PanelFactoryTest {
 
         // Test default
 
-        Panel panel_default_to_button = new Panel(1, 4, "default", 0, 1, null);
+        Panel panel_default_to_button = new Panel(1, 4, "default", 0, 1);
 
         ipanel = PanelFactory.getPanel(panel_default_to_button);
 

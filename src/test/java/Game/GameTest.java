@@ -1,13 +1,12 @@
 package Game;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by david on 12-10-15.
@@ -23,11 +22,19 @@ public class GameTest {
     Instruction in1;
     Instruction in2;
 
+    /**
+     * Sets up the test class
+     *
+     * @throws Exception
+     * @author David
+     * @note Removed instruction because panels are no longer initialized with an instruction
+     */
     @Before
     public void setUp() throws Exception {
         g  = new Game();
-        pan1 = new Panel(1, 1, "a", 0, 1, in1);
-        pan2 = new Panel(2, 1, "b", 0, 1, in2);
+
+        pan1 = new Panel(1, 1, "a", 0, 1);
+        pan2 = new Panel(2, 1, "b", 0, 1);
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
         pp1 = new ArrayList<Panel>();
