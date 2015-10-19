@@ -32,42 +32,91 @@ public class Team {
     }
 
 
+    /**
+     * Gets the current time for a instruction
+     * @author Frank Hartman
+     * @return the time
+     */
     public int getTime() {
         return this.time;
     }
 
+    /**
+     * Sets the time for a instruction
+     * @author Frank Hartman
+     * @param time set the time
+     */
     public void setTime(int time) {
         this.time = time;
     }
 
+    /**
+     * Gets the amount of correct instructions
+     * @author Frank Hartman
+     * @return the amount of correct instructions
+     */
     public int getCorrectInstruction() {
         return this.correctInstruction;
     }
 
+    /**
+     * Set the amount of correct instructions
+     * @author Frank Hartman
+     * @param correctInstruction the new amount of correct instructions
+     */
     public void setCorrectInstruction(int correctInstruction) {
         this.correctInstruction = correctInstruction;
     }
 
+    /**
+     * Gets the amount of lives from a team
+     * @author Frank Hartman
+     * @return the amount of lives
+     */
     public int getLives() {
         return this.lives;
     }
+
+    /**
+     * Set the amount of lives
+     * @param lives the new amount of lives
+     */
 
     public void setLives(int lives) {
         this.lives = lives;
     }
 
+    /**
+     * Get all the panels from a team
+     * @author Frank Hartman
+     * @return All the panels from the team
+     */
     public ArrayList<Panel> getPlayerPanels() {
         return this.playerPanels;
     }
 
+    /**
+     * Sets all the panels from a team
+     * @author Frank Hartman
+     * @param playerPanels The new list of player panels
+     */
     public void setPlayerPanels(ArrayList<Panel> playerPanels) {
         this.playerPanels = playerPanels;
     }
 
+    /**
+     * Get all the players that are in the team
+     * @author Frank Hartman
+     * @return all the players from the team
+     */
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
 
+    /**
+     * Set all new players
+     * @param players the list with players
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
