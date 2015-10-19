@@ -74,7 +74,7 @@ public class Team {
         if (players.size() == 0){
             players.add(player);
             refreshPlayerPanels();
-            return true; 
+            return true;
         }
         for(Player p : players){ //eerst add voor het conroleren
             if(!p.equals(player)){
