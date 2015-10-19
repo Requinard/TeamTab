@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by david on 12-10-15.
@@ -42,8 +43,8 @@ public class GameTest {
         pan2 = new Panel(2, 1, "b", 0, 1);
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
-        pan1 = new Panel(1, 1, "a", 0, 1, in1);
-        pan2 = new Panel(2, 1, "b", 0, 1, in2);
+        pan1 = new Panel(1, 1, "a", 0, 1);
+        pan2 = new Panel(2, 1, "b", 0, 1);
         in1.setPanel(pan1);
         in2.setPanel(pan2);
         pp1 = new ArrayList<Panel>();
@@ -91,7 +92,7 @@ public class GameTest {
         assertEquals("Gives the wrong score", "Kaj: 0", g.endGame(g.team1).get(0));
         assertEquals("Gives the wrong score", "Frank: 3", g.endGame(g.team2).get(0));
 
-        pan3 = new Panel(2, 1, "c", 0, 1, in3);
+        pan3 = new Panel(2, 1, "c", 0, 1);
         in3 = new Instruction(pan3, "Click on", 0);
         ArrayList<Panel> pal = new ArrayList<Panel>();
         pal.add(pan3);
@@ -175,6 +176,10 @@ public class GameTest {
         assertNotEquals("Player didn't get a new panel", pan1 , p1.getPanels().get(1));
         g.addCorrectInstruction(p3,p1);
         assertEquals("Amount of correct instructions is not 1", 1, t1.getCorrectInstruction());
+    }
+
+    private void assertNotEquals(String s, Panel pan1, Panel panel) {
+        assertTrue(s, !pan1.equals(panel));
     }
 
     @Test
