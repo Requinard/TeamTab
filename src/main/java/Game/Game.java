@@ -64,14 +64,20 @@ public class Game {
     }
 
     /**
-     *
-     * @param winningTeam The team that won the game
+     * first line contains 'You won' or 'You lost'
+     * @param team The team that is out of the game
+     * @author Frank Hartman
      * @return a list of players from the winning team + there score
      */
-    public ArrayList<String> endGame(Team winningTeam){
+    public ArrayList<String> endGame(Team team){
         // Sorts the players by score
         playerScores = new ArrayList<String>();
-        List<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
+        List<Player> sortedWinningTeam = team.sortedPlayerByScore();
+
+        if (teams.size() <= 0)
+            playerScores.add("You won!");
+        else
+            playerScores.add("You lost!");
 
         if (sortedWinningTeam != null) {
             for (Player p : sortedWinningTeam) {
@@ -79,7 +85,6 @@ public class Game {
             }
             return playerScores;
         }
-
         else
             return null;
     }
