@@ -35,5 +35,6 @@
          </ImageView>
        </graphic>
      </Button>
+      <TextField fx:id="TeamName" alignment="TOP_LEFT" layoutX="174.0" layoutY="249.0" opacity="0.22" prefHeight="532.0" prefWidth="894.0" />
    </children>
 </AnchorPane>

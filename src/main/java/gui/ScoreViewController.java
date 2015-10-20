@@ -5,9 +5,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -16,6 +18,8 @@ import java.util.ResourceBundle;
 public class ScoreViewController implements Initializable {
     @FXML
     private Button buttonBackLobby;
+    @FXML
+    private TextField scoreField;
 
     private ScoreView view;
     private Runnable runnable;
@@ -27,6 +31,7 @@ public class ScoreViewController implements Initializable {
                 buttonBackLobbyOnClick(event);
             }
         });
+
     }
 
     public void setView(ScoreView scoreView) {
