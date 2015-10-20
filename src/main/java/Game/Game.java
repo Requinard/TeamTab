@@ -47,11 +47,11 @@ public class Game {
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Geeft de teams die meedoen panels
+            System.out.println("Game - Game has started (startGame())");
             return true;
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
-
     }
 
     /**
@@ -117,7 +117,6 @@ public class Game {
 
             else
                 throw new IllegalArgumentException("Player is not able to join other team");
-
         }
 
         else {
@@ -234,11 +233,12 @@ public class Game {
     /**
      * Reset values from both teams
      */
-    private void reset(){
+    public void reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
             t.resetTeam();
         }
+        System.out.println("Game - Teams are reset (reset())");
     }
 
     /**

@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,11 +13,12 @@ import java.util.ResourceBundle;
 /**
  * Created by Vito Corleone on 6-10-2015.
  */
-public class GameController implements Initializable{
+public class GameController implements Initializable {
     @FXML
     private Button buttonStart;
 
     private GameView view;
+    private Runnable runnable;
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -27,15 +29,23 @@ public class GameController implements Initializable{
         });
     }
 
-    public void setView(GameView gameView)
-    {
+    public void setView(GameView gameView) {
         view = gameView;
     }
 
-    public void buttonStartOnClick(MouseEvent mouseEvent)
-    {
-        ScoreView scoreView = new ScoreView((view.stageController));
-        view.pass(scoreView);
+    public void buttonStartOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        ScoreView scoreView = new ScoreView((view.stageController));
+                        view.pass(scoreView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
 
 }

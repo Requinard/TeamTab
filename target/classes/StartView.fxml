@@ -17,19 +17,21 @@
                 <Image url="@images/StartGame/StartGameBackground.jpg" />
             </image>
         </ImageView>
-    <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="595.0" layoutY="519.0" smooth="true" visible="true">
+    <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="635.0" layoutY="497.0" smooth="true" visible="true">
         <image>
             <Image url="@images/StartGame/Start.jpg" />
         </image>
     </ImageView>
+        <TextField fx:id="TeamName" layoutX="702.0" layoutY="231.0" opacity="0.22" prefHeight="58.0" prefWidth="340.0" />
+        <TextField fx:id="TeamSize" layoutX="702.0" layoutY="347.0" opacity="0.22" prefHeight="58.0" prefWidth="340.0" />
 
-        <Button fx:id="buttonStart" ellipsisString="..." layoutX="602.0" layoutY="533.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
-  <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="602.0" layoutY="683.0" smooth="true" visible="true">
+        <Button fx:id="buttonStart" ellipsisString="..." layoutX="635.0" layoutY="525.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+  <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="635.0" layoutY="675.0" smooth="true" visible="true">
         <image>
             <Image url="@images/StartGame/ButtonBack.jpg" />
         </image>
     </ImageView>
 
-        <Button fx:id="buttonBack" ellipsisString="..." layoutX="602.0" layoutY="697.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+        <Button fx:id="buttonBack" ellipsisString="..." layoutX="635.0" layoutY="683.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
     </children>
 </AnchorPane>

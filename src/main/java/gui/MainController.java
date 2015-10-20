@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ public class MainController implements Initializable {
     private Button buttonStart;
 
     private MainView view;
-
+    private Runnable runnable;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -51,25 +52,37 @@ public class MainController implements Initializable {
         });
     }
 
-    public void setView(MainView mainView)
-    {
+    public void setView(MainView mainView) {
         view = mainView;
     }
 
-    public void buttonJoinOnClick(MouseEvent mouseEvent)
-    {
-        JoinView joinView = new JoinView(view.stageController);
-        view.pass(joinView);
+    public void buttonJoinOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        JoinView joinView = new JoinView(view.stageController);
+                        view.pass(joinView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
 
-    public void buttonStartOnClick(MouseEvent mouseEvent)
-    {
-        StartView startView = new StartView(view.stageController);
-        view.pass(startView);
+    public void buttonStartOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        StartView startView = new StartView(view.stageController);
+                        view.pass(startView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
-
-
-
-
-
 }

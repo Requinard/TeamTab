@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ public class JoinViewController implements Initializable {
     private Button buttonJoin;
 
     private JoinView view;
+    private Runnable runnable;
 
 
     /**
@@ -44,20 +46,37 @@ public class JoinViewController implements Initializable {
         });
     }
 
-    public void setView(JoinView joinView)
-    {
+    public void setView(JoinView joinView) {
         view = joinView;
     }
 
-    public void buttonBackOnClick(MouseEvent mouseEvent)
-    {
-        MainView mainView = new MainView(view.stageController);
-        view.pass(mainView);
+    public void buttonBackOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        MainView mainView = new MainView(view.stageController);
+                        view.pass(mainView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
 
-    public void buttonJoinOnClick(MouseEvent mouseEvent)
-    {
-        LobbyView lobbyView = new LobbyView(view.stageController);
-        view.pass(lobbyView);
+    public void buttonJoinOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        LobbyView lobbyView = new LobbyView(view.stageController);
+                        view.pass(lobbyView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
 }
