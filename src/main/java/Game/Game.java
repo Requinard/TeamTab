@@ -60,6 +60,8 @@ public class Game {
     public boolean newRound(){
         // returns default values
         reset();
+        team1.setPlayerPanels(panels);
+        team2.setPlayerPanels(panels);
         return false;
     }
 
