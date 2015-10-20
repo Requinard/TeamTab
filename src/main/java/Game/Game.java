@@ -99,14 +99,15 @@ public class Game {
      */
     public boolean addPlayerToTeam(Player player){
         // Adds players automaticly to a team when they join a lobby
-        if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
-        {
-            player.setTeam(team1);
-            return team1.addPlayerToTeam(player);
-        }else {
-            player.setTeam(team2);
-            return team2.addPlayerToTeam(player);
+        Team team = null;
+        teams.size();
+        for(int i=0; i<teams.size()-1; i++){
+            team = teams.get(i);
+            if (teams.get(i).getPlayers().size() > teams.get(i+1).getPlayers().size()){
+                team = teams.get(i+1);
+            }
         }
+        return team.addPlayerToTeam(player);
     }
 
     /**
@@ -118,7 +119,7 @@ public class Game {
 
         int idTeam = teams.indexOf(currentTeam);
         if (currentTeam.removePlayer(player)){
-            if (idTeam < 0 || idTeam+1 >= teams.size()) {
+            if (idTeam+1 < teams.size()) {
                 return teams.get(idTeam+1).addPlayerToTeam(player);
             }else {
                 return teams.get(0).addPlayerToTeam(player);
