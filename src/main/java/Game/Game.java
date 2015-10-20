@@ -112,26 +112,19 @@ public class Game {
      * @param player The player that wants to join the other team
      */
     public boolean changeTeam(Player player){
+        Team currentTeam = player.getTeam();
 
-        if (team1.getPlayers().contains(player)) {
-            // Player gets added to team 2
-            if (team1.removePlayer(player)) {
-                player.setTeam(team2);
-                return team2.addPlayerToTeam(player);
+        int idTeam = teams.indexOf(currentTeam);
+        if (currentTeam.removePlayer(player)){
+            if (idTeam < 0 || idTeam+1 >= teams.size()) {
+                return teams.get(idTeam+1).addPlayerToTeam(player);
+            }else {
+                return teams.get(0).addPlayerToTeam(player);
             }
+        }else {
+            return false;
         }
-
-        else {
-            // Player gets added to team 1
-            if (team2.removePlayer(player)) {
-                player.setTeam(team1);
-                return team1.addPlayerToTeam(player);
-            }
-        }
-        return false;
     }
-
-
 
     /**
      * When a team reaches a certain winstreak the game checks if they should recieve bonus time
