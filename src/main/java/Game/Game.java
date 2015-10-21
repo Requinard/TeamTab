@@ -152,28 +152,39 @@ public class Game {
     }
 
     /**
-     * When the team has less than 3 seconds it should lose a life
-     * @param losingTeam The team that gets a check if they should lose a life
-     * @return true if the given time had less than 3 seconds
+     * When the team has less than 3 seconds they lose a life
+     * if  they have 0 lives that teams game is ended
+     * @Author Qun
+     * @param team The team that gets a check if they should lose a life
+     * @return true if the live of the team is subtracted
      */
-    public boolean subtractLives(Team losingTeam){
-        if (losingTeam.getTime() <= 3) {
-            losingTeam.substractLives();
+    public boolean subtractLives(Team team){
+        if(team.substractLives() && team.getLives() <= 0) {
+            endGame(team);
+            teams.remove(team);
+            return true;
+        }
+        else if(team.substractLives()) {
+            return true;
+        }
+        else{
+            return false;
+        }
 
-            if (losingTeam.getLives() <= 0) {
-                // Remove the team from the teams in the game
-                teams.remove(losingTeam);
-                // End the game for the given team
-                endGame(losingTeam);
+        /*
+        if(team.substractLives())
+        {
+            if (team.getLives() <= 0) {
+                endGame(team);
+                teams.remove(team);
             }
             else{
                 newRound();
             }
             return true;
         }
-
-        else
-            return false;
+        return false;
+        */
     }
 
     /**
