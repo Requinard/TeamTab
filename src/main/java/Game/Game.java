@@ -47,6 +47,7 @@ public class Game {
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
             return true;
+
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
@@ -135,12 +136,14 @@ public class Game {
 
     /**
      * When a team reaches a certain winstreak the game checks if they should recieve bonus time
+     * @author Frank Hartman
      * @param team The team that gets checked
      */
     private boolean addTime(Team team){
         if (team.getCorrectInstruction() == bonusCorrectInstructions){
-
-            team.setTime(team.getTime() + 1);
+            int maxTime = 9;
+            int addTime = 1;
+            team.addTeamTime(addTime, maxTime);
             return true;
         }
         return false;
@@ -197,26 +200,22 @@ public class Game {
 
     /**
      * Check if the executed instrucctions was correct and give the player a new one
-     * @param donePanel The panel that has been pressed
+     * @param changedPanel The panel that has been pressed
      * @param player The player that gets checked
      */
-    public boolean checkInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
+    public boolean checkInstruction(Panel changedPanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
-        int currentCorrect = t.getCorrectInstruction();
-        boolean instructionCorrect = false;
 
-        for (Player p : t.getPlayers()) {
-
-            if (p.checkCorrectPanel(donePanel)) {
-
-                t.setCorrectInstruction(currentCorrect + 1);
-                addTime(t);
-                instructionCorrect = true;
-            } else {
-                t.setCorrectInstruction(0);
-            }
+        if (t.checkTeamInstruction(changedPanel)) {
+            if (addTime(t))
+                return true;
+            else
+                return false;
         }
-        return instructionCorrect;
+
+        else
+            return false;
+
     }
 
     /**
