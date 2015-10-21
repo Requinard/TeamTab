@@ -207,8 +207,15 @@ public class Team {
      * decrease the lives of the times with 1
      * @author Frank Hartman
      */
-    public void substractLives() {
-        lives--;
+    public boolean substractLives() {
+        if(getTime() <= 3) {
+            //moet dit niet setlives zijn
+            this.lives--;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private void refreshPlayerPanels() {
