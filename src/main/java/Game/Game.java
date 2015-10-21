@@ -47,6 +47,7 @@ public class Game {
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
             return true;
+
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
@@ -63,6 +64,8 @@ public class Game {
     public boolean newRound(){
         // returns default values
         reset();
+        team1.setPlayerPanels(panels);
+        team2.setPlayerPanels(panels);
         return false;
     }
 
@@ -100,14 +103,15 @@ public class Game {
      */
     public boolean addPlayerToTeam(Player player){
         // Adds players automaticly to a team when they join a lobby
-        if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
-        {
-            player.setTeam(team1);
-            return team1.addPlayerToTeam(player);
-        }else {
-            player.setTeam(team2);
-            return team2.addPlayerToTeam(player);
+        Team team = null;
+        teams.size();
+        for(int i=0; i<teams.size()-1; i++){
+            team = teams.get(i);
+            if (teams.get(i).getPlayers().size() > teams.get(i+1).getPlayers().size()){
+                team = teams.get(i+1);
+            }
         }
+        return team.addPlayerToTeam(player);
     }
 
     /**
@@ -118,35 +122,30 @@ public class Game {
      * @Return true when changing team is succesful
      */
     public boolean changeTeam(Player player){
+        Team currentTeam = player.getTeam();
 
-        if (team1.getPlayers().contains(player)) {
-            // Player gets added to team 2
-            if (team1.removePlayer(player)) {
-                player.setTeam(team2);
-                return team2.addPlayerToTeam(player);
+        int idTeam = teams.indexOf(currentTeam);
+        if (currentTeam.removePlayer(player)){
+            if (idTeam+1 < teams.size()) {
+                return teams.get(idTeam+1).addPlayerToTeam(player);
+            }else {
+                return teams.get(0).addPlayerToTeam(player);
             }
+        }else {
+            return false;
         }
-
-        else {
-            // Player gets added to team 1
-            if (team2.removePlayer(player)) {
-                player.setTeam(team1);
-                return team1.addPlayerToTeam(player);
-            }
-        }
-        return false;
     }
-
-
 
     /**
      * When a team reaches a certain winstreak the game checks if they should recieve bonus time
+     * @author Frank Hartman
      * @param team The team that gets checked
      */
     private boolean addTime(Team team){
         if (team.getCorrectInstruction() == bonusCorrectInstructions){
-
-            team.setTime(team.getTime() + 1);
+            int maxTime = 9;
+            int addTime = 1;
+            team.addTeamTime(addTime, maxTime);
             return true;
         }
         return false;
@@ -209,23 +208,19 @@ public class Game {
      * @param player The player that gets checked
      * @Return true when the instruction is correct, false when instruction is wrong
      */
-    public boolean checkInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
+    public boolean checkInstruction(Panel changedPanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
-        int currentCorrect = t.getCorrectInstruction();
-        boolean instructionCorrect = false;
 
-        for (Player p : t.getPlayers()) {
-
-            if (p.checkCorrectPanel(donePanel)) {
-
-                t.setCorrectInstruction(currentCorrect + 1);
-                addTime(t);
-                instructionCorrect = true;
-            } else {
-                t.setCorrectInstruction(0);
-            }
+        if (t.checkTeamInstruction(changedPanel)) {
+            if (addTime(t))
+                return true;
+            else
+                return false;
         }
-        return instructionCorrect;
+
+        else
+            return false;
+
     }
 
     /**

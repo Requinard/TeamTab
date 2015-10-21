@@ -224,4 +224,43 @@ public class Team {
     }
 
 
+    /**
+     * Check if the given panel was one of the players instructions
+     * If this is not the correct panel the correctinstructions will be reset to 0
+     * @author Frank Hartman
+     * @param changedPanel the panel that needs to be checked
+     * @return true if this was one of the instruction
+     */
+    public boolean checkTeamInstruction(Panel changedPanel) {
+        for (Player p : players) {
+
+            if (p.checkCorrectPanel(changedPanel)) {
+                correctInstruction++;
+                return true;
+            } else {
+                correctInstruction = 0;
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add instruction time to the team
+     * Time will only be added if the current amount of time is less the 9 seconds
+     * @author Frank Hartman
+     * @param time the extra amount of time
+     * @param maxTime the maximum amount of time
+     */
+    public boolean addTeamTime(int time, int maxTime) {
+        if (time <= maxTime) {
+            this.time = this.time + time;
+            if (time > maxTime )
+                this.time = maxTime;
+            return true;
+        }
+
+        else
+            return false;
+    }
 }

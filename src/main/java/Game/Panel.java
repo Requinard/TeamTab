@@ -9,6 +9,7 @@ public class Panel {
     private String text;
     private int min;
     private int max;
+    private int current;
     private Instruction instruction;
 
     public Panel(int id, int type, String text, int min, int max, Instruction instruction) {
@@ -61,9 +62,20 @@ public class Panel {
     }
 
     /**
-     * Returns the instruction on the panel
-     * @return the instruction
+    * @Returns the instruction on the panel
+    */
+
+    /**
+     * @returns the current value of the control
      */
+    public int getCurrent(){return current;}
+
+    /**
+     * Sets the current value of the control
+     * @param value the value the control will be set to
+     */
+    public void setCurrent(int value){current = value;}
+
     public Instruction getInstruction() {
         return instruction;
     }
