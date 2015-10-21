@@ -20,60 +20,66 @@ public class Panel {
         this.max = max;
         this.instruction = instruction;
     }
+
     /**
-    * @Returns the id of the Panel
-    */
+     * Returns the ID of the panel
+     * @return id of the panel
+     */
     public int getId() {
         return id;
     }
 
+
     /**
-    * @Returns the type of the panel
-    */
+     * Returns the type of the panel
+     * @return the type of the panel
+     */
     public int getType(){
         return type;
     }
 
     /**
-    * @Return the text that it set on the Panel
-    */
+     * Returns the text on the panel
+     * @return text on the panel
+     */
     public String getText(){
         return text;
     }
 
+
     /**
-    * @Returns the min value of the control
-    * For example if you have a slidercontrol
-    * between 0-5 it returns 0
-    */
+     * the min value of the control for example if you have a slidercontrol between 0-5 it returns 0
+     * @return minimum value of the control
+     */
     public int getMin(){
         return min;
     }
 
+
     /**
-    * @Returns the max value of the control
-    * For example if you have a slidercontrol
-    * between 0-5 it returns 5
-    */
+     * the max value of the control for example if you have a slidercontrol between 0-5 it returns 5
+     * @return maximum value of the control
+     */
     public int getMax(){
         return max;
     }
 
     /**
-    * @Returns the instruction on the panel
-    */
-
-    /**
-     * @returns the current value of the control
+     * Returns currenct value of the control
+     * @return panelcontrol value
      */
     public int getCurrent(){return current;}
 
     /**
      * Sets the current value of the control
-     * @param value the value the control will be set to
+     * @param value
      */
     public void setCurrent(int value){current = value;}
 
+    /**
+     * Returns the instruction on the panel
+     * @return the instruction on the panel
+     */
     public Instruction getInstruction() {
         return instruction;
     }

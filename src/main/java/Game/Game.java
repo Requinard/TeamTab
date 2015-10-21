@@ -73,7 +73,7 @@ public class Game {
      * In game.subtractlives the team that loses is deleted
      * from the list of teams.
      * Method checks if the size of team is <= 1 if this
-     * is true the team wins the game.   
+     * is true the team wins the game.
      * @param team The team that won the game
      * @return a list of players from the winning team + there score
      */
@@ -218,7 +218,7 @@ public class Game {
     /**
      * Check if the executed instrucctions was correct and give the player a new one
      * @Author Qun
-     * @param donePanel The panel that has been pressed
+     * @param changedPanel The panel that has been pressed
      * @param player The player that gets checked
      * @Return true when the instruction is correct, false when instruction is wrong
      */
