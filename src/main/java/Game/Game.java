@@ -70,7 +70,10 @@ public class Game {
     }
 
     /**
-     *
+     * In game.subtractlives the team that loses is deleted
+     * from the list of teams.
+     * Method checks if the size of team is <= 1 if this
+     * is true the team wins the game.   
      * @param team The team that won the game
      * @return a list of players from the winning team + there score
      */
@@ -79,7 +82,7 @@ public class Game {
         playerScores = new ArrayList<String>();
         List<Player> sortedWinningTeam = team.sortedPlayerByScore();
 
-        if (teams.size() <= 0)
+        if (teams.size() <= 1)
             playerScores.add("You won!");
         else
             playerScores.add("You lost!");
@@ -160,8 +163,8 @@ public class Game {
      */
     public boolean subtractLives(Team team){
         if(team.substractLives() && team.getLives() <= 0) {
-            endGame(team);
             teams.remove(team);
+            endGame(team); // dit moet in de controller worden aangeroepen
             return true;
         }
         else if(team.substractLives()) {
