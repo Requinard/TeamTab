@@ -19,48 +19,51 @@ public class Panel {
         this.max = max;
         this.instruction = instruction;
     }
+
     /**
-    * @Returns the id of the Panel
-    */
+     * Returns the id of the planel
+     * @return the id of the panel
+     */
     public int getId() {
         return id;
     }
 
     /**
-    * @Returns the type of the panel
-    */
+     * Returns the type of the panel
+     * @return the type of panel
+     */
     public int getType(){
         return type;
     }
 
     /**
-    * @Return the text that it set on the Panel
-    */
+     * Returns the text that is set on the panel
+     * @return the text that is set on the panel
+     */
     public String getText(){
         return text;
     }
 
     /**
-    * @Returns the min value of the control
-    * For example if you have a slidercontrol
-    * between 0-5 it returns 0
-    */
+     * the min value of the control For example if you have a slidercontrol between 0-5 it returns 0
+     * @return the minimum value
+     */
     public int getMin(){
         return min;
     }
 
     /**
-    * @Returns the max value of the control
-    * For example if you have a slidercontrol
-    * between 0-5 it returns 5
-    */
+     * the max value of the control For example if you have a slidercontrol between 0-5 it returns 5
+     * @return the maximum value
+     */
     public int getMax(){
         return max;
     }
 
     /**
-    * @Returns the instruction on the panel
-    */
+     * Returns the instruction on the panel
+     * @return the instruction
+     */
     public Instruction getInstruction() {
         return instruction;
     }

@@ -56,6 +56,9 @@ public class Game {
     /**
      * Call this method to start a new round
      * Every value in the game gets a reset
+     *
+     * @Author Qun
+     * @return a new Round
      */
     public boolean newRound(){
         // returns default values
@@ -90,10 +93,10 @@ public class Game {
     }
 
     /**
-     * When joinin a lobby the joinen player is set into the team with the least amount of players
-     *
+     * When joining a lobby the joined player is set into the team with the least amount of players
+     * @Author Qun
      * @param player De player that is joining the lobby
-     *
+     * @return true or false depending on if adding player to team is succesful
      */
     public boolean addPlayerToTeam(Player player){
         // Adds players automaticly to a team when they join a lobby
@@ -109,7 +112,10 @@ public class Game {
 
     /**
      * Changing the player to the other team
+     *
+     * @Author Qun
      * @param player The player that wants to join the other team
+     * @Return true when changing team is succesful
      */
     public boolean changeTeam(Player player){
 
@@ -147,9 +153,9 @@ public class Game {
     }
 
     /**
-     * When the team has las then 3 seconds it should lose a life
+     * When the team has less than 3 seconds it should lose a life
      * @param losingTeam The team that gets a check if they should lose a life
-     * @return true if the given time had less then 3 seconds
+     * @return true if the given time had less than 3 seconds
      */
     public boolean subtractLives(Team losingTeam){
         if (losingTeam.getTime() <= 3) {
@@ -174,6 +180,7 @@ public class Game {
     /**
      * If the team has a certain winstreak the other them should get less time for there upcomming instructions
      * @param currentTeam The team that gets checked
+     * @return true when time has been substracted succesfully
      */
     public boolean subtractTime(Team currentTeam){
 
@@ -197,8 +204,10 @@ public class Game {
 
     /**
      * Check if the executed instrucctions was correct and give the player a new one
+     * @Author Qun
      * @param donePanel The panel that has been pressed
      * @param player The player that gets checked
+     * @Return true when the instruction is correct, false when instruction is wrong
      */
     public boolean checkInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
@@ -221,6 +230,7 @@ public class Game {
 
     /**
      * Reset values from both teams
+     * @return true when resetting team is succesful else false
      */
     private boolean reset(){
         // Voor alle teams de waardes naar standaard terug zetten

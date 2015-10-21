@@ -27,87 +27,89 @@ public class Player implements Comparable<Player>{
     }
 
     /**
-     * @return IpAdress of the user
+     * Returns IP adress of the player
+     * @return the IP adress of the player
      */
     public String getIpAdress() {
         return this.ipAdress;
     }
 
     /**
-     *
+     * Returns name of the player
      * @return the name of the player
      */
     public String getName() {
         return this.name;
     }
 
-
     /**
-     *
-     * @return the score of the current player
+     * Returns the score of the player
+     * @return the players score
      */
     public int getScore() {
         return this.score;
     }
 
     /**
-     * @return the game the player is assigned to
+     * Return the game of the player
+     * @return the game of the player
      */
     public Game getGame() {
         return this.game;
     }
 
     /**
-     * @return the instructions for the player
+     * Return the instructions assigned to the player
+     * @return the instructions
      */
     public Instruction getInstructions() {
         return this.instructions;
     }
 
     /**
-     *
-     * @param instructions Sets the instructions for the player
+     * Sets the instructions for the player
+     * @param instructions
      */
     public void setInstructions(Instruction instructions) {
         this.instructions = instructions;
     }
 
     /**
-     *
-     * @return  the team the player is in
+     * Returns the team of the player
+     * @return the player team
      */
     public Team getTeam() {
         return this.team;
     }
 
     /**
-     *
-     * @param team Sets the team
+     * Sets the team of the player
+     * @param team
      */
     public void setTeam(Team team) {
         this.team = team;
     }
 
     /**
-     *
-     * @return the panels from the player
+     * Returns the player his panels
+     * @return a list of panels for the player
      */
     public ArrayList<Panel> getPanels() {
         return this.panels;
     }
 
     /**
-     *
-     * @param panels Sets the panels
+     * Sets the panels for the player
+     * @param panels
      */
     public void setPanels(ArrayList<Panel> panels) {
         this.panels = panels;
     }
 
     /**
+     * Check if the panel is correct
      * @param panel
-     * @return true or false
-     * Check if the panel that is given is correct
+     * @return true of false
      */
     public boolean checkCorrectPanel(Panel panel) {
         if (instructions.getPanel().equals(panel)) {

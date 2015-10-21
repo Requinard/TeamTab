@@ -50,13 +50,23 @@ public class GameTest {
     public void tearDown() throws Exception {
 
     }
-
+    /**
+     *
+     * Is called at the beginning of the game
+     * Check if both teams have the same amount of players
+     * @throws Exception
+     */
     @Test (expected = IllegalArgumentException.class)
     public void testExceptionStartGame() throws Exception {
         g.addPlayerToTeam(p1);
         g.startGame();
     }
 
+    /**
+     * Is called at the beginning of the game
+     * Check if both teams have the same amount of players
+     * @throws Exception
+     */
     @Test
     public void testStartGame() throws Exception {
         g.addPlayerToTeam(p1);
@@ -64,16 +74,23 @@ public class GameTest {
         g.startGame();
         assertEquals("not all player panels added", 2, g.team1.getPlayerPanels().size());
         assertEquals("not all player panels added", 0, g.team2.getPlayerPanels().size());
-
-
     }
 
+    /**
+     * Call this method to start a new round
+     * Every value in the game gets a reset
+     * @throws Exception
+     */
     @Test
     public void testNewRound() throws Exception {
         g.newRound();
         //mogelijk nog uitgebreid
     }
 
+    /**
+     * return list of players from the winning team + there score
+     * @throws Exception
+     */
     @Test
     public void testEndGame() throws Exception {
         g.addPlayerToTeam(p1);
@@ -92,6 +109,10 @@ public class GameTest {
         assertEquals("Not everyone added", 2, g.endGame(g.team1).size());
     }
 
+    /**
+     * When joining a lobby the joined player is set into the team with the least amount of players
+     * @throws Exception
+     */
     @Test
     public void testAddPlayerToTeam() throws Exception {
         g.addPlayerToTeam(p1);
@@ -103,6 +124,10 @@ public class GameTest {
         assertEquals("added to wrong team", g.team1.getPlayers().get(1), p3);
     }
 
+    /**
+     * Changing the player to the other team
+     * @throws Exception
+     */
     @Test
     public  void testchangeTeam() throws Exception {
         g.addPlayerToTeam(p1);
@@ -115,6 +140,10 @@ public class GameTest {
         assertEquals("added to the wrong team", p1, g.team2.getPlayers().get(0));
     }
 
+    /**
+     * When a team reaches a certain winstreak the game checks if they should recieve bonus time
+     * @throws Exception
+     */
     @Test
     public void testAddTime() throws Exception {
         g.addPlayerToTeam(p1);
@@ -125,6 +154,10 @@ public class GameTest {
         assertEquals("gives incorrect time", 10, g.team1.getTime());
     }
 
+    /**
+     * When the team has less than 3 seconds it should lose a life
+     * @throws Exception
+     */
     @Test
     public void testSubtractLives() throws Exception {
         g.addPlayerToTeam(p1);
@@ -140,6 +173,10 @@ public class GameTest {
         assertEquals("EndGame not started", 3, g.team1.getTime());
     }
 
+    /**
+     * If the team has a certain winstreak the other them should get less time for there upcomming instructions
+     * @throws Exception
+     */
     @Test
     public void testSubtractTime() throws Exception {
         g.addPlayerToTeam(p1);
@@ -151,6 +188,10 @@ public class GameTest {
         assertEquals("gives incorrect time", 8, g.team2.getTime());
     }
 
+    /**
+     * Is nog niet gemaakt omdat deze methode nog moet worden aangepast
+     * @throws Exception
+     */
     //Vanaf hier doet Frank
     @Test
     public void testRemovePlayer() throws Exception {
@@ -158,10 +199,8 @@ public class GameTest {
     }
 
     /**
-     * @Author Qun
-     * nog niet kunnen testen omdat de code nog moet worden
+     * Deze code moet nog worden aangepast
      * @throws Exception
-     * Moet nog worden aangepast nadat code is aangepast
      */
     @Test
     public void testAddCorrectInstruction() throws Exception {
@@ -176,8 +215,8 @@ public class GameTest {
         assertEquals("Amount of correct instructions is not 0", 0, g.team1.getCorrectInstruction());
     }
 
+
     /**
-     * @Author Qun
      * Test reset values from both teams
      * @throws Exception
      */
@@ -192,7 +231,7 @@ public class GameTest {
     }
 
     /**
-     * @Author Qun
+     *
      * De speler die een nieuwe instructie moet krijgen
      * @throws Exception
      */

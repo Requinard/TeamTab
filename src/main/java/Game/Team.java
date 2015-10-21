@@ -34,6 +34,7 @@ public class Team {
 
     /**
      * Gets the current time for a instruction
+     *
      * @author Frank Hartman
      * @return the time
      */
@@ -43,6 +44,7 @@ public class Team {
 
     /**
      * Sets the time for a instruction
+     *
      * @author Frank Hartman
      * @param time set the time
      */
