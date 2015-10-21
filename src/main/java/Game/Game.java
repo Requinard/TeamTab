@@ -97,7 +97,7 @@ public class Game {
 
     /**
      * When joining a lobby the joined player is set into the team with the least amount of players
-     * @Author Qun
+     * @Author Kaj
      * @param player De player that is joining the lobby
      * @return true or false depending on if adding player to team is succesful
      */
@@ -117,7 +117,7 @@ public class Game {
     /**
      * Changing the player to the other team
      *
-     * @Author Qun
+     * @Author Kaj
      * @param player The player that wants to join the other team
      * @Return true when changing team is succesful
      */
