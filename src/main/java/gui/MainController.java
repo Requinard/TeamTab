@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
  */
 
 public class MainController implements Initializable {
+
     @FXML
     private Button buttonJoin;
     @FXML
