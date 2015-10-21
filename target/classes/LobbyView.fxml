@@ -30,7 +30,7 @@
 </ImageView>
          </graphic>
       </Button>
-       <Button fx:id="buttonReady" ellipsisString="..." layoutX="697.0" layoutY="874.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="READYREADY" visible="true" >
+       <Button fx:id="buttonReady" ellipsisString="..." layoutX="697.0" layoutY="874.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="READYREADY" visible="true">
            <graphic>
  <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="697.0" layoutY="868.0" smooth="true" visible="true">
        <image>
@@ -39,5 +39,7 @@
 </ImageView>
            </graphic>
        </Button>
+      <TextField alignment="TOP_LEFT" layoutX="104.0" layoutY="309.0" opacity="0.22" prefHeight="480.0" prefWidth="492.0" />
+      <TextField alignment="TOP_LEFT" layoutX="691.0" layoutY="309.0" opacity="0.22" prefHeight="480.0" prefWidth="492.0" />
    </children>
 </AnchorPane>

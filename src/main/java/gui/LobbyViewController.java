@@ -1,9 +1,11 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -18,8 +20,13 @@ public class LobbyViewController implements Initializable {
     private Button buttonBack;
     @FXML
     private Button buttonReady;
+    @FXML
+    private TextField team1;
+    @FXML
+    private TextField team2;
 
     private LobbyView view;
+    private Runnable runnable;
 
     public void initialize(URL location, ResourceBundle resources) {
         buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -32,25 +39,39 @@ public class LobbyViewController implements Initializable {
                 buttonReadyOnClick(event);
             }
         });
-
     }
 
-    public void setView(LobbyView lobbyView)
-    {
+    public void setView(LobbyView lobbyView) {
         view = lobbyView;
     }
 
-    public void buttonReadyOnClick(MouseEvent mouseEvent)
-    {
-        GameView gameView = new GameView((view.stageController));
-        view.pass(gameView);
+    public void buttonReadyOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        GameView gameView = new GameView((view.stageController));
+                        view.pass(gameView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
 
-    public void buttonBackOnClick(MouseEvent mouseEvent)
-    {
-        JoinView joinView = new JoinView((view.stageController));
-        view.pass(joinView);
+    public void buttonBackOnClick(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        JoinView joinView = new JoinView((view.stageController));
+                        view.pass(joinView);
+                    }
+                });
+            }
+        };
+        runnable.run();
     }
-
-
 }
