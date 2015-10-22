@@ -17,6 +17,7 @@ public class Game {
     private int timeRound;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
+    private Player currentPlayer;
 
     public Game(){
         final int STARTLEVENS = 3;
@@ -38,15 +39,17 @@ public class Game {
     }
 
     /**
+     * @Author Qun
      * Is called at the beginning of the game
      * Check if both teams have the same amount of players
-     * @return true if they are the same
+     * @return the player for which the game starts
      */
-    public ArrayList<Team> startGame(){
+    public Player startGame(Player player){
+        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstructions(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
-            return teams;
+            return currentPlayer;
 
         }else {
             throw new IllegalArgumentException ("wrong sizes");
@@ -57,15 +60,17 @@ public class Game {
     /**
      * Call this method to start a new round
      * Every value in the game gets a reset
-     *
+     * Every Team receives new panels
      * @Author Qun
      * @return a new Round
      */
     public boolean newRound(){
         // returns default values
         reset();
-        team1.setPlayerPanels(panels);
-        team2.setPlayerPanels(panels);
+        for(Team team : teams)
+        {
+            team.setPlayerPanels(panels);
+        }
         return false;
     }
 
@@ -283,5 +288,15 @@ public class Game {
 
         // Returns the instruction
         return instuction;
+    }
+
+    /**
+     * Returns the panels from the player
+     * @param player
+     * @return playerPanels
+     */
+    private ArrayList<Panel> returnPanelsPlayer(Player player)
+    {
+        return player.getPanels();
     }
 }

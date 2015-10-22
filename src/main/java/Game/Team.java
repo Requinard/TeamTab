@@ -106,6 +106,13 @@ public class Team {
         this.playerPanels = playerPanels;
     }
 
+    // Panels die in het team zitten, deze moeten worden verdeeld
+    // over de spelers. Spelers mogen dezelfde panels hebben
+    //
+    private void givePanelsToPlayersFromTeam(){
+
+    }
+
     /**
      * Get all the players that are in the team
      * @author Frank Hartman
