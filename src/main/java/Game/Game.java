@@ -42,11 +42,11 @@ public class Game {
      * Check if both teams have the same amount of players
      * @return true if they are the same
      */
-    public boolean startGame(){
+    public ArrayList<Team> startGame(){
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
-            return true;
+            return teams;
 
         }else {
             throw new IllegalArgumentException ("wrong sizes");
