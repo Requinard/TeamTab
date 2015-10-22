@@ -129,4 +129,9 @@ public class Player implements Comparable<Player>{
         int compareScore = ((Player)p).getScore();
         return compareScore - this.score;
     }
+
+    @Override
+    public String toString() {
+        return  "Player : " + name;
+    }
 }
