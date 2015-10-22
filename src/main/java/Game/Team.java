@@ -106,11 +106,27 @@ public class Team {
         this.playerPanels = playerPanels;
     }
 
-    // Panels die in het team zitten, deze moeten worden verdeeld
-    // over de spelers. Spelers mogen dezelfde panels hebben
-    //
+    /**
+     * Panels die in het team zitten, deze moeten worden verdeeld over de spelers. Spelers mogen niet dezelfde panels hebben
+     * For each player in players from the team
+     * it loops trough playerPanels
+     * It fills the temporary panelList
+     * If it reached 12 it sets the panels for the player
+     * So each panels only gets used once
+     * Maybe something to check if i really dont give double panels ????
+     */
     private void givePanelsToPlayersFromTeam(){
-
+        ArrayList<Panel> TempPanels = new ArrayList<Panel>();
+        for(Player player : players)
+        {
+            for(Panel panel : playerPanels){
+                if(player.getPanels().size() < 12)
+                {
+                    TempPanels.add(panel);
+                }
+            }
+            player.setPanels(TempPanels);
+        }
     }
 
     /**
