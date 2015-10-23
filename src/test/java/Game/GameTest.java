@@ -59,7 +59,7 @@ public class GameTest {
     @Test (expected = IllegalArgumentException.class)
     public void testExceptionStartGame() throws Exception {
         g.addPlayerToTeam(p1);
-        g.startGame();
+        g.startGame(p1);
     }
 
     /**
@@ -71,7 +71,7 @@ public class GameTest {
     public void testStartGame() throws Exception {
         g.addPlayerToTeam(p1);
         g.addPlayerToTeam(p2);
-        g.startGame();
+        g.startGame(p1);
         assertEquals("not all player panels added", 2, g.team1.getPlayerPanels().size());
         assertEquals("not all player panels added", 0, g.team2.getPlayerPanels().size());
     }

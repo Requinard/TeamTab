@@ -107,6 +107,7 @@ public class Team {
     }
 
     /**
+     * @Author Qun
      * Panels die in het team zitten, deze moeten worden verdeeld over de spelers. Spelers mogen niet dezelfde panels hebben
      * For each player in players from the team
      * it loops trough playerPanels
@@ -114,18 +115,19 @@ public class Team {
      * If it reached 12 it sets the panels for the player
      * So each panels only gets used once
      * Maybe something to check if i really dont give double panels ????
+     * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
     private void givePanelsToPlayersFromTeam(){
         ArrayList<Panel> TempPanels = new ArrayList<Panel>();
         for(Player player : players)
         {
-            for(Panel panel : playerPanels){
+            /*for(Panel panel : playerPanels){
                 if(player.getPanels().size() < 12)
                 {
                     TempPanels.add(panel);
                 }
             }
-            player.setPanels(TempPanels);
+            player.setPanels(TempPanels);*/ //Nu krijgt elke speler dezelfde panels. De eerste 12.
         }
     }
 
