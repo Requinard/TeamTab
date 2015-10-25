@@ -155,8 +155,16 @@ public class TeamTest {
         assertTrue(team.addTeamTime(2,9));
         assertEquals(9, team.getTime());
 
+    }
 
-
+    /**
+     * @author Frank HArtman
+     * Check the part that is not being tested in game test
+     */
+    @Test
+    public void testCheckForInstruction() {
+        Panel testPanel = new Panel(10, 1, "a", 0, 1, in1);
+        assertFalse(team.checkTeamInstruction(testPanel));
     }
 }
 
