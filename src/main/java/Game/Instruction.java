@@ -50,11 +50,15 @@ public class Instruction {
 
     /**
      * Returns the commando the player has to execute
+     * @author Frank Hartman
      * @return the tostring commando
      */
     @Override
     public String toString() {
-        return "Voer het commando : " + commando + " uit ";
+        if (panel != null)
+            return commando + " : " + panel.getText();
+        else
+            return commando;
     }
 
 
