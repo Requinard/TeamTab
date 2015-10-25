@@ -1,5 +1,7 @@
 package gui;
 
+import Game.Player;
+import Game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import java.lang.management.PlatformLoggingMXBean;
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,9 +23,8 @@ public class StartViewController implements Initializable {
     @FXML
     private Button buttonBack;
     @FXML
-    TextField TeamName;
-    @FXML
-    TextField TeamSize;
+    private TextField teamNameTextField;
+
 
     private StartView view;
     private Runnable runnable;
@@ -50,13 +51,27 @@ public class StartViewController implements Initializable {
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                //view.stageController.game.startGame();
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        GameView gameView = new GameView((view.stageController));
-                        view.pass(gameView);
-                    }
-                });
+                if (teamNameTextField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Kies een teamname");
+                } else {
+                    String teamName = teamNameTextField.getText();
+                    System.out.println("StartView - Teamname is set to: " + teamName);
+                    view.stageController.game.startGame();
+                    view.stageController.game.createTeam(teamName);
+                    // Bij het aanmaken van de player wordt deze al in een team gestopt.
+                    // Of liever via losse methoden werken???
+                    Player newPlayer = view.stageController.game.createAndGetThisPlayer(view.stageController.playerName, teamName);
+
+                    Team teamByTeamName = view.stageController.game.getTeamByName(teamName);
+                    view.stageController.game.addPlayerToTeam(newPlayer,teamByTeamName);
+
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            LobbyView lobbyView = new LobbyView((view.stageController));
+                            view.pass(lobbyView);
+                        }
+                    });
+                }
             }
         };
         runnable.run();
@@ -65,7 +80,7 @@ public class StartViewController implements Initializable {
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                //view.stageController.game.reset();
+                view.stageController.game.reset();
                 Platform.runLater(new Runnable() {
                     public void run() {
                         MainView mainView = new MainView((view.stageController));

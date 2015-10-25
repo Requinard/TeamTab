@@ -1,5 +1,7 @@
 package gui;
 
+import Game.Player;
+import Game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,9 +23,15 @@ public class LobbyViewController implements Initializable {
     @FXML
     private Button buttonReady;
     @FXML
-    private TextField team1;
+    private TextField team1Name;
     @FXML
-    private TextField team2;
+    private TextField team2Name;
+    @FXML
+    private TextField playersTeam1Name;
+    @FXML
+    private TextField playersTeam2Names;
+    @FXML
+    private Button buttonHaalTeamsOp;
 
     private LobbyView view;
     private Runnable runnable;
@@ -37,6 +45,11 @@ public class LobbyViewController implements Initializable {
         buttonReady.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonReadyOnClick(event);
+            }
+        });
+        buttonHaalTeamsOp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                buttonbuttonHaalTeamsOpOnClick(event);
             }
         });
     }
@@ -70,6 +83,32 @@ public class LobbyViewController implements Initializable {
                         view.pass(joinView);
                     }
                 });
+            }
+        };
+        runnable.run();
+    }
+
+    public void buttonbuttonHaalTeamsOpOnClick(MouseEvent mouseEvent) {
+        final Player currentPlayer = view.stageController.game.getPlayerByName(view.stageController.playerName);
+        runnable = new Runnable() {
+            public void run() {
+
+                for (Team a : view.stageController.game.allTeams()) {
+                    if (a.isPlayerInTeam(currentPlayer)) {
+                        team1Name.setText(a.getName());
+                        for (Player p : a.getPlayers()) {
+                            playersTeam1Name.setText(p.getName() + "\n");
+                        }
+                    } else {
+                        team2Name.setText(a.getName());
+                        {
+                            for (Player b : a.getPlayers()) {
+                                playersTeam2Names.setText(b.getName() + "\n");
+                            }
+                        }
+                    }
+                }
+
             }
         };
         runnable.run();

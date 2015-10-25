@@ -18,6 +18,7 @@ public class StageController {
     IView currentView;
     Thread gameThread;
     Game game;
+    static String playerName;
 
     public StageController(Stage primaryStage) {
 
@@ -47,5 +48,7 @@ public class StageController {
     public void refreshView() {
         return;
     }
+
+
 
 }

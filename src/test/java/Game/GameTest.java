@@ -75,8 +75,6 @@ public class GameTest {
         g.startGame();
         assertEquals("not all player panels added", 2, g.team1.getPlayerPanels().size());
         assertEquals("not all player panels added", 0, g.team2.getPlayerPanels().size());
-
-
     }
 
     @Test

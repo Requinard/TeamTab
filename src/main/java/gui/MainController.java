@@ -8,10 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +27,10 @@ public class MainController implements Initializable {
     private Button buttonJoin;
     @FXML
     private Button buttonStart;
+    @FXML
+    private TextField userName;
+
+
 
     private MainView view;
     private Runnable runnable;
@@ -59,13 +65,18 @@ public class MainController implements Initializable {
     public void buttonJoinOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        JoinView joinView = new JoinView(view.stageController);
-                        view.pass(joinView);
-                    }
-                });
+                if (userName.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,"Kies een username");
+                } else {
+                    view.stageController.playerName = userName.getText();
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            System.out.println("MainView - Username is set to: " + view.stageController.playerName);
+                            JoinView joinView = new JoinView(view.stageController);
+                            view.pass(joinView);
+                        }
+                    });
+                }
             }
         };
         runnable.run();
@@ -74,13 +85,18 @@ public class MainController implements Initializable {
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        StartView startView = new StartView(view.stageController);
-                        view.pass(startView);
-                    }
-                });
+                if (userName.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Kies een username");
+                } else {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            view.stageController.playerName = userName.getText();
+                            System.out.println("MainView - Username is set to: " + view.stageController.playerName);
+                            StartView startView = new StartView(view.stageController);
+                            view.pass(startView);
+                        }
+                    });
+                }
             }
         };
         runnable.run();

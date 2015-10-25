@@ -14,16 +14,18 @@ public class Team {
     private int time;
     private int lives;
     private int correctInstruction;
+    private String name;
 
-
-    public Team(int time, int lives, int correctInstructions){
+    public Team(int time, int lives, int correctInstructions, String name){
         this.time =time;
         this.lives = lives;
         this.correctInstruction =correctInstructions;
+        this.name = name;
         players = new ArrayList<Player>();
         playerPanels = new ArrayList<Panel>();
     }
 
+    public String getName() {return this.name; }
 
     public int getTime() {
         return this.time;

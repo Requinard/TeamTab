@@ -1,6 +1,8 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,9 +16,17 @@ public class Game {
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
-    private int timeRound;
+    private int timeRound =9;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
+
+    // THE VARIABLES DECLARED HERE ARE ONLY FOR DEMO PURPOSE, THEY WILL BE REMOVED AFTER REAL DATA WILL BE AVAILABLE
+
+    Panel panel = new Panel(1,1,"Demo Panel", 1,1);
+    Instruction instruction = new Instruction(panel,"DemoCommando", 1);
+
+    // END DEMO VARIABLES
+
 
     public Game(){
         teams = new ArrayList<Team>();
@@ -24,19 +34,95 @@ public class Game {
         instructions = new ArrayList<Instruction>();
         panels = new ArrayList<Panel>();
 
-        team1 = new Team(0, 0, 0);
-        team2 = new Team(0, 0, 0);
+        // waarom worden hier 2 teams aangemaakt en de regel eronder dezelfde teams met waarden. onlogisch.
+        team1 = new Team(0, 0, 0, "Team1");
+        team2 = new Team(0, 0, 0, "Team2");
 
-        team1 = new Team(timeRound, 3, 0);
-        team2 = new Team(timeRound, 3, 0);
+        team1 = new Team(timeRound, 3, 0, "Team1");
+        team2 = new Team(timeRound, 3, 0, "Team2");
 
         teams.add(team1);
         teams.add(team2);
 
-        // Standaard tijd voor een ronde
-
-
     }
+
+    //
+    // THE FUNCTIONS DECLARED HERE ARE ONLY FOR DEMO PURPOSE, THEY WILL BE REMOVED AFTER REAL DATA WILL BE AVAILABLE
+    // Author KAMIL
+    //
+
+    // de instantie van de betreffende game opvragen
+    public Game getGame (){
+        return this;
+    }
+
+
+    // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
+    private void setUp(){
+        Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
+        team2.addPlayerToTeam(a);
+        System.out.println("Game - Demo players are made and added to teams (setUp)");
+    }
+
+    // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
+    public List<Team> allTeams(){
+        System.out.println("Game - sire of ArrayList teams: " + teams.size());
+         return Collections.unmodifiableList(teams);
+    }
+
+    // een speler opvragen op basis van zijn naam
+    public Player getPlayerByName(String playerName){
+        for(Team t : teams){
+            for(Player p: t.getPlayers()){
+                if(p.getName().equals(playerName)){
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    // een nieuw team aanmaken
+    public boolean createTeam(String teamName){
+        Team newTeam = new Team(9,3,0,teamName);
+        teams.add(newTeam);
+
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                System.out.println("Game - Team is created (createTeam)");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // een nieuwe speler aanmaken en deze aan de team toevoegen. Vervolgens de player instantie retourneren
+    public Player createAndGetThisPlayer(String playerName, String teamName){
+        Team getTeam = null;
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                getTeam = t;
+            }
+        }
+        Player newPlayer = new Player("localhost", playerName, 0, panels, instruction,this, getTeam);
+        System.out.println("Game - Player is created (createAndGetThisPlayer)");
+        return  newPlayer;
+    }
+
+    // een intantie van Team opvragen op basis van teamnaam
+    public Team getTeamByName(String teamName){
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                System.out.println("Game - Team is found and returned (getTeamByName)");
+                return t;
+            }
+        }
+        return null;
+    }
+
+    //
+    // END END END END
+    //
 
     /**
      * Is called at the beginning of the game
@@ -47,6 +133,13 @@ public class Game {
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Geeft de teams die meedoen panels
+
+            // demo method KAMIL
+
+            setUp();
+
+            // END
+
             System.out.println("Game - Game has started (startGame())");
             return true;
         }else {
@@ -198,13 +291,18 @@ public class Game {
      * @param t
      */
     public void addPlayerToTeam(Player p, Team t){
-        if (!t.addPlayerToTeam(p)){
-            throw new IllegalArgumentException("Player can not be added to the team");
+//        if (!t.addPlayerToTeam(p)){
+//            throw new IllegalArgumentException("Player can not be added to the team");
+//        }
+//        //p.setTeam(t); //aanpassing team set
+//        //ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
+//        players.add(p);
+//        //t.setPlayers(excitingPlayers);
+
+        if(!t.isPlayerInTeam(p)){
+            System.out.println("Game - Player is added to the team (addPlayerToTeam)");
+            t.addPlayerToTeam(p);
         }
-        //p.setTeam(t); //aanpassing team set
-        //ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
-        players.add(p);
-        //t.setPlayers(excitingPlayers);
     }
 
 

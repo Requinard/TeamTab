@@ -27,6 +27,5 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         StageController st = new StageController(primaryStage);
 
-
     }
 }
