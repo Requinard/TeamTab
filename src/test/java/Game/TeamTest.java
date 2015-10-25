@@ -174,5 +174,14 @@ public class TeamTest {
         assertEquals(5, team.getLives());
     }
 
+    @Test
+    public void testSetPlayers(){
+        ArrayList testPlayers = new ArrayList<Player>();
+        testPlayers.add(p1);
+        testPlayers.add(p2);
+        team.setPlayers(testPlayers);
+        assertEquals(2, testPlayers.size());
+    }
+
 }
 
