@@ -21,7 +21,7 @@ public class TeamTest {
     Instruction in1;
     Instruction in2;
     Instruction in3;
-    Team t;
+    Team team;
     Panel pan1;
     Panel pan2;
     Team TeamCorrect;
@@ -29,7 +29,7 @@ public class TeamTest {
     @Before
     public void setUp() throws Exception {
         g = new Game();
-        t = new Team(3,3);
+        team = new Team(9,3);
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
         in3 = new Instruction(pan2, "Set to 50", 1);
@@ -54,9 +54,9 @@ public class TeamTest {
      * @throws Exception
      */
     @Test public void testAddPlayerToTeam() throws Exception {
-        assertEquals("Player isn't added", true, t.addPlayerToTeam(p1));
-        t.addPlayerToTeam(p1);
-        assertEquals("Player is added to the list ", false, t.addPlayerToTeam(p1));
+        assertEquals("Player isn't added", true, team.addPlayerToTeam(p1));
+        team.addPlayerToTeam(p1);
+        assertEquals("Player is added to the list ", false, team.addPlayerToTeam(p1));
     }
 
     /**
@@ -68,9 +68,9 @@ public class TeamTest {
      */
      @Test
     public void testRemovePlayer() throws Exception {
-        t.addPlayerToTeam(p1);
-        assertEquals("Player is not removed", true, t.removePlayer(p1));
-        assertEquals("Player is removed", false, t.removePlayer(p1));
+        team.addPlayerToTeam(p1);
+        assertEquals("Player is not removed", true, team.removePlayer(p1));
+        assertEquals("Player is removed", false, team.removePlayer(p1));
     }
 
     /**
@@ -81,11 +81,11 @@ public class TeamTest {
      */
     @Test
     public void testResetTeam() {
-        t.resetTeam();
-        assertEquals("Team hasn't been reset", true, t.resetTeam());
-        assertEquals("Time has not been reset", 9, t.getTime());
-        assertEquals("Lives have not been reset", 3, t.getLives());
-        assertEquals("Amount of correct instructions have not been reset ", 0, t.getCorrectInstruction());
+        team.resetTeam();
+        assertEquals("Team hasn't been reset", true, team.resetTeam());
+        assertEquals("Time has not been reset", 9, team.getTime());
+        assertEquals("Lives have not been reset", 3, team.getLives());
+        assertEquals("Amount of correct instructions have not been reset ", 0, team.getCorrectInstruction());
     }
 
     /**
@@ -99,13 +99,13 @@ public class TeamTest {
      */
     @Test
     public void testSortedPlayerByScore() {
-        t.addPlayerToTeam(p1);  // Score 2
-        t.addPlayerToTeam(p2);  // Score 3
-        t.addPlayerToTeam(p3);  // Score 3
-        t.sortedPlayerByScore();
-        assertEquals("Wrong player is first", p2, t.getPlayers().get(0));
-        assertEquals("Wrong player is second", p3, t.getPlayers().get(1));
-        assertEquals("Wrong player is third", p1, t.getPlayers().get(2));
+        team.addPlayerToTeam(p1);  // Score 2
+        team.addPlayerToTeam(p2);  // Score 3
+        team.addPlayerToTeam(p3);  // Score 3
+        team.sortedPlayerByScore();
+        assertEquals("Wrong player is first", p2, team.getPlayers().get(0));
+        assertEquals("Wrong player is second", p3, team.getPlayers().get(1));
+        assertEquals("Wrong player is third", p1, team.getPlayers().get(2));
     }
 
     /**
@@ -117,9 +117,9 @@ public class TeamTest {
      */
     @Test
     public void testIsPlayerInTeam() {
-        t.addPlayerToTeam(p1);
-        assertEquals("Player is not in team", true, t.isPlayerInTeam(p1));
-        assertEquals("Player is in team", false, t.isPlayerInTeam(p2));
+        team.addPlayerToTeam(p1);
+        assertEquals("Player is not in team", true, team.isPlayerInTeam(p1));
+        assertEquals("Player is in team", false, team.isPlayerInTeam(p2));
     }
 
 
@@ -138,6 +138,25 @@ public class TeamTest {
         assertEquals("Panel is not added for the new player team2", 1, g.team2.getPlayerPanels().size());
         g.team1.removePlayer(p1);
         assertEquals("Panel is not deleted after remove", 0, g.team1.getPlayerPanels().size());
+    }
+
+    /**
+     * @author Frank Hartman
+     */
+    @Test
+    public void testAddTeamTime() {
+        team.setTime(8);
+        // Not allowed to add more time than the maximum time
+        assertFalse(team.addTeamTime(10, 9));
+
+        assertTrue(team.addTeamTime(1, 9));
+        assertEquals(9, team.getTime());
+        // Make sure the time is not more than the maximum amount of time
+        assertTrue(team.addTeamTime(2,9));
+        assertEquals(9, team.getTime());
+
+
+
     }
 }
 

@@ -6,11 +6,13 @@ import java.util.*;
  * Created by HP user on 12-10-2015.
  */
 public class Game {
+
     private ArrayList<Team> teams;
     private ArrayList<Player> players;
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
+
 
     Team team1;
     Team team2;

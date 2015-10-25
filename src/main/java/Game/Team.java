@@ -210,6 +210,7 @@ public class Team {
     public List<Player> sortedPlayerByScore(){
         List<Player> sortedPlayers = new ArrayList<Player>(players);
         Collections.sort(sortedPlayers);
+
         return Collections.unmodifiableList(sortedPlayers);
     }
 
@@ -279,7 +280,7 @@ public class Team {
 
     /**
      * Add instruction time to the team
-     * Time will only be added if the current amount of time is less the 9 seconds
+     * Time will only be added if the current amount of time is less the the max time
      * @author Frank Hartman
      * @param time the extra amount of time
      * @param maxTime the maximum amount of time
@@ -287,7 +288,7 @@ public class Team {
     public boolean addTeamTime(int time, int maxTime) {
         if (time <= maxTime) {
             this.time = this.time + time;
-            if (time > maxTime )
+            if (this.time > maxTime )
                 this.time = maxTime;
             return true;
         }
