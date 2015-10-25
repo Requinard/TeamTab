@@ -168,6 +168,11 @@ public class TeamTest {
         assertFalse(team.checkTeamInstruction(testPanel));
     }
 
+    @Test
+    public void testSetLives() {
+        team.setLives(5);
+        assertEquals(5, team.getLives());
+    }
 
 }
 
