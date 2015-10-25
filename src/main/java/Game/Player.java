@@ -132,6 +132,6 @@ public class Player implements Comparable<Player>{
 
     @Override
     public String toString() {
-        return  "Player : " + name;
+        return  "Player: " + name;
     }
 }
