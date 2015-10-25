@@ -25,7 +25,7 @@ public class Game {
     private int timeRound =9;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
-
+    private Instruction instruction;
 
     /**
      * Initialize a game
@@ -47,20 +47,19 @@ public class Game {
 
         teams.add(team1);
         teams.add(team2);
-
+        // Load panels from CSV
+        loadPanels();
     }
 
     //
     // THE FUNCTIONS DECLARED HERE ARE ONLY FOR DEMO PURPOSE, THEY WILL BE REMOVED AFTER REAL DATA WILL BE AVAILABLE
     // Author KAMIL
     //
-        // Load panels from CSV
-        loadPanels();
-    }
 
     // de instantie van de betreffende game opvragen
-    public Game getGame (){
+    public Game getGame () {
         return this;
+    }
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
@@ -102,6 +101,8 @@ public class Game {
 
     // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
     private void setUp(){
+        Panel panel = new Panel(1, 1, "Test", 0, 0);
+        instruction = new Instruction(panel, "Test", 0);
         Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
         team2.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
