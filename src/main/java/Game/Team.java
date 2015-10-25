@@ -157,14 +157,12 @@ public class Team {
         if (players.size() == 0){
             players.add(player);
             player.setTeam(this);
-            refreshPlayerPanels();
             return true;
         }
         for(Player p : players){ //eerst add voor het conroleren
             if(!p.equals(player)){
                 players.add(player);
                 player.setTeam(this);
-                refreshPlayerPanels();
                 return true;
             }
         }
@@ -180,7 +178,6 @@ public class Team {
         for(Player p : players)
             if (p.equals(player)) {
                 players.remove(player);
-                refreshPlayerPanels();
                 return true;
             }
         return false;
@@ -243,17 +240,6 @@ public class Team {
         }
     }
 
-    private void refreshPlayerPanels() {
-        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
-
-
-        for (Player player : players) {
-            for (Panel p : player.getPanels()) {
-                tempPanels.add(p);
-            }
-        }
-        playerPanels = tempPanels;
-    }
 
 
     /**
