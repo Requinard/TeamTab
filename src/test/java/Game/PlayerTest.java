@@ -147,4 +147,11 @@ public class PlayerTest {
     public void testToString() throws Exception {
         assertEquals("Player: FrankHartman", player.toString());
     }
+
+    @Test
+    public void testAddScore() {
+        int testScore = player.getScore();
+        player.addScore();
+        assertEquals(testScore + 1, player.getScore());
+    }
 }

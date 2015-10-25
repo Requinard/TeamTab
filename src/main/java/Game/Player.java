@@ -107,6 +107,14 @@ public class Player implements Comparable<Player>{
     }
 
     /**
+     * @author Frank Hartman
+     * add a point to the score of the player
+     */
+    public void addScore() {
+        score++;
+    }
+
+    /**
      * Check if the panel is correct
      * @param panel
      * @return true of false

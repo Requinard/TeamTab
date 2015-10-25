@@ -254,6 +254,7 @@ public class Team {
 
             if (p.checkCorrectPanel(changedPanel)) {
                 correctInstruction++;
+                p.addScore();
                 return true;
             } else {
                 correctInstruction = 0;
