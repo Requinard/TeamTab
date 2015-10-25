@@ -34,4 +34,24 @@ public class InstructionTest {
         assertEquals("Click on : a", in1.toString());
         assertEquals("Click off", in2.toString());
     }
+
+    @Test
+    public void testSetPanel() throws Exception {
+
+    }
+
+    @Test
+    public void testGetPanel() throws Exception {
+
+    }
+
+    @Test
+    public void testGetCommando() throws Exception {
+        assertEquals("Click on", in1.getCommando());
+    }
+
+    @Test
+    public void testGetNewValue() throws Exception {
+
+    }
 }
