@@ -177,13 +177,12 @@ public class Team {
      * @return true when player is removed from the list
      */
     public boolean removePlayer(Player player){
-        for(Player p : players){
-            if(p.equals(player)){
+        for(Player p : players)
+            if (p.equals(player)) {
                 players.remove(player);
                 refreshPlayerPanels();
                 return true;
             }
-        }
         return false;
     }
 

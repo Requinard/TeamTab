@@ -61,6 +61,7 @@ public class TeamTest {
 
     /**
      * @Author Qun
+     * @author Frank Hartman
      * Test RemovePlayer
      * Test if player is removed
      * Test if a player who is not in the team is removed
@@ -166,5 +167,7 @@ public class TeamTest {
         Panel testPanel = new Panel(10, 1, "a", 0, 1, in1);
         assertFalse(team.checkTeamInstruction(testPanel));
     }
+
+
 }
 
