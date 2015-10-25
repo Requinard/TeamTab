@@ -1,5 +1,11 @@
 package Game;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,14 +26,12 @@ public class Game {
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
 
-    // THE VARIABLES DECLARED HERE ARE ONLY FOR DEMO PURPOSE, THEY WILL BE REMOVED AFTER REAL DATA WILL BE AVAILABLE
 
-    Panel panel = new Panel(1,1,"Demo Panel", 1,1);
-    Instruction instruction = new Instruction(panel,"DemoCommando", 1);
-
-    // END DEMO VARIABLES
-
-
+    /**
+     * Initialize a game
+     *
+     * @author David
+     */
     public Game(){
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
@@ -50,10 +54,49 @@ public class Game {
     // THE FUNCTIONS DECLARED HERE ARE ONLY FOR DEMO PURPOSE, THEY WILL BE REMOVED AFTER REAL DATA WILL BE AVAILABLE
     // Author KAMIL
     //
+        // Load panels from CSV
+        loadPanels();
+    }
 
     // de instantie van de betreffende game opvragen
     public Game getGame (){
         return this;
+    public boolean loadPanels() {
+        URL location = this.getClass().getClassLoader().getResource("panels.csv");
+
+
+        try (FileInputStream fileInputStream = new FileInputStream(location.getFile())) {
+            String full = IOUtils.toString(fileInputStream);
+
+            // go over each line
+            for (String s : full.split("\n")) {
+                // If we start with a hashtag the line is commented and we skip it
+                if (s.startsWith("#"))
+                    continue;
+
+                // get the individual lines
+                String[] split = s.split(",");
+
+                // Parse the strings
+                int id = Integer.parseInt(split[0].trim());
+                int type = Integer.parseInt(split[1].trim());
+                String text = split[2];
+                int min = Integer.parseInt(split[3].trim());
+                int max = Integer.parseInt(split[4].trim());
+
+                // Create the panels
+                Panel panel = new Panel(id, type, text, min, max);
+
+                panels.add(panel);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return panels.size() > 0;
     }
 
 

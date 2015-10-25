@@ -196,4 +196,13 @@ public class GameTest {
         //Have to ask the teacher about this first before testing it
     }
 
+    @Test
+    public void testLoadPanels() throws Exception {
+        Game game = new Game();
+
+        boolean b = game.loadPanels();
+
+        assertTrue("No panels were loaded", b);
+
+    }
 }
