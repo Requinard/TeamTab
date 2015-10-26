@@ -18,7 +18,7 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     public PanelVerticalControl(Panel panel) {
         super(panel);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                "panels/PanelVerticalControl.fxml"));
+                "/panels/PanelVerticalControl.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

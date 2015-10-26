@@ -17,15 +17,15 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
     public PanelButtonControl(Panel panel) {
         super(panel);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                "panels/PanelButtonControl.fxml"));
+                "/panels/PanelButtonControl.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
         try {
-            fxmlLoader.load();
+             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
     }
 
     @FXML protected void btnClick() {
@@ -37,7 +37,6 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
     public void setTextField(String txt){
         textField.setText(txt);
     }
-
     public void update() {
 
     }
