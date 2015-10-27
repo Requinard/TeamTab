@@ -153,7 +153,7 @@ public class TeamTest {
         assertTrue(team.addTeamTime(1, 9));
         assertEquals(9, team.getTime());
         // Make sure the time is not more than the maximum amount of time
-        assertTrue(team.addTeamTime(2,9));
+        assertTrue(team.addTeamTime(2, 9));
         assertEquals(9, team.getTime());
 
     }
@@ -182,6 +182,11 @@ public class TeamTest {
         team.setPlayers(testPlayers);
         assertEquals(2, testPlayers.size());
     }
+    @Test
+    public void givePanelsToPlayersFromTeam(){
+        team.addPlayerToTeam(p1);
+        assertEquals("Panel is not added for the new player team1", 1, p1.getPanels().size());
 
+    }
 }
 

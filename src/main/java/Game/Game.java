@@ -126,21 +126,23 @@ public class Game {
 
     /**
      * Changing the player to the other team
-     *
+     * @Author Qun changed the if statement so false can be returned
      * @Author Kaj
      * @param player The player that wants to join the other team
      * @Return true when changing team is succesful
      */
     public boolean changeTeam(Player player){
         Team currentTeam = player.getTeam();
+        if(currentTeam != null)
+        {
+            int idTeam = teams.indexOf(currentTeam);
+                currentTeam.removePlayer(player);
+                if (idTeam+1 < teams.size()) {
+                    return teams.get(idTeam+1).addPlayerToTeam(player);
+                }else {
+                    return teams.get(0).addPlayerToTeam(player);
 
-        int idTeam = teams.indexOf(currentTeam);
-        if (currentTeam.removePlayer(player)){
-            if (idTeam+1 < teams.size()) {
-                return teams.get(idTeam+1).addPlayerToTeam(player);
-            }else {
-                return teams.get(0).addPlayerToTeam(player);
-            }
+        }
         }else {
             return false;
         }

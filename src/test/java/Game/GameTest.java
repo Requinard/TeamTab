@@ -16,6 +16,7 @@ public class GameTest {
     Game game;
     Player p1;
     Player p2;
+    Player player3;
     ArrayList<Panel> pp1;
     Panel pan1;
     Panel pan2;
@@ -41,6 +42,7 @@ public class GameTest {
         pp1.add(pan2);
         p1 = new Player("1.1.1.1", "Kaj", 0, pp1, in1, game, null); //team later toevoegen
         p2 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
+        player3 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
         //t1 = new Team(1, 1, 1);
         time= 0;
         p3 = new Panel(3, 1, "Press it down", 0, 1, null);
@@ -148,6 +150,7 @@ public class GameTest {
         game.changeTeam(p2);
         assertEquals("added to the wrong team", p2, game.team1.getPlayers().get(0));
         assertEquals("added to the wrong team", p1, game.team2.getPlayers().get(0));
+        assertEquals("Player changed from team", false,game.changeTeam(player3) );
     }
 
     /**
