@@ -118,7 +118,7 @@ public class Team {
      * Maybe something to check if i really dont give double panels ????
      * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
-    public void givePanelsToPlayersFromTeam(){
+    public void givePanelsToPlayersFromTeam(ArrayList<Panel>){
         ArrayList<Panel> tempPanels = new ArrayList<Panel>();
         Panel pan;
         Random r = new Random();

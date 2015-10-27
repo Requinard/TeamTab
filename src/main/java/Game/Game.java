@@ -42,6 +42,9 @@ public class Game {
 
     /**
      * @Author Qun
+     * OVERLOAD DEZE METHODE MET ipadress & username
+     * OVERLOAD DEZE METHODE startgame()
+     * TODO: OVERLOAD DEZE METHODE MET IPADRESS & USERNAME
      * Is called at the beginning of the game
      * Check if both teams have the same amount of players
      * @return the player for which the game starts
@@ -184,20 +187,6 @@ public class Game {
             return false;
         }
 
-        /*
-        if(team.substractLives())
-        {
-            if (team.getLives() <= 0) {
-                endGame(team);
-                teams.remove(team);
-            }
-            else{
-                newRound();
-            }
-            return true;
-        }
-        return false;
-        */
     }
 
     /**
@@ -253,11 +242,13 @@ public class Game {
      * Reset values from both teams
      * @return true when resetting team is succesful else false
      */
-    private void reset(){
+    private boolean reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
              t.resetTeam();
+            return true;
             }
+        return false;
         }
 
     /**

@@ -246,6 +246,14 @@ public class GameTest {
         assertEquals("Amount of correct instructions is not 0", 0, game.team1.getCorrectInstruction());
         assertEquals("Amount of playerpanels is not 0", 0, game.team1.getPlayerPanels().size());
         assertEquals("Amount of players is not 0", 0, game.team1.getPlayers().size());
+        Team testTeam1 = game.team1;
+        Team testTeam2 = game.team2;
+        testTeam1.setLives(0);
+        testTeam2.setLives(0);
+        game.subtractLives(testTeam1);
+        game.subtractLives(testTeam2);
+        game.newRound();
+
     }
 
     /**
