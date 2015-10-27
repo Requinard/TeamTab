@@ -145,6 +145,7 @@ public class GameTest {
         game.addPlayerToTeam(p1);
         game.addPlayerToTeam(p2);
         game.changeTeam(p1);
+        assertEquals("Player didn't change from team", game.team2, p1.getTeam());
         assertEquals("Wrong size team", 0, game.team1.getPlayers().size());
         assertEquals("Wrong size team", 2, game.team2.getPlayers().size());
         game.changeTeam(p2);
@@ -234,9 +235,13 @@ public class GameTest {
      * @throws Exception
      */
     @Test
-    public void testReset() throws Exception {
+    public void testReset(){
         game.addPlayerToTeam(p1);
-        game.team1.resetTeam();
+        game.addPlayerToTeam(p2);
+        game.subtractLives(game.team1);
+        game.subtractTime(game.team1);
+        game.team1.setCorrectInstruction(2);
+        game.newRound();
         assertEquals("Time is not 9", 9, game.team1.getTime());
         assertEquals("Amount of correct instructions is not 0", 0, game.team1.getCorrectInstruction());
         assertEquals("Amount of playerpanels is not 0", 0, game.team1.getPlayerPanels().size());

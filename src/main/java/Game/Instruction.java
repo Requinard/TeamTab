@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class Instruction {
     private Panel panel;
     private String commando;
-    private int newValue;
+    private int value;
 
-    public Instruction(Panel panel, String commando, int newValue) {
+    public Instruction(Panel panel, String commando, int value) {
         this.panel = panel;
         this.commando = commando;
-        this.newValue = newValue;
+        this.value = value;
     }
 
     /**
@@ -45,7 +45,7 @@ public class Instruction {
      * Returns the value of the instruction
      * @return instruction value
      */
-    public int getNewValue() {return newValue;}
+    public int getValue() {return value;}
 
 
     /**

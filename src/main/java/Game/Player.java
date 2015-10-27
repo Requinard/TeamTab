@@ -115,12 +115,14 @@ public class Player implements Comparable<Player>{
     }
 
     /**
+     * @Author Qun & Frank
+     * Check value of the instruction and compares it to the current value of the panel
      * Check if the panel is correct
      * @param panel
      * @return true of false
      */
     public boolean checkCorrectPanel(Panel panel) {
-        if (instructions.getPanel().equals(panel)) {
+        if (instructions.getValue() == (panel.getCurrent())) {
             return true;
         }
         else

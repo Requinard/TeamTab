@@ -5,6 +5,7 @@ import com.sun.javafx.UnmodifiableArrayList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by HP user on 12-10-2015.
@@ -117,25 +118,41 @@ public class Team {
      * Maybe something to check if i really dont give double panels ????
      * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
-    private void givePanelsToPlayersFromTeam(){
-        ArrayList<Panel> TempPanels = new ArrayList<Panel>();
+    public void givePanelsToPlayersFromTeam(){
+        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
+        Panel pan;
+        Random r = new Random();
         for(Player player : players)
         {
-            /*for(Panel panel : playerPanels){
+            for(Panel panel : playerPanels){
                 if(player.getPanels().size() < 12)
+            for (int i = player.getPanels().size() ; i <12 ; i++)
+            {
+                pan = player.getPanels().get(r.nextInt(playerPanels.size()));
+                if(!tempPanels.contains(pan))
                 {
-                    TempPanels.add(panel);
+                    tempPanels.add(pan);
+                }
+                else
+                {
+                    i--;
                 }
             }
-            player.setPanels(TempPanels);*/ //Nu krijgt elke speler dezelfde panels. De eerste 12.
+            player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
+            }
         }
+
+
+
+
     }
 
-    /**
-     * Get all the players that are in the team
-     * @author Frank Hartman
-     * @return all the players from the team
-     */
+
+        /**
+         * Get all the players that are in the team
+         * @author Frank Hartman
+         * @return all the players from the team
+         */
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
@@ -170,18 +187,21 @@ public class Team {
     }
 
     /***
+     * @Author Qun hoe komt de persoon
      * If this list containt the player then the player will be removed
      * @param player
      * @return true when player is removed from the list
      */
     public boolean removePlayer(Player player){
-        for(Player p : players)
+        for(Player p : players){
             if (p.equals(player)) {
                 players.remove(player);
                 return true;
             }
+        }
         return false;
     }
+
 
     /***
      * @Author Qun

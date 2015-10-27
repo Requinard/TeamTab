@@ -74,7 +74,19 @@ public class Panel {
      * Sets the current value of the control
      * @param value
      */
-    public void setCurrent(int value){current = value;}
+    public boolean setCurrent(int value) {
+        if(value <= max && value >= min)
+        {
+            current = value;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
 
     /**
      * Returns the instruction on the panel

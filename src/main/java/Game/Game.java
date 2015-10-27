@@ -261,40 +261,6 @@ public class Game {
         }
 
     /**
-     * Gives a player a new instruction
-     * @param player The player that needs a new instruction
-     */
-    private Instruction givePlayerInstructions(Player player) {
-        Team playerTeam = player.getTeam();
-        int maxSize = playerTeam.getPlayerPanels().size();
-        Random random = new Random();
-        // Panels that are in use
-        ArrayList<Panel> usedPanelNumbers = new ArrayList<Panel>();
-        // Panels that are not in use and that cannot be chosen
-        ArrayList<Panel> unusedPanelNumbers = playerTeam.getPlayerPanels();
-
-        // Gets all the panels wich are used by the team of the player
-        for (Player p : playerTeam.getPlayers()) {
-            usedPanelNumbers.add(p.getInstructions().getPanel());
-        }
-
-        // Removes all the panels that are in use so only the available panels remain
-        for (Panel p : usedPanelNumbers) {
-            unusedPanelNumbers.remove(p);
-        }
-
-        // gets a random panel from the list of panels
-        Panel panel = unusedPanelNumbers.get(random.nextInt(maxSize));
-
-        // Add the random instruction to the player
-        Instruction instuction = panel.getInstruction();
-        player.setInstructions(instuction);
-
-        // Returns the instruction
-        return instuction;
-    }
-
-    /**
      * Returns the panels from the player
      * @param player
      * @return playerPanels

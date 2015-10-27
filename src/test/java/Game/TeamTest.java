@@ -60,7 +60,7 @@ public class TeamTest {
     }
 
     /**
-     * @Author Qun
+     * @Author Qun Waarom wordt bij Team.java removePlayer(Player player) niet de return gecovered. Hier gaat de test wel langs
      * @author Frank Hartman
      * Test RemovePlayer
      * Test if player is removed
@@ -71,7 +71,7 @@ public class TeamTest {
     public void testRemovePlayer() throws Exception {
         team.addPlayerToTeam(p1);
         assertEquals("Player is not removed", true, team.removePlayer(p1));
-        assertEquals("Player is removed", false, team.removePlayer(p1));
+        assertEquals("Player is removed", false, team.removePlayer(p2));
     }
 
     /**
@@ -82,6 +82,8 @@ public class TeamTest {
      */
     @Test
     public void testResetTeam() {
+        team.addTeamTime(2,2);
+        team.setLives(5);
         team.resetTeam();
         assertEquals("Team hasn't been reset", true, team.resetTeam());
         assertEquals("Time has not been reset", 9, team.getTime());
