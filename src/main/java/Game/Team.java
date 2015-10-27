@@ -21,6 +21,7 @@ public class Team {
 
     private int lives;
     private int correctInstruction;
+    private String name;
 
 
     public Team(int time, int lives){
@@ -32,6 +33,7 @@ public class Team {
         playerPanels = new ArrayList<Panel>();
     }
 
+    public String getName() {return this.name; }
 
     /**
      * Gets the current time for a instruction

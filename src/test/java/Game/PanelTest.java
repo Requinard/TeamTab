@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by david on 12-10-15.
@@ -18,8 +18,8 @@ public class PanelTest {
 
     @Before
     public void setUp() throws Exception {
-        panel1 = new Panel(1, 1, "a", 0, 1, instruction1);
-        panel2 = new Panel(2, 1, "b", 0, 3, instruction2);
+        panel1 = new Panel(1, 1, "a", 0, 1);
+        panel2 = new Panel(2, 1, "b", 0, 3);
         instruction1 = new Instruction(panel1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         instruction2 = new Instruction(panel2, "Click off", 1);
         instruction1.setPanel(panel1);
@@ -40,8 +40,8 @@ public class PanelTest {
 
     @Test
     public void testGetType() throws Exception {
-        assertEquals(1, panel1.getType());
-        assertEquals(1, panel2.getType());
+        assertEquals(PanelTypeEnum.HorizontalSlider, panel1.getType());
+        assertEquals(PanelTypeEnum.HorizontalSlider, panel2.getType());
     }
 
     @Test

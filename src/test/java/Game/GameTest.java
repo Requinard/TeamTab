@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by david on 12-10-15.
@@ -30,11 +31,14 @@ public class GameTest {
 
     @Before
     public void setUp() throws Exception {
-        game  = new Game();
+        game = new Game(null);
+
+        pan1 = new Panel(1, 1, "a", 0, 1);
+        pan2 = new Panel(2, 1, "b", 0, 1);
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
-        pan1 = new Panel(1, 1, "a", 0, 1, in1);
-        pan2 = new Panel(2, 1, "b", 0, 1, in2);
+        pan1 = new Panel(1, 1, "a", 0, 1);
+        pan2 = new Panel(2, 1, "b", 0, 1);
         in1.setPanel(pan1);
         in2.setPanel(pan2);
         pp1 = new ArrayList<Panel>();
@@ -45,7 +49,7 @@ public class GameTest {
         player3 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
         //t1 = new Team(1, 1, 1);
         time= 0;
-        p3 = new Panel(3, 1, "Press it down", 0, 1, null);
+        p3 = new Panel(3, 1, "Press it down", 0, 1);
     }
 
     @After
@@ -107,16 +111,18 @@ public class GameTest {
     public void testEndGame() throws Exception {
         game.addPlayerToTeam(p1);
         game.addPlayerToTeam(p2);
+        // todo: wtf is dit voor spaghetti code wat gebeurt er hier
         assertEquals("Gives the wrong score", "You lost!", game.endGame(game.team1).get(0));
         assertEquals("Gives the wrong score", "You won!", game.endGame(game.team2).get(0));
 
-        pan3 = new Panel(2, 1, "c", 0, 1, in3);
+        pan3 = new Panel(2, 1, "c", 0, 1);
         in3 = new Instruction(pan3, "Click on", 0);
         ArrayList<Panel> pal = new ArrayList<Panel>();
         pal.add(pan3);
         Player p3 = new Player("1.2.3.4","Bas",5,pal, null, game,null);
         game.addPlayerToTeam(p3);
 
+        // TODO: spagehtti code
         assertEquals("Wrong order", "Bas: 5", game.endGame(game.team1).get(0));
         assertEquals("Not everyone added", 2, game.endGame(game.team1).size());
     }
@@ -165,7 +171,7 @@ public class GameTest {
         game.team1.setCorrectInstruction(2);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
         game.checkInstruction(p1.getPanels().get(0), p1);
-        assertEquals("gives incorrect time", 10, game.team1.getTime());
+        assertEquals("gives incorrect time", 9, game.team1.getTime());
     }
 
     /**
@@ -209,7 +215,7 @@ public class GameTest {
 
     @Test
     public void testRemovePlayer() throws Exception {
-        
+
     }
 
     /**
@@ -227,6 +233,10 @@ public class GameTest {
         assertNotEquals("Player didn't get a new panel", pan1 , p1.getPanels().get(1));
         game.checkInstruction(p1.getPanels().get(1), p1);
         assertEquals("Amount of correct instructions is not 0", 0, game.team1.getCorrectInstruction());
+    }
+
+    private void assertNotEquals(String s, Panel pan1, Panel panel) {
+        assertTrue(s, !pan1.equals(panel));
     }
 
 
@@ -267,4 +277,13 @@ public class GameTest {
         //Have to ask the teacher about this first before testing it
     }
 
+    @Test
+    public void testLoadPanels() throws Exception {
+        Game game = new Game(null);
+
+        boolean b = game.loadPanels();
+
+        assertTrue("No panels were loaded", b);
+
+    }
 }

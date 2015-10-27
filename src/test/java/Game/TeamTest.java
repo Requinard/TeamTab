@@ -28,7 +28,7 @@ public class TeamTest {
 
     @Before
     public void setUp() throws Exception {
-        g = new Game();
+        g = new Game(null);
         team = new Team(9,3);
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
@@ -166,7 +166,7 @@ public class TeamTest {
      */
     @Test
     public void testCheckForInstruction() {
-        Panel testPanel = new Panel(10, 1, "a", 0, 1, in1);
+        Panel testPanel = new Panel(10, 1, "a", 0, 1);
         assertFalse(team.checkTeamInstruction(testPanel));
     }
 

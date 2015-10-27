@@ -1,30 +1,43 @@
 package Game;
 
-import java.util.*;
+import gui.StageController;
+import org.apache.commons.io.IOUtils;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by HP user on 12-10-2015.
  */
 public class Game {
-
+    private final int STARTTIMEROUND = 90;
+    private final int STARTLEVENS = 3;
+    Team team1;
+    Team team2;
     private ArrayList<Team> teams;
     private ArrayList<Player> players;
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
-
-
-    Team team1;
-    Team team2;
-    private int timeRound;
+    private int timeRound =9;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
     private Player currentPlayer;
+    private Instruction instruction = null;
+    private StageController stageController;
 
-    public Game(){
-        final int STARTLEVENS = 3;
-        final int STARTTIMEROUND = 9;
-
+    /**
+     * Initialize a game
+     *
+     * @author David
+     */
+    public Game( StageController stageController){
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
@@ -32,13 +45,132 @@ public class Game {
 
         bonusCorrectInstructions = 3;
         substractCorrectInstructions = 5;
+        this.stageController = stageController;
 
         team1 = new Team(STARTTIMEROUND, STARTLEVENS);
         team2 = new Team(STARTTIMEROUND, STARTLEVENS);
 
         teams.add(team1);
         teams.add(team2);
+        // Load panels from CSV
+        loadPanels();
     }
+
+    //
+    // THE FUNCTIONS DECLARED HERE ARE ONLY FOR DEMO PURPOSE, THEY WILL BE REMOVED AFTER REAL DATA WILL BE AVAILABLE
+    // Author KAMIL
+    //
+
+    // de instantie van de betreffende game opvragen
+    public Game getGame () {
+        return this;
+    }
+    public boolean loadPanels() {
+        URL location = this.getClass().getClassLoader().getResource("panels.csv");
+
+
+        try (FileInputStream fileInputStream = new FileInputStream(location.getFile())) {
+            String full = IOUtils.toString(fileInputStream);
+
+            // go over each line
+            for (String s : full.split("\n")) {
+                // If we start with a hashtag the line is commented and we skip it
+                if (s.startsWith("#"))
+                    continue;
+
+                // get the individual lines
+                String[] split = s.split(",");
+
+                // Parse the strings
+                int id = Integer.parseInt(split[0].trim());
+                int type = Integer.parseInt(split[1].trim());
+                String text = split[2];
+                int min = Integer.parseInt(split[3].trim());
+                int max = Integer.parseInt(split[4].trim());
+
+                // Create the panels
+                Panel panel = new Panel(id, type, text, min, max);
+
+                panels.add(panel);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return panels.size() > 0;
+    }
+
+
+    // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
+    private void setUp(){
+        Panel panel = new Panel(1, 1, "Test", 0, 0);
+        Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
+        team2.addPlayerToTeam(a);
+        System.out.println("Game - Demo players are made and added to teams (setUp)");
+    }
+
+    // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
+    public List<Team> allTeams(){
+        System.out.println("Game - sire of ArrayList teams: " + teams.size());
+         return Collections.unmodifiableList(teams);
+    }
+
+    // een speler opvragen op basis van zijn naam
+    public Player getPlayerByName(String playerName){
+        for(Team t : teams){
+            for(Player p: t.getPlayers()){
+                if(p.getName().equals(playerName)){
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    // een nieuw team aanmaken
+    public boolean createTeam(String teamName){
+        Team newTeam = new Team(9, 3);
+        teams.add(newTeam);
+
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                System.out.println("Game - Team is created (createTeam)");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // een nieuwe speler aanmaken en deze aan de team toevoegen. Vervolgens de player instantie retourneren
+    public Player createAndGetThisPlayer(String playerName, String teamName){
+        Team getTeam = null;
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                getTeam = t;
+            }
+        }
+        Player newPlayer = new Player("localhost", playerName, 0, panels, instruction,this, getTeam);
+        System.out.println("Game - Player is created (createAndGetThisPlayer)");
+        return  newPlayer;
+    }
+
+    // een intantie van Team opvragen op basis van teamnaam
+    public Team getTeamByName(String teamName){
+        for(Team t : teams){
+            if(t.getName().equals(teamName)){
+                System.out.println("Game - Team is found and returned (getTeamByName)");
+                return t;
+            }
+        }
+        return null;
+    }
+
+    //
+    // END END END END
+    //
 
     /**
      * @Author Qun
@@ -59,7 +191,6 @@ public class Game {
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
-
     }
 
     /**
@@ -179,13 +310,7 @@ public class Game {
             teams.remove(team);
             endGame(team); // dit moet in de controller worden aangeroepen
             return true;
-        }
-        else if(team.substractLives()) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        } else return team.substractLives();
 
     }
 
@@ -212,6 +337,25 @@ public class Game {
         return true;
     }
 
+    /**
+     * Adding a player to a team
+     * @param p
+     * @param t
+     */
+    public void addPlayerToTeam(Player p, Team t){
+//        if (!t.addPlayerToTeam(p)){
+//            throw new IllegalArgumentException("Player can not be added to the team");
+//        }
+//        //p.setTeam(t); //aanpassing team set
+//        //ArrayList<Player> excitingPlayers = t.getPlayers(); //toch fout
+//        players.add(p);
+//        //t.setPlayers(excitingPlayers);
+
+        if(!t.isPlayerInTeam(p)){
+            System.out.println("Game - Player is added to the team (addPlayerToTeam)");
+            t.addPlayerToTeam(p);
+        }
+    }
 
 
     /**
@@ -225,10 +369,7 @@ public class Game {
         Team t = player.getTeam();
 
         if (t.checkTeamInstruction(changedPanel)) {
-            if (addTime(t))
-                return true;
-            else
-                return false;
+            return addTime(t);
         }
 
         else
