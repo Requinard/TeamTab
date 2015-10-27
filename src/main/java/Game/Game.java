@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.*;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
@@ -15,17 +16,20 @@ import java.util.Random;
  * Created by HP user on 12-10-2015.
  */
 public class Game {
-    Team team1;
-    Team team2;
     private ArrayList<Team> teams;
     private ArrayList<Player> players;
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
+
+
+    Team team1;
+    Team team2;
+    private int timeRound;
     private int timeRound =9;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
-    private Instruction instruction;
+    private Player currentPlayer;
 
     /**
      * Initialize a game
@@ -33,17 +37,19 @@ public class Game {
      * @author David
      */
     public Game(){
+        final int STARTLEVENS = 3;
+        final int STARTTIMEROUND = 9;
+
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
         panels = new ArrayList<Panel>();
 
-        // waarom worden hier 2 teams aangemaakt en de regel eronder dezelfde teams met waarden. onlogisch.
-        team1 = new Team(0, 0, 0, "Team1");
-        team2 = new Team(0, 0, 0, "Team2");
+        bonusCorrectInstructions = 3;
+        substractCorrectInstructions = 5;
 
-        team1 = new Team(timeRound, 3, 0, "Team1");
-        team2 = new Team(timeRound, 3, 0, "Team2");
+        team1 = new Team(STARTTIMEROUND, STARTLEVENS);
+        team2 = new Team(STARTTIMEROUND, STARTLEVENS);
 
         teams.add(team1);
         teams.add(team2);
@@ -169,47 +175,58 @@ public class Game {
     //
 
     /**
+     * @Author Qun
      * Is called at the beginning of the game
      * Check if both teams have the same amount of players
-     * @return true if they are the same
+     * @return the player for which the game starts
      */
-    public boolean startGame(){
+    public Player startGame(Player player){
+        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstructions(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
-            // Geeft de teams die meedoen panels
+            // Panels are given to the teams that compete
+            return currentPlayer;
 
-            // demo method KAMIL
-
-            setUp();
-
-            // END
-
-            System.out.println("Game - Game has started (startGame())");
-            return true;
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
     }
 
     /**
-     * Een nieuwe ronde dient gestart te worden wanneer een van de twee teams een leven verliest
-     * Alle waardes in de game worden dan vervolgens gereset
+     * Call this method to start a new round
+     * Every value in the game gets a reset
+     * Every Team receives new panels
+     * @Author Qun
+     * @return a new Round
      */
-    public void newRound(){
-        // Terug zetten van standaard waardes
+    public boolean newRound(){
+        // returns default values
         reset();
+        for(Team team : teams)
+        {
+            team.setPlayerPanels(panels);
+        }
+        return false;
     }
 
     /**
-     *
-     * @param winningTeam The team that won the game
+     * In game.subtractlives the team that loses is deleted
+     * from the list of teams.
+     * Method checks if the size of team is <= 1 if this
+     * is true the team wins the game.
+     * @param team The team that won the game
      * @return a list of players from the winning team + there score
      */
-    public ArrayList<String> endGame(Team winningTeam){
-
-        // Sorteren van de spelers op score
+    public ArrayList<String> endGame(Team team){
+        // Sorts the players by score
         playerScores = new ArrayList<String>();
-        ArrayList<Player> sortedWinningTeam = winningTeam.sortedPlayerByScore();
+        List<Player> sortedWinningTeam = team.sortedPlayerByScore();
+
+        if (teams.size() <= 1)
+            playerScores.add("You won!");
+        else
+            playerScores.add("You lost!");
+
         if (sortedWinningTeam != null) {
             for (Player p : sortedWinningTeam) {
                 playerScores.add(p.getName() + ": " + p.getScore());
@@ -222,99 +239,106 @@ public class Game {
     }
 
     /**
-     * When joinin a lobby the joinen player is set into the team with the least amount of players
-     *
+     * When joining a lobby the joined player is set into the team with the least amount of players
+     * @Author Kaj
      * @param player De player that is joining the lobby
-     *
+     * @return true or false depending on if adding player to team is succesful
      */
-    public void addPlayerToTeam(Player player){
-        // Automatisch toevoegen van spelers aan een team wanneer ze de lobby joinen
-        if(teams.get(0).getPlayers().size() <= teams.get(1).getPlayers().size())
-        {
-            player.setTeam(team1);
-            team1.addPlayerToTeam(player);
-        }else {
-            player.setTeam(team2);
-            team2.addPlayerToTeam(player);
+    public boolean addPlayerToTeam(Player player){
+        // Adds players automaticly to a team when they join a lobby
+        Team team = null;
+        teams.size();
+        for(int i=0; i<teams.size()-1; i++){
+            team = teams.get(i);
+            if (teams.get(i).getPlayers().size() > teams.get(i+1).getPlayers().size()){
+                team = teams.get(i+1);
+            }
         }
+        return team.addPlayerToTeam(player);
     }
 
     /**
      * Changing the player to the other team
+     *
+     * @Author Kaj
      * @param player The player that wants to join the other team
+     * @Return true when changing team is succesful
      */
-    public  void changeTeam(Player player){
+    public boolean changeTeam(Player player){
+        Team currentTeam = player.getTeam();
 
-        if (team1.getPlayers().contains(player)) {
-            // Speler wordt toegevoegd aan team 2
-            if (team1.removePlayer(player)) {
-                player.setTeam(team2);
-                team2.addPlayerToTeam(player);
+        int idTeam = teams.indexOf(currentTeam);
+        if (currentTeam.removePlayer(player)){
+            if (idTeam+1 < teams.size()) {
+                return teams.get(idTeam+1).addPlayerToTeam(player);
+            }else {
+                return teams.get(0).addPlayerToTeam(player);
             }
-
-            else
-                throw new IllegalArgumentException("Player is not able to join other team");
+        }else {
+            return false;
         }
-
-        else {
-            // Speler wordt toegevoegd aan team 1
-            if (team2.removePlayer(player)) {
-                player.setTeam(team1);
-                team1.addPlayerToTeam(player);
-            }
-            else
-                throw new IllegalArgumentException("Player is not able to join other team");
-
-        }
-
     }
-
-
 
     /**
      * When a team reaches a certain winstreak the game checks if they should recieve bonus time
-     * @param tm The team that gets checked
+     * @author Frank Hartman
+     * @param team The team that gets checked
      */
-    private void addTime(Team tm){
-
-        if (tm.getCorrectInstruction() == bonusCorrectInstructions){
-
-            tm.setTime(tm.getTime() + 1);
-        }
-    }
-
-    /**
-     * When the team has las then 3 seconds it should lose a life
-     * @param losingTeam The team that gets a check if the should lose a life
-     */
-    public boolean subtractLives(Team losingTeam){
-        if (losingTeam.getTime() <= 3){
-            losingTeam.setLives(losingTeam.getLives() - 1);
-
-            if (losingTeam.getLives() <= 0)
-                // Game is over
-                if (losingTeam.equals(team1)) {
-                    endGame(team2);
-                }
-                else
-                    endGame(team1);
-            else{
-                // Team lost the round a new round should be started
-                newRound();
-            }
+    private boolean addTime(Team team){
+        if (team.getCorrectInstruction() == bonusCorrectInstructions){
+            int maxTime = 9;
+            int addTime = 1;
+            team.addTeamTime(addTime, maxTime);
             return true;
         }
         return false;
     }
 
     /**
+     * When the team has less than 3 seconds they lose a life
+     * if  they have 0 lives that teams game is ended
+     * @Author Qun
+     * @param team The team that gets a check if they should lose a life
+     * @return true if the live of the team is subtracted
+     */
+    public boolean subtractLives(Team team){
+        if(team.substractLives() && team.getLives() <= 0) {
+            teams.remove(team);
+            endGame(team); // dit moet in de controller worden aangeroepen
+            return true;
+        }
+        else if(team.substractLives()) {
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        /*
+        if(team.substractLives())
+        {
+            if (team.getLives() <= 0) {
+                endGame(team);
+                teams.remove(team);
+            }
+            else{
+                newRound();
+            }
+            return true;
+        }
+        return false;
+        */
+    }
+
+    /**
      * If the team has a certain winstreak the other them should get less time for there upcomming instructions
      * @param currentTeam The team that gets checked
+     * @return true when time has been substracted succesfully
      */
-    public void subtractTime(Team currentTeam){
+    public boolean subtractTime(Team currentTeam){
 
         for (Team t : teams) {
-            // Checken of het teamm genoeg correcte antwoorden behaald heeft
+            // Check if the team has got enough correct awnsers
             if (!t.equals(currentTeam) && currentTeam.getCorrectInstruction() >= substractCorrectInstructions){
                 Team otherTeam = t;
                 // Other team gets a time penalty
@@ -326,7 +350,7 @@ public class Game {
                 break;
             }
         }
-
+        return true;
     }
 
     /**
@@ -352,65 +376,81 @@ public class Game {
 
     /**
      * Check if the executed instrucctions was correct and give the player a new one
-     * @param donePanel The panel that has been pressed
+     * @Author Qun
+     * @param changedPanel The panel that has been pressed
      * @param player The player that gets checked
+     * @Return true when the instruction is correct, false when instruction is wrong
      */
-    public void addCorrectInstruction(Panel donePanel, Player player){ //player kan gevonden worden door op panel te zoeken
+    public boolean checkInstruction(Panel changedPanel, Player player){ //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
-        int currentCorrect = t.getCorrectInstruction();
 
-
-        for (Player p : t.getPlayers()) {
-
-            if (p.checkCorrectPanel(donePanel)) {
-
-                t.setCorrectInstruction(currentCorrect + 1);
-                //givePlayerInstructions(p); QUN LET OP weg gehaald, omdat hij errored maar niet nodig is voor mijn test
-                addTime(t);
-            } else
-                t.setCorrectInstruction(0);
+        if (t.checkTeamInstruction(changedPanel)) {
+            if (addTime(t))
+                return true;
+            else
+                return false;
         }
+
+        else
+            return false;
+
     }
 
     /**
      * Reset values from both teams
+     * @return true when resetting team is succesful else false
      */
-    public void reset(){
+    private boolean reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
-            t.resetTeam();
+            if (!t.resetTeam()){
+                return false;
+            }
         }
-        System.out.println("Game - Teams are reset (reset())");
+        return true;
     }
 
     /**
-     * FRANK: SAMEN MET KAMIL NAAR KIJKEN
-     * @param player De speler die een nieuwe instructie moet krijgen
+     * Gives a player a new instruction
+     * @param player The player that needs a new instruction
      */
-    private void givePlayerInstructions(Player player) {
+    private Instruction givePlayerInstructions(Player player) {
         Team playerTeam = player.getTeam();
         int maxSize = playerTeam.getPlayerPanels().size();
         Random random = new Random();
-        // Panels die in gebruik zijn
+        // Panels that are in use
         ArrayList<Panel> usedPanelNumbers = new ArrayList<Panel>();
-        // Panels die niet in gebruik zijn en waar dus uit gekozen mag worden
+        // Panels that are not in use and that cannot be chosen
         ArrayList<Panel> unusedPanelNumbers = playerTeam.getPlayerPanels();
 
-        // Haalt alle panels op die op dit moment gebruikt worden door de speler uit het team
+        // Gets all the panels wich are used by the team of the player
         for (Player p : playerTeam.getPlayers()) {
             usedPanelNumbers.add(p.getInstructions().getPanel());
         }
 
-        // Verwijdert de panels die gebruikt worden zodat alleen de panels overblijven die nog niet gebruikt worden
+        // Removes all the panels that are in use so only the available panels remain
         for (Panel p : usedPanelNumbers) {
             unusedPanelNumbers.remove(p);
         }
 
-        // Een random panel wordt gekozen uit de lijst met panels
+        // gets a random panel from the list of panels
         Panel panel = unusedPanelNumbers.get(random.nextInt(maxSize));
 
-        // Voegt de random instructie toe aan de speler
-    //    player.setInstructions(panel.getInstruction());
+        // Add the random instruction to the player
+        Instruction instuction = panel.getInstruction();
+        player.setInstructions(instuction);
 
+        // Returns the instruction
+        return instuction;
+    }
+
+    /**
+     * Returns the panels from the player
+     * @param player
+     * @return playerPanels
+     */
+    private ArrayList<Panel> returnPanelsPlayer(Player player)
+    {
+        return player.getPanels();
     }
 }

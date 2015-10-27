@@ -17,36 +17,48 @@ public class Instruction {
     }
 
     /**
-    * @Returns the panel which is linked to the instruction
-    * */
+     * sets panel for the player
+     * @param panel
+     */
     public void setPanel(Panel panel) {
         this.panel = panel;
     }
 
+    /**
+     * Gets the panel from the player
+     * @return the panel
+     */
     public Panel getPanel() {
         return panel;
     }
 
     /**
-     * @Returns the commando the player has to execute
+     * Returns the command the player has to execute
+     * @return the commando
      */
-
     public String getCommando() {
         return commando;
     }
 
+
     /**
-    * @Returns the value of the instruction
-    * it checks if it is true or false
+     * Returns the value of the instruction
+     * @return instruction value
      */
     public int getNewValue() {return newValue;}
 
 
-
-
+    /**
+     * Returns the commando the player has to execute
+     * @author Frank Hartman
+     * @return the tostring commando
+     */
     @Override
     public String toString() {
-        return "Voer het commando : " + commando + " uit ";
+        if (panel != null)
+            return commando + " : " + panel.getText();
+        else
+            return commando;
     }
 
 
