@@ -1,31 +1,27 @@
 package gui;
 
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
+import Game.Game;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import Game.Game;
 
 /**
  * Created by Kevin on 5-10-2015.
  */
 public class StageController {
 
+    static String playerName;
     Stage stage;
     IView currentView;
     Thread gameThread;
     Game game;
-    static String playerName;
 
     public StageController(Stage primaryStage) {
 
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
-        game = new Game();
+        game = new Game(this);
 
     }
 

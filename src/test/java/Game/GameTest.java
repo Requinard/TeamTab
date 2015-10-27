@@ -1,6 +1,5 @@
 package Game;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.*;
 
 /**
  * Created by david on 12-10-15.
@@ -32,7 +30,7 @@ public class GameTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game();
+        game = new Game(null);
 
         pan1 = new Panel(1, 1, "a", 0, 1);
         pan2 = new Panel(2, 1, "b", 0, 1);
@@ -265,7 +263,7 @@ public class GameTest {
 
     @Test
     public void testLoadPanels() throws Exception {
-        Game game = new Game();
+        Game game = new Game(null);
 
         boolean b = game.loadPanels();
 

@@ -1,13 +1,12 @@
 package Game;
 
+import gui.StageController;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import gui.StageController;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +16,8 @@ import java.util.Random;
  * Created by HP user on 12-10-2015.
  */
 public class Game {
+    private final int STARTTIMEROUND = 90;
+    private final int STARTLEVENS = 3;
     Team team1;
     Team team2;
     private ArrayList<Team> teams;
@@ -29,18 +30,13 @@ public class Game {
     private int substractCorrectInstructions;
     private Player currentPlayer;
     private Instruction instruction = null;
+    private StageController stageController;
 
     /**
      * Initialize a game
      *
      * @author David
      */
-    public Game(){
-        final int STARTLEVENS = 3;
-        final int STARTTIMEROUND = 9;
-
-    private StageController stageController;
-
     public Game( StageController stageController){
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();

@@ -30,7 +30,7 @@ public class PlayerTest {
      */
     @Before
     public void setUp() throws Exception {
-        game = new Game();
+        game = new Game(null);
         team = new Team(9, 3);
         instruction1 = new Instruction(pan1, "Click on", 0);
         instruction2 = new Instruction(pan2, "Click off", 1);
