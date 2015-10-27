@@ -37,7 +37,7 @@ public class GameTest {
      */
     @Before
     public void setUp() throws Exception {
-        g  = new Game();
+        game = new Game();
 
         pan1 = new Panel(1, 1, "a", 0, 1);
         pan2 = new Panel(2, 1, "b", 0, 1);
@@ -54,7 +54,7 @@ public class GameTest {
         p2 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
         //t1 = new Team(1, 1, 1);
         time= 0;
-        p3 = new Panel(3, 1, "Press it down", 0, 1, null);
+        p3 = new Panel(3, 1, "Press it down", 0, 1);
     }
 
     @After
@@ -116,6 +116,7 @@ public class GameTest {
     public void testEndGame() throws Exception {
         game.addPlayerToTeam(p1);
         game.addPlayerToTeam(p2);
+        // todo: wtf is dit voor spaghetti code wat gebeurt er hier
         assertEquals("Gives the wrong score", "You lost!", game.endGame(game.team1).get(0));
         assertEquals("Gives the wrong score", "You won!", game.endGame(game.team2).get(0));
 
@@ -126,6 +127,7 @@ public class GameTest {
         Player p3 = new Player("1.2.3.4","Bas",5,pal, null, game,null);
         game.addPlayerToTeam(p3);
 
+        // TODO: spagehtti code
         assertEquals("Wrong order", "Bas: 5", game.endGame(game.team1).get(0));
         assertEquals("Not everyone added", 2, game.endGame(game.team1).size());
     }
@@ -172,7 +174,7 @@ public class GameTest {
         game.team1.setCorrectInstruction(2);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
         game.checkInstruction(p1.getPanels().get(0), p1);
-        assertEquals("gives incorrect time", 10, game.team1.getTime());
+        assertEquals("gives incorrect time", 9, game.team1.getTime());
     }
 
     /**

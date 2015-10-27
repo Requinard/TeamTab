@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.*;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
@@ -16,20 +15,18 @@ import java.util.Random;
  * Created by HP user on 12-10-2015.
  */
 public class Game {
+    Team team1;
+    Team team2;
     private ArrayList<Team> teams;
     private ArrayList<Player> players;
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
-
-
-    Team team1;
-    Team team2;
-    private int timeRound;
     private int timeRound =9;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
     private Player currentPlayer;
+    private Instruction instruction = null;
 
     /**
      * Initialize a game
@@ -108,7 +105,6 @@ public class Game {
     // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
     private void setUp(){
         Panel panel = new Panel(1, 1, "Test", 0, 0);
-        instruction = new Instruction(panel, "Test", 0);
         Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
         team2.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
@@ -134,7 +130,7 @@ public class Game {
 
     // een nieuw team aanmaken
     public boolean createTeam(String teamName){
-        Team newTeam = new Team(9,3,0,teamName);
+        Team newTeam = new Team(9, 3);
         teams.add(newTeam);
 
         for(Team t : teams){
@@ -306,13 +302,7 @@ public class Game {
             teams.remove(team);
             endGame(team); // dit moet in de controller worden aangeroepen
             return true;
-        }
-        else if(team.substractLives()) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        } else return team.substractLives();
 
         /*
         if(team.substractLives())
@@ -385,10 +375,7 @@ public class Game {
         Team t = player.getTeam();
 
         if (t.checkTeamInstruction(changedPanel)) {
-            if (addTime(t))
-                return true;
-            else
-                return false;
+            return addTime(t);
         }
 
         else

@@ -56,11 +56,11 @@ public class StartViewController implements Initializable {
                 } else {
                     String teamName = teamNameTextField.getText();
                     System.out.println("StartView - Teamname is set to: " + teamName);
-                    view.stageController.game.startGame();
+//TODO: wtf?                    view.stageController.game.startGame();
                     view.stageController.game.createTeam(teamName);
                     // Bij het aanmaken van de player wordt deze al in een team gestopt.
                     // Of liever via losse methoden werken???
-                    Player newPlayer = view.stageController.game.createAndGetThisPlayer(view.stageController.playerName, teamName);
+                    Player newPlayer = view.stageController.game.createAndGetThisPlayer(StageController.playerName, teamName);
 
                     Team teamByTeamName = view.stageController.game.getTeamByName(teamName);
                     view.stageController.game.addPlayerToTeam(newPlayer,teamByTeamName);
@@ -80,7 +80,6 @@ public class StartViewController implements Initializable {
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                view.stageController.game.reset();
                 Platform.runLater(new Runnable() {
                     public void run() {
                         MainView mainView = new MainView((view.stageController));

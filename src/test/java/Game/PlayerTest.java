@@ -1,14 +1,13 @@
 package Game;
 
-import javafx.scene.layout.Pane;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by david on 12-10-15.
@@ -35,8 +34,8 @@ public class PlayerTest {
         team = new Team(9, 3);
         instruction1 = new Instruction(pan1, "Click on", 0);
         instruction2 = new Instruction(pan2, "Click off", 1);
-        pan1 = new Panel(1, 1, "a", 0, 1, instruction1);
-        pan2 = new Panel(2, 1, "b", 0, 1, instruction2);
+        pan1 = new Panel(1, 1, "a", 0, 1);
+        pan2 = new Panel(2, 1, "b", 0, 1);
         instruction1.setPanel(pan1);
         instruction2.setPanel(pan2);
         panels = new ArrayList<Panel>();
