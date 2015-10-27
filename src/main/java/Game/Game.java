@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import gui.StageController;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +39,9 @@ public class Game {
         final int STARTLEVENS = 3;
         final int STARTTIMEROUND = 9;
 
+    private StageController stageController;
+
+    public Game( StageController stageController){
         teams = new ArrayList<Team>();
         players = new ArrayList<Player>();
         instructions = new ArrayList<Instruction>();
@@ -44,6 +49,7 @@ public class Game {
 
         bonusCorrectInstructions = 3;
         substractCorrectInstructions = 5;
+        this.stageController = stageController;
 
         team1 = new Team(STARTTIMEROUND, STARTLEVENS);
         team2 = new Team(STARTTIMEROUND, STARTLEVENS);

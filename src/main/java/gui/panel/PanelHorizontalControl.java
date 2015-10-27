@@ -35,6 +35,9 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     public void setTextField(String txt){
         textField.setText(txt);
     }
+    public void setHorizontalSlider(double sliderValue){
+        horizontalSlider.setValue(sliderValue);
+    }
     public double getSlidervalue(){
         return horizontalSlider.getValue();
     }

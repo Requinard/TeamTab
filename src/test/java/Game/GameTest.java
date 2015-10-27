@@ -1,5 +1,6 @@
 package Game;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by david on 12-10-15.
@@ -28,13 +30,6 @@ public class GameTest {
     Instruction in3;
     Panel p3;
 
-    /**
-     * Sets up the test class
-     *
-     * @throws Exception
-     * @author David
-     * @note Removed instruction because panels are no longer initialized with an instruction
-     */
     @Before
     public void setUp() throws Exception {
         game = new Game();
@@ -218,7 +213,7 @@ public class GameTest {
 
     @Test
     public void testRemovePlayer() throws Exception {
-        
+
     }
 
     /**

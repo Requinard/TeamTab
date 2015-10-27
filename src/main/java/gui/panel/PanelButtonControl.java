@@ -28,7 +28,7 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
 
     }
 
-    @FXML protected void btnClick() {
+    @FXML public void btnClick() {
         System.out.println("The button was clicked!");
     }
     public String getText(){

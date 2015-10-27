@@ -34,6 +34,9 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     public void setTextField(String txt){
         textField.setText(txt);
     }
+    public void setVerticalSlider(double sliderValue){
+        verticalSlider.setValue(sliderValue);
+    }
     public double getSlidervalue(){
         return verticalSlider.getValue();
     }
