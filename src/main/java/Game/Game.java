@@ -47,8 +47,8 @@ public class Game {
         substractCorrectInstructions = 5;
         this.stageController = stageController;
 
-        team1 = new Team(STARTTIMEROUND, STARTLEVENS);
-        team2 = new Team(STARTTIMEROUND, STARTLEVENS);
+        team1 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team1");
+        team2 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team2");
 
         teams.add(team1);
         teams.add(team2);
@@ -102,11 +102,10 @@ public class Game {
 
         return panels.size() > 0;
     }
-
-
     // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
     private void setUp(){
         Panel panel = new Panel(1, 1, "Test", 0, 0);
+        instruction = new Instruction(panel, "Test", 0);
         Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
         team2.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
@@ -115,7 +114,7 @@ public class Game {
     // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
     public List<Team> allTeams(){
         System.out.println("Game - sire of ArrayList teams: " + teams.size());
-         return Collections.unmodifiableList(teams);
+        return Collections.unmodifiableList(teams);
     }
 
     // een speler opvragen op basis van zijn naam
@@ -132,7 +131,7 @@ public class Game {
 
     // een nieuw team aanmaken
     public boolean createTeam(String teamName){
-        Team newTeam = new Team(9, 3);
+        Team newTeam = new Team(9,3,0,teamName);
         teams.add(newTeam);
 
         for(Team t : teams){
@@ -179,6 +178,9 @@ public class Game {
      * @return the player for which the game starts
      */
     public Player startGame(Player player){
+        // setup voor demo spelers
+        setUp();
+        //
         currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstructions(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
@@ -389,7 +391,7 @@ public class Game {
      * Reset values from both teams
      * @return true when resetting team is succesful else false
      */
-    private boolean reset(){
+    public boolean reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
             if (!t.resetTeam()){
