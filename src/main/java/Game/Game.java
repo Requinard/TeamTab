@@ -63,17 +63,18 @@ public class Game {
      * Call this method to start a new round
      * Every value in the game gets a reset
      * Every Team receives new panels
-     * @Author Qun
+     * @Author this method always returns false. Changed it to a void method
      * @return a new Round
      */
-    public boolean newRound(){
+    public void newRound(){
         // returns default values
         reset();
         for(Team team : teams)
         {
             team.setPlayerPanels(panels);
         }
-        return false;
+
+        //return false;
     }
 
     /**
@@ -247,18 +248,17 @@ public class Game {
     }
 
     /**
+     * @Author Qun ik snap niet wanneer het fout kan gaan ? Misschien bij starttime setten in resetTeam() ?
+     * Nu aangepast zodat het een void is.
      * Reset values from both teams
      * @return true when resetting team is succesful else false
      */
-    private boolean reset(){
+    private void reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
-            if (!t.resetTeam()){
-                return false;
+             t.resetTeam();
             }
         }
-        return true;
-    }
 
     /**
      * Gives a player a new instruction
