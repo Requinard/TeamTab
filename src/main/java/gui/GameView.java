@@ -51,4 +51,5 @@ public class GameView extends AbstractView implements IView {
         stageController.loadScene(scene);
         return true;
     }
+
 }

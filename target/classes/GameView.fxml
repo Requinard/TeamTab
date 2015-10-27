@@ -10,18 +10,25 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-     <ImageView>
-       <image>
-         <Image url="@images/GameScreen/GameScreen.jpg" />
-       </image>
-     </ImageView>
-<ImageView fitHeight="115.0" fitWidth="378.0" focusTraversable="false" layoutX="442.0" layoutY="785.0" smooth="true" visible="true">
- <image>
-   <Image url="@images/GameScreen/Start.jpg" />
- </image>
-</ImageView>
-     <Button fx:id="buttonStart" ellipsisString="..." layoutX="394.0" layoutY="798.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
-   </children>
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <ImageView>
+      <image>
+        <Image url="@images/GameScreen/GameScreen.jpg" />
+      </image>
+    </ImageView>
+    <GridPane layoutX="136.0" layoutY="365.0" prefHeight="598.0" prefWidth="999.0" fx:id="gridPane">
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+  </children>
 </AnchorPane>
