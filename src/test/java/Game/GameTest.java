@@ -139,6 +139,9 @@ public class GameTest {
     @Test
     public void testNewRound() throws Exception {
         game.newRound();
+        Game game2 = new Game(null);
+        game2.newRound();
+
         //mogelijk nog uitgebreid
     }
 
@@ -195,17 +198,18 @@ public class GameTest {
      * @throws Exception
      */
     @Test
-    public void testAddTime() throws Exception {
+    public void testAddTimeAndCheckInstruction() throws Exception {
         game.addPlayerToTeam(player1);
         game.addPlayerToTeam(player2);
         game.team1.setCorrectInstruction(2);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
 
-        //Er is geen correcte instructie
+        //Create a panel that gets the right instruction so it can be checked
         Panel testPanel = player1.getInstruction().getPanel();
         int testPanelValue = player1.getInstruction().getValue();
         testPanel.setCurrent(testPanelValue);
 
+        //Test correct instruction
         game.checkInstruction(testPanel, player1);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
 
@@ -213,12 +217,49 @@ public class GameTest {
         game.team1.setTime(8);
         game.team1.setCorrectInstruction(2);
 
+        //Create a panel that gets the right instruction so it can be checked
         Panel testPanel2 = player1.getInstruction().getPanel();
         int testPanelValue2 = player1.getInstruction().getValue();
-        testPanel.setCurrent(testPanelValue);
+        testPanel.setCurrent(testPanelValue2);
 
+        //Test correct instruction
         game.checkInstruction(testPanel2,player1);
         assertEquals("No bonustime added",9, game.team1.getTime());
+
+        //Test addTime so it returns a false. Now it doesn't add bonustime
+        game.team1.setTime(8);
+        game.team1.setCorrectInstruction(1);
+
+        //Create a panel that gets the right instruction so it can be checked
+        Panel testPanel3 = player1.getInstruction().getPanel();
+        int testPanelValue3 = player1.getInstruction().getValue();
+        testPanel.setCurrent(testPanelValue3);
+
+        //Test correct instruction
+        game.checkInstruction(testPanel3,player1);
+        assertEquals("No bonustime added",8, game.team1.getTime());
+
+        //Create a new panel which doesn't exist yet
+        Panel testPanel4 = new Panel(51,1,"Self-Destruct",1,2);
+        int testPanelValue4 = player1.getInstruction().getValue()+1;
+
+        testPanel.setCurrent(testPanelValue4);
+
+        //Test incorrect instruction with a wrong panel
+        boolean testWrongInstruction = game.checkInstruction(testPanel4,player1);
+        assertEquals("The instruction is correct",false , testWrongInstruction);
+
+        //Create a panel that gets the wrong instruction so it can be checked
+        Panel testPanel5 = player1.getInstruction().getPanel();
+        int testPanelValue5 = player1.getInstruction().getValue()+1;
+
+        testPanel.setCurrent(testPanelValue5);
+
+        //Test incorrect instruction
+        boolean testWrongInstruction2 = game.checkInstruction(testPanel5,player1);
+        assertEquals("The instruction is correct",false , testWrongInstruction);
+
+
 
     }
 

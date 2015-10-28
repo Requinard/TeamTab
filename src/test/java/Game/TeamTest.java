@@ -149,7 +149,6 @@ public class TeamTest {
         // Make sure the time is not more than the maximum amount of time
         assertTrue(team.addTeamTime(2, 9));
         assertEquals(9, team.getTime());
-
     }
 
     /**

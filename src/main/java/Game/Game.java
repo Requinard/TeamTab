@@ -381,18 +381,19 @@ public class Game {
     }
 
     /**
-     * @Author Qun ik snap niet wanneer het fout kan gaan ? Misschien bij starttime setten in resetTeam() ?
+     * @Author Qun ik snap niet wanneer het fout kan gaan ?
      * Nu aangepast zodat het een void is.
      * Reset values from both teams
      * @return true when resetting team is succesful else false
      */
     private boolean reset(){
+        boolean teamHasBeenReset = false;
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
              t.resetTeam();
-            return true;
+            teamHasBeenReset = true;
             }
-        return false;
+        return teamHasBeenReset;
         }
 
     /**
