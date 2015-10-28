@@ -82,6 +82,6 @@ public class PanelTest {
 
     @Test
     public void testPanel() {
-        Panel panel = new Panel(1, )
+        //Panel panel = new Panel(1, )
     }
 }

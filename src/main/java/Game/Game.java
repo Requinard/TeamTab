@@ -64,6 +64,7 @@ public class Game {
     public Game getGame () {
         return this;
     }
+
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
@@ -74,7 +75,7 @@ public class Game {
             // go over each line
             for (String s : full.split("\n")) {
                 // If we start with a hashtag the line is commented and we skip it
-                if (s.startsWith("#"))
+                if (s.startsWith("#")||s.equals("\r"))
                     continue;
 
                 // get the individual lines
