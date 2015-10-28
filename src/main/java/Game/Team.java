@@ -134,7 +134,6 @@ public class Team {
         for(Player player : players)
         {
             // Loop through all the panels in the game
-            for(Panel panel : allPanelsForTeam){
 
             for (int i = 0 ; i <12 ; i++)
             {
@@ -152,7 +151,7 @@ public class Team {
                 player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
             }
 
-        }
+
     return true;
     }
 
