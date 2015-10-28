@@ -80,8 +80,8 @@ public class PanelTest {
         //assertEquals(instruction1, panel1.getInstruction());
     }
 
-    @Test
-    public void testPanel() {
-        Panel panel = new Panel(1, )
-    }
+    //@Test
+    //public void testPanel() {
+    //    Panel panel = new Panel(1, )
+    //}
 }
