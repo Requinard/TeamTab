@@ -62,7 +62,7 @@ public class Player implements Comparable<Player>{
      * Return the instructions assigned to the player
      * @return the instructions
      */
-    public Instruction getInstructions() {
+    public Instruction getInstruction() {
         return this.instructions;
     }
 

@@ -1,6 +1,8 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Qun on 12-10-2015.
@@ -61,5 +63,27 @@ public class Instruction {
             return commando;
     }
 
+    /**
+     * Change the current instruction to a new instruction
+     * @param playerPanels The panels of the player that should get a new instruction
+     * @author Frank Hartman
+     */
+    public boolean createNewInstruction(ArrayList<Panel> playerPanels) {
+        Random random = new Random();
+        try {
 
+            Panel instructionPanel = playerPanels.get(random.nextInt(playerPanels.size()));
+            this.panel = instructionPanel;
+            this.commando = "Change to";
+            this.value = random.nextInt(panel.getMax());
+            System.out.println("Player gets a new commando");
+            return true;
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+    }
 }

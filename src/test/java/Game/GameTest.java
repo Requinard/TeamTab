@@ -83,7 +83,7 @@ public class GameTest {
         assertEquals("not all player panels added", 0, game.team2.getPlayerPanels().size());
         assertEquals(p1.getName(), currentPlayer.getName());
         assertEquals(p1.getGame(), currentPlayer.getGame());
-        assertEquals(p1.getInstructions(), currentPlayer.getInstructions());
+        assertEquals(p1.getInstruction(), currentPlayer.getInstruction());
         assertEquals(p1.getIpAdress(), currentPlayer.getIpAdress());
         assertEquals(p1.getScore(), currentPlayer.getScore());
         assertEquals(p1.getPanels(), currentPlayer.getPanels());

@@ -1,7 +1,5 @@
 package Game;
 
-import com.sun.javafx.UnmodifiableArrayList;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -274,16 +272,35 @@ public class Team {
     public boolean checkTeamInstruction(Panel changedPanel) {
         for (Player p : players) {
 
-            if (p.checkCorrectPanel(changedPanel)) {
-                correctInstruction++;
-                p.addScore();
-                return true;
-            } else {
-                correctInstruction = 0;
-                return false;
+            // Check if the panel belongs to the player
+            if (p.getInstruction().getPanel().equals(changedPanel)) {
+                // Check if the value is correct
+                if (p.checkCorrectPanel(changedPanel)) {
+                    correctInstruction++;
+                    p.addScore();
+                    // Give the player a new instruction
+                    newInstruction(p);
+                    return true;
+                } else {
+                    correctInstruction = 0;
+                    // Give the player a new instruction
+                    newInstruction(p);
+                    return false;
+                }
             }
+
         }
         return false;
+    }
+
+    /**
+     * Give the player a new instruction
+     * @param player The player that gets a new instruction
+     */
+    private void newInstruction(Player player) {
+        // Give the player a new instruction
+        Instruction playerInstruction = player.getInstruction();
+        playerInstruction.createNewInstruction(player.getPanels());
     }
 
     /**
