@@ -405,7 +405,7 @@ public class Game {
      * Gives a player a new instruction
      * @param player The player that needs a new instruction
      */
-    private Instruction givePlayerInstructions(Player player) {
+    public Instruction givePlayerInstructions(Player player) {
         Team playerTeam = player.getTeam();
         int maxSize = playerTeam.getPlayerPanels().size();
         Random random = new Random();
