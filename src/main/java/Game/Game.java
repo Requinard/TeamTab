@@ -15,7 +15,7 @@ import java.util.List;
  * Created by HP user on 12-10-2015.
  */
 public class Game {
-    private final int STARTTIMEROUND = 90;
+    private final int STARTTIMEROUND = 9;
     private final int STARTLEVENS = 3;
     Team team1;
     Team team2;

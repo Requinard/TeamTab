@@ -6,8 +6,11 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 /**
  * Created by david on 12-10-15.
@@ -40,14 +43,17 @@ public class GameTest {
     Instruction in3;
     Panel p3;
 
+    String commando;
+    String commando1;
+
     @Before
     public void setUp() throws Exception {
         game = new Game(null);
 
         pan1 = new Panel(1, 1, "a", 0, 1);
         pan2 = new Panel(2, 1, "b", 0, 1);
-        in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
-        in2 = new Instruction(pan2, "Click off", 1);
+        in1 = new Instruction(pan1, "Click on", 1); //newvalue moet nog in de game logic afgehandeld worden
+        in2 = new Instruction(pan2, "Click off", 0);
         pan1 = new Panel(1, 1, "a", 0, 1);
         pan2 = new Panel(2, 1, "b", 0, 1);
         pan3 = new Panel(3, 1, "b", 0, 1);
@@ -206,8 +212,26 @@ public class GameTest {
         game.addPlayerToTeam(player2);
         game.team1.setCorrectInstruction(2);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
-        game.checkInstruction(player1.getPanels().get(0), player1);
+
+        //Er is geen correcte instructie
+        Panel testPanel = player1.getInstruction().getPanel();
+        int testPanelValue = player1.getInstruction().getValue();
+        testPanel.setCurrent(testPanelValue);
+
+        game.checkInstruction(testPanel, player1);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
+
+        //Test if bonustime is added. Set time to 8
+        game.team1.setTime(8);
+        game.team1.setCorrectInstruction(2);
+
+        Panel testPanel2 = player1.getInstruction().getPanel();
+        int testPanelValue2 = player1.getInstruction().getValue();
+        testPanel.setCurrent(testPanelValue);
+
+        game.checkInstruction(testPanel2,player1);
+        assertEquals("No bonustime added",9, game.team1.getTime());
+
     }
 
     /**
@@ -330,13 +354,14 @@ public class GameTest {
     @Test
     public void testCheckInstruction(){
         game.addPlayerToTeam(player1);
-        ArrayList<Panel> panels = new ArrayList<Panel>();
-        panels.add(pan1);
-        player1.setPanels(panels);
-        Panel p = player1.getInstruction().getPanel();
+        game.newRound();
+        // Update the panel
+        pan1.setCurrent(1);
+        commando = in1.getCommando();
         game.checkInstruction(pan1, player1);
+        commando1 = in1.getCommando();
         assertEquals("No correct instructions added", 1, player1.getScore());
-        assertNotEquals("Krijgt geen nieuwe instructies", p, player1.getInstruction().getPanel());
-
+        assertThat("Krijgt geen nieuwe instructies", is(not(commando)));
+        //assertNotEquals("Krijgt geen nieuwe instructies", not(commando), commando1);
     }
 }
