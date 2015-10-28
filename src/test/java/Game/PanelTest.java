@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.EnumType;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -76,5 +78,10 @@ public class PanelTest {
     @Test
     public void testGetInstruction() throws Exception {
         //assertEquals(instruction1, panel1.getInstruction());
+    }
+
+    @Test
+    public void testPanel() {
+        Panel panel = new Panel(1, )
     }
 }

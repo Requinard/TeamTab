@@ -1,2 +1,36 @@
 #id,type,text,min,max
 1,1, "Detonate", 0, 1
+2,2, "Red wire", 0, 1
+3,1, "Yellow Button", 0, 1
+4,2, "Green slider", 0, 4
+5,2, "Yellow Slider", 0, 4
+6,3, "Blue Detonate", 0, 1
+7,3, "Blue Slider", 1, 5
+8,3, "Yellow wire", 0, 1
+9,2, "Blue wire", 0, 1
+10,1,"Green Button", 0, 1
+11,3,"Red Button", 0, 1
+12,2,"Green Button", 0, 1
+13,2,"Yellow Zone", 0, 1
+14,1,"Red Emergency Button", 0, 1
+15,2,"Green Emergency Button", 0, 1
+16,2,"Blue Emergency Button", 0, 1
+17,2,"Yellow Emergency Button", 0, 1
+18,2,"White Brake", 0, 1
+19,1,"Yellow Brake", 0, 1
+20,2,"Red Brake", 0, 1
+21,3,"Green Brake", 0, 1
+22,2,"Purple Brake", 0, 1
+23,1,"Purple Button", 0, 1
+24,2,"Purple wire", 0, 1
+25,3,"Meltdown", 0, 1
+26,3,"Emergency", 0, 1
+27,3,"Fire alert", 0, 1
+28,2,"Cool down", 0, 1
+29,1,"Heat up", 0, 1
+30,2,"Start evactuation", 0, 1
+31,1,"Save persons", 0, 1
+32,2,"Start evactuation plan", 0, 1
+33,3,"Set fire out", 0, 1
+34,2,"Call fire department", 0, 1
+

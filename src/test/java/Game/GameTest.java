@@ -326,4 +326,17 @@ public class GameTest {
         assertTrue("No panels were loaded", b);
 
     }
+
+    @Test
+    public void testCheckInstruction(){
+        game.addPlayerToTeam(p1);
+        ArrayList<Panel> panels = new ArrayList<Panel>();
+        panels.add(pan1);
+        p1.setPanels(panels);
+        Panel p = p1.getInstruction().getPanel();
+        game.checkInstruction(pan1, p1);
+        assertEquals("No correct instructions added", 1, p1.getScore());
+        assertNotEquals("Krijgt geen nieuwe instructies", p, p1.getInstruction().getPanel());
+
+    }
 }
