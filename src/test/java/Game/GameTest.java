@@ -333,7 +333,7 @@ public class GameTest {
         ArrayList<Panel> panels = new ArrayList<Panel>();
         panels.add(pan1);
         player1.setPanels(panels);
-        Panel p = p1.getInstruction().getPanel();
+        Panel p = player1.getInstruction().getPanel();
         game.checkInstruction(pan1, player1);
         assertEquals("No correct instructions added", 1, player1.getScore());
         assertNotEquals("Krijgt geen nieuwe instructies", p, player1.getInstruction().getPanel());
