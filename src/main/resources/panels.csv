@@ -1,2 +1,3 @@
 #id,type,text,min,max
 1,1, "Detonate", 0, 1
+2,1, "Redwire", 0, 1

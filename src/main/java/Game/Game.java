@@ -193,6 +193,18 @@ public class Game {
         }
     }
 
+    public Player startGame(String ipAdress, String username){
+        currentPlayer = new Player(ipAdress,username,0,null,null,null,null);
+        // Check if both teams are the same size
+        if (team1.getPlayers().size() == team2.getPlayers().size()) {
+            // Panels are given to the teams that compete
+            return currentPlayer;
+
+        }else {
+            throw new IllegalArgumentException ("wrong sizes");
+        }
+    }
+
     /**
      * Call this method to start a new round
      * Every value in the game gets a reset

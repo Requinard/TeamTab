@@ -120,15 +120,15 @@ public class Team {
      * Maybe something to check if i really dont give double panels ????
      * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
-    public void givePanelsToPlayersFromTeam(ArrayList<Panel>){
+    public void givePanelsToPlayersFromTeam(ArrayList<Panel> panelsTeam){
         ArrayList<Panel> tempPanels = new ArrayList<Panel>();
         Panel pan;
         Random r = new Random();
         for(Player player : players)
         {
-            for(Panel panel : playerPanels){
-                if(player.getPanels().size() < 12)
-            for (int i = player.getPanels().size() ; i <12 ; i++)
+            for(Panel panel : panelsTeam){
+                //if(player.getPanels().size() < 12)
+            for (int i = 0 ; i <12 ; i++)
             {
                 pan = player.getPanels().get(r.nextInt(playerPanels.size()));
                 if(!tempPanels.contains(pan))
