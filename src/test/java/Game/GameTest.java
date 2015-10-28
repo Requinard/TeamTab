@@ -152,20 +152,9 @@ public class GameTest {
     public void testEndGame() throws Exception {
         game.addPlayerToTeam(player1);
         game.addPlayerToTeam(player2);
-        // todo: wtf is dit voor spaghetti code wat gebeurt er hier
+
         assertEquals("Gives the wrong score", "You lost!", game.endGame(game.team1).get(0));
         assertEquals("Gives the wrong score", "You won!", game.endGame(game.team2).get(0));
-
-        pan3 = new Panel(2, 1, "c", 0, 1);
-        in3 = new Instruction(pan3, "Click on", 0);
-        ArrayList<Panel> pal = new ArrayList<Panel>();
-        pal.add(pan3);
-        Player p3 = new Player("1.2.3.4","Bas",5,pal, null, game,null);
-        game.addPlayerToTeam(p3);
-
-        // TODO: spagehtti code
-        assertEquals("Wrong order", "Bas: 5", game.endGame(game.team1).get(0));
-        assertEquals("Not everyone added", 2, game.endGame(game.team1).size());
     }
 
     /**

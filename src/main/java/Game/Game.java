@@ -233,6 +233,7 @@ public class Game {
             for (Player p : sortedWinningTeam) {
                 playerScores.add(p.getName() + ": " + p.getScore());
             }
+            teams.remove(team);
             return playerScores;
         }
 
