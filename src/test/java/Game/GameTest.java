@@ -15,17 +15,28 @@ import static org.junit.Assert.assertTrue;
 public class GameTest {
 
     Game game;
-    Player p1;
-    Player p2;
+    Player player1;
+    Player player2;
     Player player3;
     ArrayList<Panel> pp1;
     Panel pan1;
     Panel pan2;
+    Panel pan3;
+    Panel pan4;
+    Panel pan5;
+    Panel pan6;
+    Panel pan7;
+    Panel pan8;
+    Panel pan9;
+    Panel pan10;
+    Panel pan11;
+    Panel pan12;
+
     Instruction in1;
     Instruction in2;
     Team t1;
     int time;
-    Panel pan3;
+
     Instruction in3;
     Panel p3;
 
@@ -39,17 +50,42 @@ public class GameTest {
         in2 = new Instruction(pan2, "Click off", 1);
         pan1 = new Panel(1, 1, "a", 0, 1);
         pan2 = new Panel(2, 1, "b", 0, 1);
+        pan3 = new Panel(3, 1, "b", 0, 1);
+        pan4 = new Panel(4, 1, "b", 0, 1);
+        pan5 = new Panel(5, 1, "b", 0, 1);
+        pan6 = new Panel(6, 1, "b", 0, 1);
+        pan7 = new Panel(7, 1, "b", 0, 1);
+        pan8 = new Panel(8, 1, "b", 0, 1);
+        pan9 = new Panel(9, 1, "b", 0, 1);
+        pan10 = new Panel(10, 1, "b", 0, 1);
+        pan11 = new Panel(11, 1, "b", 0, 1);
+        pan12 = new Panel(12, 1, "b", 0, 1);
+
         in1.setPanel(pan1);
         in2.setPanel(pan2);
         pp1 = new ArrayList<Panel>();
         pp1.add(pan1);
         pp1.add(pan2);
-        p1 = new Player("1.1.1.1", "Kaj", 0, pp1, in1, game, null); //team later toevoegen
-        p2 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
+        pp1.add(pan3);
+        pp1.add(pan4);
+        pp1.add(pan5);
+        pp1.add(pan6);
+        pp1.add(pan7);
+        pp1.add(pan8);
+        pp1.add(pan9);
+        pp1.add(pan10);
+        pp1.add(pan11);
+        pp1.add(pan12);
+
+
+
+
+        player1 = new Player("1.1.1.1", "Kaj", 0, pp1, in1, game, null); //team later toevoegen
+        player2 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
         player3 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
         //t1 = new Team(1, 1, 1);
         time= 0;
-        p3 = new Panel(3, 1, "Press it down", 0, 1);
+
     }
 
     @After
@@ -64,8 +100,8 @@ public class GameTest {
      */
     @Test (expected = IllegalArgumentException.class)
     public void testExceptionStartGame() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.startGame(p1);
+        game.addPlayerToTeam(player1);
+        game.startGame(player1);
     }
 
     /**
@@ -76,18 +112,18 @@ public class GameTest {
      */
     @Test
     public void testStartGame() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
-        Player currentPlayer = game.startGame(p1);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
+        Player currentPlayer = game.startGame(player1);
         assertEquals("not all player panels added", 2, game.team1.getPlayerPanels().size());
         assertEquals("not all player panels added", 0, game.team2.getPlayerPanels().size());
-        assertEquals(p1.getName(), currentPlayer.getName());
-        assertEquals(p1.getGame(), currentPlayer.getGame());
-        assertEquals(p1.getInstruction(), currentPlayer.getInstruction());
-        assertEquals(p1.getIpAdress(), currentPlayer.getIpAdress());
-        assertEquals(p1.getScore(), currentPlayer.getScore());
-        assertEquals(p1.getPanels(), currentPlayer.getPanels());
-        assertEquals(p1.getTeam(), currentPlayer.getTeam());
+        assertEquals(player1.getName(), currentPlayer.getName());
+        assertEquals(player1.getGame(), currentPlayer.getGame());
+        assertEquals(player1.getInstruction(), currentPlayer.getInstruction());
+        assertEquals(player1.getIpAdress(), currentPlayer.getIpAdress());
+        assertEquals(player1.getScore(), currentPlayer.getScore());
+        assertEquals(player1.getPanels(), currentPlayer.getPanels());
+        assertEquals(player1.getTeam(), currentPlayer.getTeam());
     }
 
     /**
@@ -109,8 +145,8 @@ public class GameTest {
      */
     @Test
     public void testEndGame() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
         // todo: wtf is dit voor spaghetti code wat gebeurt er hier
         assertEquals("Gives the wrong score", "You lost!", game.endGame(game.team1).get(0));
         assertEquals("Gives the wrong score", "You won!", game.endGame(game.team2).get(0));
@@ -133,10 +169,10 @@ public class GameTest {
      */
     @Test
     public void testAddPlayerToTeam() throws Exception {
-        game.addPlayerToTeam(p1);
-        assertEquals("added to wrong team", game.team1.getPlayers().get(0), p1);
-        game.addPlayerToTeam(p2);
-        assertEquals("added to wrong team", game.team2.getPlayers().get(0), p2);
+        game.addPlayerToTeam(player1);
+        assertEquals("added to wrong team", game.team1.getPlayers().get(0), player1);
+        game.addPlayerToTeam(player2);
+        assertEquals("added to wrong team", game.team2.getPlayers().get(0), player2);
         Player p3 = new Player("2.2.2.2", "Frank", 3, new ArrayList<Panel>(), null, game, null);
         game.addPlayerToTeam(p3);
         assertEquals("added to wrong team", game.team1.getPlayers().get(1), p3);
@@ -148,15 +184,15 @@ public class GameTest {
      */
     @Test
     public  void testchangeTeam() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
-        game.changeTeam(p1);
-        assertEquals("Player didn't change from team", game.team2, p1.getTeam());
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
+        game.changeTeam(player1);
+        assertEquals("Player didn't change from team", game.team2, player1.getTeam());
         assertEquals("Wrong size team", 0, game.team1.getPlayers().size());
         assertEquals("Wrong size team", 2, game.team2.getPlayers().size());
-        game.changeTeam(p2);
-        assertEquals("added to the wrong team", p2, game.team1.getPlayers().get(0));
-        assertEquals("added to the wrong team", p1, game.team2.getPlayers().get(0));
+        game.changeTeam(player2);
+        assertEquals("added to the wrong team", player2, game.team1.getPlayers().get(0));
+        assertEquals("added to the wrong team", player1, game.team2.getPlayers().get(0));
         assertEquals("Player changed from team", false,game.changeTeam(player3) );
     }
 
@@ -166,11 +202,11 @@ public class GameTest {
      */
     @Test
     public void testAddTime() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
         game.team1.setCorrectInstruction(2);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
-        game.checkInstruction(p1.getPanels().get(0), p1);
+        game.checkInstruction(player1.getPanels().get(0), player1);
         assertEquals("gives incorrect time", 9, game.team1.getTime());
     }
 
@@ -180,8 +216,8 @@ public class GameTest {
      */
     @Test
     public void testSubtractLives() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
         assertEquals("gives the incorrect lives", 3, game.team1.getLives());
         game.team1.setTime(3);
         game.subtractLives(game.team1);
@@ -199,8 +235,8 @@ public class GameTest {
      */
     @Test
     public void testSubtractTime() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
         game.team1.setCorrectInstruction(5);
         assertEquals("gives incorrect time", 9, game.team2.getTime());
         game.subtractTime(game.team1);
@@ -224,14 +260,14 @@ public class GameTest {
      */
     @Test
     public void testAddCorrectInstruction() throws Exception {
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
-        game.checkInstruction(p1.getPanels().get(0), p1);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
+        game.checkInstruction(player1.getPanels().get(0), player1);
 
         assertEquals("Amount of correct instructions is not 1", 1, game.team1.getCorrectInstruction());
         assertEquals("Amount of time isn't raised by 1",9 , game.team1.getTime());
-        assertNotEquals("Player didn't get a new panel", pan1 , p1.getPanels().get(1));
-        game.checkInstruction(p1.getPanels().get(1), p1);
+        assertNotEquals("Player didn't get a new panel", pan1 , player1.getPanels().get(1));
+        game.checkInstruction(player1.getPanels().get(1), player1);
         assertEquals("Amount of correct instructions is not 0", 0, game.team1.getCorrectInstruction());
     }
 
@@ -246,8 +282,8 @@ public class GameTest {
      */
     @Test
     public void testReset(){
-        game.addPlayerToTeam(p1);
-        game.addPlayerToTeam(p2);
+        game.addPlayerToTeam(player1);
+        game.addPlayerToTeam(player2);
         game.subtractLives(game.team1);
         game.subtractTime(game.team1);
         game.team1.setCorrectInstruction(2);
@@ -273,8 +309,12 @@ public class GameTest {
      */
     @Test
     public void testGivePlayerInstructions() throws Exception {
-        //Internet advices not to test private methodes several times
-        //Have to ask the teacher about this first before testing it
+        player1.setPanels(new ArrayList<Panel>());
+        assertTrue(game.addPlayerToTeam(player1));
+        assertEquals("The player should not have panels at this stage", 0, player1.getPanels().size());
+        game.loadPanels();
+        game.newRound();
+        assertEquals("The player does not have the right amount of panels", 12, player1.getPanels().size());
     }
 
     @Test

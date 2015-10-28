@@ -118,34 +118,48 @@ public class Team {
      * Maybe something to check if i really dont give double panels ????
      * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
-    public void givePanelsToPlayersFromTeam(ArrayList<Panel> allPanelsForTeam){
+    public boolean givePanelsToPlayersFromTeam(ArrayList<Panel> allPanelsForTeam){
         ArrayList<Panel> tempPanels = new ArrayList<Panel>();
         Panel pan;
         Random r = new Random();
+        this.playerPanels = allPanelsForTeam;
+
+        // Check if there are enough panels
+        if(allPanelsForTeam.size() < 12)
+        {
+            return false;
+        }
+
+        // Loop through the players
         for(Player player : players)
         {
+            // Loop through all the panels in the game
             for(Panel panel : allPanelsForTeam){
-                //if(player.getPanels().size() < 12)
+
             for (int i = 0 ; i <12 ; i++)
             {
-                pan = player.getPanels().get(r.nextInt(allPanelsForTeam.size()));
+                pan = allPanelsForTeam.get(r.nextInt(allPanelsForTeam.size()));
                 if(!tempPanels.contains(pan))
                 {
                     tempPanels.add(pan);
+                    allPanelsForTeam.remove(r);
                 }
                 else
                 {
                     i--;
                 }
             }
-            player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
+                player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
             }
+
         }
-
-
-
-
+    return true;
     }
+
+
+
+
+
 
 
         /**
@@ -213,7 +227,6 @@ public class Team {
     public boolean resetTeam(){
         time = startTime;
         correctInstruction = 0;
-        players.clear();
         playerPanels.clear();
         return true;
     }

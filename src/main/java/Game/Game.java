@@ -186,7 +186,6 @@ public class Game {
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
             return currentPlayer;
-
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
@@ -204,7 +203,7 @@ public class Game {
         reset();
         for(Team team : teams)
         {
-            team.setPlayerPanels(panels);
+            team.givePanelsToPlayersFromTeam(panels);
         }
 
         //return false;
