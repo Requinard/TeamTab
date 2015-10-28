@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -87,7 +88,6 @@ public class TeamTest {
         team.resetTeam();
         assertEquals("Team hasn't been reset", true, team.resetTeam());
         assertEquals("Time has not been reset", 9, team.getTime());
-        assertEquals("Lives have not been reset", 3, team.getLives());
         assertEquals("Amount of correct instructions have not been reset ", 0, team.getCorrectInstruction());
     }
 
@@ -105,10 +105,19 @@ public class TeamTest {
         team.addPlayerToTeam(p1);  // Score 2
         team.addPlayerToTeam(p2);  // Score 3
         team.addPlayerToTeam(p3);  // Score 3
-        team.sortedPlayerByScore();
-        assertEquals("Wrong player is first", p2, team.getPlayers().get(0));
-        assertEquals("Wrong player is second", p3, team.getPlayers().get(1));
-        assertEquals("Wrong player is third", p1, team.getPlayers().get(2));
+        p2.addScore();
+        p2.addScore();
+        p2.addScore();
+        p2.addScore();
+
+        p3.addScore();
+        p3.addScore();
+
+        p1.addScore();
+        List<Player> sortedPlayers = team.sortedPlayerByScore();
+        assertEquals("Wrong player is first", p2, sortedPlayers.get(0));
+        assertEquals("Wrong player is second", p3, sortedPlayers.get(1));
+        assertEquals("Wrong player is third", p1, sortedPlayers.get(2));
     }
 
     /**
@@ -125,23 +134,6 @@ public class TeamTest {
         assertEquals("Player is in team", false, team.isPlayerInTeam(p2));
     }
 
-
-    /**
-     * @Author Qun
-     * Test the private void refreshPlayerPanels()
-     * This is used in addPlayerToTeam and removePlayer
-     * Test if this method adds a panel and removes a panel
-     */
-    @Test
-    public void testRefreshPlayerPanels() {
-        g.addPlayerToTeam(p1);
-        g.addPlayerToTeam(p2);
-        int test = g.team1.getPlayerPanels().size();
-        assertEquals("Panel is not added for the new player team1", 1, test);
-        assertEquals("Panel is not added for the new player team2", 1, g.team2.getPlayerPanels().size());
-        g.team1.removePlayer(p1);
-        assertEquals("Panel is not deleted after remove", 0, g.team1.getPlayerPanels().size());
-    }
 
     /**
      * @author Frank Hartman

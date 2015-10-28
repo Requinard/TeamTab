@@ -277,26 +277,6 @@ public class GameTest {
 
     }
 
-    /**
-     * Deze code moet nog worden aangepast
-     * @throws Exception
-     */
-    @Test
-    public void testAddCorrectInstruction() throws Exception {
-        game.addPlayerToTeam(player1);
-        game.addPlayerToTeam(player2);
-        game.checkInstruction(player1.getPanels().get(0), player1);
-
-        assertEquals("Amount of correct instructions is not 1", 1, game.team1.getCorrectInstruction());
-        assertEquals("Amount of time isn't raised by 1",9 , game.team1.getTime());
-        assertNotEquals("Player didn't get a new panel", pan1 , player1.getPanels().get(1));
-        game.checkInstruction(player1.getPanels().get(1), player1);
-        assertEquals("Amount of correct instructions is not 0", 0, game.team1.getCorrectInstruction());
-    }
-
-    private void assertNotEquals(String s, Panel pan1, Panel panel) {
-        assertTrue(s, !pan1.equals(panel));
-    }
 
 
     /**
@@ -314,7 +294,6 @@ public class GameTest {
         assertEquals("Time is not 9", 9, game.team1.getTime());
         assertEquals("Amount of correct instructions is not 0", 0, game.team1.getCorrectInstruction());
         assertEquals("Amount of playerpanels is not 0", 0, game.team1.getPlayerPanels().size());
-        assertEquals("Amount of players is not 0", 0, game.team1.getPlayers().size());
         Team testTeam1 = game.team1;
         Team testTeam2 = game.team2;
         testTeam1.setLives(0);
@@ -346,7 +325,6 @@ public class GameTest {
         game.newRound();
         assertEquals("The player does not have the right amount of panels", 12, player1.getPanels().size());
         assertEquals("The player does not have the right amount of panels", 12, player2.getPanels().size());
-
     }
 
     @Test
