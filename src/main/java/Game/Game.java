@@ -186,6 +186,7 @@ public class Game {
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
+            newRound();
             return currentPlayer;
         }else {
             throw new IllegalArgumentException ("wrong sizes");
@@ -301,16 +302,18 @@ public class Game {
      * When the team has less than 3 seconds they lose a life
      * if  they have 0 lives that teams game is ended
      * @Author Qun
+     * @author Frank Hartman
      * @param team The team that gets a check if they should lose a life
      * @return true if the live of the team is subtracted
      */
-    public boolean subtractLives(Team team){
+    public void subtractLives(Team team){
         if(team.substractLives() && team.getLives() <= 0) {
             teams.remove(team);
-            endGame(team); // dit moet in de controller worden aangeroepen
-            return true;
-        } else return team.substractLives();
+            endGame(team);
+        }
 
+        else
+            newRound();
     }
 
     /**

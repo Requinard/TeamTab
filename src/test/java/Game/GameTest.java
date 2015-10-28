@@ -121,15 +121,14 @@ public class GameTest {
         game.addPlayerToTeam(player1);
         game.addPlayerToTeam(player2);
         Player currentPlayer = game.startGame(player1);
-        assertEquals("not all player panels added", 2, game.team1.getPlayerPanels().size());
-        assertEquals("not all player panels added", 0, game.team2.getPlayerPanels().size());
         assertEquals(player1.getName(), currentPlayer.getName());
         assertEquals(player1.getGame(), currentPlayer.getGame());
         assertEquals(player1.getInstruction(), currentPlayer.getInstruction());
         assertEquals(player1.getIpAdress(), currentPlayer.getIpAdress());
         assertEquals(player1.getScore(), currentPlayer.getScore());
-        assertEquals(player1.getPanels(), currentPlayer.getPanels());
         assertEquals(player1.getTeam(), currentPlayer.getTeam());
+        assertEquals("Not enough panels", 12, player1.getPanels().size());
+        assertEquals("Not enough panels", 12, player2.getPanels().size());
     }
 
     /**
@@ -329,16 +328,25 @@ public class GameTest {
     /**
      *
      * De speler die een nieuwe instructie moet krijgen
+     * @author Frank Hartman
      * @throws Exception
      */
     @Test
     public void testGivePlayerInstructions() throws Exception {
+        // Make sure the player has no panels
         player1.setPanels(new ArrayList<Panel>());
+        player2.setPanels(new ArrayList<Panel>());
+        // Add a player to the team
         assertTrue(game.addPlayerToTeam(player1));
+        assertTrue(game.addPlayerToTeam(player2));
         assertEquals("The player should not have panels at this stage", 0, player1.getPanels().size());
+        // Load the panels
         game.loadPanels();
+        // A new round gives panels to the players
         game.newRound();
         assertEquals("The player does not have the right amount of panels", 12, player1.getPanels().size());
+        assertEquals("The player does not have the right amount of panels", 12, player2.getPanels().size());
+
     }
 
     @Test

@@ -150,8 +150,6 @@ public class Team {
             }
                 player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
             }
-
-
     return true;
     }
 
