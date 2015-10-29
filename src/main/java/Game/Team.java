@@ -23,6 +23,7 @@ public class Team {
 
     public Team(int time, int lives, int correctInstructions, String name){
         this.time =time;
+        this.startTime = time;
         this.lives = lives;
         this.correctInstruction =correctInstructions;
         this.name = name;
@@ -284,7 +285,7 @@ public class Team {
         for (Player p : players) {
 
             // Check if the panel belongs to the player
-            //if (p.getInstruction().getPanel().equals(changedPanel)) {
+            if (p.getInstruction().getPanel().equals(changedPanel)) {
                 // Check if the value is correct
                 if (p.checkCorrectPanel(changedPanel)) {
                     correctInstruction++;
@@ -292,13 +293,20 @@ public class Team {
                     // Give the player a new instruction
                     newInstruction(p);
                     return true;
-                } else {
+                }
+
+                else {
                     correctInstruction = 0;
                     // Give the player a new instruction
                     newInstruction(p);
                     return false;
                 }
-            //}
+            }
+
+            correctInstruction = 0;
+            // Give the player a new instruction
+            newInstruction(p);
+            return false;
 
         }
         return false;
@@ -331,6 +339,10 @@ public class Team {
 
         else
             return false;
+    }
+
+    public void decreaseTime() {
+        this.time--;
     }
 
 

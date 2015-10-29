@@ -315,13 +315,18 @@ public class Game {
      * @return true if the live of the team is subtracted
      */
     public void subtractLives(Team team){
-        if(team.substractLives() && team.getLives() <= 0) {
-            teams.remove(team);
-            endGame(team);
+
+
+        if(team.substractLives()) {
+            if (team.getLives() <= 0) {
+                teams.remove(team);
+                endGame(team);
+            }
+            else
+                newRound();
         }
 
-        else
-            newRound();
+
     }
 
     /**
@@ -380,12 +385,26 @@ public class Game {
 
         if (t.checkTeamInstruction(changedPanel)) {
             System.out.println("The instruction was correct!");
-            return addTime(t);
+            // Check the bonus for streaks
+            addTime(t);
+            subtractTime(t);
+            System.out.println("Team time: " + t.getTime());
+            System.out.println("Team lives: " + t.getLives());
+            return true;
         }
 
-        else
-            //System.out.println("The instruction was not correct");
+        else {
+            System.out.println("The instruction was not correct");
+            // Check if the team should lose a life
+            t.decreaseTime();
+            subtractLives(t);
+            System.out.println("Team time: " + t.getTime());
+            System.out.println("Team lives: " + t.getLives());
             return false;
+        }
+
+
+
 
     }
 
