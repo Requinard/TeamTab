@@ -75,9 +75,9 @@ public class Instruction {
             Panel instructionPanel = playerPanels.get(random.nextInt(playerPanels.size()));
             this.panel = instructionPanel;
             this.commando = "Change to";
-            //this.value = random.nextInt(panel.getMax());
+            this.value = random.nextInt(panel.getMax()) + 1;
             // EERSTE ITERATIE
-            this.value = 1;
+
             System.out.println("Player gets a new commando");
             System.out.println(panel.getText() + ": " + commando + ": " + value);
             return true;

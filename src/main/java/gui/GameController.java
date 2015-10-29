@@ -105,6 +105,7 @@ public class GameController implements Initializable {
     }
 
     public void fillGridWithPanels() {
+        gridPane.getChildren().removeAll();
 
         ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
         int x = 0;
@@ -112,6 +113,7 @@ public class GameController implements Initializable {
         for (Panel panel : panels) {
             IPanel iPanel = panelFactory.getPanel(panel, this);
             gridPane.setAlignment(Pos.CENTER);
+
             gridPane.add((Node) iPanel, x, y);
             y++;
             if (y == 5) {
