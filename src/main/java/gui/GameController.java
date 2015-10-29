@@ -21,9 +21,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +73,12 @@ public class GameController implements Initializable {
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
 
+
     public void initialize(URL location, ResourceBundle resources) {
         //view.stageController.game.startGame();
         panelFactory = new PanelFactory();
+
+
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonStartOnClick(event);
@@ -91,6 +99,7 @@ public class GameController implements Initializable {
         };
         timerRefresh.schedule(timerTask, 0, 30);
     }
+
 
     private void refreshView() {
         showTeamLevens();
