@@ -9,17 +9,18 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -49,7 +50,7 @@ public class GameController implements Initializable {
     private Label timeLabel;
     private Timer timer;
     @FXML
-    private GridPane gridPane;
+    private GridPane gridPane = new GridPane();
     @FXML
     private TextField textFieldInstruction;
     @FXML
@@ -115,22 +116,41 @@ public class GameController implements Initializable {
     }
 
     public void fillGridWithPanels() {
-        gridPane.getChildren().removeAll();
 
+        gridPane.getChildren().removeAll();
+        gridPane.setGridLinesVisible(true);
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setMinSize(0,0);
         ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
-        int x = 0;
-        int y = 0;
+        int column = 0;
+        int row = 0;
         for (Panel panel : panels) {
             IPanel iPanel = panelFactory.getPanel(panel, this);
-            gridPane.setAlignment(Pos.CENTER);
-
-            gridPane.add((Node) iPanel, x, y);
-            y++;
-            if (y == 5) {
-                x++;
-                y = 0;
+            if(row < 4){
+                gridPane.add((Node) iPanel, row, column);
             }
+            else{
+                row = 0;
+                column++;
+                gridPane.add((Node) iPanel, row, column);
+            }
+            row++;
         }
+
+
+//        gridPane.getChildren().removeAll();
+//        gridPane = new GridPane();
+////        for (int i = 0; i < 4; i++) {
+////            ColumnConstraints columnConstraints = new ColumnConstraints(150);
+////            gridPane.getColumnConstraints().add(columnConstraints);
+////        }
+////        for (int i = 0; i < 3; i++) {
+////            RowConstraints rowConstraints = new RowConstraints(150);
+////            gridPane.getRowConstraints().add(rowConstraints);
+////        }
+//        gridPane.setMinSize(600,450);
+//        gridPane.setMaxSize(600,450);
+//        gridPane.setGridLinesVisible(true);
     }
 
     //Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
