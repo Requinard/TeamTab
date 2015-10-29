@@ -72,6 +72,7 @@ public class GameController implements Initializable {
     private PanelFactory panelFactory;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
+    private boolean correctInstruction;
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -136,7 +137,8 @@ public class GameController implements Initializable {
     public void showPlayerInstruction() {
         Platform.runLater(new Runnable() {
             public void run() {
-                textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().getValue() );
+                if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null)
+                    textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().getValue());
             }
         });
     }
@@ -144,7 +146,8 @@ public class GameController implements Initializable {
     public void showTeamInstructionCount() {
         Platform.runLater(new Runnable() {
             public void run() {
-                labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getCorrectInstruction() + "");
+                if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null)
+                    labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getCorrectInstruction() + "");
             }
         });
     }
@@ -152,90 +155,64 @@ public class GameController implements Initializable {
     public void showTeamLevens() {
         Platform.runLater(new Runnable() {
             public void run() {
-                //List<Team> teams = view.stageController.game.allTeams().get(0).getLives();
-                int levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
-                int levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
-                //System.out.println(levensTeam2);
-                /*
-                Team team1 = teams.get(0);
-                Team team2 = teams.get(1);
-                int levensTeam1 = team1.getLives();
-                int levensTeam2 = team2.getLives();
-                System.out.println(levensTeam1);
+                int levensTeam1;
+                int levensTeam2;
+                if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null) {
+                    levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
+                    levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
 
-                if (levensTeam1 == 2){
-                    Team1Leven1.setVisible(false);
-                    Team1Leven2.setVisible(false);
-                    Team1Leven3.setVisible(true);
-                    System.out.println("test1");
+                    switch (levensTeam1) {
+                        case 1:
+                            Team1Leven1.setVisible(false);
+                            Team1Leven2.setVisible(true);
+                            Team1Leven3.setVisible(true);
+                            break;
+                        case 2: {
+                            Team1Leven1.setVisible(false);
+                            Team1Leven2.setVisible(false);
+                            Team1Leven3.setVisible(true);
+                            break;
+                        }
+                        case 3: {
+                            Team1Leven3.setVisible(false);
+                            Team1Leven2.setVisible(false);
+                            Team1Leven1.setVisible(false);
+                            break;
+                        }
+                        default:
+                            Team1Leven1.setVisible(true);
+                            Team1Leven2.setVisible(true);
+                            Team1Leven3.setVisible(true);
+                            break;
+                    }
+                    switch (levensTeam2) {
+                        case 1:
+                            Team2Leven1.setVisible(false);
+                            Team2Leven2.setVisible(true);
+                            Team2Leven3.setVisible(true);
+                            break;
+                        case 2: {
+                            Team2Leven2.setVisible(false);
+                            Team2Leven1.setVisible(false);
+                            Team2Leven3.setVisible(true);
+                            break;
+                        }
+                        case 3: {
+                            Team2Leven3.setVisible(false);
+                            Team2Leven2.setVisible(false);
+                            Team2Leven1.setVisible(false);
+                            break;
+                        }
+                        default:
+                            Team2Leven1.setVisible(true);
+                            Team2Leven2.setVisible(true);
+                            Team2Leven3.setVisible(true);
+                            break;
+                    }
                 }
-                if (levensTeam2 == 2){
-                    Team2Leven1.setVisible(false);
-                    Team2Leven2.setVisible(false);
-                    Team2Leven3.setVisible(true);
-                    System.out.println("test2");
-                }
-                if (levensTeam1 == 3){
-                    Team1Leven1.setVisible(false);
-                    Team1Leven2.setVisible(false);
-                    Team1Leven3.setVisible(false);
 
-                }
-                if (levensTeam2 == 3){
-                    Team2Leven1.setVisible(false);
-                    Team2Leven2.setVisible(false);
-                    Team2Leven3.setVisible(false);
-                }
-                */
-                switch (levensTeam1) {
-                    case 1:
-                        Team1Leven1.setVisible(false);
-                        Team1Leven2.setVisible(true);
-                        Team1Leven3.setVisible(true);
-                        break;
-                    case 2: {
-                        Team1Leven1.setVisible(false);
-                        Team1Leven2.setVisible(false);
-                        Team1Leven3.setVisible(true);
-                        break;
-                    }
-                    case 3: {
-                        Team1Leven3.setVisible(false);
-                        Team1Leven2.setVisible(false);
-                        Team1Leven1.setVisible(false);
-                        break;
-                    }
-                    default:
-                        Team1Leven1.setVisible(true);
-                        Team1Leven2.setVisible(true);
-                        Team1Leven3.setVisible(true);
-                        break;
-                }
-                switch (levensTeam2) {
-                    case 1:
-                        Team2Leven1.setVisible(false);
-                        Team2Leven2.setVisible(true);
-                        Team2Leven3.setVisible(true);
-                        break;
-                    case 2: {
-                        Team2Leven2.setVisible(false);
-                        Team2Leven1.setVisible(false);
-                        Team2Leven3.setVisible(true);
-                        break;
-                    }
-                    case 3: {
-                        Team2Leven3.setVisible(false);
-                        Team2Leven2.setVisible(false);
-                        Team2Leven1.setVisible(false);
-                        break;
-                    }
-                    default:
-                        Team2Leven1.setVisible(true);
-                        Team2Leven2.setVisible(true);
-                        Team2Leven3.setVisible(true);
-                        break;
-                }
             }
+
         });
     }
 
@@ -259,7 +236,11 @@ public class GameController implements Initializable {
         runnable.run();
     }
 
+
+
+
     public void buttonStartTimerOnClick(MouseEvent mouseEvent) {
+        buttonStartTimer.setVisible(false);
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -268,10 +249,14 @@ public class GameController implements Initializable {
 
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
+
                         counter--;
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
+                                if(correctIn()){
+                                    counter = view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getTime();
+                                }
                                 progressBar.setProgress(counter * 0.1);
                                 timeLabel.setText(Integer.toString(counter));
                             }
@@ -292,9 +277,15 @@ public class GameController implements Initializable {
         runnable.run();
     }
 
-    public void checkInstruction(Panel panel) {
-        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName));
+    public boolean correctIn(){
+        if (correctInstruction){
+            correctInstruction = false;
+            return true;
+        }
+        return false;
     }
 
-
+    public void checkInstruction(Panel panel) {
+        correctInstruction = view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName));
+    }
 }
