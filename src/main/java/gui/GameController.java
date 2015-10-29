@@ -81,6 +81,7 @@ public class GameController implements Initializable {
                 buttonStartTimerOnClick(event);
             }
         });
+        showTeamLevens();
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
             @Override
@@ -92,7 +93,7 @@ public class GameController implements Initializable {
     }
 
     private void refreshView() {
-        showTeamLevens();
+        //showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
     }
@@ -124,7 +125,7 @@ public class GameController implements Initializable {
     public void showPlayerInstruction() {
         Platform.runLater(new Runnable() {
             public void run() {
-        textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString());
+                textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().getValue() );
             }
         });
     }
@@ -145,6 +146,7 @@ public class GameController implements Initializable {
                 Team team2 = teams.get(1);
                 int levensTeam1 = team1.getLives();
                 int levensTeam2 = team2.getLives();
+                System.out.println(levensTeam1);
                 switch (levensTeam1) {
                     case 0:
                         Team1Leven1.setVisible(true);
