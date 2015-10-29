@@ -81,7 +81,7 @@ public class GameController implements Initializable {
                 buttonStartTimerOnClick(event);
             }
         });
-        showTeamLevens();
+
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
             @Override
@@ -93,7 +93,7 @@ public class GameController implements Initializable {
     }
 
     private void refreshView() {
-        //showTeamLevens();
+        showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
     }
@@ -141,51 +141,88 @@ public class GameController implements Initializable {
     public void showTeamLevens() {
         Platform.runLater(new Runnable() {
             public void run() {
-                List<Team> teams = view.stageController.game.allTeams();
+                //List<Team> teams = view.stageController.game.allTeams().get(0).getLives();
+                int levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
+                int levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
+                //System.out.println(levensTeam2);
+                /*
                 Team team1 = teams.get(0);
                 Team team2 = teams.get(1);
                 int levensTeam1 = team1.getLives();
                 int levensTeam2 = team2.getLives();
                 System.out.println(levensTeam1);
+
+                if (levensTeam1 == 2){
+                    Team1Leven1.setVisible(false);
+                    Team1Leven2.setVisible(false);
+                    Team1Leven3.setVisible(true);
+                    System.out.println("test1");
+                }
+                if (levensTeam2 == 2){
+                    Team2Leven1.setVisible(false);
+                    Team2Leven2.setVisible(false);
+                    Team2Leven3.setVisible(true);
+                    System.out.println("test2");
+                }
+                if (levensTeam1 == 3){
+                    Team1Leven1.setVisible(false);
+                    Team1Leven2.setVisible(false);
+                    Team1Leven3.setVisible(false);
+
+                }
+                if (levensTeam2 == 3){
+                    Team2Leven1.setVisible(false);
+                    Team2Leven2.setVisible(false);
+                    Team2Leven3.setVisible(false);
+                }
+                */
                 switch (levensTeam1) {
-                    case 0:
-                        Team1Leven1.setVisible(true);
-                        Team1Leven2.setVisible(true);
-                        Team1Leven3.setVisible(true);
                     case 1:
                         Team1Leven1.setVisible(false);
                         Team1Leven2.setVisible(true);
                         Team1Leven3.setVisible(true);
+                        break;
                     case 2: {
                         Team1Leven1.setVisible(false);
                         Team1Leven2.setVisible(false);
                         Team1Leven3.setVisible(true);
+                        break;
                     }
                     case 3: {
                         Team1Leven3.setVisible(false);
                         Team1Leven2.setVisible(false);
                         Team1Leven1.setVisible(false);
+                        break;
                     }
+                    default:
+                        Team1Leven1.setVisible(true);
+                        Team1Leven2.setVisible(true);
+                        Team1Leven3.setVisible(true);
+                        break;
                 }
                 switch (levensTeam2) {
-                    case 0:
-                        Team2Leven1.setVisible(true);
-                        Team2Leven2.setVisible(true);
-                        Team2Leven3.setVisible(true);
                     case 1:
                         Team2Leven1.setVisible(false);
                         Team2Leven2.setVisible(true);
                         Team2Leven3.setVisible(true);
+                        break;
                     case 2: {
                         Team2Leven2.setVisible(false);
                         Team2Leven1.setVisible(false);
                         Team2Leven3.setVisible(true);
+                        break;
                     }
                     case 3: {
                         Team2Leven3.setVisible(false);
                         Team2Leven2.setVisible(false);
                         Team2Leven1.setVisible(false);
+                        break;
                     }
+                    default:
+                        Team2Leven1.setVisible(true);
+                        Team2Leven2.setVisible(true);
+                        Team2Leven3.setVisible(true);
+                        break;
                 }
             }
         });
