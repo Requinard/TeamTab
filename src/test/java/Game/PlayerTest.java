@@ -97,13 +97,13 @@ public class PlayerTest {
 
     @Test
     public void testGetInstructions() throws Exception {
-        assertEquals(instruction1, player.getInstructions());
+        assertEquals(instruction1, player.getInstruction());
     }
 
     @Test
     public void testSetInstructions() throws Exception {
         player.setInstructions(instruction2);
-        assertEquals(instruction2, player.getInstructions());
+        assertEquals(instruction2, player.getInstruction());
     }
 
     @Test

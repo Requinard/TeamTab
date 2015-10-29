@@ -1,10 +1,9 @@
 package Game;
 
-import com.sun.javafx.UnmodifiableArrayList;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by HP user on 12-10-2015.
@@ -119,25 +118,52 @@ public class Team {
      * Maybe something to check if i really dont give double panels ????
      * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
-    private void givePanelsToPlayersFromTeam(){
-        ArrayList<Panel> TempPanels = new ArrayList<Panel>();
+    public boolean givePanelsToPlayersFromTeam(ArrayList<Panel> allPanelsForTeam){
+        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
+        Panel pan;
+        Random r = new Random();
+        this.playerPanels = allPanelsForTeam;
+
+        // Check if there are enough panels
+        if(allPanelsForTeam.size() < 12)
+        {
+            return false;
+        }
+
+        // Loop through the players
         for(Player player : players)
         {
-            /*for(Panel panel : playerPanels){
-                if(player.getPanels().size() < 12)
+            // Loop through all the panels in the game
+
+            for (int i = 0 ; i <12 ; i++)
+            {
+                pan = allPanelsForTeam.get(r.nextInt(allPanelsForTeam.size()));
+                if(!tempPanels.contains(pan))
                 {
-                    TempPanels.add(panel);
+                    tempPanels.add(pan);
+                    allPanelsForTeam.remove(r);
+                }
+                else
+                {
+                    i--;
                 }
             }
-            player.setPanels(TempPanels);*/ //Nu krijgt elke speler dezelfde panels. De eerste 12.
-        }
+                player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
+            }
+    return true;
     }
 
-    /**
-     * Get all the players that are in the team
-     * @author Frank Hartman
-     * @return all the players from the team
-     */
+
+
+
+
+
+
+        /**
+         * Get all the players that are in the team
+         * @author Frank Hartman
+         * @return all the players from the team
+         */
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
@@ -172,18 +198,21 @@ public class Team {
     }
 
     /***
+     * @Author Qun hoe komt de persoon
      * If this list containt the player then the player will be removed
      * @param player
      * @return true when player is removed from the list
      */
     public boolean removePlayer(Player player){
-        for(Player p : players)
+        for(Player p : players){
             if (p.equals(player)) {
                 players.remove(player);
                 return true;
             }
+        }
         return false;
     }
+
 
     /***
      * @Author Qun
@@ -195,7 +224,6 @@ public class Team {
     public boolean resetTeam(){
         time = startTime;
         correctInstruction = 0;
-        players.clear();
         playerPanels.clear();
         return true;
     }
@@ -254,16 +282,35 @@ public class Team {
     public boolean checkTeamInstruction(Panel changedPanel) {
         for (Player p : players) {
 
-            if (p.checkCorrectPanel(changedPanel)) {
-                correctInstruction++;
-                p.addScore();
-                return true;
-            } else {
-                correctInstruction = 0;
-                return false;
+            // Check if the panel belongs to the player
+            if (p.getInstruction().getPanel().equals(changedPanel)) {
+                // Check if the value is correct
+                if (p.checkCorrectPanel(changedPanel)) {
+                    correctInstruction++;
+                    p.addScore();
+                    // Give the player a new instruction
+                    newInstruction(p);
+                    return true;
+                } else {
+                    correctInstruction = 0;
+                    // Give the player a new instruction
+                    newInstruction(p);
+                    return false;
+                }
             }
+
         }
         return false;
+    }
+
+    /**
+     * Give the player a new instruction
+     * @param player The player that gets a new instruction
+     */
+    private void newInstruction(Player player) {
+        // Give the player a new instruction
+        Instruction playerInstruction = player.getInstruction();
+        playerInstruction.createNewInstruction(player.getPanels());
     }
 
     /**
