@@ -28,6 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -42,18 +43,30 @@ public class GameController implements Initializable {
     @FXML
     private Label timeLabel;
     private Timer timer;
-    @FXML private GridPane gridPane;
-    @FXML private TextField textFieldInstruction;
-    @FXML private ImageView Team1Leven1;
-    @FXML private ImageView Team1Leven2;
-    @FXML private ImageView Team1Leven3;
-    @FXML private ImageView Team2Leven1;
-    @FXML private ImageView Team2Leven2;
-    @FXML private ImageView Team2Leven3;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private TextField textFieldInstruction;
+    @FXML
+    private Label labelCorrectInstructions;
+    @FXML
+    private ImageView Team1Leven1;
+    @FXML
+    private ImageView Team1Leven2;
+    @FXML
+    private ImageView Team1Leven3;
+    @FXML
+    private ImageView Team2Leven1;
+    @FXML
+    private ImageView Team2Leven2;
+    @FXML
+    private ImageView Team2Leven3;
 
     private GameView view;
     private Runnable runnable;
     private PanelFactory panelFactory;
+    private java.util.Timer timerRefresh;
+    private TimerTask timerTask;
 
     public void initialize(URL location, ResourceBundle resources) {
         //view.stageController.game.startGame();
@@ -68,6 +81,20 @@ public class GameController implements Initializable {
                 buttonStartTimerOnClick(event);
             }
         });
+        timerRefresh = new java.util.Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                refreshView();
+            }
+        };
+        timerRefresh.schedule(timerTask, 0, 30);
+    }
+
+    private void refreshView() {
+        showTeamLevens();
+        showTeamInstructionCount();
+        showPlayerInstruction();
     }
 
     public void setView(GameView gameView) {
@@ -75,6 +102,7 @@ public class GameController implements Initializable {
         fillGridWithPanels();
         showTeamLevens();
     }
+
     public void fillGridWithPanels() {
 
         ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
@@ -91,29 +119,76 @@ public class GameController implements Initializable {
             }
         }
     }
+
     //Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
-    public void showPlayerInstruction()
-    {
+    public void showPlayerInstruction() {
+        Platform.runLater(new Runnable() {
+            public void run() {
         textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString());
+            }
+        });
     }
-    public void showTeamLevens()
-    {
-        List<Team> teams =  view.stageController.game.allTeams();
-        Team team1 = teams.get(0);
-        Team team2 = teams.get(1);
-        int levensTeam1 = team1.getLives();
-        int levensTeam2 = team2.getLives();
-        switch (levensTeam1){
-            case 1: Team1Leven1.setVisible(false);
-            case 2: {Team1Leven2.setVisible(false); Team1Leven1.setVisible(false);}
-            case 3: {Team1Leven3.setVisible(false);Team1Leven2.setVisible(false);Team1Leven1.setVisible(false);}
-        }
-        switch (levensTeam2){
-        case 1: Team2Leven1.setVisible(false);
-        case 2: {Team2Leven2.setVisible(false);Team2Leven1.setVisible(false);}
-        case 3: {Team2Leven3.setVisible(false);Team2Leven2.setVisible(false);Team2Leven1.setVisible(false);}
+
+    public void showTeamInstructionCount() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getCorrectInstruction() + "");
+            }
+        });
     }
+
+    public void showTeamLevens() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                List<Team> teams = view.stageController.game.allTeams();
+                Team team1 = teams.get(0);
+                Team team2 = teams.get(1);
+                int levensTeam1 = team1.getLives();
+                int levensTeam2 = team2.getLives();
+                switch (levensTeam1) {
+                    case 0:
+                        Team1Leven1.setVisible(true);
+                        Team1Leven2.setVisible(true);
+                        Team1Leven3.setVisible(true);
+                    case 1:
+                        Team1Leven1.setVisible(false);
+                        Team1Leven2.setVisible(true);
+                        Team1Leven3.setVisible(true);
+                    case 2: {
+                        Team1Leven1.setVisible(false);
+                        Team1Leven2.setVisible(false);
+                        Team1Leven3.setVisible(true);
+                    }
+                    case 3: {
+                        Team1Leven3.setVisible(false);
+                        Team1Leven2.setVisible(false);
+                        Team1Leven1.setVisible(false);
+                    }
+                }
+                switch (levensTeam2) {
+                    case 0:
+                        Team2Leven1.setVisible(true);
+                        Team2Leven2.setVisible(true);
+                        Team2Leven3.setVisible(true);
+                    case 1:
+                        Team2Leven1.setVisible(false);
+                        Team2Leven2.setVisible(true);
+                        Team2Leven3.setVisible(true);
+                    case 2: {
+                        Team2Leven2.setVisible(false);
+                        Team2Leven1.setVisible(false);
+                        Team2Leven3.setVisible(true);
+                    }
+                    case 3: {
+                        Team2Leven3.setVisible(false);
+                        Team2Leven2.setVisible(false);
+                        Team2Leven1.setVisible(false);
+                    }
+                }
+            }
+        });
     }
+
     //get gamestatus update
     /*
         Hoeveel team levens?
@@ -140,6 +215,7 @@ public class GameController implements Initializable {
             public void run() {
                 timer = new Timer(1000, new ActionListener() {
                     int counter = view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getTime();
+
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
                         counter--;
@@ -150,8 +226,7 @@ public class GameController implements Initializable {
                                 timeLabel.setText(Integer.toString(counter));
                             }
                         });
-                        if(counter == 0)
-                        {
+                        if (counter == 0) {
                             //dit moet worden verandert door een subtract time methode
                             view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().setTime(5);
                             timer.stop();
@@ -165,7 +240,7 @@ public class GameController implements Initializable {
     }
 
     public void checkInstruction(Panel panel) {
-        view.stageController.game.checkInstruction(panel,view.stageController.game.getPlayerByName(view.stageController.playerName));
+        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName));
     }
 
 

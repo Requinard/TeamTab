@@ -119,7 +119,7 @@ public class Game {
 
     // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
     public List<Team> allTeams(){
-        System.out.println("Game - sire of ArrayList teams: " + teams.size());
+        //System.out.println("Game - sire of ArrayList teams: " + teams.size());
          return Collections.unmodifiableList(teams);
     }
 
