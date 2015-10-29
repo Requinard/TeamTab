@@ -47,13 +47,16 @@ public class Game {
         substractCorrectInstructions = 5;
         this.stageController = stageController;
 
-        team1 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team1");
+        team1 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team bots");
         team2 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team2");
 
         teams.add(team1);
         teams.add(team2);
         // Load panels from CSV
         loadPanels();
+
+        // EERSTE INTERATIE
+        setUp();
     }
 
     //
@@ -68,7 +71,6 @@ public class Game {
 
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
-
 
         try (FileInputStream fileInputStream = new FileInputStream(location.getFile())) {
             String full = IOUtils.toString(fileInputStream);
@@ -107,9 +109,12 @@ public class Game {
     private void setUp(){
         Panel panel = new Panel(1, 1, "Test", 0, 0);
         instruction = new Instruction(panel, "Test", 0);
-        Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
-        team2.addPlayerToTeam(a);
+        Player a = new Player("localhost","BOT 1",0, new ArrayList<Panel>(),instruction,this, team2);
+
+        team1.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
+
+        newRound();
     }
 
     // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
@@ -132,8 +137,7 @@ public class Game {
 
     // een nieuw team aanmaken
     public boolean createTeam(String teamName){
-        Team newTeam = new Team(9,3,0,teamName);
-        teams.add(newTeam);
+        team2.setName(teamName);
 
         for(Team t : teams){
             if(t.getName().equals(teamName)){
@@ -153,6 +157,7 @@ public class Game {
             }
         }
         Player newPlayer = new Player("localhost", playerName, 0, panels, instruction,this, getTeam);
+        currentPlayer = newPlayer;
         System.out.println("Game - Player is created (createAndGetThisPlayer)");
         return  newPlayer;
     }
@@ -181,11 +186,10 @@ public class Game {
      * Check if both teams have the same amount of players
      * @return the player for which the game starts
      */
-    public Player startGame(Player player){
+    public Player startGame(){
         // setup voor demo spelers
-        setUp();
         //
-        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstruction(),player.getGame(),player.getTeam());
+        //currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstruction(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
@@ -206,6 +210,7 @@ public class Game {
     public void newRound(){
         // returns default values
         reset();
+        loadPanels();
         for(Team team : teams)
         {
             team.givePanelsToPlayersFromTeam(panels);

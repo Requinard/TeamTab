@@ -54,6 +54,7 @@ public class GameController implements Initializable {
     PanelFactory panelFactory;
 
     public void initialize(URL location, ResourceBundle resources) {
+        //view.stageController.game.startGame();
         panelFactory = new PanelFactory();
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -73,6 +74,7 @@ public class GameController implements Initializable {
         showTeamLevens();
     }
     public void fillGridWithPanels() {
+
         ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
         int x = 0;
         int y = 0;

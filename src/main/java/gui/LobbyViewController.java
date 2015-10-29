@@ -61,7 +61,7 @@ public class LobbyViewController implements Initializable {
     public void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-
+                view.stageController.game.startGame();
                 Platform.runLater(new Runnable() {
                     public void run() {
                         GameView gameView = new GameView((view.stageController));

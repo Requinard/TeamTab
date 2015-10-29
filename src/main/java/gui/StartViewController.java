@@ -56,12 +56,14 @@ public class StartViewController implements Initializable {
                 } else {
                     String teamName = teamNameTextField.getText();
                     System.out.println("StartView - Teamname is set to: " + teamName);
-                    //view.stageController.game.startGame();
+
+                    //DIT WERKT ALLEEN VOOR DE EERSTE ITERATIE
                     view.stageController.game.createTeam(teamName);
                     Player newPlayer = view.stageController.game.createAndGetThisPlayer(view.stageController.playerName, teamName);
 
-                    Team teamByTeamName = view.stageController.game.getTeamByName(teamName);
-                    view.stageController.game.addPlayerToTeam(newPlayer,teamByTeamName);
+
+                    //Team teamByTeamName = view.stageController.game.getTeamByName(teamName);
+                    view.stageController.game.addPlayerToTeam(newPlayer);
 
                     Platform.runLater(new Runnable() {
                         public void run() {

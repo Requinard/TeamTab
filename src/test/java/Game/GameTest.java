@@ -107,7 +107,7 @@ public class GameTest {
     @Test (expected = IllegalArgumentException.class)
     public void testExceptionStartGame() throws Exception {
         game.addPlayerToTeam(player1);
-        game.startGame(player1);
+        game.startGame();
     }
 
     /**
@@ -120,7 +120,7 @@ public class GameTest {
     public void testStartGame() throws Exception {
         game.addPlayerToTeam(player1);
         game.addPlayerToTeam(player2);
-        Player currentPlayer = game.startGame(player1);
+        Player currentPlayer = game.startGame();
         assertEquals(player1.getName(), currentPlayer.getName());
         assertEquals(player1.getGame(), currentPlayer.getGame());
         assertEquals(player1.getInstruction(), currentPlayer.getInstruction());

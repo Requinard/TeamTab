@@ -32,6 +32,8 @@ public class Team {
 
     public String getName() {return this.name; }
 
+    public void setName(String name) {this.name = name;}
+
     /**
      * Gets the current time for a instruction
      *
