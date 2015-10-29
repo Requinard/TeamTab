@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -35,6 +36,8 @@ public class LobbyViewController implements Initializable {
 
     private LobbyView view;
     private Runnable runnable;
+    private java.util.Timer timerRefresh;
+    private TimerTask timerTask;
 
     public void initialize(URL location, ResourceBundle resources) {
         buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -47,9 +50,36 @@ public class LobbyViewController implements Initializable {
                 buttonReadyOnClick(event);
             }
         });
-        buttonHaalTeamsOp.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonbuttonHaalTeamsOpOnClick(event);
+        timerRefresh = new java.util.Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                initiateLobby();
+            }
+        };
+        timerRefresh.schedule(timerTask, 0, 30);
+    }
+
+    private void initiateLobby() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                final Player currentPlayer = view.stageController.game.getPlayerByName(view.stageController.playerName);
+                for (Team a : view.stageController.game.allTeams()) {
+                    if (a.isPlayerInTeam(currentPlayer)) {
+                        team1Name.setText(a.getName());
+                        for (Player p : a.getPlayers()) {
+                            playersTeam1Name.setText(p.getName() + "\n");
+                        }
+                    } else {
+                        team2Name.setText(a.getName());
+                        {
+                            for (Player b : a.getPlayers()) {
+                                playersTeam2Names.setText(b.getName() + "\n");
+                            }
+                        }
+                    }
+                }
+
             }
         });
     }
@@ -83,32 +113,6 @@ public class LobbyViewController implements Initializable {
                         view.pass(joinView);
                     }
                 });
-            }
-        };
-        runnable.run();
-    }
-
-    public void buttonbuttonHaalTeamsOpOnClick(MouseEvent mouseEvent) {
-        final Player currentPlayer = view.stageController.game.getPlayerByName(view.stageController.playerName);
-        runnable = new Runnable() {
-            public void run() {
-
-                for (Team a : view.stageController.game.allTeams()) {
-                    if (a.isPlayerInTeam(currentPlayer)) {
-                        team1Name.setText(a.getName());
-                        for (Player p : a.getPlayers()) {
-                            playersTeam1Name.setText(p.getName() + "\n");
-                        }
-                    } else {
-                        team2Name.setText(a.getName());
-                        {
-                            for (Player b : a.getPlayers()) {
-                                playersTeam2Names.setText(b.getName() + "\n");
-                            }
-                        }
-                    }
-                }
-
             }
         };
         runnable.run();
