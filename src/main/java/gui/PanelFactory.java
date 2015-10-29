@@ -27,7 +27,6 @@ public class PanelFactory {
                 ret = new PanelHorizontalControl(panel);
                 break;
         }
-
         return ret;
     }
 }

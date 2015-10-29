@@ -3,6 +3,7 @@ package gui.panel;
 import Game.Panel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -13,23 +14,28 @@ import java.io.IOException;
 public class PanelButtonControl extends AbstractPanelControl implements IPanel {
 
     @FXML private TextField textField;
+    @FXML private Button btnPanelClick;
+    private String panelName = "";
 
     public PanelButtonControl(Panel panel) {
         super(panel);
+        panelName = panel.getText();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelButtonControl.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
              fxmlLoader.load();
+            btnPanelClick.setText(panel.getText());
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
 
     }
 
-    @FXML public void btnClick() {
-        System.out.println("The button was clicked!");
+    @FXML
+    public void btnPanelClick() {
+        System.out.println(panelName + " was clicked!");
     }
     public String getText(){
         return textField.getText();

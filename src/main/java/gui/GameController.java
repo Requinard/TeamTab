@@ -51,7 +51,7 @@ public class GameController implements Initializable {
 
     private GameView view;
     private Runnable runnable;
-    PanelFactory panelFactory;
+    private PanelFactory panelFactory;
 
     public void initialize(URL location, ResourceBundle resources) {
         //view.stageController.game.startGame();

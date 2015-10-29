@@ -1,6 +1,8 @@
 package gui.panel;
 
 import Game.Panel;
+import gui.GameController;
+import gui.StageController;
 import javafx.scene.layout.VBox;
 
 /**
@@ -8,7 +10,6 @@ import javafx.scene.layout.VBox;
  */
  public abstract class AbstractPanelControl extends VBox{
  Panel panelused;
-
  /**
   * @autor Kevin Jetten
   * the panel gets saved in the class
