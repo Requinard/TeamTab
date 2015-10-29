@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by Kevin on 5-10-2015.
  */
@@ -16,7 +18,7 @@ public class StageController {
     Thread gameThread;
     Game game;
 
-    public StageController(Stage primaryStage) {
+    public StageController(Stage primaryStage) throws UnsupportedEncodingException {
 
         stage = primaryStage;
         currentView = new MainView(this);

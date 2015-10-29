@@ -70,9 +70,9 @@ public class Game {
     }
 
     public boolean loadPanels() {
-        URL location = this.getClass().getClassLoader().getResource("panels.csv");
+        //URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
-        try (FileInputStream fileInputStream = new FileInputStream(location.getFile())) {
+        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/panels.csv")) {
             String full = IOUtils.toString(fileInputStream);
 
             // go over each line
