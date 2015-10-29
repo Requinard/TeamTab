@@ -72,7 +72,7 @@ public class GameController implements Initializable {
     private PanelFactory panelFactory;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
-    private boolean correctInstruction;
+    private boolean panelPushed;
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -278,14 +278,15 @@ public class GameController implements Initializable {
     }
 
     public boolean correctIn(){
-        if (correctInstruction){
-            correctInstruction = false;
+        if (panelPushed){
+            panelPushed = false;
             return true;
         }
         return false;
     }
 
     public void checkInstruction(Panel panel) {
-        correctInstruction = view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName));
+        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName));
+        panelPushed = true;
     }
 }
