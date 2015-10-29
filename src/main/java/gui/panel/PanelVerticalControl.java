@@ -20,9 +20,8 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     public PanelVerticalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
 
-        verticalSlider = new Slider(panel.getMin(), panel.getMax(), 0);
+        verticalSlider = new Slider(0,0,0);
         sliderName = panel.getText();
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelVerticalControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -30,6 +29,12 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
 
         try {
             fxmlLoader.load();
+            textField.setText(panel.getText());
+            if(panel.getMin() >= 2){
+                verticalSlider.setMin(panel.getMin());
+                verticalSlider.setMax(panel.getMax());
+            }
+
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

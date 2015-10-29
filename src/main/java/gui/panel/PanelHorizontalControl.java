@@ -23,7 +23,8 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     public PanelHorizontalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
         sliderName = panel.getText();
-        horizontalSlider = new Slider(panel.getMin(), panel.getMax(),0);
+        textField = new TextField();
+        horizontalSlider = new Slider(0,0,0);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelHorizontalControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -31,6 +32,11 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
 
         try {
             fxmlLoader.load();
+            textField.setText(panel.getText());
+            if(panel.getMin() >= 2){
+                horizontalSlider.setMin(panel.getMin());
+                horizontalSlider.setMax(panel.getMax());
+            }
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
