@@ -21,12 +21,11 @@ public class Team {
     private int correctInstruction;
     private String name;
 
-
-    public Team(int time, int lives){
+    public Team(int time, int lives, int correctInstructions, String name){
         this.time =time;
-        this.startTime = time;
         this.lives = lives;
-        this.correctInstruction = 0;
+        this.correctInstruction =correctInstructions;
+        this.name = name;
         players = new ArrayList<Player>();
         playerPanels = new ArrayList<Panel>();
     }

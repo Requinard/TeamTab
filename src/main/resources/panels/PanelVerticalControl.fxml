@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
-
 <?import javafx.scene.layout.*?>
 
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <TextField fx:id="textField" />
-  <Slider fx:id="verticalSlider" orientation="VERTICAL" />
+  <TextField fx:id="textField" disable="true" />
+  <Slider fx:id="verticalSlider" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="0" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
 </fx:root>

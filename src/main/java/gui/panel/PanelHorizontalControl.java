@@ -38,6 +38,7 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     public void setHorizontalSlider(double sliderValue){
         horizontalSlider.setValue(sliderValue);
     }
+    public void setMaxHorizontalSlider(double maxValue){horizontalSlider.setMax(maxValue);}
     public double getSlidervalue(){
         return horizontalSlider.getValue();
     }

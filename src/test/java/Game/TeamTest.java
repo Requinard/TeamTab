@@ -30,7 +30,7 @@ public class TeamTest {
     @Before
     public void setUp() throws Exception {
         g = new Game(null);
-        team = new Team(9,3);
+        team = new Team(9,3,0,"team");
         in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
         in2 = new Instruction(pan2, "Click off", 1);
         in3 = new Instruction(pan2, "Set to 50", 1);

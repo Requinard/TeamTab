@@ -37,6 +37,7 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     public void setVerticalSlider(double sliderValue){
         verticalSlider.setValue(sliderValue);
     }
+    public void setMaxVerticalSlider(double maxValue) {verticalSlider.setMax(maxValue);}
     public double getSlidervalue(){
         return verticalSlider.getValue();
     }

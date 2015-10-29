@@ -10,12 +10,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by HP user on 12-10-2015.
  */
 public class Game {
-    private final int STARTTIMEROUND = 9;
+    private final int STARTTIMEROUND = 90;
     private final int STARTLEVENS = 3;
     Team team1;
     Team team2;
@@ -46,8 +47,8 @@ public class Game {
         substractCorrectInstructions = 5;
         this.stageController = stageController;
 
-        team1 = new Team(STARTTIMEROUND, STARTLEVENS);
-        team2 = new Team(STARTTIMEROUND, STARTLEVENS);
+        team1 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team1");
+        team2 = new Team(STARTTIMEROUND, STARTLEVENS,0, "Team2");
 
         teams.add(team1);
         teams.add(team2);
@@ -64,7 +65,6 @@ public class Game {
     public Game getGame () {
         return this;
     }
-
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
@@ -75,7 +75,7 @@ public class Game {
             // go over each line
             for (String s : full.split("\n")) {
                 // If we start with a hashtag the line is commented and we skip it
-                if (s.startsWith("#")||s.equals("\r"))
+                if (s.startsWith("#"))
                     continue;
 
                 // get the individual lines
@@ -102,11 +102,10 @@ public class Game {
 
         return panels.size() > 0;
     }
-
-
     // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
     private void setUp(){
         Panel panel = new Panel(1, 1, "Test", 0, 0);
+        instruction = new Instruction(panel, "Test", 0);
         Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
         team2.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
@@ -115,7 +114,7 @@ public class Game {
     // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
     public List<Team> allTeams(){
         System.out.println("Game - sire of ArrayList teams: " + teams.size());
-         return Collections.unmodifiableList(teams);
+        return Collections.unmodifiableList(teams);
     }
 
     // een speler opvragen op basis van zijn naam
@@ -132,7 +131,7 @@ public class Game {
 
     // een nieuw team aanmaken
     public boolean createTeam(String teamName){
-        Team newTeam = new Team(9, 3);
+        Team newTeam = new Team(9,3,0,teamName);
         teams.add(newTeam);
 
         for(Team t : teams){
@@ -174,20 +173,20 @@ public class Game {
 
     /**
      * @Author Qun
-     * OVERLOAD DEZE METHODE MET ipadress & username
-     * OVERLOAD DEZE METHODE startgame()
-     * TODO: OVERLOAD DEZE METHODE MET IPADRESS & USERNAME
      * Is called at the beginning of the game
      * Check if both teams have the same amount of players
      * @return the player for which the game starts
      */
     public Player startGame(Player player){
-        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstruction(),player.getGame(),player.getTeam());
+        // setup voor demo spelers
+        setUp();
+        //
+        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstructions(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
-            newRound();
             return currentPlayer;
+
         }else {
             throw new IllegalArgumentException ("wrong sizes");
         }
@@ -197,18 +196,17 @@ public class Game {
      * Call this method to start a new round
      * Every value in the game gets a reset
      * Every Team receives new panels
-     * @Author this method always returns false. Changed it to a void method
+     * @Author Qun
      * @return a new Round
      */
-    public void newRound(){
+    public boolean newRound(){
         // returns default values
         reset();
         for(Team team : teams)
         {
-            team.givePanelsToPlayersFromTeam(panels);
+            team.setPlayerPanels(panels);
         }
-
-        //return false;
+        return false;
     }
 
     /**
@@ -233,7 +231,6 @@ public class Game {
             for (Player p : sortedWinningTeam) {
                 playerScores.add(p.getName() + ": " + p.getScore());
             }
-            teams.remove(team);
             return playerScores;
         }
 
@@ -262,23 +259,21 @@ public class Game {
 
     /**
      * Changing the player to the other team
-     * @Author Qun changed the if statement so false can be returned
+     *
      * @Author Kaj
      * @param player The player that wants to join the other team
      * @Return true when changing team is succesful
      */
     public boolean changeTeam(Player player){
         Team currentTeam = player.getTeam();
-        if(currentTeam != null)
-        {
-            int idTeam = teams.indexOf(currentTeam);
-                currentTeam.removePlayer(player);
-                if (idTeam+1 < teams.size()) {
-                    return teams.get(idTeam+1).addPlayerToTeam(player);
-                }else {
-                    return teams.get(0).addPlayerToTeam(player);
 
-        }
+        int idTeam = teams.indexOf(currentTeam);
+        if (currentTeam.removePlayer(player)){
+            if (idTeam+1 < teams.size()) {
+                return teams.get(idTeam+1).addPlayerToTeam(player);
+            }else {
+                return teams.get(0).addPlayerToTeam(player);
+            }
         }else {
             return false;
         }
@@ -303,18 +298,30 @@ public class Game {
      * When the team has less than 3 seconds they lose a life
      * if  they have 0 lives that teams game is ended
      * @Author Qun
-     * @author Frank Hartman
      * @param team The team that gets a check if they should lose a life
      * @return true if the live of the team is subtracted
      */
-    public void subtractLives(Team team){
+    public boolean subtractLives(Team team){
         if(team.substractLives() && team.getLives() <= 0) {
             teams.remove(team);
-            endGame(team);
-        }
+            endGame(team); // dit moet in de controller worden aangeroepen
+            return true;
+        } else return team.substractLives();
 
-        else
-            newRound();
+        /*
+        if(team.substractLives())
+        {
+            if (team.getLives() <= 0) {
+                endGame(team);
+                teams.remove(team);
+            }
+            else{
+                newRound();
+            }
+            return true;
+        }
+        return false;
+        */
     }
 
     /**
@@ -381,20 +388,52 @@ public class Game {
     }
 
     /**
-     * @Author Qun ik snap niet wanneer het fout kan gaan ?
-     * Nu aangepast zodat het een void is.
      * Reset values from both teams
      * @return true when resetting team is succesful else false
      */
-    private boolean reset(){
-        boolean teamHasBeenReset = false;
+    public boolean reset(){
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
-             t.resetTeam();
-            teamHasBeenReset = true;
+            if (!t.resetTeam()){
+                return false;
             }
-        return teamHasBeenReset;
         }
+        return true;
+    }
+
+    /**
+     * Gives a player a new instruction
+     * @param player The player that needs a new instruction
+     */
+    public Instruction givePlayerInstructions(Player player) {
+        Team playerTeam = player.getTeam();
+        int maxSize = playerTeam.getPlayerPanels().size();
+        Random random = new Random();
+        // Panels that are in use
+        ArrayList<Panel> usedPanelNumbers = new ArrayList<Panel>();
+        // Panels that are not in use and that cannot be chosen
+        ArrayList<Panel> unusedPanelNumbers = playerTeam.getPlayerPanels();
+
+        // Gets all the panels wich are used by the team of the player
+        for (Player p : playerTeam.getPlayers()) {
+            usedPanelNumbers.add(p.getInstructions().getPanel());
+        }
+
+        // Removes all the panels that are in use so only the available panels remain
+        for (Panel p : usedPanelNumbers) {
+            unusedPanelNumbers.remove(p);
+        }
+
+        // gets a random panel from the list of panels
+        Panel panel = unusedPanelNumbers.get(random.nextInt(maxSize));
+
+        // Add the random instruction to the player
+        Instruction instuction = panel.getInstruction();
+        player.setInstructions(instuction);
+
+        // Returns the instruction
+        return instuction;
+    }
 
     /**
      * Returns the panels from the player

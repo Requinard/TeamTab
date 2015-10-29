@@ -31,7 +31,7 @@ public class PlayerTest {
     @Before
     public void setUp() throws Exception {
         game = new Game(null);
-        team = new Team(9, 3);
+        team = new Team(9, 3, 0, "team");
         instruction1 = new Instruction(pan1, "Click on", 0);
         instruction2 = new Instruction(pan2, "Click off", 1);
         pan1 = new Panel(1, 1, "a", 0, 1);
