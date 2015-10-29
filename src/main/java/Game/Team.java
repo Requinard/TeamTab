@@ -145,12 +145,12 @@ public class Team {
                     tempPanels.add(pan);
                     allPanelsForTeam.remove(r);
                 }
-                else
-                {
+                else {
                     i--;
                 }
             }
                 player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
+                newInstruction(player);
             }
     return true;
     }
