@@ -284,7 +284,7 @@ public class Team {
         for (Player p : players) {
 
             // Check if the panel belongs to the player
-            if (p.getInstruction().getPanel().equals(changedPanel)) {
+            //if (p.getInstruction().getPanel().equals(changedPanel)) {
                 // Check if the value is correct
                 if (p.checkCorrectPanel(changedPanel)) {
                     correctInstruction++;
@@ -298,7 +298,7 @@ public class Team {
                     newInstruction(p);
                     return false;
                 }
-            }
+            //}
 
         }
         return false;

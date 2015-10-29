@@ -43,8 +43,11 @@ public class PanelFactoryTest {
      */
     @Test
     public void testGetPanel() throws Exception {
+
+        GameController gameController = new GameController();
+
         // Test button
-        IPanel ipanel = PanelFactory.getPanel(this.panel);
+        IPanel ipanel = PanelFactory.getPanel(this.panel, gameController);
 
         boolean assignableFrom = ipanel instanceof PanelButtonControl;
 
@@ -54,7 +57,7 @@ public class PanelFactoryTest {
 
         Panel panel_horizontal = new Panel(1, 2, "slide", 1, 10);
 
-        ipanel = PanelFactory.getPanel(panel_horizontal);
+        ipanel = PanelFactory.getPanel(panel_horizontal, gameController);
 
         assignableFrom = ipanel instanceof PanelHorizontalControl;
 
@@ -64,7 +67,7 @@ public class PanelFactoryTest {
 
         Panel panel_vertical = new Panel(1, 3, "vertial", 1, 10);
 
-        ipanel = PanelFactory.getPanel(panel_vertical);
+        ipanel = PanelFactory.getPanel(panel_vertical, gameController);
 
         assignableFrom = ipanel instanceof PanelVerticalControl;
 
@@ -74,7 +77,7 @@ public class PanelFactoryTest {
 
         Panel panel_default_to_button = new Panel(1, 4, "default", 0, 1);
 
-        ipanel = PanelFactory.getPanel(panel_default_to_button);
+        ipanel = PanelFactory.getPanel(panel_default_to_button, gameController);
 
         assignableFrom = ipanel instanceof PanelButtonControl;
 

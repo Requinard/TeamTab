@@ -5,6 +5,7 @@ import Game.Panel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import gui.GameController;
 import gui.panel.PanelHorizontalControl;
 import javafx.stage.Stage;
 import org.junit.Test;
@@ -47,7 +48,8 @@ public class PanelHolizontalControlTest extends ApplicationTest{
      */
     @Override
     public void start(Stage stage) throws Exception {
+        GameController gameController = new GameController();
         Panel mainPanel = new Panel(1,1,"TestControl",1,1);
-         panelHorizontalControl = new PanelHorizontalControl(mainPanel);
+         panelHorizontalControl = new PanelHorizontalControl(mainPanel, gameController);
     }
 }

@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -79,7 +80,7 @@ public class GameController implements Initializable {
         int x = 0;
         int y = 0;
         for (Panel panel : panels) {
-            IPanel iPanel = panelFactory.getPanel(panel);
+            IPanel iPanel = panelFactory.getPanel(panel, this);
             gridPane.add((Node) iPanel, x, y);
             y++;
             if (y == 5) {
@@ -159,6 +160,10 @@ public class GameController implements Initializable {
             }
         };
         runnable.run();
+    }
+
+    public void checkInstruction(Panel panel) {
+        view.stageController.game.checkInstruction(panel,view.stageController.game.getPlayerByName(view.stageController.playerName));
     }
 
 

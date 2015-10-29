@@ -1,6 +1,7 @@
 package PanelControlTest;
 
 import Game.Panel;
+import gui.GameController;
 import gui.panel.PanelButtonControl;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -40,8 +41,10 @@ public class PanelButtonControlTest extends ApplicationTest {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        GameController gameController = new GameController();
+
         Panel mainPanel = new Panel(1,1,"TestControl",1,1);
-         panelButtonControl = new PanelButtonControl(mainPanel);
+         panelButtonControl = new PanelButtonControl(mainPanel, gameController);
 
     }
 }

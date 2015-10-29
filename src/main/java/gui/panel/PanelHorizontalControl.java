@@ -1,6 +1,7 @@
 package gui.panel;
 
 import Game.Panel;
+import gui.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
@@ -16,8 +17,8 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     @FXML private Slider horizontalSlider;
 
 
-    public PanelHorizontalControl(Panel panel) {
-        super(panel);
+    public PanelHorizontalControl(Panel panel, GameController gameController) {
+        super(panel, gameController);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelHorizontalControl.fxml"));
         fxmlLoader.setRoot(this);

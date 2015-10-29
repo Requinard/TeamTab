@@ -1,6 +1,7 @@
 package gui.panel;
 
 import Game.Panel;
+import gui.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -17,9 +18,8 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
     @FXML private Button btnPanelClick;
     private String panelName = "";
 
-    public PanelButtonControl(Panel panel) {
-        super(panel);
-        panelName = panel.getText();
+    public PanelButtonControl(Panel panel, GameController gameController) {
+        super(panel, gameController);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelButtonControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -33,9 +33,11 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
 
     }
 
-    @FXML
-    public void btnPanelClick() {
+    @FXML public void btnPanelClick() {
         System.out.println(panelName + " was clicked!");
+        Panel panel = getPanel();
+        panel.setCurrent(1);
+        gameController.checkInstruction(panel);
     }
     public String getText(){
         return textField.getText();

@@ -379,10 +379,12 @@ public class Game {
         Team t = player.getTeam();
 
         if (t.checkTeamInstruction(changedPanel)) {
+            System.out.println("The instruction was correct!");
             return addTime(t);
         }
 
         else
+            //System.out.println("The instruction was not correct");
             return false;
 
     }

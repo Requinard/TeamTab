@@ -1,6 +1,7 @@
 package gui.panel;
 
 import Game.Panel;
+import gui.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
@@ -15,8 +16,8 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     @FXML private TextField textField;
     @FXML private Slider verticalSlider;
 
-    public PanelVerticalControl(Panel panel) {
-        super(panel);
+    public PanelVerticalControl(Panel panel, GameController gameController) {
+        super(panel, gameController);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelVerticalControl.fxml"));
         fxmlLoader.setRoot(this);
