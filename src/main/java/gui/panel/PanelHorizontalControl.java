@@ -33,10 +33,10 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
         try {
             fxmlLoader.load();
             textField.setText(panel.getText());
-            if(panel.getMin() >= 2){
+
                 horizontalSlider.setMin(panel.getMin());
                 horizontalSlider.setMax(panel.getMax());
-            }
+
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

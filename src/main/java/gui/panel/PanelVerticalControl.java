@@ -13,14 +13,16 @@ import java.io.IOException;
  * Created by Kevin on 12-10-2015.
  */
 public class PanelVerticalControl extends AbstractPanelControl implements IPanel {
-    @FXML private TextField textField;
-    @FXML private Slider verticalSlider;
+    @FXML
+    private TextField textField;
+    @FXML
+    private Slider verticalSlider;
     private String sliderName;
 
     public PanelVerticalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
 
-        verticalSlider = new Slider(0,0,0);
+        verticalSlider = new Slider(0, 0, 0);
         sliderName = panel.getText();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelVerticalControl.fxml"));
@@ -30,24 +32,23 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
         try {
             fxmlLoader.load();
             textField.setText(panel.getText());
-            if(panel.getMin() >= 2){
-                verticalSlider.setMin(panel.getMin());
-                verticalSlider.setMax(panel.getMax());
-            }
+            verticalSlider.setMin(panel.getMin());
+            verticalSlider.setMax(panel.getMax());
 
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    @FXML public void sliderValueChanged() {
+    @FXML
+    public void sliderValueChanged() {
         System.out.println(sliderName + " " + getSliderValue());
         Panel panel = getPanel();
         panel.setCurrent(1);
         gameController.checkInstruction(panel);
     }
 
-    private Double getSliderValue(){
+    private Double getSliderValue() {
         return verticalSlider.getValue();
     }
 
