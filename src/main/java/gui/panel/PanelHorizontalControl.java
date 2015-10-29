@@ -17,6 +17,7 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     private TextField textField;
     @FXML
     private Slider horizontalSlider;
+
     private String sliderName = "";
 
     public PanelHorizontalControl(Panel panel, GameController gameController) {
@@ -34,7 +35,6 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
             throw new RuntimeException(exception);
         }
     }
-
 
     @FXML public void sliderValueChanged() {
         System.out.println(sliderName + " " + getSliderValue());

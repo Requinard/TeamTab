@@ -15,9 +15,14 @@ import java.io.IOException;
 public class PanelVerticalControl extends AbstractPanelControl implements IPanel {
     @FXML private TextField textField;
     @FXML private Slider verticalSlider;
+    private String sliderName;
 
     public PanelVerticalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
+
+        verticalSlider = new Slider(panel.getMin(), panel.getMax(), 0);
+        sliderName = panel.getText();
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelVerticalControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -29,19 +34,31 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
             throw new RuntimeException(exception);
         }
     }
-    public String getText(){
-        return textField.getText();
+
+    @FXML public void sliderValueChanged() {
+        System.out.println(sliderName + " " + getSliderValue());
+        Panel panel = getPanel();
+        panel.setCurrent(1);
+        gameController.checkInstruction(panel);
     }
-    public void setTextField(String txt){
-        textField.setText(txt);
-    }
-    public void setVerticalSlider(double sliderValue){
-        verticalSlider.setValue(sliderValue);
-    }
-    public void setMaxVerticalSlider(double maxValue) {verticalSlider.setMax(maxValue);}
-    public double getSlidervalue(){
+
+    private Double getSliderValue(){
         return verticalSlider.getValue();
     }
+
+//    public String getText(){
+//        return textField.getText();
+//    }
+//    public void setTextField(String txt){
+//        textField.setText(txt);
+//    }
+//    public void setVerticalSlider(double sliderValue){
+//        verticalSlider.setValue(sliderValue);
+//    }
+//    public void setMaxVerticalSlider(double maxValue) {verticalSlider.setMax(maxValue);}
+//    public double getSlidervalue(){
+//        return verticalSlider.getValue();
+//    }
 
     public void update() {
 
