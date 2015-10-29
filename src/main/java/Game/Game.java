@@ -64,7 +64,6 @@ public class Game {
     public Game getGame () {
         return this;
     }
-
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
@@ -102,11 +101,10 @@ public class Game {
 
         return panels.size() > 0;
     }
-
-
     // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
     private void setUp(){
         Panel panel = new Panel(1, 1, "Test", 0, 0);
+        instruction = new Instruction(panel, "Test", 0);
         Player a = new Player("localhost","Donnie Brasco",0,panels,instruction,this, team2);
         team2.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
@@ -182,6 +180,9 @@ public class Game {
      * @return the player for which the game starts
      */
     public Player startGame(Player player){
+        // setup voor demo spelers
+        setUp();
+        //
         currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstruction(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
@@ -197,7 +198,7 @@ public class Game {
      * Call this method to start a new round
      * Every value in the game gets a reset
      * Every Team receives new panels
-     * @Author this method always returns false. Changed it to a void method
+     * @Author Qun
      * @return a new Round
      */
     public void newRound(){
