@@ -89,7 +89,7 @@ public class GameController implements Initializable {
     //Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
     public void showPlayerInstruction()
     {
-        textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstructions().toString());
+        textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString());
     }
     public void showTeamLevens()
     {

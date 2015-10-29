@@ -185,7 +185,7 @@ public class Game {
         // setup voor demo spelers
         setUp();
         //
-        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstructions(),player.getGame(),player.getTeam());
+        currentPlayer = new Player(player.getIpAdress(),player.getName(),player.getScore(),player.getPanels(),player.getInstruction(),player.getGame(),player.getTeam());
         // Check if both teams are the same size
         if (team1.getPlayers().size() == team2.getPlayers().size()) {
             // Panels are given to the teams that compete
@@ -388,7 +388,7 @@ public class Game {
      * Reset values from both teams
      * @return true when resetting team is succesful else false
      */
-    private boolean reset(){
+    public boolean reset(){
         boolean teamHasBeenReset = false;
         // Voor alle teams de waardes naar standaard terug zetten
         for (Team t : teams) {
