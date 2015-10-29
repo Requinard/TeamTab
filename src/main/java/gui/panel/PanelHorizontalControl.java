@@ -13,12 +13,16 @@ import java.io.IOException;
  * Created by Kevin on 12-10-2015.
  */
 public class PanelHorizontalControl extends AbstractPanelControl implements IPanel {
-    @FXML private TextField textField;
-    @FXML private Slider horizontalSlider;
-
+    @FXML
+    private TextField textField;
+    @FXML
+    private Slider horizontalSlider;
+    private String sliderName = "";
 
     public PanelHorizontalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
+        sliderName = panel.getText();
+        horizontalSlider = new Slider(panel.getMin(), panel.getMax(),0);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelHorizontalControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -30,17 +34,33 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
             throw new RuntimeException(exception);
         }
     }
-    public String getText(){
-        return textField.getText();
+
+
+    @FXML public void sliderValueChanged() {
+        System.out.println(sliderName + " " + getSliderValue());
+        Panel panel = getPanel();
+        panel.setCurrent(1);
+        gameController.checkInstruction(panel);
     }
-    public void setTextField(String txt){
-        textField.setText(txt);
+
+    private Double getSliderValue(){
+        return horizontalSlider.getValue();
     }
-    public void setHorizontalSlider(double sliderValue){
-        horizontalSlider.setValue(sliderValue);
-    }
-    public void setMaxHorizontalSlider(double maxValue){horizontalSlider.setMax(maxValue);}
-    public double getSlidervalue(){
+
+
+
+//    public String getText() {
+//        return textField.getText();
+//    }
+
+    //public void setTextField(String txt){
+    //    textField.setText(txt);
+    // }
+    //public void setHorizontalSlider(double sliderValue){
+    //    horizontalSlider.setValue(sliderValue);
+    // }
+    //public void setMaxHorizontalSlider(double maxValue){horizontalSlider.setMax(maxValue);}
+    public double getSlidervalue() {
         return horizontalSlider.getValue();
     }
 

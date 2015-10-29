@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -81,6 +82,7 @@ public class GameController implements Initializable {
         int y = 0;
         for (Panel panel : panels) {
             IPanel iPanel = panelFactory.getPanel(panel, this);
+            gridPane.setAlignment(Pos.CENTER);
             gridPane.add((Node) iPanel, x, y);
             y++;
             if (y == 5) {

@@ -18,13 +18,13 @@ public class PanelButtonControlTest extends ApplicationTest {
      * Next it will get the set text of the textfield and than compairs is to the original value.
      * If the values are the same the test will succeed.
      */
-    @Test
-    public void TestSetAndGetText() {
-
-        String textValue = "test";
-        panelButtonControl.setTextField(textValue);
-        assertEquals(panelButtonControl.getText(), textValue);
-    }
+//    @Test
+//    public void TestSetAndGetText() {
+//
+//        String textValue = "test";
+//        panelButtonControl.setTextField(textValue);
+//        assertEquals(panelButtonControl.getText(), textValue);
+//    }
 
     /**
      * @author Kevin Jetten
