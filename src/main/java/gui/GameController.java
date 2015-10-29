@@ -228,8 +228,11 @@ public class GameController implements Initializable {
                         });
                         if (counter == 0) {
                             //dit moet worden verandert door een subtract time methode
-                            view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().setTime(5);
-                            timer.stop();
+                            Player player = view.stageController.game.getPlayerByName(view.stageController.playerName);
+
+                            view.stageController.game.instructionIsToLate(player);
+                            Team team = player.getTeam();
+                            counter = team.getTime();
                         }
                     }
                 });

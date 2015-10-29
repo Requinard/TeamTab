@@ -402,10 +402,17 @@ public class Game {
             System.out.println("Team lives: " + t.getLives());
             return false;
         }
+    }
 
 
-
-
+    /**
+     * When there is no time to execute a instruction this method should be called
+     * @author Frank Hartman
+     */
+    public void instructionIsToLate(Player player) {
+        Panel panel = new Panel(1000, 1, "WRONG PANNEL", 0, 0);
+        checkInstruction(panel, player);
+        System.out.println("INSTRUCTION TO LATE! current instruction time: " + player.getTeam().getTime());
     }
 
     /**
