@@ -19,7 +19,7 @@ public class ScoreViewController implements Initializable {
     @FXML
     private Button buttonBackLobby;
     @FXML
-    private TextField scoreField;
+    private TextField TeamName;
 
     private ScoreView view;
     private Runnable runnable;
@@ -31,8 +31,23 @@ public class ScoreViewController implements Initializable {
                 buttonBackLobbyOnClick(event);
             }
         });
+        EndGame();
+    }
+
+    public void EndGame() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                ArrayList<String> scores = view.stageController.game.endGame(view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam());
+                String scoresString = "";
+                for (String s : scores) {
+                    scoresString = scoresString + s + "           ";
+                }
+                TeamName.setText(scoresString);
+            }
+        });
 
     }
+
 
     public void setView(ScoreView scoreView) {
         view = scoreView;

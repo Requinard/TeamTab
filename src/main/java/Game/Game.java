@@ -320,8 +320,8 @@ public class Game {
 
         if(team.substractLives()) {
             if (team.getLives() <= 0) {
-                teams.remove(team);
-                endGame(team);
+                //teams.remove(team);
+                //endGame(team);
             }
             else
                 newRound();

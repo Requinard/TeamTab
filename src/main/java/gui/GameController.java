@@ -107,7 +107,30 @@ public class GameController implements Initializable {
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
+        showPlayerScore();
     }
+
+    private void showPlayerScore() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                if (view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getLives() <= 0) {
+//                    runnable = new Runnable() {
+//                        public void run() {
+//
+//                            Platform.runLater(new Runnable() {
+//                                public void run() {
+                                    ScoreView scoreView = new ScoreView((view.stageController));
+                                    view.pass(scoreView);
+                    timerRefresh.cancel();
+                                }
+//                            });
+//                        }
+//                    };
+//                    runnable.run();
+                }
+            });
+        }
+
 
     public void setView(GameView gameView) {
         view = gameView;
@@ -120,16 +143,15 @@ public class GameController implements Initializable {
         gridPane.getChildren().removeAll();
         gridPane.setGridLinesVisible(true);
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.setMinSize(0,0);
+        gridPane.setMinSize(0, 0);
         ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
         int column = 0;
         int row = 0;
         for (Panel panel : panels) {
             IPanel iPanel = panelFactory.getPanel(panel, this);
-            if(row < 4){
+            if (row < 4) {
                 gridPane.add((Node) iPanel, row, column);
-            }
-            else{
+            } else {
                 row = 0;
                 column++;
                 gridPane.add((Node) iPanel, row, column);
@@ -257,8 +279,6 @@ public class GameController implements Initializable {
     }
 
 
-
-
     public void buttonStartTimerOnClick(MouseEvent mouseEvent) {
         buttonStartTimer.setVisible(false);
         runnable = new Runnable() {
@@ -274,7 +294,7 @@ public class GameController implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                if(correctIn()){
+                                if (correctIn()) {
                                     counter = view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getTime();
                                 }
                                 progressBar.setProgress(counter * 0.1);
@@ -297,8 +317,8 @@ public class GameController implements Initializable {
         runnable.run();
     }
 
-    public boolean correctIn(){
-        if (panelPushed){
+    public boolean correctIn() {
+        if (panelPushed) {
             panelPushed = false;
             return true;
         }
