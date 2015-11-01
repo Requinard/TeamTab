@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -12,31 +14,34 @@
    <children>
      <ImageView layoutX="3.0">
        <image>
-         <Image url="@images/MainScreen/Background.jpg" />
+         <Image url="@images/MainScreen/MainScreen.jpg" />
        </image>
      </ImageView>
 
-     <Button fx:id="buttonJoin" ellipsisString="..." layoutX="115.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
-       <graphic>
-         <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
-           <image>
-             <Image url="@images/MainScreen/ButtonJoin.jpg" />
-           </image>
-         </ImageView>
-       </graphic>
-     </Button>
+     <TextField fx:id="userName" alignment="CENTER" layoutX="686.0" layoutY="405.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" promptText="User name" visible="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <DisplacementMap>
+               <mapData>
+                  <FloatMap />
+               </mapData>
+            </DisplacementMap>
+         </effect></TextField>
+   <ImageView fitHeight="127.0" fitWidth="475.0" focusTraversable="false" layoutX="170.0" layoutY="232.0" smooth="true" visible="true">
+     <image>
+       <Image url="@images/MainScreen/ButtonJoin.jpg" />
+     </image>
+   </ImageView>
+   <ImageView fitHeight="117.0" fitWidth="475.0" focusTraversable="false" layoutX="672.0" layoutY="243.0" smooth="true" visible="true">
+     <image>
+       <Image url="@images/MainScreen/ButtonStart.jpg" />
+     </image>
+   </ImageView>
 
-     <Button fx:id="buttonStart" ellipsisString="..." layoutX="649.0" layoutY="233.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
-       <graphic>
-         <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
-           <image>
-             <Image url="@images/MainScreen/ButtonStart.jpg" />
-           </image>
-         </ImageView>
-       </graphic>
-     </Button>
+     <Button fx:id="buttonJoin" ellipsisString="..." layoutX="171.0" layoutY="248.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
 
-     <TextField fx:id="userName" layoutX="415.0" layoutY="905.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" visible="true" />
-      <Label layoutX="573.0" layoutY="851.0" text="USERNAME" textFill="WHITE" />
+     <Button fx:id="buttonStart" ellipsisString="..." layoutX="673.0" layoutY="248.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
    </children>
 </AnchorPane>

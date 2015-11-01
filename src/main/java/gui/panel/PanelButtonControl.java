@@ -14,8 +14,10 @@ import java.io.IOException;
  */
 public class PanelButtonControl extends AbstractPanelControl implements IPanel {
 
-    @FXML private TextField textField;
-    @FXML private Button btnPanelClick;
+    @FXML
+    private TextField textField;
+    @FXML
+    private Button btnPanelClick;
     private String panelName = "";
 
     public PanelButtonControl(Panel panel, GameController gameController) {
@@ -28,28 +30,25 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
-             fxmlLoader.load();
+            fxmlLoader.load();
             btnPanelClick.setText(panel.getText());
-            textField.setText(panel.getText());
+            btnPanelClick.setMinWidth(250);
+            btnPanelClick.setMaxWidth(250);
+            //textField.setText(panel.getText());
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
 
     }
 
-    @FXML public void btnPanelClick() {
+    @FXML
+    public void btnPanelClick() {
         System.out.println(panelName + " was clicked!");
         Panel panel = getPanel();
         panel.setCurrent(1);
-        gameController.checkInstruction(panel);
+        gameController.checkInstruction(panel, 1);
     }
 
-//    public String getText(){
-//        return textField.getText();
-//    }
-//    public void setTextField(String txt){
-//        textField.setText(txt);
-//    }
     public void update() {
 
     }

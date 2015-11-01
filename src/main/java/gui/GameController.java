@@ -4,35 +4,24 @@ import Game.Panel;
 import Game.Player;
 import Game.Team;
 import gui.panel.IPanel;
-import gui.panel.PanelButtonControl;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
-import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 
@@ -48,11 +37,15 @@ public class GameController implements Initializable {
     private ProgressBar progressBar = new ProgressBar(1);
     @FXML
     private Label timeLabel;
+    @FXML
+    private Label secondenLabel;
+    @FXML
+    private Label instructionLabel;
+
     private Timer timer;
     @FXML
     private GridPane gridPane = new GridPane();
-    @FXML
-    private TextField textFieldInstruction;
+
     @FXML
     private Label labelCorrectInstructions;
     @FXML
@@ -107,30 +100,7 @@ public class GameController implements Initializable {
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
-        showPlayerScore();
     }
-
-    private void showPlayerScore() {
-        Platform.runLater(new Runnable() {
-            public void run() {
-                if (view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getLives() <= 0) {
-//                    runnable = new Runnable() {
-//                        public void run() {
-//
-//                            Platform.runLater(new Runnable() {
-//                                public void run() {
-                                    ScoreView scoreView = new ScoreView((view.stageController));
-                                    view.pass(scoreView);
-                    timerRefresh.cancel();
-                                }
-//                            });
-//                        }
-//                    };
-//                    runnable.run();
-                }
-            });
-        }
-
 
     public void setView(GameView gameView) {
         view = gameView;
@@ -139,16 +109,15 @@ public class GameController implements Initializable {
     }
 
     public void fillGridWithPanels() {
-
         gridPane.getChildren().removeAll();
-        gridPane.setGridLinesVisible(true);
-        gridPane.setAlignment(Pos.CENTER);
         gridPane.setMinSize(0, 0);
-        ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
+        gridPane.setAlignment(Pos.CENTER);
+        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
         int column = 0;
         int row = 0;
         for (Panel panel : panels) {
             IPanel iPanel = panelFactory.getPanel(panel, this);
+            System.out.println(panel.getText());
             if (row < 4) {
                 gridPane.add((Node) iPanel, row, column);
             } else {
@@ -159,28 +128,14 @@ public class GameController implements Initializable {
             row++;
         }
 
-
-//        gridPane.getChildren().removeAll();
-//        gridPane = new GridPane();
-////        for (int i = 0; i < 4; i++) {
-////            ColumnConstraints columnConstraints = new ColumnConstraints(150);
-////            gridPane.getColumnConstraints().add(columnConstraints);
-////        }
-////        for (int i = 0; i < 3; i++) {
-////            RowConstraints rowConstraints = new RowConstraints(150);
-////            gridPane.getRowConstraints().add(rowConstraints);
-////        }
-//        gridPane.setMinSize(600,450);
-//        gridPane.setMaxSize(600,450);
-//        gridPane.setGridLinesVisible(true);
     }
 
-    //Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
+    // Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
     public void showPlayerInstruction() {
         Platform.runLater(new Runnable() {
             public void run() {
                 if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null)
-                    textFieldInstruction.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().getValue());
+                    instructionLabel.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().getValue());
             }
         });
     }
@@ -266,7 +221,6 @@ public class GameController implements Initializable {
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-
                 Platform.runLater(new Runnable() {
                     public void run() {
                         ScoreView scoreView = new ScoreView((view.stageController));
@@ -325,8 +279,12 @@ public class GameController implements Initializable {
         return false;
     }
 
-    public void checkInstruction(Panel panel) {
-        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName));
+    public void checkInstruction(Panel panel, int sliderValue) {
+        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName), sliderValue);
         panelPushed = true;
+        if(view.stageController.game.gameOver()){
+            ScoreView scoreView = new ScoreView(view.stageController);
+            view.pass(scoreView);
+        }
     }
 }

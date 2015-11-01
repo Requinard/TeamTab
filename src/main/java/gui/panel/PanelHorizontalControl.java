@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
         super(panel, gameController);
         sliderName = panel.getText();
         textField = new TextField();
-        horizontalSlider = new Slider(0,0,0);
+        horizontalSlider = new Slider(0, 0, 0);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/panels/PanelHorizontalControl.fxml"));
         fxmlLoader.setRoot(this);
@@ -33,38 +34,26 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
         try {
             fxmlLoader.load();
             textField.setText(panel.getText());
-                horizontalSlider.setMin(panel.getMin());
-                horizontalSlider.setMax(panel.getMax());
-
+            horizontalSlider.setMin(panel.getMin());
+            horizontalSlider.setMax(panel.getMax());
+            horizontalSlider.setEffect(new ColorAdjust(0,0,1,1));
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    @FXML public void sliderValueChanged() {
-        System.out.println(sliderName + " " + getSliderValue());
+    @FXML
+    public void sliderValueChanged() {
+        System.out.println(sliderName + " " + getSliderValue().intValue());
         Panel panel = getPanel();
-        panel.setCurrent(1);
-        gameController.checkInstruction(panel);
+        panel.setCurrent(getSliderValue().intValue());
+        gameController.checkInstruction(panel, getSliderValue().intValue());
     }
 
-    private Double getSliderValue(){
+    private Double getSliderValue() {
         return horizontalSlider.getValue();
     }
 
-
-
-//    public String getText() {
-//        return textField.getText();
-//    }
-
-    //public void setTextField(String txt){
-    //    textField.setText(txt);
-    // }
-    //public void setHorizontalSlider(double sliderValue){
-    //    horizontalSlider.setValue(sliderValue);
-    // }
-    //public void setMaxHorizontalSlider(double maxValue){horizontalSlider.setMax(maxValue);}
     public double getSlidervalue() {
         return horizontalSlider.getValue();
     }

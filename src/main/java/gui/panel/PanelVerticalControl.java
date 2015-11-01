@@ -5,7 +5,9 @@ import gui.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 
 import java.io.IOException;
 
@@ -34,7 +36,7 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
             textField.setText(panel.getText());
             verticalSlider.setMin(panel.getMin());
             verticalSlider.setMax(panel.getMax());
-
+            verticalSlider.setEffect(new ColorAdjust(0,0,1,1));
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -42,29 +44,16 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
 
     @FXML
     public void sliderValueChanged() {
-        System.out.println(sliderName + " " + getSliderValue());
+        System.out.println(sliderName + " " + getSliderValue().intValue());
         Panel panel = getPanel();
-        panel.setCurrent(1);
-        gameController.checkInstruction(panel);
+        panel.setCurrent(getSliderValue().intValue());
+        gameController.checkInstruction(panel, getSliderValue().intValue());
     }
 
     private Double getSliderValue() {
         return verticalSlider.getValue();
     }
 
-//    public String getText(){
-//        return textField.getText();
-//    }
-//    public void setTextField(String txt){
-//        textField.setText(txt);
-//    }
-//    public void setVerticalSlider(double sliderValue){
-//        verticalSlider.setValue(sliderValue);
-//    }
-//    public void setMaxVerticalSlider(double maxValue) {verticalSlider.setMax(maxValue);}
-//    public double getSlidervalue(){
-//        return verticalSlider.getValue();
-//    }
 
     public void update() {
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
@@ -14,16 +15,24 @@
    <children>
      <ImageView>
        <image>
-         <Image url="@images/ScoreScreen/Background.jpg" />
+         <Image url="@images/ScoreScreen/ScoreScreen.jpg" />
        </image>
      </ImageView>
 
-     <ImageView fitHeight="113.0" fitWidth="374.0" focusTraversable="false" layoutX="440.0" layoutY="701.0" smooth="true" visible="true">
+     <ImageView fitHeight="113.0" fitWidth="374.0" focusTraversable="false" layoutX="440.0" layoutY="701.0" smooth="true" visible="false">
        <image>
          <Image url="@images/ScoreScreen/ButtonBack.jpg" />
        </image>
      </ImageView>
-     <Button fx:id="buttonBackLobby" ellipsisString="..." layoutX="390.0" layoutY="713.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
-      <TextField fx:id="TeamName" alignment="TOP_LEFT" layoutX="252.0" layoutY="243.0" opacity="0.22" prefHeight="428.0" prefWidth="784.0" />
+     <Button fx:id="buttonBackLobby" ellipsisString="..." layoutX="414.0" layoutY="853.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+      <TextField fx:id="scoreField" alignment="TOP_LEFT" editable="false" layoutX="252.0" layoutY="243.0" opacity="0.22" prefHeight="428.0" prefWidth="784.0">
+         <font>
+            <Font size="48.0" />
+         </font></TextField>
+      <TextArea fx:id="scoreArea" editable="false" layoutX="252.0" layoutY="243.0" prefHeight="428.0"  opacity="0.22" prefWidth="784.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>

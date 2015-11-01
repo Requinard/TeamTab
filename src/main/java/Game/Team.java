@@ -127,11 +127,9 @@ public class Team {
         this.playerPanels = allPanelsForTeam;
 
         // Check if there are enough panels
-        if(allPanelsForTeam.size() < 12)
-        {
+        if(allPanelsForTeam.size() < 12) {
             return false;
         }
-
         // Loop through the players
         for(Player player : players)
         {
@@ -140,13 +138,14 @@ public class Team {
             for (int i = 0 ; i <12 ; i++)
             {
                 pan = allPanelsForTeam.get(r.nextInt(allPanelsForTeam.size()));
-                if(!tempPanels.contains(pan))
+
+                if(tempPanels.contains(pan))
                 {
-                    tempPanels.add(pan);
-                    allPanelsForTeam.remove(r);
+                    tempPanels.remove(r);
+                    i--;
                 }
                 else {
-                    i--;
+                    tempPanels.add(pan);
                 }
             }
                 player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
@@ -154,12 +153,6 @@ public class Team {
             }
     return true;
     }
-
-
-
-
-
-
 
         /**
          * Get all the players that are in the team
@@ -236,9 +229,8 @@ public class Team {
      * @return the unmodifiableList with the sorted players
      */
     public List<Player> sortedPlayerByScore(){
-        List<Player> sortedPlayers = new ArrayList<Player>(players);
+        List<Player> sortedPlayers = new ArrayList<Player>();
         Collections.sort(sortedPlayers);
-
         return Collections.unmodifiableList(sortedPlayers);
     }
 
@@ -281,13 +273,13 @@ public class Team {
      * @param changedPanel the panel that needs to be checked
      * @return true if this was one of the instruction
      */
-    public boolean checkTeamInstruction(Panel changedPanel) {
+    public boolean checkTeamInstruction(Panel changedPanel, int sliderValue) {
         for (Player p : players) {
 
             // Check if the panel belongs to the player
             if (p.getInstruction().getPanel().equals(changedPanel)) {
                 // Check if the value is correct
-                if (p.checkCorrectPanel(changedPanel)) {
+                if (p.checkCorrectPanel(changedPanel, sliderValue)) {
                     correctInstruction++;
                     p.addScore();
                     // Give the player a new instruction
@@ -296,14 +288,14 @@ public class Team {
                 }
 
                 else {
-                    correctInstruction = 0;
+                    //correctInstruction = 0;
                     // Give the player a new instruction
                     newInstruction(p);
                     return false;
                 }
             }
 
-            correctInstruction = 0;
+            //correctInstruction = 0;
             // Give the player a new instruction
             newInstruction(p);
             return false;

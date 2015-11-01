@@ -121,14 +121,13 @@ public class Player implements Comparable<Player>{
      * @param panel
      * @return true of false
      */
-    public boolean checkCorrectPanel(Panel panel) {
-        if (instructions.getValue() == (panel.getCurrent())) {
+    public boolean checkCorrectPanel(Panel panel, int sliderValue) {
+        if (instructions.getValue() == panel.getCurrent() && instructions.getValue() == sliderValue) {
             return true;
         }
         else
             return false;
     }
-
 
     /**
      * this is the implementation of the Comparable interface. Based on the DESCENDING compare

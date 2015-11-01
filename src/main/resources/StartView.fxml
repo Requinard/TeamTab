@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
@@ -9,6 +10,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.effect.DisplacementMap?>
+<?import javafx.scene.effect.FloatMap?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -17,20 +20,29 @@
                 <Image url="@images/StartGame/Backgroundzonderteamsize.jpg" />
             </image>
         </ImageView>
-    <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="635.0" layoutY="497.0" smooth="true" visible="true">
+    <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="642.0" layoutY="379.0" smooth="true" visible="true">
         <image>
             <Image url="@images/StartGame/Start.jpg" />
         </image>
     </ImageView>
-        <TextField fx:id="teamNameTextField" layoutX="702.0" layoutY="231.0" opacity="0.22" prefHeight="58.0" prefWidth="340.0" />
+        <TextField fx:id="teamNameTextField" alignment="CENTER" layoutX="662.0" layoutY="223.0" opacity="0.22" prefHeight="77.0" prefWidth="434.0" promptText="Team name">
+        <font>
+            <Font size="36.0" />
+        </font>
+        <effect>
+            <DisplacementMap>
+                <mapData>
+                    <FloatMap />
+                </mapData>
+            </DisplacementMap>
+        </effect></TextField>
+        <Button fx:id="buttonStart" ellipsisString="..." layoutX="642.0" layoutY="393.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+      <ImageView fitHeight="59.0" fitWidth="203.0" focusTraversable="false" layoutX="87.0" layoutY="40.0" smooth="true" visible="true">
+         <image>
+            <Image url="@images/Lobby/ButtonBack.jpg" />
+         </image>
+      </ImageView>
 
-        <Button fx:id="buttonStart" ellipsisString="..." layoutX="635.0" layoutY="525.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
-  <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" layoutX="635.0" layoutY="675.0" smooth="true" visible="true">
-        <image>
-            <Image url="@images/StartGame/ButtonBack.jpg" />
-        </image>
-    </ImageView>
-
-        <Button fx:id="buttonBack" ellipsisString="..." layoutX="635.0" layoutY="683.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+        <Button fx:id="buttonBack" ellipsisString="..." layoutX="36.0" layoutY="25.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="306.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
     </children>
 </AnchorPane>

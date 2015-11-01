@@ -1,16 +1,19 @@
 package gui;
 
+import com.avaje.ebeaninternal.server.lib.util.Str;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -19,35 +22,46 @@ public class ScoreViewController implements Initializable {
     @FXML
     private Button buttonBackLobby;
     @FXML
-    private TextField TeamName;
+    private TextField scoreField;
+    @FXML
+    private TextArea scoreArea;
 
     private ScoreView view;
     private Runnable runnable;
+    private java.util.Timer timerRefresh;
+    private TimerTask timerTask;
 
     public void initialize(URL location, ResourceBundle resources) {
-
         buttonBackLobby.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonBackLobbyOnClick(event);
             }
         });
-        EndGame();
+
+        timerRefresh = new java.util.Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                fillScoreBoard();
+            }
+        };
+        timerRefresh.schedule(timerTask, 500);
     }
 
-    public void EndGame() {
+    private void fillScoreBoard(){
+        System.out.println("OK");
+        System.out.println(view.stageController.playerName);
+        //System.out.println(view.stageController.game.getTeamOfPlayer().getName());
+        final ArrayList<String> scoreBoard = view.stageController.game.endGame(view.stageController.game.getTeamOfPlayer());
         Platform.runLater(new Runnable() {
+            @Override
             public void run() {
-                ArrayList<String> scores = view.stageController.game.endGame(view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam());
-                String scoresString = "";
-                for (String s : scores) {
-                    scoresString = scoresString + s + "           ";
+                for(String score : scoreBoard){
+                    scoreArea.appendText(score + "\n");
                 }
-                TeamName.setText(scoresString);
             }
         });
-
     }
-
 
     public void setView(ScoreView scoreView) {
         view = scoreView;

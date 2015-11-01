@@ -50,6 +50,7 @@ public class LobbyViewController implements Initializable {
                 buttonReadyOnClick(event);
             }
         });
+
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
             @Override
@@ -109,8 +110,8 @@ public class LobbyViewController implements Initializable {
 
                 Platform.runLater(new Runnable() {
                     public void run() {
-                        JoinView joinView = new JoinView((view.stageController));
-                        view.pass(joinView);
+                        StartView startView = new StartView((view.stageController));
+                        view.pass(startView);
                     }
                 });
             }

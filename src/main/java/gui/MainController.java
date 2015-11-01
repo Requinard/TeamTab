@@ -31,8 +31,6 @@ public class MainController implements Initializable {
     @FXML
     private TextField userName;
 
-
-
     private MainView view;
     private Runnable runnable;
 
@@ -58,6 +56,7 @@ public class MainController implements Initializable {
             }
         });
     }
+
 
     public void setView(MainView mainView) {
         view = mainView;

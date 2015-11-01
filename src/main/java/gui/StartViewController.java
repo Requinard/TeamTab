@@ -85,6 +85,7 @@ public class StartViewController implements Initializable {
                     public void run() {
                         MainView mainView = new MainView((view.stageController));
                         view.pass(mainView);
+
                     }
                 });
             }
