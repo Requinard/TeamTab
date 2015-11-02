@@ -311,7 +311,7 @@ public class Team {
     private void newInstruction(Player player) {
         // Give the player a new instruction
         Instruction playerInstruction = player.getInstruction();
-        playerInstruction.createNewInstruction(player.getPanels());
+        playerInstruction.createNewInstruction(player.getPanels(), playerInstruction);
     }
 
     /**

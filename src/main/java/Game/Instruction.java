@@ -67,13 +67,41 @@ public class Instruction {
      * @param playerPanels The panels of the player that should get a new instruction
      * @author Frank Hartman
      */
-    public boolean createNewInstruction(ArrayList<Panel> playerPanels) {
+    public boolean createNewInstruction(ArrayList<Panel> playerPanels, Instruction playerInstruction) {
         Random random = new Random();
         try {
+            ArrayList<Panel> tempPanels = playerPanels;
+            //this.panel = playerPanels.get(random.nextInt(playerPanels.size()));
+            tempPanels.remove(playerInstruction.getPanel());
+            this.panel = tempPanels.get(random.nextInt(tempPanels.size()));
 
-            this.panel = playerPanels.get(random.nextInt(playerPanels.size()));
+            /*while (playerInstruction.getPanel() ==  this.panel) {
+                this.panel = playerPanels.get(random.nextInt(playerPanels.size()));
+            }*/
+
+
+
             this.commando = "Change to";
             this.value = random.nextInt((panel.getMax() - panel.getMin()) + 1) + panel.getMin();
+            if(panel.getType() == PanelTypeEnum.HorizontalSlider ||  panel.getType() == PanelTypeEnum.VerticalSlider){
+                if(value == playerInstruction.getPanel().getCurrent()){
+                    if(value == panel.getMax()){
+                        this.value = this.value - 1;
+                    }
+                    else
+                    {
+                        this.value = this.value + 1;
+                    }
+                }
+                if(playerInstruction.getPanel().getCurrent() == 0){
+                    if(value == panel.getMin()){
+                        this.value = this.value + 1;
+                    }
+                }
+            }
+            //{
+               // this.value = random.nextInt((panel.getMax() - panel.getMin()) + 1) + panel.getMin();
+            //}
             // EERSTE ITERATIE
 
             System.out.println("Player gets a new commando");
