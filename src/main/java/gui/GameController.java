@@ -66,6 +66,7 @@ public class GameController implements Initializable {
     private PanelFactory panelFactory;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
+    private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
 
 
@@ -100,8 +101,19 @@ public class GameController implements Initializable {
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
+        panelChecker();
     }
 
+    private void panelChecker(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (!panelHolder.equals(view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels())){
+                    fillGridWithPanels();
+                }
+            }
+        });
+    }
     public void setView(GameView gameView) {
         view = gameView;
         fillGridWithPanels();
@@ -109,10 +121,11 @@ public class GameController implements Initializable {
     }
 
     public void fillGridWithPanels() {
-        gridPane.getChildren().removeAll();
+        gridPane.getChildren().clear();
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
         final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
+        panelHolder = panels;
         int column = 0;
         int row = 0;
         for (Panel panel : panels) {

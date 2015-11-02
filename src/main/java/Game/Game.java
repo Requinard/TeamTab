@@ -73,7 +73,7 @@ public class Game {
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
-        try (FileInputStream fileInputStream = new FileInputStream(location.getFile())) {
+        try (FileInputStream fileInputStream = new FileInputStream(location.getPath().replace("%20", " "))) {
             String full = IOUtils.toString(fileInputStream);
 
             // go over each line
@@ -220,6 +220,7 @@ public class Game {
         loadPanels();
         for (Team team : teams) {
             team.givePanelsToPlayersFromTeam(panels);
+
         }
     }
 
