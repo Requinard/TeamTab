@@ -20,6 +20,9 @@ import javafx.scene.layout.GridPane;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -68,12 +71,12 @@ public class GameController implements Initializable {
     private TimerTask timerTask;
     private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
+    private AudioPlayer explosionPlayer;
 
 
     public void initialize(URL location, ResourceBundle resources) {
         //view.stageController.game.startGame();
         panelFactory = new PanelFactory();
-
 
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -94,6 +97,15 @@ public class GameController implements Initializable {
             }
         };
         timerRefresh.schedule(timerTask, 0, 30);
+
+        URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep");
+        try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
+            explosionPlayer = new AudioPlayer(fileInputStream.toString());
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
 
@@ -173,6 +185,7 @@ public class GameController implements Initializable {
 
                     switch (levensTeam2) {
                         case 1:
+                            explosionPlayer.play();
                             Team1Leven1.setVisible(false);
                             Team1Leven2.setVisible(true);
                             Team1Leven3.setVisible(true);
@@ -197,6 +210,7 @@ public class GameController implements Initializable {
                     }
                     switch (levensTeam1) {
                         case 1:
+                            explosionPlayer.play();
                             Team2Leven1.setVisible(false);
                             Team2Leven2.setVisible(true);
                             Team2Leven3.setVisible(true);
