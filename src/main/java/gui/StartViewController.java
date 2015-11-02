@@ -17,14 +17,13 @@ import java.util.ResourceBundle;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class StartViewController implements Initializable {
+    private final String pattern = "[\n\r \t]+";
     @FXML
     private Button buttonStart;
     @FXML
     private Button buttonBack;
     @FXML
     private TextField teamNameTextField;
-
-
     private StartView view;
     private Runnable runnable;
 
@@ -52,6 +51,8 @@ public class StartViewController implements Initializable {
             public void run() {
                 if (teamNameTextField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Kies een teamname");
+                } else if (teamNameTextField.getText().matches(pattern)) {
+                    JOptionPane.showMessageDialog(null, "Je string bevat karakters die niet toegestaan zijn!");
                 } else {
                     String teamName = teamNameTextField.getText();
                     System.out.println("StartView - Teamname is set to: " + teamName);

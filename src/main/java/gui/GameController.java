@@ -108,7 +108,7 @@ public class GameController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (!panelHolder.equals(view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels())){
+                if (!panelHolder.equals(view.stageController.game.getPlayerByName(StageController.playerName).getPanels())) {
                     fillGridWithPanels();
                 }
             }
@@ -124,7 +124,7 @@ public class GameController implements Initializable {
         gridPane.getChildren().clear();
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
-        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
+        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
         panelHolder = panels;
         int column = 0;
         int row = 0;

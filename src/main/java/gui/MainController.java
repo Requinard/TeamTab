@@ -18,13 +18,13 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    private final String pattern = "[ \n\r\t]+";
     @FXML
     private Button buttonJoin;
     @FXML
     private Button buttonStart;
     @FXML
     private TextField userName;
-
     private MainView view;
     private Runnable runnable;
 
@@ -60,7 +60,9 @@ public class MainController implements Initializable {
         runnable = new Runnable() {
             public void run() {
                 if (userName.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,"Kies een username");
+                    JOptionPane.showMessageDialog(null, "Kies een username");
+                } else if (userName.getText().matches(pattern)) {
+                    JOptionPane.showMessageDialog(null, "Je username bevat karakters die niet zijn toegestaan!");
                 } else {
                     StageController.playerName = userName.getText();
                     Platform.runLater(new Runnable() {
@@ -81,6 +83,8 @@ public class MainController implements Initializable {
             public void run() {
                 if (userName.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Kies een username");
+                } else if (userName.getText().matches(pattern)) {
+                    JOptionPane.showMessageDialog(null, "Je username bevat ongewenste karakters!");
                 } else {
                     Platform.runLater(new Runnable() {
                         public void run() {
