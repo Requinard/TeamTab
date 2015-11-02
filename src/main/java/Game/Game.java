@@ -5,6 +5,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,9 +70,9 @@ public class Game {
     }
 
     public boolean loadPanels() {
-        //URL location = this.getClass().getClassLoader().getResource("panels.csv");
+        URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
-        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/panels.csv")) {
+        try (FileInputStream fileInputStream = new FileInputStream(location.getPath().replace("%20", " "))) {
             String full = IOUtils.toString(fileInputStream);
 
             // go over each line
@@ -216,6 +217,7 @@ public class Game {
         loadPanels();
         for (Team team : teams) {
             team.givePanelsToPlayersFromTeam(panels);
+
         }
     }
 

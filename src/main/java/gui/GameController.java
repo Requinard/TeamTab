@@ -66,6 +66,7 @@ public class GameController implements Initializable {
     private PanelFactory panelFactory;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
+    private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
 
 
@@ -100,19 +101,31 @@ public class GameController implements Initializable {
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
+        panelChecker();
     }
 
+    private void panelChecker(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (!panelHolder.equals(view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels())){
+                    fillGridWithPanels();
+                }
+            }
+        });
+    }
     public void setView(GameView gameView) {
         view = gameView;
         fillGridWithPanels();
         showTeamLevens();
     }
 
-    private void fillGridWithPanels() {
-        gridPane.getChildren().removeAll();
+    public void fillGridWithPanels() {
+        gridPane.getChildren().clear();
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
-        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
+        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
+        panelHolder = panels;
         int column = 0;
         int row = 0;
         for (Panel panel : panels) {
@@ -158,7 +171,7 @@ public class GameController implements Initializable {
                     levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
                     levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
 
-                    switch (levensTeam1) {
+                    switch (levensTeam2) {
                         case 1:
                             Team1Leven1.setVisible(false);
                             Team1Leven2.setVisible(true);
@@ -182,7 +195,7 @@ public class GameController implements Initializable {
                             Team1Leven3.setVisible(true);
                             break;
                     }
-                    switch (levensTeam2) {
+                    switch (levensTeam1) {
                         case 1:
                             Team2Leven1.setVisible(false);
                             Team2Leven2.setVisible(true);
