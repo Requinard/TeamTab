@@ -352,6 +352,7 @@ public class Game {
                 subtractLives(t);
                 // Reset correct constructions to 0
                 //currentTeam.setCorrectInstruction(0);
+                t.setCorrectInstruction(0);
                 break;
             }
         }
