@@ -117,16 +117,17 @@ public class GameController implements Initializable {
         panelChecker();
     }
 
-    private void panelChecker(){
+    private void panelChecker() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (!panelHolder.equals(view.stageController.game.getPlayerByName(StageController.playerName).getPanels())) {
+                if (!panelHolder.equals(view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels())) {
                     fillGridWithPanels();
                 }
             }
         });
     }
+
     public void setView(GameView gameView) {
         view = gameView;
         fillGridWithPanels();
@@ -186,7 +187,6 @@ public class GameController implements Initializable {
 
                     switch (levensTeam2) {
                         case 1:
-                            explosionPlayer.play();
                             Team1Leven1.setVisible(false);
                             Team1Leven2.setVisible(true);
                             Team1Leven3.setVisible(true);
@@ -310,9 +310,11 @@ public class GameController implements Initializable {
     public void checkInstruction(Panel panel, int sliderValue) {
         view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;
-        if(view.stageController.game.gameOver()){
-            ScoreView scoreView = new ScoreView(view.stageController);
-            view.pass(scoreView);
+        for (Team teams : view.stageController.game.allTeams()) {
+            if (teams.getLives() <= 0) {
+                ScoreView scoreView = new ScoreView(view.stageController);
+                view.pass(scoreView);
+            }
         }
     }
 }

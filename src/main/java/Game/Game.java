@@ -217,7 +217,6 @@ public class Game {
         loadPanels();
         for (Team team : teams) {
             team.givePanelsToPlayersFromTeam(panels);
-
         }
     }
 
@@ -446,5 +445,17 @@ public class Game {
      */
     private ArrayList<Panel> returnPanelsPlayer(Player player) {
         return player.getPanels();
+    }
+
+
+
+    public void hardReset(){
+        reset();
+        System.out.println("Team 1 " + team1.getLives());
+        System.out.println("Team 2 " + team2.getLives());
+        team1.setLives(3);
+        team2.setLives(3);
+        System.out.println("Team 1 " + team1.getLives());
+        System.out.println("Team 2 " + team2.getLives());
     }
 }

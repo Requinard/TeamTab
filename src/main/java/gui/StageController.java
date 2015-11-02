@@ -46,6 +46,14 @@ public class StageController {
     public void refreshView() {
     }
 
+    public void resetGame(){
+        this.game = new Game(this);
+    }
+
+    public void setExistingGame(Game game){
+        this.game = game;
+    }
+
 
 
 }

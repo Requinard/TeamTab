@@ -69,6 +69,8 @@ public class ScoreViewController implements Initializable {
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
+                //view.stageController.setExistingGame(view.stageController.game.hardReset(view.stageController.playerName));
+                view.stageController.game.hardReset();
                 Platform.runLater(new Runnable() {
                     public void run() {
                         LobbyView lobbyView = new LobbyView((view.stageController));

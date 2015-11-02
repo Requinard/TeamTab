@@ -81,6 +81,7 @@ public class MainController implements Initializable {
     private void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
+
                 if (userName.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Kies een username");
                 } else if (userName.getText().matches(pattern)) {
@@ -88,8 +89,9 @@ public class MainController implements Initializable {
                 } else {
                     Platform.runLater(new Runnable() {
                         public void run() {
-                            StageController.playerName = userName.getText();
-                            System.out.println("MainView - Username is set to: " + StageController.playerName);
+                            view.stageController.resetGame();
+                            view.stageController.playerName = userName.getText();
+                            System.out.println("MainView - Username is set to: " + view.stageController.playerName);
                             StartView startView = new StartView(view.stageController);
                             view.pass(startView);
                         }
