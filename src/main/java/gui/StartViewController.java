@@ -8,8 +8,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.*;
 
 import javax.swing.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,6 +35,7 @@ public class StartViewController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
 
+
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonStartOnClick(event);
@@ -40,6 +47,10 @@ public class StartViewController implements Initializable {
                 buttonBackOnClick(event);
             }
         });
+
+        AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
+        audioPlayer.play();
+
     }
 
     public void setView(StartView startView) {

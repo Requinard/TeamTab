@@ -98,7 +98,8 @@ public class GameController implements Initializable {
         };
         timerRefresh.schedule(timerTask, 0, 30);
 
-        URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep");
+        URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep.mp3");
+
         try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
             explosionPlayer = new AudioPlayer(fileInputStream.toString());
         } catch (FileNotFoundException e1) {
