@@ -1,7 +1,6 @@
 package gui;
 
 import Game.Player;
-import Game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -59,7 +58,7 @@ public class StartViewController implements Initializable {
 
                     //DIT WERKT ALLEEN VOOR DE EERSTE ITERATIE
                     view.stageController.game.createTeam(teamName);
-                    Player newPlayer = view.stageController.game.createAndGetThisPlayer(view.stageController.playerName, teamName);
+                    Player newPlayer = view.stageController.game.createAndGetThisPlayer(StageController.playerName, teamName);
 
 
                     //Team teamByTeamName = view.stageController.game.getTeamByName(teamName);

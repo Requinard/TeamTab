@@ -8,19 +8,20 @@ import javafx.scene.layout.VBox;
  * Created by Kevin on 12-10-2015.
  */
  public abstract class AbstractPanelControl extends VBox{
- Panel panelused;
  GameController gameController;
+ private Panel panelused;
 
  /**
-  * @autor Kevin Jetten
+  * @author Kevin Jetten
   * the panel gets saved in the class
-  * @param panel
+  * @param panel Panel that is initialized
   */
- public AbstractPanelControl(Panel panel, GameController gameController) {
+ AbstractPanelControl(Panel panel, GameController gameController) {
   this.panelused = panel;
   this.gameController = gameController;
  }
- public Panel getPanel()
+
+ Panel getPanel()
  {
   return panelused;
  }

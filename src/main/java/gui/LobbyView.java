@@ -1,17 +1,12 @@
 package gui;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -34,7 +29,7 @@ public class LobbyView extends AbstractView implements IView {
         loader.setController(new LobbyViewController());
 
         try {
-            Pane myPane = (Pane)loader.load();
+            Pane myPane = loader.load();
             Scene scene = new Scene(myPane);
             stage.setScene(scene);
             passScene(scene);
@@ -43,7 +38,7 @@ public class LobbyView extends AbstractView implements IView {
             e.printStackTrace();
         }
 
-        lobbyViewController = (LobbyViewController)loader.getController();
+        lobbyViewController = loader.getController();
         lobbyViewController.setView(this);
 
         return true;

@@ -27,8 +27,8 @@ public class Team {
         this.lives = lives;
         this.correctInstruction =correctInstructions;
         this.name = name;
-        players = new ArrayList<Player>();
-        playerPanels = new ArrayList<Panel>();
+        players = new ArrayList<>();
+        playerPanels = new ArrayList<>();
     }
 
     public String getName() {return this.name; }
@@ -121,7 +121,7 @@ public class Team {
      * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
     public boolean givePanelsToPlayersFromTeam(ArrayList<Panel> allPanelsForTeam){
-        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
+        ArrayList<Panel> tempPanels = new ArrayList<>();
         Panel pan;
         Random r = new Random();
         this.playerPanels = allPanelsForTeam;
@@ -229,7 +229,7 @@ public class Team {
      * @return the unmodifiableList with the sorted players
      */
     public List<Player> sortedPlayerByScore(){
-        List<Player> sortedPlayers = new ArrayList<Player>();
+        List<Player> sortedPlayers = new ArrayList<>();
         Collections.sort(sortedPlayers);
         return Collections.unmodifiableList(sortedPlayers);
     }

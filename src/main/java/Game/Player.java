@@ -1,7 +1,8 @@
 package Game;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Qun on 12-10-2015.
@@ -122,11 +123,7 @@ public class Player implements Comparable<Player>{
      * @return true of false
      */
     public boolean checkCorrectPanel(Panel panel, int sliderValue) {
-        if (instructions.getValue() == panel.getCurrent() && instructions.getValue() == sliderValue) {
-            return true;
-        }
-        else
-            return false;
+        return instructions.getValue() == panel.getCurrent() && instructions.getValue() == sliderValue;
     }
 
     /**
@@ -134,8 +131,8 @@ public class Player implements Comparable<Player>{
      * @param p player
      * @return
      */
-    public int compareTo(Player p) {
-        int compareScore = ((Player)p).getScore();
+    public int compareTo(@NotNull Player p) {
+        int compareScore = p.getScore();
         return compareScore - this.score;
     }
 

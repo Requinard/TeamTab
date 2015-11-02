@@ -108,15 +108,15 @@ public class GameController implements Initializable {
         showTeamLevens();
     }
 
-    public void fillGridWithPanels() {
+    private void fillGridWithPanels() {
         gridPane.getChildren().removeAll();
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
-        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels();
+        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
         int column = 0;
         int row = 0;
         for (Panel panel : panels) {
-            IPanel iPanel = panelFactory.getPanel(panel, this);
+            IPanel iPanel = PanelFactory.getPanel(panel, this);
             System.out.println(panel.getText());
             if (row < 4) {
                 gridPane.add((Node) iPanel, row, column);
@@ -131,30 +131,30 @@ public class GameController implements Initializable {
     }
 
     // Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
-    public void showPlayerInstruction() {
+    private void showPlayerInstruction() {
         Platform.runLater(new Runnable() {
             public void run() {
-                if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null)
-                    instructionLabel.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(view.stageController.playerName).getInstruction().getValue());
+                if (view.stageController.game.getPlayerByName(StageController.playerName) != null)
+                    instructionLabel.setText(view.stageController.game.getPlayerByName(StageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(StageController.playerName).getInstruction().getValue());
             }
         });
     }
 
-    public void showTeamInstructionCount() {
+    private void showTeamInstructionCount() {
         Platform.runLater(new Runnable() {
             public void run() {
-                if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null)
-                    labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getCorrectInstruction() + "");
+                if (view.stageController.game.getPlayerByName(StageController.playerName) != null)
+                    labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getCorrectInstruction() + "");
             }
         });
     }
 
-    public void showTeamLevens() {
+    private void showTeamLevens() {
         Platform.runLater(new Runnable() {
             public void run() {
                 int levensTeam1;
                 int levensTeam2;
-                if (view.stageController.game.getPlayerByName(view.stageController.playerName) != null) {
+                if (view.stageController.game.getPlayerByName(StageController.playerName) != null) {
                     levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
                     levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
 
@@ -218,7 +218,7 @@ public class GameController implements Initializable {
         Hoeveel team levens?
         nieuwe instructie
 */
-    public void buttonStartOnClick(MouseEvent mouseEvent) {
+    private void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
                 Platform.runLater(new Runnable() {
@@ -233,13 +233,13 @@ public class GameController implements Initializable {
     }
 
 
-    public void buttonStartTimerOnClick(MouseEvent mouseEvent) {
+    private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
         buttonStartTimer.setVisible(false);
         runnable = new Runnable() {
             @Override
             public void run() {
                 timer = new Timer(1000, new ActionListener() {
-                    int counter = view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getTime();
+                    int counter = view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getTime();
 
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
@@ -249,7 +249,7 @@ public class GameController implements Initializable {
                             @Override
                             public void run() {
                                 if (correctIn()) {
-                                    counter = view.stageController.game.getPlayerByName(view.stageController.playerName).getTeam().getTime();
+                                    counter = view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getTime();
                                 }
                                 progressBar.setProgress(counter * 0.1);
                                 timeLabel.setText(Integer.toString(counter));
@@ -257,7 +257,7 @@ public class GameController implements Initializable {
                         });
                         if (counter == 0) {
                             //dit moet worden verandert door een subtract time methode
-                            Player player = view.stageController.game.getPlayerByName(view.stageController.playerName);
+                            Player player = view.stageController.game.getPlayerByName(StageController.playerName);
 
                             view.stageController.game.instructionIsToLate(player);
                             Team team = player.getTeam();
@@ -271,7 +271,7 @@ public class GameController implements Initializable {
         runnable.run();
     }
 
-    public boolean correctIn() {
+    private boolean correctIn() {
         if (panelPushed) {
             panelPushed = false;
             return true;
@@ -280,7 +280,7 @@ public class GameController implements Initializable {
     }
 
     public void checkInstruction(Panel panel, int sliderValue) {
-        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(view.stageController.playerName), sliderValue);
+        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;
         if(view.stageController.game.gameOver()){
             ScoreView scoreView = new ScoreView(view.stageController);

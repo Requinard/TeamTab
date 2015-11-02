@@ -4,14 +4,12 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.TextArea;
-import java.awt.*;
+
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -65,7 +63,7 @@ public class JoinViewController implements Initializable {
 
     }
 
-    public void buttonSearchOnClick(MouseEvent mouseEvent) {
+    private void buttonSearchOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
 //                ArrayList<String> games = view.stageController.game.joinGameViewTeams();
@@ -81,7 +79,7 @@ public class JoinViewController implements Initializable {
         view = joinView;
     }
 
-    public void buttonBackOnClick(MouseEvent mouseEvent) {
+    private void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
 
@@ -96,7 +94,7 @@ public class JoinViewController implements Initializable {
         runnable.run();
     }
 
-    public void buttonJoinOnClick(MouseEvent mouseEvent) {
+    private void buttonJoinOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
 

@@ -44,7 +44,6 @@ public class StageController {
     }
 
     public void refreshView() {
-        return;
     }
 
 

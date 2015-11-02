@@ -1,6 +1,5 @@
 package gui;
 
-import com.avaje.ebeaninternal.server.lib.util.Str;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,13 +49,13 @@ public class ScoreViewController implements Initializable {
 
     private void fillScoreBoard(){
         System.out.println("OK");
-        System.out.println(view.stageController.playerName);
+        System.out.println(StageController.playerName);
         //System.out.println(view.stageController.game.getTeamOfPlayer().getName());
         final ArrayList<String> scoreBoard = view.stageController.game.endGame(view.stageController.game.getTeamOfPlayer());
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                for(String score : scoreBoard){
+                for (String score : scoreBoard) {
                     scoreArea.appendText(score + "\n");
                 }
             }
@@ -67,7 +66,7 @@ public class ScoreViewController implements Initializable {
         view = scoreView;
     }
 
-    public void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
+    private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
                 Platform.runLater(new Runnable() {

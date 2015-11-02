@@ -64,7 +64,7 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
         Platform.runLater(new Runnable() {
             public void run() {
-                final Player currentPlayer = view.stageController.game.getPlayerByName(view.stageController.playerName);
+                final Player currentPlayer = view.stageController.game.getPlayerByName(StageController.playerName);
                 for (Team a : view.stageController.game.allTeams()) {
                     if (a.isPlayerInTeam(currentPlayer)) {
                         team1Name.setText(a.getName());
@@ -89,7 +89,7 @@ public class LobbyViewController implements Initializable {
         view = lobbyView;
     }
 
-    public void buttonReadyOnClick(MouseEvent mouseEvent) {
+    private void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
                 view.stageController.game.startGame();
@@ -104,7 +104,7 @@ public class LobbyViewController implements Initializable {
         runnable.run();
     }
 
-    public void buttonBackOnClick(MouseEvent mouseEvent) {
+    private void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
 

@@ -2,7 +2,6 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Qun on 12-10-2015.
@@ -19,19 +18,19 @@ public class Instruction {
     }
 
     /**
-     * sets panel for the player
-     * @param panel
-     */
-    public void setPanel(Panel panel) {
-        this.panel = panel;
-    }
-
-    /**
      * Gets the panel from the player
      * @return the panel
      */
     public Panel getPanel() {
         return panel;
+    }
+
+    /**
+     * sets panel for the player
+     * @param panel
+     */
+    public void setPanel(Panel panel) {
+        this.panel = panel;
     }
 
     /**
@@ -72,8 +71,7 @@ public class Instruction {
         Random random = new Random();
         try {
 
-            Panel instructionPanel = playerPanels.get(random.nextInt(playerPanels.size()));
-            this.panel = instructionPanel;
+            this.panel = playerPanels.get(random.nextInt(playerPanels.size()));
             this.commando = "Change to";
             this.value = random.nextInt((panel.getMax() - panel.getMin()) + 1) + panel.getMin();
             // EERSTE ITERATIE

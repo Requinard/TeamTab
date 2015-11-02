@@ -4,7 +4,6 @@ import gui.StageController;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +36,10 @@ public class Game {
      * @author David
      */
     public Game(StageController stageController) {
-        teams = new ArrayList<Team>();
-        players = new ArrayList<Player>();
-        instructions = new ArrayList<Instruction>();
-        panels = new ArrayList<Panel>();
+        teams = new ArrayList<>();
+        players = new ArrayList<>();
+        instructions = new ArrayList<>();
+        panels = new ArrayList<>();
 
         bonusCorrectInstructions = 3;
         substractCorrectInstructions = 5;
@@ -97,8 +96,6 @@ public class Game {
                 panels.add(panel);
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,7 +166,7 @@ public class Game {
             System.out.println(allTeams.getName());
             for(Player curPlayer : allTeams.getPlayers()){
                 System.out.println(curPlayer.getName());
-                if(curPlayer.getName().equals(currentPlayer)){
+                if (curPlayer.getName().equals(currentPlayer.getName())) {
                     System.out.println("Game - team of player returned (getTeamOfPlayer)");
                     return allTeams;
                 }
@@ -233,7 +230,7 @@ public class Game {
      */
     public ArrayList<String> endGame(Team team) {
         // Sorts the players by score
-        playerScores = new ArrayList<String>();
+        playerScores = new ArrayList<>();
         //playerScores.add("Succes!");
 
         for(Team allTeams : this.teams){
@@ -271,6 +268,7 @@ public class Game {
                 team = teams.get(i + 1);
             }
         }
+        assert team != null;
         return team.addPlayerToTeam(player);
     }
 
@@ -346,11 +344,10 @@ public class Game {
         for (Team t : teams) {
             // Check if the team has got enough correct awnsers
             if (!t.equals(currentTeam) && currentTeam.getCorrectInstruction() >= substractCorrectInstructions) {
-                Team otherTeam = t;
                 // Other team gets a time penalty
-                otherTeam.setTime(otherTeam.getTime() - 1);
+                t.setTime(t.getTime() - 1);
                 // Check if it is game over for the other team
-                subtractLives(otherTeam);
+                subtractLives(t);
                 // Reset correct constructions to 0
                 //currentTeam.setCorrectInstruction(0);
                 break;

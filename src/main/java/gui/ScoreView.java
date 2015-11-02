@@ -1,7 +1,6 @@
 package gui;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,7 +25,7 @@ public class ScoreView extends AbstractView implements IView{
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new ScoreViewController());
         try {
-            Pane myPane = (Pane)loader.load();
+            Pane myPane = loader.load();
             Scene scene = new Scene(myPane);
             stage.setScene(scene);
             passScene(scene);
@@ -35,7 +34,7 @@ public class ScoreView extends AbstractView implements IView{
             e.printStackTrace();
         }
 
-        scoreViewController = (ScoreViewController)loader.getController();
+        scoreViewController = loader.getController();
         scoreViewController.setView(this);
 
         return true;

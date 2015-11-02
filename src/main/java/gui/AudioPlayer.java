@@ -2,7 +2,6 @@ package gui;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
 
 import java.io.BufferedInputStream;
@@ -16,7 +15,6 @@ import java.io.FileNotFoundException;
 public class AudioPlayer extends PlaybackListener implements Runnable {
     private String filePath;
     private AdvancedPlayer player;
-    private Thread playerThread;
     private BufferedInputStream bufferedInputStream;
 
     public AudioPlayer(String filePath)
@@ -49,9 +47,9 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
 
             this.player.setPlayBackListener(this);
 
-            this.playerThread = new Thread(this, "AudioPlayerThread");
+            Thread playerThread = new Thread(this, "AudioPlayerThread");
 
-            this.playerThread.start();
+            playerThread.start();
         }
         catch (Exception ex)
         {
