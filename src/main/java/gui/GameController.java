@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -63,6 +64,10 @@ public class GameController implements Initializable {
     private ImageView Team2Leven2;
     @FXML
     private ImageView Team2Leven3;
+    @FXML
+    private TextField lblTeamName1;
+    @FXML
+    private TextField lblTeamName2;
 
     private GameView view;
     private Runnable runnable;
@@ -132,6 +137,7 @@ public class GameController implements Initializable {
         view = gameView;
         fillGridWithPanels();
         showTeamLevens();
+        setTeamNames();
     }
 
     public void fillGridWithPanels() {
@@ -241,11 +247,12 @@ public class GameController implements Initializable {
         });
     }
 
-    //get gamestatus update
-    /*
-        Hoeveel team levens?
-        nieuwe instructie
-*/
+    private void setTeamNames()
+    {
+        lblTeamName1.setText( view.stageController.game.allTeams().get(1).getName());
+        lblTeamName2.setText(view.stageController.game.allTeams().get(0).getName());
+    }
+
     private void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
