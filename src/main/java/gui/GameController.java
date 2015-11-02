@@ -171,7 +171,7 @@ public class GameController implements Initializable {
                     levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
                     levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
 
-                    switch (levensTeam1) {
+                    switch (levensTeam2) {
                         case 1:
                             Team1Leven1.setVisible(false);
                             Team1Leven2.setVisible(true);
@@ -195,7 +195,7 @@ public class GameController implements Initializable {
                             Team1Leven3.setVisible(true);
                             break;
                     }
-                    switch (levensTeam2) {
+                    switch (levensTeam1) {
                         case 1:
                             Team2Leven1.setVisible(false);
                             Team2Leven2.setVisible(true);
