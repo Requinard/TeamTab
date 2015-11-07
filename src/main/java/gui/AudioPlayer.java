@@ -17,11 +17,17 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
     private AdvancedPlayer player;
     private BufferedInputStream bufferedInputStream;
 
+    /**
+     * @param filePath  Path to audio file
+     */
     public AudioPlayer(String filePath)
     {
         this.filePath = filePath;
     }
 
+    /**
+     * play the audio file
+     */
     public void play()
     {
         try
@@ -57,10 +63,9 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
         }
     }
 
-
-
-    // Runnable members
-
+    /**
+     * run audio for player
+     */
     public void run()
     {
         try
@@ -71,6 +76,5 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
         {
             ex.printStackTrace();
         }
-
     }
 }

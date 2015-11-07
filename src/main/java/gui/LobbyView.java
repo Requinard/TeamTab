@@ -20,6 +20,9 @@ public class LobbyView extends AbstractView implements IView {
         lobbyViewController = new LobbyViewController();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean load() {
 
         Stage stage = new Stage();
@@ -44,19 +47,24 @@ public class LobbyView extends AbstractView implements IView {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean deload() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
         return true;
     }
 
-    public boolean passScene(IView nextView) {
-        return true;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public boolean passScene(Scene scene) {
         stageController.loadScene(scene);
         return true;

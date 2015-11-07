@@ -20,6 +20,9 @@ public class JoinView extends AbstractView implements IView {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean load() {
         Stage stage = new Stage();
         stage.setTitle("JoinView");
@@ -42,15 +45,24 @@ public class JoinView extends AbstractView implements IView {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean deload() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean passScene(Scene scene) {
         stageController.loadScene(scene);
         return true;

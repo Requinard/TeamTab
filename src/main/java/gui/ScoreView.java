@@ -18,6 +18,10 @@ public class ScoreView extends AbstractView implements IView{
         super(stageController);
         scoreViewController = new ScoreViewController();
     }
+
+    /**
+     * {@inheritDoc}
+     */
     public boolean load() {
         Stage stage = new Stage();
         stage.setTitle("ScoreView");
@@ -40,15 +44,24 @@ public class ScoreView extends AbstractView implements IView{
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean deload() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean pass(IView nextView) {
         stageController.loadScene(nextView);
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean passScene(Scene scene) {
         stageController.loadScene(scene);
         return true;

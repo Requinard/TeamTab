@@ -13,11 +13,16 @@ public interface IView {
      */
     boolean load();
 
+    /**
+     * Attempts to load the next scene
+     * @param scene next scene that needs to be loaded
+     * @return Success of the operations
+     */
     boolean passScene(Scene scene);
 
     /**
      * Attempts to deload a scene.
-     * @return Whether the operations was successfull
+     * @return Whether the operations was successful
      */
     boolean deload();
 
@@ -26,5 +31,5 @@ public interface IView {
      * @param nextView Next view that needs to be loaded
      * @return Success of the operations
      */
-    //boolean pass(IView nextView);
+    boolean pass(IView nextView);
 }
