@@ -10,8 +10,6 @@ public class Panel {
     private int min;
     private int max;
     private int current;
-    private Instruction instruction;
-
 
     /**
      * @param id          Panel number id
@@ -24,14 +22,6 @@ public class Panel {
     public Panel(int id, int type, String text, int min, int max) {
         this.id = id;
         this.type = PanelTypeEnum.values()[type];
-        this.text = text;
-        this.min = min;
-        this.max = max;
-    }
-
-    public Panel(int id, PanelTypeEnum type, String text, int min, int max) {
-        this.id = id;
-        this.type = type;
         this.text = text;
         this.min = min;
         this.max = max;
@@ -99,15 +89,5 @@ public class Panel {
         {
             return false;
         }
-
-
-    }
-
-    /**
-     * Returns the instruction on the panel
-     * @return the instruction on the panel
-     */
-    public Instruction getInstruction() {
-        return instruction;
     }
 }
