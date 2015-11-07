@@ -23,7 +23,6 @@ public class Game {
     private ArrayList<Instruction> instructions;
     private ArrayList<Panel> panels;
     private ArrayList<String> playerScores;
-    private int timeRound = 9;
     private int bonusCorrectInstructions;
     private int substractCorrectInstructions;
     private Player currentPlayer;
@@ -33,7 +32,7 @@ public class Game {
 
     /**
      * Initialize a game
-     *
+     * @param stageController   the StageController for the game
      * @author David
      */
     public Game(StageController stageController) {
@@ -64,11 +63,18 @@ public class Game {
     // Author KAMIL
     //
 
-    // de instantie van de betreffende game opvragen
+    /**
+     * Gets the Game
+     * @return this Game
+     */
     public Game getGame() {
         return this;
     }
 
+    /**
+     * loads panels from CSV
+     * @return true is panels are correctly loaded
+     */
     public boolean loadPanels() {
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
@@ -104,7 +110,9 @@ public class Game {
         return panels.size() > 0;
     }
 
-    // het opzetten van een demo speler zodat in de JoinView er een tegenstander aanwezig is
+    /**
+     * sets demo player
+     */
     private void setUp() {
         Panel panel = new Panel(1, 1, "Test", 0, 0);
         instruction = new Instruction(panel, "Test", 0);
@@ -112,17 +120,22 @@ public class Game {
 
         team1.addPlayerToTeam(a);
         System.out.println("Game - Demo players are made and added to teams (setUp)");
-
-        //newRound();
     }
 
-    // alle teams opvragen, in het begin zijn dit nog maar enkel 2 teams
+    /**
+     * gets all teams in the game
+     * @return list of all teams
+     */
     public List<Team> allTeams() {
         //System.out.println("Game - sire of ArrayList teams: " + teams.size());
         return Collections.unmodifiableList(teams);
     }
 
-    // een speler opvragen op basis van zijn naam
+    /**
+     * Returns the player with the name you al looking for
+     * @param playerName    name of the player
+     * @return a Player else null
+     */
     public Player getPlayerByName(String playerName) {
         for (Team t : teams) {
             for (Player p : t.getPlayers()) {
@@ -134,7 +147,11 @@ public class Game {
         return null;
     }
 
-    // een nieuw team aanmaken
+    /**
+     * Creates a team
+     * @param teamName  name of team
+     * @return true if it succeeded
+     */
     public boolean createTeam(String teamName) {
         team2.setName(teamName);
 
@@ -147,7 +164,12 @@ public class Game {
         return false;
     }
 
-    // een nieuwe speler aanmaken en deze aan de team toevoegen. Vervolgens de player instantie retourneren
+    /**
+     * creates a new player adds it to team with para teamName and returns made player
+     * @param playerName    name of player
+     * @param teamName      name of team
+     * @return new player
+     */
     public Player createAndGetThisPlayer(String playerName, String teamName) {
         Team getTeam = null;
         for (Team t : teams) {
@@ -161,7 +183,10 @@ public class Game {
         return newPlayer;
     }
 
-    // een intantie van Team opvragen op basis van teamnaam
+    /**
+     * Gets a team using the teamname
+     * @return team
+     */
     public Team getTeamOfPlayer() {
         for (Team allTeams : this.teams) {
             System.out.println(allTeams.getName());
@@ -181,13 +206,13 @@ public class Game {
     //
 
     /**
-     * @return the player for which the game starts
-     * @Author Qun
      * OVERLOAD DEZE METHODE MET ipadress & username
      * OVERLOAD DEZE METHODE startgame()
      * TODO: OVERLOAD DEZE METHODE MET IPADRESS & USERNAME
      * Is called at the beginning of the game
      * Check if both teams have the same amount of players
+     * @return the player for which the game starts
+     * @Author Qun
      */
     public Player startGame() {
         // setup voor demo spelers
@@ -207,9 +232,6 @@ public class Game {
      * Call this method to start a new round
      * Every value in the game gets a reset
      * Every Team receives new panels
-     *
-     * @return a new Round
-     * @Author this method always returns false. Changed it to a void method
      */
     public void newRound() {
         // returns default values
@@ -232,18 +254,15 @@ public class Game {
     public ArrayList<String> endGame(Team team) {
         // Sorts the players by score
         playerScores = new ArrayList<>();
-        //playerScores.add("Succes!");
 
         for(Team allTeams : this.teams){
             if(allTeams.equals(team)){
-                //playerScores.add("You loose!");
                 playerScores.add(allTeams.getName());
                 for(Player playersInLoosingTeam : allTeams.getPlayers()){
                     playerScores.add(playersInLoosingTeam.getName() + " score: " + playersInLoosingTeam.getScore());
                 }
             }
             else{
-                //playerScores.add("You Win!");
                 for(Player playersWinningTeam : allTeams.getPlayers()){
                     playerScores.add(playersWinningTeam.getName() + " score: " + playersWinningTeam.getScore());
                 }
@@ -256,7 +275,7 @@ public class Game {
      * When joining a lobby the joined player is set into the team with the least amount of players
      *
      * @param player De player that is joining the lobby
-     * @return true or false depending on if adding player to team is succesful
+     * @return true or false depending on if adding player to team is successful
      * @Author Kaj
      */
     public boolean addPlayerToTeam(Player player) {
@@ -278,7 +297,7 @@ public class Game {
      *
      * @param player The player that wants to join the other team
      * @Author Kaj
-     * @Return true when changing team is succesful
+     * @Return true when changing team is successful
      */
     public boolean changeTeam(Player player) {
         Team currentTeam = player.getTeam();
@@ -297,7 +316,7 @@ public class Game {
     }
 
     /**
-     * When a team reaches a certain winstreak the game checks if they should recieve bonus time
+     * When a team reaches a certain win streak the game checks if they should receive bonus time
      *
      * @param team The team that gets checked
      * @author Frank Hartman
@@ -335,8 +354,8 @@ public class Game {
     }
 
     /**
-     * If the team has a certain winstreak the other them should get less time for there upcomming instructions
-     *
+     * If the team has a certain win streak the other them should get less time for there upcoming instructions
+     * correct instruction is reset so a new win streak can begin
      * @param currentTeam The team that gets checked
      * @return true when time has been substracted succesfully
      */
@@ -359,26 +378,12 @@ public class Game {
     }
 
     /**
-     * Adding a player to a team
-     *
-     * @param p
-     * @param t
-     */
-    public void addPlayerToTeam(Player p, Team t) {
-        if (!t.isPlayerInTeam(p)) {
-            System.out.println("Game - Player is added to the team (addPlayerToTeam)");
-            t.addPlayerToTeam(p);
-        }
-    }
-
-
-    /**
-     * Check if the executed instrucctions was correct and give the player a new one
+     * Check if the executed instructions was correct and give the player a new one
      *
      * @param changedPanel The panel that has been pressed
      * @param player       The player that gets checked
-     * @Author Qun
      * @Return true when the instruction is correct, false when instruction is wrong
+     * @Author Qun
      */
     public void checkInstruction(Panel changedPanel, Player player, int sliderValue) { //player kan gevonden worden door op panel te zoeken
         Team t = player.getTeam();
@@ -401,9 +406,9 @@ public class Game {
     }
 
     /**
-     * @author Kamil Wasylkiewicz
      * this methods returns the value of the boolean
      * @return the boolean gameover
+     * @author Kamil Wasylkiewicz
      */
     public boolean gameOver() {
         return this.gameOver;
@@ -412,7 +417,7 @@ public class Game {
 
     /**
      * When there is no time to execute a instruction this method should be called
-     *
+     * @param player
      * @author Frank Hartman
      */
     public void instructionIsToLate(Player player) {
@@ -422,10 +427,8 @@ public class Game {
     }
 
     /**
-     * @return true when resetting team is succesful else false
-     * @Author Qun ik snap niet wanneer het fout kan gaan ?
-     * Nu aangepast zodat het een void is.
-     * Reset values from both teams
+     * resets the values for all teams
+     * @return true when resetting team is successful else false
      */
     public boolean reset() {
         boolean teamHasBeenReset = false;
@@ -448,7 +451,9 @@ public class Game {
     }
 
 
-
+    /**
+     * hardReset for teams
+     */
     public void hardReset(){
         reset();
         System.out.println("Team 1 " + team1.getLives());
