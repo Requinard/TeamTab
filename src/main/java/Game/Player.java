@@ -21,7 +21,7 @@ public class Player implements Comparable<Player>{
      * @param name          Name of the player
      * @param score         Total score of the player in one game
      * @param panels        All panels that will be shown, in a round, for this player
-     * @param instruction   Current instruction for this player
+     * @param instruction   Current instruction that has to be done
      * @param game          Current Game
      * @param team          Current Team
      */

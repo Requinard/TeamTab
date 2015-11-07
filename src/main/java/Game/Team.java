@@ -9,10 +9,8 @@ import java.util.Random;
  * Created by HP user on 12-10-2015.
  */
 public class Team {
-
     private ArrayList<Player> players;
     private ArrayList<Panel> playerPanels;
-
 
     private int time;
     private int startTime;
@@ -21,6 +19,12 @@ public class Team {
     private int correctInstruction;
     private String name;
 
+    /**
+     * @param time                  Time a player of this team has to complete a instruction
+     * @param lives                 Amount of lives
+     * @param correctInstructions   Amount of correct instructions in total
+     * @param name                  name of the team
+     */
     public Team(int time, int lives, int correctInstructions, String name){
         this.time =time;
         this.startTime = time;
@@ -31,14 +35,20 @@ public class Team {
         playerPanels = new ArrayList<>();
     }
 
+    /**
+     * Gets the name of the team
+     * @return team name
+     */
     public String getName() {return this.name; }
 
+    /**
+     * Set name of the team
+     * @param name
+     */
     public void setName(String name) {this.name = name;}
 
     /**
      * Gets the current time for a instruction
-     *
-     * @author Frank Hartman
      * @return the time
      */
     public int getTime() {
@@ -47,8 +57,6 @@ public class Team {
 
     /**
      * Sets the time for a instruction
-     *
-     * @author Frank Hartman
      * @param time set the time
      */
     public void setTime(int time) {
@@ -57,7 +65,6 @@ public class Team {
 
     /**
      * Gets the amount of correct instructions
-     * @author Frank Hartman
      * @return the amount of correct instructions
      */
     public int getCorrectInstruction() {
@@ -66,7 +73,6 @@ public class Team {
 
     /**
      * Set the amount of correct instructions
-     * @author Frank Hartman
      * @param correctInstruction the new amount of correct instructions
      */
     public void setCorrectInstruction(int correctInstruction) {
@@ -75,7 +81,6 @@ public class Team {
 
     /**
      * Gets the amount of lives from a team
-     * @author Frank Hartman
      * @return the amount of lives
      */
     public int getLives() {
@@ -86,14 +91,12 @@ public class Team {
      * Set the amount of lives
      * @param lives the new amount of lives
      */
-
     public void setLives(int lives) {
         this.lives = lives;
     }
 
     /**
      * Get all the panels from a team
-     * @author Frank Hartman
      * @return All the panels from the team
      */
     public ArrayList<Panel> getPlayerPanels() {
@@ -102,7 +105,6 @@ public class Team {
 
     /**
      * Sets all the panels from a team
-     * @author Frank Hartman
      * @param playerPanels The new list of player panels
      */
     public void setPlayerPanels(ArrayList<Panel> playerPanels) {
@@ -110,15 +112,11 @@ public class Team {
     }
 
     /**
+     * Gives player 12 random panels from all the panels available to his team.
+     * Gets all new panel after a one game round is finished (So every round has new panels)
+     * @param allPanelsForTeam  list of all available panels one team
+     * @return true when all new panels are assigned
      * @Author Qun
-     * Panels die in het team zitten, deze moeten worden verdeeld over de spelers. Spelers mogen niet dezelfde panels hebben
-     * For each player in players from the team
-     * it loops trough playerPanels
-     * It fills the temporary panelList
-     * If it reached 12 it sets the panels for the player
-     * So each panels only gets used once
-     * Maybe something to check if i really dont give double panels ????
-     * Geef random panels. Houdt bij in een lijst welke panels al gebruikt zijn.
      */
     public boolean givePanelsToPlayersFromTeam(ArrayList<Panel> allPanelsForTeam){
         ArrayList<Panel> tempPanels = new ArrayList<>();
@@ -134,7 +132,6 @@ public class Team {
         for(Player player : players)
         {
             // Loop through all the panels in the game
-
             for (int i = 0 ; i <12 ; i++)
             {
                 pan = allPanelsForTeam.get(r.nextInt(allPanelsForTeam.size()));
@@ -148,17 +145,17 @@ public class Team {
                     tempPanels.add(pan);
                 }
             }
-                player.setPanels(tempPanels); //Nu krijgt elke speler dezelfde panels. De eerste 12.
-                newInstruction(player);
-            }
+            //Nu krijgt elke speler dezelfde panels. De eerste 12.
+            player.setPanels(tempPanels);
+            newInstruction(player);
+        }
     return true;
     }
 
-        /**
-         * Get all the players that are in the team
-         * @author Frank Hartman
-         * @return all the players from the team
-         */
+    /**
+     * Get all the players that are in the team
+     * @return all the players from the team
+     */
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
@@ -171,18 +168,20 @@ public class Team {
         this.players = players;
     }
 
-    /***
+    /**
      * If the list doesn't contains the player then this player will be added to this ArrayList<Player>
      * @param player
      * @return true when player is added to the list
      */
     public boolean addPlayerToTeam(Player player){
+        //For the fist player
         if (players.size() == 0){
             players.add(player);
             player.setTeam(this);
             return true;
         }
-        for(Player p : players){ //eerst add voor het conroleren
+        //All other players
+        for(Player p : players){
             if(!p.equals(player)){
                 players.add(player);
                 player.setTeam(this);
@@ -192,11 +191,11 @@ public class Team {
         return  false;
     }
 
-    /***
-     * @Author Qun hoe komt de persoon
+    /**
      * If this list containt the player then the player will be removed
      * @param player
      * @return true when player is removed from the list
+     * @Author Qun
      */
     public boolean removePlayer(Player player){
         for(Player p : players){
@@ -208,13 +207,10 @@ public class Team {
         return false;
     }
 
-
-    /***
-     * @Author Qun
-     * Removed if-statement
-     * sets all the variables to their default values and clears the Player & playerPanels List
+    /**
+     * sets all the variables to their default values and clears playerPanels List
+     * @return true when all the values are checked for their default values and the above mentioned list are empty
      * @author Frank Hartman
-     * @return true when all the values are checked for their default values and the above mentioned list's are empty
      */
     public boolean resetTeam(){
         time = startTime;
@@ -223,10 +219,10 @@ public class Team {
         return true;
     }
 
-    /***
+    /**
      * calls the comparable method on the Players list and sorts them DESCENDING
-     * @author Frank Hartman
      * @return the unmodifiableList with the sorted players
+     * @author Frank Hartman
      */
     public List<Player> sortedPlayerByScore(){
         List<Player> sortedPlayers = new ArrayList<>();
@@ -234,13 +230,12 @@ public class Team {
         return Collections.unmodifiableList(sortedPlayers);
     }
 
-    /***
+    /**
      * Checks if the player is already part of the team.
      * @param player
      * @return true if the player is in the team
      */
     public boolean isPlayerInTeam(Player player){
-
         for(Player p : players ){
             if(p.equals(player)){
                 return true;
@@ -252,6 +247,7 @@ public class Team {
     /**
      * decrease the lives of the times with 1
      * @author Frank Hartman
+     * @return true if it succeeded
      */
     public boolean substractLives() {
         if(getTime() <= 3) {
@@ -264,14 +260,14 @@ public class Team {
         }
     }
 
-
-
     /**
      * Check if the given panel was one of the players instructions
-     * If this is not the correct panel the correctinstructions will be reset to 0
-     * @author Frank Hartman
-     * @param changedPanel the panel that needs to be checked
+     * If correct increase the score and gives a new instruction
+     * If false reset correct instructions and gives new instruction
+     * @param changedPanel  the panel that needs to be checked
+     * @param sliderValue   the value of the panel
      * @return true if this was one of the instruction
+     * @author Frank Hartman
      */
     public boolean checkTeamInstruction(Panel changedPanel, int sliderValue) {
         for (Player p : players) {
@@ -294,12 +290,10 @@ public class Team {
                     return false;
                 }
             }
-
             //correctInstruction = 0;
             // Give the player a new instruction
             newInstruction(p);
             return false;
-
         }
         return false;
     }
@@ -317,9 +311,9 @@ public class Team {
     /**
      * Add instruction time to the team
      * Time will only be added if the current amount of time is less the the max time
+     * @param time      the extra amount of time
+     * @param maxTime   the maximum amount of time
      * @author Frank Hartman
-     * @param time the extra amount of time
-     * @param maxTime the maximum amount of time
      */
     public boolean addTeamTime(int time, int maxTime) {
         if (time <= maxTime) {
@@ -328,14 +322,14 @@ public class Team {
                 this.time = maxTime;
             return true;
         }
-
         else
             return false;
     }
 
+    /**
+     * decreases time for instructions when called
+     */
     public void decreaseTime() {
         this.time--;
     }
-
-
 }
