@@ -81,7 +81,7 @@ public class Instruction {
 
 
             this.commando = "Change to";
-            //Get new value which is not the current value for sliders
+            //Gets new value which is not the current value for sliders
             this.value = random.nextInt((panel.getMax() - panel.getMin()) + 1) + panel.getMin();
             if(panel.getType() == PanelTypeEnum.HorizontalSlider ||  panel.getType() == PanelTypeEnum.VerticalSlider){
                 if(value == playerInstruction.getPanel().getCurrent()){

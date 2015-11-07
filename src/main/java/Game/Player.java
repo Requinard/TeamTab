@@ -16,6 +16,15 @@ public class Player implements Comparable<Player>{
     private Game game;
     private Team team;
 
+    /**
+     * @param ipAdress      IpAdress of the player
+     * @param name          Name of the player
+     * @param score         Total score of the player in one game
+     * @param panels        All panels that will be shown, in a round, for this player
+     * @param instruction   Current instruction for this player
+     * @param game          Current Game
+     * @param team          Current Team
+     */
     public Player(String ipAdress, String name, int score, ArrayList<Panel> panels, Instruction instruction, Game game, Team team) {
         this.ipAdress = ipAdress;
         this.name = name;
@@ -24,7 +33,6 @@ public class Player implements Comparable<Player>{
         this.instructions = instruction;
         this.game = game;
         this.team = team;
-        //instructions = new ArrayList<Instruction>();
     }
 
     /**
@@ -119,8 +127,9 @@ public class Player implements Comparable<Player>{
      * @Author Qun & Frank
      * Check value of the instruction and compares it to the current value of the panel
      * Check if the panel is correct
-     * @param panel
-     * @return true of false
+     * @param panel         panel
+     * @param sliderValue   value
+     * @return true or false
      */
     public boolean checkCorrectPanel(Panel panel, int sliderValue) {
         return instructions.getValue() == panel.getCurrent() && instructions.getValue() == sliderValue;
@@ -128,14 +137,18 @@ public class Player implements Comparable<Player>{
 
     /**
      * this is the implementation of the Comparable interface. Based on the DESCENDING compare
-     * @param p player
-     * @return
+     * @param player    player
+     * @return score
      */
-    public int compareTo(@NotNull Player p) {
-        int compareScore = p.getScore();
+    public int compareTo(@NotNull Player player) {
+        int compareScore = player.getScore();
         return compareScore - this.score;
     }
 
+    /**
+     * Returns the player his name
+     * @return player name
+     */
     @Override
     public String toString() {
         return  "Player: " + name;
