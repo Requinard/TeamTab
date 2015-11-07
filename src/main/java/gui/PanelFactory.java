@@ -10,6 +10,13 @@ import gui.panel.PanelVerticalControl;
  * Created by david on 17-10-15.
  */
 public class PanelFactory {
+
+    /**
+     *
+     * @param panel
+     * @param gameController
+     * @return
+     */
     public static IPanel getPanel(Panel panel, GameController gameController) {
         IPanel ret;
 

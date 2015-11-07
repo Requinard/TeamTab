@@ -21,6 +21,11 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
 
     private String sliderName = "";
 
+    /**
+     * Create the horizontal slider with values from panel
+     * @param panel
+     * @param gameController
+     */
     public PanelHorizontalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
         sliderName = panel.getText();
@@ -42,6 +47,9 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
         }
     }
 
+    /**
+     * When the value of the slider changes
+     */
     @FXML
     public void sliderValueChanged() {
         System.out.println(sliderName + " " + getSliderValue().intValue());
@@ -50,22 +58,31 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
         gameController.checkInstruction(panel, getSliderValue().intValue());
     }
 
+    /**
+     * get slider value
+     * @return value of slider
+     */
     private Double getSliderValue() {
         return horizontalSlider.getValue();
     }
 
-    public double getSlidervalue() {
-        return horizontalSlider.getValue();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public void update() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void draw() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void remove() {
 
     }

@@ -30,6 +30,16 @@ public class ScoreViewController implements Initializable {
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * Starts a timer for fillScoreBoard
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt>
+     */
     public void initialize(URL location, ResourceBundle resources) {
         buttonBackLobby.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -47,10 +57,13 @@ public class ScoreViewController implements Initializable {
         timerRefresh.schedule(timerTask, 500);
     }
 
+    /**
+     * Shows if the team has won or lost
+     * Prints the score of the players in TextArea
+     */
     private void fillScoreBoard(){
         System.out.println("OK");
         System.out.println(StageController.playerName);
-        //System.out.println(view.stageController.game.getTeamOfPlayer().getName());
         final ArrayList<String> scoreBoard = view.stageController.game.endGame(view.stageController.game.getTeamOfPlayer());
         Platform.runLater(new Runnable() {
             @Override
@@ -62,14 +75,21 @@ public class ScoreViewController implements Initializable {
         });
     }
 
+    /**
+     * Sets the scoreView
+     * @param scoreView
+     */
     public void setView(ScoreView scoreView) {
         view = scoreView;
     }
 
+    /**
+     * When button back to lobby is pressed, Game hardReset and change to LobbyView
+     * @param mouseEvent
+     */
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                //view.stageController.setExistingGame(view.stageController.game.hardReset(view.stageController.playerName));
                 view.stageController.game.hardReset();
                 Platform.runLater(new Runnable() {
                     public void run() {

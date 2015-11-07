@@ -20,6 +20,11 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     private Slider verticalSlider;
     private String sliderName;
 
+    /**
+     * Create the vertical slider with values from panel
+     * @param panel
+     * @param gameController
+     */
     public PanelVerticalControl(Panel panel, GameController gameController) {
         super(panel, gameController);
 
@@ -41,6 +46,9 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
         }
     }
 
+    /**
+     * When the value of the slider changes
+     */
     @FXML
     public void sliderValueChanged() {
         System.out.println(sliderName + " " + getSliderValue().intValue());
@@ -49,19 +57,32 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
         gameController.checkInstruction(panel, getSliderValue().intValue());
     }
 
+    /**
+     * get slider value
+     * @return value of slider
+     */
     private Double getSliderValue() {
         return verticalSlider.getValue();
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public void update() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void draw() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void remove() {
 
     }

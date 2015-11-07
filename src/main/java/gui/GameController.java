@@ -78,16 +78,20 @@ public class GameController implements Initializable {
     private boolean panelPushed;
     private AudioPlayer explosionPlayer;
 
-
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * start a timer for refreshView
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     */
     public void initialize(URL location, ResourceBundle resources) {
-        //view.stageController.game.startGame();
+
         panelFactory = new PanelFactory();
 
-        buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonStartOnClick(event);
-            }
-        });
         buttonStartTimer.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonStartTimerOnClick(event);
@@ -114,7 +118,9 @@ public class GameController implements Initializable {
         }
     }
 
-
+    /**
+     * Call methods to refresh the View
+     */
     private void refreshView() {
         showTeamLevens();
         showTeamInstructionCount();
@@ -122,6 +128,9 @@ public class GameController implements Initializable {
         panelChecker();
     }
 
+    /**
+     * checks if grid with panels is filled
+     */
     private void panelChecker() {
         Platform.runLater(new Runnable() {
             @Override
@@ -133,6 +142,11 @@ public class GameController implements Initializable {
         });
     }
 
+    /**
+     * Sets the GameView
+     * refreshes the View
+     * @param gameView
+     */
     public void setView(GameView gameView) {
         view = gameView;
         fillGridWithPanels();
@@ -140,6 +154,10 @@ public class GameController implements Initializable {
         setTeamNames();
     }
 
+    /**
+     * Fills the gridPane with panels in the right row and column
+     * refreshes every Round
+     */
     public void fillGridWithPanels() {
         gridPane.getChildren().clear();
         gridPane.setMinSize(0, 0);
@@ -163,7 +181,10 @@ public class GameController implements Initializable {
 
     }
 
-    // Als de player een instructie krijgt kan deze worden aangeroepen zodat die getoont wordt. Op dit moment is de playerinstructie leeg.
+    /**
+     * Shows the player Instruction in instructionLabel
+     * refreshes ever 30 ms
+     */
     private void showPlayerInstruction() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -173,6 +194,10 @@ public class GameController implements Initializable {
         });
     }
 
+    /**
+     * Shows amount of teams correct instructions in labelCorrectInstructions
+     * refreshes ever 30 ms
+     */
     private void showTeamInstructionCount() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -182,6 +207,10 @@ public class GameController implements Initializable {
         });
     }
 
+    /**
+     * Shows for every team the amount of lives left. represented in buldings that are still standing
+     * refreshes ever 30 ms
+     */
     private void showTeamLevens() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -241,33 +270,23 @@ public class GameController implements Initializable {
                             break;
                     }
                 }
-
             }
-
         });
     }
 
+    /**
+     * Sets the name of the teams that are playing
+     */
     private void setTeamNames()
     {
-        lblTeamName1.setText( view.stageController.game.allTeams().get(1).getName());
+        lblTeamName1.setText(view.stageController.game.allTeams().get(1).getName());
         lblTeamName2.setText(view.stageController.game.allTeams().get(0).getName());
     }
 
-    private void buttonStartOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        ScoreView scoreView = new ScoreView((view.stageController));
-                        view.pass(scoreView);
-                    }
-                });
-            }
-        };
-        runnable.run();
-    }
-
-
+    /**
+     * When button StartTimer is pressed start a timer which counts down the amount of time you have to fulfill a instruction
+     * @param mouseEvent
+     */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
         buttonStartTimer.setVisible(false);
         runnable = new Runnable() {
@@ -283,6 +302,7 @@ public class GameController implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
+                                //check if counter must be reset because a button or slider was used
                                 if (correctIn()) {
                                     counter = view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getTime();
                                 }
@@ -306,6 +326,11 @@ public class GameController implements Initializable {
         runnable.run();
     }
 
+    /**
+     * Trigger for if a panel was pressed or a slider was used
+     * sets panelPushed back to false after one time
+     * @return true if a panel was pressed or used
+     */
     private boolean correctIn() {
         if (panelPushed) {
             panelPushed = false;
@@ -314,6 +339,13 @@ public class GameController implements Initializable {
         return false;
     }
 
+    /**
+     * Check if instructions was correctly completed
+     * sets panelPused to true
+     * If lives of a team is 0 change to ScoreView
+     * @param panel         pressed/used panel
+     * @param sliderValue   value of the panel
+     */
     public void checkInstruction(Panel panel, int sliderValue) {
         view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;

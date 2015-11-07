@@ -39,6 +39,16 @@ public class LobbyViewController implements Initializable {
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * Start a timer for initiateLobby
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt>
+     */
     public void initialize(URL location, ResourceBundle resources) {
         buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -61,6 +71,10 @@ public class LobbyViewController implements Initializable {
         timerRefresh.schedule(timerTask, 0, 30);
     }
 
+    /**
+     * Fills TextFields playersTeam1Name and playersTeam2Name
+     * With a the list of all players in the team
+     */
     private void initiateLobby() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -80,15 +94,22 @@ public class LobbyViewController implements Initializable {
                         }
                     }
                 }
-
             }
         });
     }
 
+    /**
+     * Sets the lobbyView
+     * @param lobbyView
+     */
     public void setView(LobbyView lobbyView) {
         view = lobbyView;
     }
 
+    /**
+     * When button ready is pressed startGame and change to GameView
+     * @param mouseEvent
+     */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
@@ -104,6 +125,10 @@ public class LobbyViewController implements Initializable {
         runnable.run();
     }
 
+    /**
+     * When button back pressed change to StartView
+     * @param mouseEvent
+     */
     private void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {

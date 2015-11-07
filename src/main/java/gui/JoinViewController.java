@@ -22,16 +22,13 @@ public class JoinViewController implements Initializable {
     private Button buttonJoin;
     @FXML
     private Button buttonSearch;
-
     @FXML
     private TextField availableGames;
     @FXML
     private ListView listGames;
 
-
     private JoinView view;
     private Runnable runnable;
-
 
     /**
      * Called to initialize a controller after its root element has been
@@ -63,6 +60,10 @@ public class JoinViewController implements Initializable {
 
     }
 
+    /**
+     * When button search is pressed look for available lobby's
+     * @param mouseEvent
+     */
     private void buttonSearchOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
@@ -75,10 +76,18 @@ public class JoinViewController implements Initializable {
         runnable.run();
     }
 
+    /**
+     * Sets the joinView
+     * @param joinView
+     */
     public void setView(JoinView joinView) {
         view = joinView;
     }
 
+    /**
+     * When button back is pressed change to MainView
+     * @param mouseEvent
+     */
     private void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
@@ -94,6 +103,10 @@ public class JoinViewController implements Initializable {
         runnable.run();
     }
 
+    /**
+     * When button Join is pressed join selected lobby
+     * @param mouseEvent
+     */
     private void buttonJoinOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {

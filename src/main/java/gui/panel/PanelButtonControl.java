@@ -13,13 +13,18 @@ import java.io.IOException;
  * Created by Kevin on 12-10-2015.
  */
 public class PanelButtonControl extends AbstractPanelControl implements IPanel {
-
     @FXML
     private TextField textField;
     @FXML
     private Button btnPanelClick;
+
     private String panelName = "";
 
+    /**
+     * create the button with values from panel
+     * @param panel
+     * @param gameController
+     */
     public PanelButtonControl(Panel panel, GameController gameController) {
         super(panel, gameController);
         panelName = panel.getText();
@@ -41,6 +46,9 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
 
     }
 
+    /**
+     * when button is clicked
+     */
     @FXML
     public void btnPanelClick() {
         System.out.println(panelName + " was clicked!");
@@ -49,14 +57,23 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
         gameController.checkInstruction(panel, 1);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void update() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void draw() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void remove() {
 
     }

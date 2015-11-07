@@ -12,19 +12,23 @@ import javafx.scene.layout.VBox;
  private Panel panelused;
 
  /**
-  * @author Kevin Jetten
   * the panel gets saved in the class
-  * @param panel Panel that is initialized
+  * @param panel           Panel that is initialized
+  * @param gameController
+  * @author Kevin Jetten
   */
  AbstractPanelControl(Panel panel, GameController gameController) {
   this.panelused = panel;
   this.gameController = gameController;
  }
 
- Panel getPanel()
+ /**
+  * Gets panel
+  * @return the panel
+  */
+  Panel getPanel()
  {
   return panelused;
  }
-
 
 }

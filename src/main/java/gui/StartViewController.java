@@ -33,8 +33,17 @@ public class StartViewController implements Initializable {
     private StartView view;
     private Runnable runnable;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * start audio
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt>
+     */
     public void initialize(URL location, ResourceBundle resources) {
-
 
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -50,13 +59,20 @@ public class StartViewController implements Initializable {
 
         AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
         audioPlayer.play();
-
     }
 
+    /**
+     * Sets the startView
+     * @param startView
+     */
     public void setView(StartView startView) {
         view = startView;
     }
 
+    /**
+     * When button start is pressed checks if teanname is filled in and change to LobbyView
+     * @param mouseEvent
+     */
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
@@ -88,6 +104,10 @@ public class StartViewController implements Initializable {
         runnable.run();
     }
 
+    /**
+     * When button back is pressed change to MainView
+     * @param mouseEvent
+     */
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {

@@ -34,7 +34,7 @@ public class MainController implements Initializable {
      *
      * @param location  The location used to resolve relative paths for the root object, or
      *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     * @param resources The resources used to localize the root object, or <tt>null</tt>
      */
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -51,11 +51,18 @@ public class MainController implements Initializable {
         });
     }
 
-
+    /**
+     * Sets the mainView
+     * @param mainView
+     */
     public void setView(MainView mainView) {
         view = mainView;
     }
 
+    /**
+     * When button join is pressed, Check if username is filled in and change to JoinView
+     * @param mouseEvent
+     */
     private void buttonJoinOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
@@ -78,6 +85,10 @@ public class MainController implements Initializable {
         runnable.run();
     }
 
+    /**
+     * When button start is pressed, Check if username is filled in and change to StartView
+     * @param mouseEvent
+     */
     private void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
