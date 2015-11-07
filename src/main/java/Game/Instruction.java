@@ -11,6 +11,11 @@ public class Instruction {
     private String commando;
     private int value;
 
+    /**
+     * @param panel         Panel of the current instruction
+     * @param commando      Text what the player must do with the panel
+     * @param value         Value the panel must have
+     */
     public Instruction(Panel panel, String commando, int value) {
         this.panel = panel;
         this.commando = commando;
@@ -65,23 +70,18 @@ public class Instruction {
     /**
      * Change the current instruction to a new instruction
      * @param playerPanels The panels of the player that should get a new instruction
-     * @author Frank Hartman
      */
     public boolean createNewInstruction(ArrayList<Panel> playerPanels, Instruction playerInstruction) {
         Random random = new Random();
         try {
+            //Gets new panel which is not the current panel
             ArrayList<Panel> tempPanels = playerPanels;
-            //this.panel = playerPanels.get(random.nextInt(playerPanels.size()));
             tempPanels.remove(playerInstruction.getPanel());
             this.panel = tempPanels.get(random.nextInt(tempPanels.size()));
 
-            /*while (playerInstruction.getPanel() ==  this.panel) {
-                this.panel = playerPanels.get(random.nextInt(playerPanels.size()));
-            }*/
-
-
 
             this.commando = "Change to";
+            //Get new value which is not the current value for sliders
             this.value = random.nextInt((panel.getMax() - panel.getMin()) + 1) + panel.getMin();
             if(panel.getType() == PanelTypeEnum.HorizontalSlider ||  panel.getType() == PanelTypeEnum.VerticalSlider){
                 if(value == playerInstruction.getPanel().getCurrent()){
@@ -99,9 +99,6 @@ public class Instruction {
                     }
                 }
             }
-            //{
-               // this.value = random.nextInt((panel.getMax() - panel.getMin()) + 1) + panel.getMin();
-            //}
             // EERSTE ITERATIE
 
             System.out.println("Player gets a new commando");
@@ -113,6 +110,5 @@ public class Instruction {
             System.out.println(e.getMessage());
             return false;
         }
-
     }
 }

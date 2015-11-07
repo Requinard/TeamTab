@@ -15,7 +15,7 @@ public class Panel {
      * @param id          Panel number id
      * @param type        Type of panel (Button, horizontal or vertical)
      * @param text        Text that gives a description
-     * @param min         Minimum value a panel ccan have
+     * @param min         Minimum value a panel can have
      * @param max         Maximum value a panel can have
      * @author David
      */
@@ -70,7 +70,7 @@ public class Panel {
     }
 
     /**
-     * Returns currenct value of the control
+     * Returns current value of the control
      * @return panelcontrol value
      */
     public int getCurrent(){return current;}
