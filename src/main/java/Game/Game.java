@@ -32,7 +32,8 @@ public class Game {
 
     /**
      * Initialize a game
-     * @param stageController   the StageController for the game
+     *
+     * @param stageController the StageController for the game
      * @author David
      */
     public Game(StageController stageController) {
@@ -65,6 +66,7 @@ public class Game {
 
     /**
      * Gets the Game
+     *
      * @return this Game
      */
     public Game getGame() {
@@ -73,6 +75,7 @@ public class Game {
 
     /**
      * loads panels from CSV
+     *
      * @return true is panels are correctly loaded
      */
     public boolean loadPanels() {
@@ -124,6 +127,7 @@ public class Game {
 
     /**
      * gets all teams in the game
+     *
      * @return list of all teams
      */
     public List<Team> allTeams() {
@@ -133,23 +137,18 @@ public class Game {
 
     /**
      * Returns the player with the name you al looking for
-     * @param playerName    name of the player
+     *
+     * @param playerName name of the player
      * @return a Player else null
      */
     public Player getPlayerByName(String playerName) {
-        for (Team t : teams) {
-            for (Player p : t.getPlayers()) {
-                if (p.getName().equals(playerName)) {
-                    return p;
-                }
-            }
-        }
-        return null;
+        return players.stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
     }
 
     /**
      * Creates a team
-     * @param teamName  name of team
+     *
+     * @param teamName name of team
      * @return true if it succeeded
      */
     public boolean createTeam(String teamName) {
@@ -166,8 +165,9 @@ public class Game {
 
     /**
      * creates a new player adds it to team with para teamName and returns made player
-     * @param playerName    name of player
-     * @param teamName      name of team
+     *
+     * @param playerName name of player
+     * @param teamName   name of team
      * @return new player
      */
     public Player createAndGetThisPlayer(String playerName, String teamName) {
@@ -185,12 +185,13 @@ public class Game {
 
     /**
      * Gets a team using the teamname
+     *
      * @return team
      */
     public Team getTeamOfPlayer() {
         for (Team allTeams : this.teams) {
             System.out.println(allTeams.getName());
-            for(Player curPlayer : allTeams.getPlayers()){
+            for (Player curPlayer : allTeams.getPlayers()) {
                 System.out.println(curPlayer.getName());
                 if (curPlayer.getName().equals(currentPlayer.getName())) {
                     System.out.println("Game - team of player returned (getTeamOfPlayer)");
@@ -211,6 +212,7 @@ public class Game {
      * TODO: OVERLOAD DEZE METHODE MET IPADRESS & USERNAME
      * Is called at the beginning of the game
      * Check if both teams have the same amount of players
+     *
      * @return the player for which the game starts
      * @Author Qun
      */
@@ -255,15 +257,14 @@ public class Game {
         // Sorts the players by score
         playerScores = new ArrayList<>();
 
-        for(Team allTeams : this.teams){
-            if(allTeams.equals(team)){
+        for (Team allTeams : this.teams) {
+            if (allTeams.equals(team)) {
                 playerScores.add(allTeams.getName());
-                for(Player playersInLoosingTeam : allTeams.getPlayers()){
+                for (Player playersInLoosingTeam : allTeams.getPlayers()) {
                     playerScores.add(playersInLoosingTeam.getName() + " score: " + playersInLoosingTeam.getScore());
                 }
-            }
-            else{
-                for(Player playersWinningTeam : allTeams.getPlayers()){
+            } else {
+                for (Player playersWinningTeam : allTeams.getPlayers()) {
                     playerScores.add(playersWinningTeam.getName() + " score: " + playersWinningTeam.getScore());
                 }
             }
@@ -356,6 +357,7 @@ public class Game {
     /**
      * If the team has a certain win streak the other them should get less time for there upcoming instructions
      * correct instruction is reset so a new win streak can begin
+     *
      * @param currentTeam The team that gets checked
      * @return true when time has been substracted succesfully
      */
@@ -407,6 +409,7 @@ public class Game {
 
     /**
      * this methods returns the value of the boolean
+     *
      * @return the boolean gameover
      * @author Kamil Wasylkiewicz
      */
@@ -417,6 +420,7 @@ public class Game {
 
     /**
      * When there is no time to execute a instruction this method should be called
+     *
      * @param player
      * @author Frank Hartman
      */
@@ -428,6 +432,7 @@ public class Game {
 
     /**
      * resets the values for all teams
+     *
      * @return true when resetting team is successful else false
      */
     public boolean reset() {
@@ -454,7 +459,7 @@ public class Game {
     /**
      * hardReset for teams
      */
-    public void hardReset(){
+    public void hardReset() {
         reset();
         System.out.println("Team 1 " + team1.getLives());
         System.out.println("Team 2 " + team2.getLives());
