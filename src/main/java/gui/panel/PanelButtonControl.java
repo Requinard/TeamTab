@@ -53,7 +53,6 @@ public class PanelButtonControl extends AbstractPanelControl implements IPanel {
     public void btnPanelClick() {
         System.out.println(panelName + " was clicked!");
         Panel panel = getPanel();
-        panel.setCurrent(1);
         gameController.checkInstruction(panel, 1);
     }
 
