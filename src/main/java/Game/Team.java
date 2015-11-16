@@ -118,8 +118,8 @@ public class Team {
      * @return true when all new panels are assigned
      * @Author Qun
      */
-    public boolean givePanelsToPlayersFromTeam(ArrayList<Panel> allPanelsForTeam){
-        ArrayList<Panel> tempPanels = new ArrayList<>();
+    public void givePanelsToPlayersFromTeam(ArrayList<Panel> panelsTeam){
+        ArrayList<Panel> tempPanels = new ArrayList<Panel>();
         Panel pan;
         Random r = new Random();
         this.playerPanels = allPanelsForTeam;
@@ -131,7 +131,8 @@ public class Team {
         // Loop through the players
         for(Player player : players)
         {
-            // Loop through all the panels in the game
+            for(Panel panel : panelsTeam){
+                //if(player.getPanels().size() < 12)
             for (int i = 0 ; i <12 ; i++)
             {
                 pan = allPanelsForTeam.get(r.nextInt(allPanelsForTeam.size()));
