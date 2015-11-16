@@ -1,16 +1,20 @@
 package Game;
 
 import gui.panel.AbstractPanelControl;
+import javassist.bytecode.stackmap.TypeData;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientGame implements IGame {
 
-	private Collection<Player> players;
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private Collection<Player> players;
 	private Collection<Team> teams;
 	private Collection<Panel> panels;
 
@@ -114,12 +118,17 @@ public class ClientGame implements IGame {
 
 	/**
 	 * Resets lives, time and instructions for all teams.
-	 * @param hard Indicates that this is a hard reset. Destroy all data
+     * Author Frank Hartman
+     * @param hard Indicates that this is a hard reset. Destroy all data
 	 */
 	@Override()
 	public void reset(boolean hard) {
-		// TODO - implement ClientGame.reset
-		throw new UnsupportedOperationException();
+
+        log.log(Level.INFO, "Resetting teams");
+        for (Team team : teams) {
+            team.reset(hard);
+        }
+
 	}
 
 	@Override

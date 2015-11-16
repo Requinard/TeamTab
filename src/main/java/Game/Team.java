@@ -1,17 +1,24 @@
 package Game;
 
+import javassist.bytecode.stackmap.TypeData;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Team {
 
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private final int STARTLIVES = 3;
+    private final int STARTTIME = 9;
     private List<Player> players;
     private List<Panel> panels;
     private String name;
     private List<Instruction> activeInstructions;
-    private int lives = 3;
-    private int time = 9;
+    private int lives = STARTLIVES;
+    private int time = STARTTIME;
 
     /**
      * @param name
@@ -113,4 +120,18 @@ public class Team {
 		throw new UnsupportedOperationException();
 	}
 
+    /**
+     * Reset the data of the team
+     * Author Frank Hartman
+     *
+     * @param hard if true the amount of lives will be set to the beginning amount of time
+     */
+    public void reset(boolean hard) {
+        // If it is a hard reset then reset the lives
+        if (hard)
+            lives = STARTLIVES;
+
+        time = STARTTIME;
+        log.log(Level.INFO, "Team: " + name + " has been reset");
+    }
 }
