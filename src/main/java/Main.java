@@ -6,6 +6,10 @@ import gui.StageController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+
 public class Main extends Application{
 
     /**
@@ -25,6 +29,8 @@ public class Main extends Application{
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Handler fh = new FileHandler("log.xml");
+        Logger.getLogger("").addHandler(fh);
         new StageController(primaryStage);
 
     }
