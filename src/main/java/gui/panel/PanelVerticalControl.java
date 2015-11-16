@@ -38,8 +38,8 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
         try {
             fxmlLoader.load();
             textField.setText(panel.getText());
-            verticalSlider.setMin(panel.getMin());
-            verticalSlider.setMax(panel.getMax());
+            verticalSlider.setMin(panel.getMinimumValue());
+            verticalSlider.setMax(panel.getMaximumValue());
             verticalSlider.setEffect(new ColorAdjust(0,0,1,1));
         } catch (IOException exception) {
             throw new RuntimeException(exception);
@@ -53,7 +53,6 @@ public class PanelVerticalControl extends AbstractPanelControl implements IPanel
     public void sliderValueChanged() {
         System.out.println(sliderName + " " + getSliderValue().intValue());
         Panel panel = getPanel();
-        panel.setCurrent(getSliderValue().intValue());
         gameController.checkInstruction(panel, getSliderValue().intValue());
     }
 

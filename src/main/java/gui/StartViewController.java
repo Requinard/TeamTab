@@ -1,6 +1,6 @@
 package gui;
 
-import game.Player;
+import Game.Player;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -80,12 +80,19 @@ public class StartViewController implements Initializable {
 
                     //DIT WERKT ALLEEN VOOR DE EERSTE ITERATIE
                     view.stageController.game.createTeam(teamName);
+                    /*
                     Player newPlayer = view.stageController.game.createAndGetThisPlayer(StageController.playerName, teamName);
 
-
+                    Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo:createAndGetThisPlayer moet vervangen worden
+                    */
                     //Team teamByTeamName = view.stageController.game.getTeamByName(teamName);
+                    /*
                     view.stageController.game.addPlayerToTeam(newPlayer);
 
+                    Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: addPlayerToTeam moet vervangen worden
+                    */
                     Platform.runLater(new Runnable() {
                         public void run() {
                             LobbyView lobbyView = new LobbyView((view.stageController));
@@ -105,6 +112,7 @@ public class StartViewController implements Initializable {
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
+                /*
                 view.stageController.game.reset();
                 Platform.runLater(new Runnable() {
                     public void run() {
@@ -113,6 +121,9 @@ public class StartViewController implements Initializable {
 
                     }
                 });
+                Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: de game moet gereset worden met de nieuwe reset methode
+                */
             }
         };
         runnable.run();

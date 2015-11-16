@@ -1,13 +1,13 @@
 package Game;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 public class Player {
 
     private String username;
     private String ip = "127.0.0.1";
-    private Collection<Panel> panels;
+    private List<Panel> panels;
     private Team team;
     private Instruction activeInstruction;
 
@@ -32,7 +32,7 @@ public class Player {
         return this.ip;
     }
 
-    public Collection<Panel> getPanels() {
+    public List<Panel> getPanels() {
         return this.panels;
     }
 
@@ -48,9 +48,20 @@ public class Player {
         return this.activeInstruction;
     }
 
-    public java.util.List<Panel> generatePanels() {
-        // TODO - implement Player.generatePanels
-        throw new UnsupportedOperationException();
+    /**
+     * This method generates random panels for a player. A player gets 12 random panels
+     *
+     * @param teamPanels Panels which are given for a team
+     * @return Panels that have been added to a player his panels
+     */
+    public java.util.List<Panel> generatePanels(List<Panel> teamPanels) {
+        Random random = new Random();
+        final int PANELSPERPLAYER = 12;
+        for (int i = 0; i <= PANELSPERPLAYER; i++) {
+            //Gets random panel from teamPanels and adds this to the players panel
+            panels.add(teamPanels.get(random.nextInt(teamPanels.size())));
+        }
+        return panels;
     }
 
     /**

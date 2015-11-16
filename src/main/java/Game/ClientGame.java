@@ -32,7 +32,8 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public Team createTeam(String name) {
-
+		return null;
+		//todo: methode invullen
 	}
 
 	/**
@@ -42,7 +43,8 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public Player createPlayer(String username, String ip) {
-
+		return null;
+		//todo: methode invullen
 	}
 
 	/**
@@ -56,7 +58,8 @@ public class ClientGame implements IGame {
 	}
 
 	private java.util.List<Panel> generatePanels() {
-
+		return null;
+		//todo: methode invullen
 	}
 
 	private void loadPanelsFromFile() {
@@ -76,7 +79,8 @@ public class ClientGame implements IGame {
 
 	@Override
 	public ClientGame startRound() {
-
+		return null;
+		//todo: methode invullen
 	}
 
 	/**
@@ -86,7 +90,8 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public boolean processPanel(Player player, Panel panel) {
-
+		return false;
+		//todo: methode invullen
 	}
 
 	@Override()
@@ -101,7 +106,8 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public boolean registerInvalidInstruction(Instruction instruction) {
-
+		return false;
+		//todo: methode invullen
 	}
 
 	/**
@@ -110,7 +116,8 @@ public class ClientGame implements IGame {
 	 * @param panel Panel control that was clicked
 	 */
 	private boolean validateInstruction(Player player, AbstractPanelControl panel) {
-
+		return false;
+		//todo: methode invullen
 	}
 
 }
