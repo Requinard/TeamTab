@@ -16,8 +16,8 @@ import java.util.logging.Logger;
  */
 public class ScoreView extends AbstractView implements IView{
 
-    private ScoreViewController scoreViewController;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private ScoreViewController scoreViewController;
 
     public ScoreView(StageController stageController){
         super(stageController);
@@ -32,7 +32,7 @@ public class ScoreView extends AbstractView implements IView{
         Stage stage = new Stage();
         stage.setTitle("ScoreView");
         URL location = this.getClass().getResource("/ScoreView.fxml");
-        log.log(Level.INFO, "loaded ScoreView from {0}",location.toString());
+        log.log(Level.INFO, "loaded ScoreView from {0}", location.toString());
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new ScoreViewController());
         try {

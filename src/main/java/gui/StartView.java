@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class StartView extends AbstractView implements IView {
-    private StartViewController startViewController;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private StartViewController startViewController;
 
     public StartView(StageController stageController){
         super(stageController);
@@ -31,7 +31,7 @@ public class StartView extends AbstractView implements IView {
         Stage stage = new Stage();
         stage.setTitle("StartView");
         URL location = this.getClass().getResource("/StartView.fxml");
-        log.log(Level.INFO, "loaded ScoreView from {0}",location.toString());
+        log.log(Level.INFO, "loaded ScoreView from {0}", location.toString());
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new StartViewController());
         try {

@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class JoinView extends AbstractView implements IView {
-    private JoinViewController joinViewController;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private JoinViewController joinViewController;
 
     public JoinView(StageController stageController) {
         super(stageController);
@@ -32,7 +32,7 @@ public class JoinView extends AbstractView implements IView {
         Stage stage = new Stage();
         stage.setTitle("JoinView");
         URL location = this.getClass().getResource("/JoinView.fxml");
-        log.log(Level.INFO, "loaded JoinView from {0}",location.toString());
+        log.log(Level.INFO, "loaded JoinView from {0}", location.toString());
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new JoinViewController());
 

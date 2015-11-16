@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * Created by david on 6-10-15.
  */
 public class MainView extends AbstractView implements IView {
-    private MainController mainController;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private MainController mainController;
 
     public MainView(StageController stageController) {
         super(stageController);
@@ -31,7 +31,7 @@ public class MainView extends AbstractView implements IView {
         Stage stage = new Stage();
         stage.setTitle("MainView");
         URL location = this.getClass().getResource("/MainView.fxml");
-        log.log(Level.INFO, "loaded MainView from {0}",location.toString());
+        log.log(Level.INFO, "loaded MainView from {0}", location.toString());
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new MainController());
         try {

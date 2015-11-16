@@ -14,8 +14,8 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class GameView extends AbstractView implements IView {
-    private GameController gameController;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private GameController gameController;
 
     /**
      * @param stageController Stagecontroller that is controlling the application
@@ -34,7 +34,7 @@ public class GameView extends AbstractView implements IView {
         Stage stage = new Stage();
         stage.setTitle("GameView");
         URL location = this.getClass().getResource("/GameView.fxml");
-        log.log(Level.INFO, "loaded gameview from {0}",location.toString());
+        log.log(Level.INFO, "loaded gameview from {0}", location.toString());
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new GameController());
         try {
@@ -51,7 +51,7 @@ public class GameView extends AbstractView implements IView {
 
         gameController = loader.getController();
         gameController.setView(this);
-        log.log(Level.INFO,"Loaded gameview in view");
+        log.log(Level.INFO, "Loaded gameview in view");
         return true;
     }
 

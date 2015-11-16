@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class LobbyView extends AbstractView implements IView {
-    private LobbyViewController lobbyViewController;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private LobbyViewController lobbyViewController;
 
     public LobbyView(StageController stageController){
         super(stageController);
@@ -31,7 +31,7 @@ public class LobbyView extends AbstractView implements IView {
         Stage stage = new Stage();
         stage.setTitle("LobbyView");
         URL location = this.getClass().getResource("/LobbyView.fxml");
-        log.log(Level.INFO, "loaded LobbyView from {0}",location.toString());
+        log.log(Level.INFO, "loaded LobbyView from {0}", location.toString());
         FXMLLoader loader = new FXMLLoader(location);
         loader.setController(new LobbyViewController());
 

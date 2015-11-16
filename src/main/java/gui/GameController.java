@@ -1,8 +1,8 @@
 package gui;
 
-import Game.Panel;
-import Game.Player;
-import Game.Team;
+import game.Panel;
+import game.Player;
+import game.Team;
 import gui.panel.IPanel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -36,6 +36,7 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class GameController implements Initializable {
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     @FXML
     private Button buttonStart;
     @FXML
@@ -48,11 +49,9 @@ public class GameController implements Initializable {
     private Label secondenLabel;
     @FXML
     private Label instructionLabel;
-
     private Timer timer;
     @FXML
     private GridPane gridPane = new GridPane();
-
     @FXML
     private Label labelCorrectInstructions;
     @FXML
@@ -71,7 +70,6 @@ public class GameController implements Initializable {
     private TextField lblTeamName1;
     @FXML
     private TextField lblTeamName2;
-
     private GameView view;
     private Runnable runnable;
     private PanelFactory panelFactory;
@@ -80,7 +78,6 @@ public class GameController implements Initializable {
     private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
     private AudioPlayer explosionPlayer;
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
 
     /**
      * Called to initialize a controller after its root element has been
@@ -93,7 +90,7 @@ public class GameController implements Initializable {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     public void initialize(URL location, ResourceBundle resources) {
-        log.log(Level.INFO,"Start initializing the gamecontroller");
+        log.log(Level.INFO, "Start initializing the gamecontroller");
         panelFactory = new PanelFactory();
 
         buttonStartTimer.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -115,7 +112,7 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Audiofile url set to: {0}", url.toString());
         try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
             explosionPlayer = new AudioPlayer(fileInputStream.toString());
-            log.log(Level.INFO,"explosion audioplayer created");
+            log.log(Level.INFO, "explosion audioplayer created");
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
             log.log(Level.SEVERE, e1.toString(), e1);
@@ -129,7 +126,7 @@ public class GameController implements Initializable {
      * Call methods to refresh the View
      */
     private void refreshView() {
-        log.log(Level.FINER,"refreshView started");
+        log.log(Level.FINER, "refreshView started");
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
@@ -144,9 +141,9 @@ public class GameController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (!panelHolder.equals(view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels())) {
+                if (!panelHolder.equals(view.stageController.game.getPlayerByName(StageController.playerName).getPanels())) {
                     fillGridWithPanels();
-                    log.log(Level.INFO,"Gridview filled with panels");
+                    log.log(Level.INFO, "Gridview filled with panels");
                 }
             }
         });
@@ -158,7 +155,7 @@ public class GameController implements Initializable {
      * @param gameView
      */
     public void setView(GameView gameView) {
-        log.log(Level.FINER,"setView started");
+        log.log(Level.FINER, "setView started");
         view = gameView;
         fillGridWithPanels();
         showTeamLevens();
@@ -171,16 +168,16 @@ public class GameController implements Initializable {
      * refreshes every Round
      */
     public void fillGridWithPanels() {
-        log.log(Level.INFO,"fillGridWithPanels started");
+        log.log(Level.INFO, "fillGridWithPanels started");
         gridPane.getChildren().clear();
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
-        log.log(Level.INFO,"gridPane children cleared, minsize set and alignment set");
+        log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
         final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
         panelHolder = panels;
         int column = 0;
         int row = 0;
-        log.log(Level.INFO,"Add panels to the gridpane");
+        log.log(Level.INFO, "Add panels to the gridpane");
         for (Panel panel : panels) {
             IPanel iPanel = PanelFactory.getPanel(panel, this);
             System.out.println(panel.getText());
@@ -194,7 +191,7 @@ public class GameController implements Initializable {
             log.log(Level.FINER, "Added panel with text {0}", panel.getText());
             row++;
         }
-        log.log(Level.INFO, "Loaded {0} panels in the gridPane",panels.size());
+        log.log(Level.INFO, "Loaded {0} panels in the gridPane", panels.size());
     }
 
     /**
