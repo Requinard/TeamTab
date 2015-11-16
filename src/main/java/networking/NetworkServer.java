@@ -1,14 +1,14 @@
 package networking;
 
 import java.util.Queue;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Handles incoming requests and sends outgoing requests
  */
 public class NetworkServer {
 
-    Queue<NetworkMessage> messageQueue = new SynchronousQueue<>();
+    private Queue<NetworkMessage> messageQueue = new LinkedBlockingQueue<>();
     /**
      * Port number
      */
@@ -16,6 +16,10 @@ public class NetworkServer {
 
     public NetworkServer(int port) {
         this.port = port;
+    }
+
+    public Queue<NetworkMessage> getMessageQueue() {
+        return messageQueue;
     }
 
     public int getPort() {
@@ -41,6 +45,20 @@ public class NetworkServer {
     public boolean send(String message, String receiver) {
         // TODO - implement NetworkServer.send
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns a message item
+     */
+    public NetworkMessage consumeMessage() {
+        return messageQueue.poll();
+    }
+
+    /**
+     * Returns a boolean that determines whether there are messages waiting
+     */
+    public boolean peek() {
+        return messageQueue.peek() != null;
     }
 
 }
