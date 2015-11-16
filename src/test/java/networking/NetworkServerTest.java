@@ -9,7 +9,7 @@ import java.util.Queue;
  */
 public class NetworkServerTest extends TestCase {
 
-    NetworkServer networkServer = new NetworkServer(80085);
+    private final NetworkServer networkServer = new NetworkServer(80085);
 
     public void setUp() throws Exception {
         super.setUp();
@@ -60,7 +60,7 @@ public class NetworkServerTest extends TestCase {
 
         // Test for a non-empty queue
         NetworkMessage message = new NetworkMessage("bla bla", "sender", "receiver");
-        Queue queue = networkServer.getMessageQueue();
+        Queue<NetworkMessage> queue = networkServer.getMessageQueue();
         queue.add(message);
 
         peek = networkServer.peek();
@@ -68,7 +68,7 @@ public class NetworkServerTest extends TestCase {
         assertTrue("Peek did not return a value", peek);
 
         // empty the queue and then test again
-        message = networkServer.consumeMessage();
+        networkServer.consumeMessage();
 
         peek = networkServer.peek();
 
