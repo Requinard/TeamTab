@@ -3,9 +3,11 @@ package gui;
 import Game.ClientGame;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javazoom.jl.decoder.JavaLayerException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.UnsupportedEncodingException;
+import java.util.TimerTask;
 import Game.*;
 
 /**
@@ -13,12 +15,16 @@ import Game.*;
  */
 public class StageController {
 
+    private java.util.Timer timerRefresh;
+    private TimerTask timerTask;
+
     static String playerName;
     Stage stage;
     IView currentView;
     Thread gameThread;
     ClientGame game;
 	ClientGame clientGame;
+    private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
 
     public StageController(Stage primaryStage) throws UnsupportedEncodingException {
 
@@ -31,6 +37,19 @@ public class StageController {
                 todo: newGame moet clientgame worden
         */
 
+        timerRefresh = new java.util.Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    //playBackgroundMusic();
+                    audioPlayer.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timerRefresh.schedule(timerTask, 0, 20000);
     }
 
     public void loadScene(@NotNull IView nextView) {
@@ -68,7 +87,7 @@ public class StageController {
                 todo: de clientgame moet geset worden
 */
 	/**
-	 * 
+	 *
 	 * @param clientGame
 	 */
 	public void setExistingGame(ClientGame clientGame) {

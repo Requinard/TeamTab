@@ -77,7 +77,7 @@ public class GameController implements Initializable {
     private TimerTask timerTask;
     private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
-    private AudioPlayer explosionPlayer;
+    private AudioPlayer audioPlayer;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -278,7 +278,7 @@ public class GameController implements Initializable {
                     }
                     switch (levensTeam1) {
                         case 1:
-                            explosionPlayer.play();
+                            audioPlayer.play();
                             Team2Leven1.setVisible(false);
                             Team2Leven2.setVisible(true);
                             Team2Leven3.setVisible(true);
@@ -392,6 +392,8 @@ public class GameController implements Initializable {
         /*
         view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;
+        audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
+        audioPlayer.play();
         for (Team teams : view.stageController.game.allTeams()) {
             if (teams.getLives() <= 0) {
                 ScoreView scoreView = new ScoreView(view.stageController);

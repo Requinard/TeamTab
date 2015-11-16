@@ -1,8 +1,9 @@
-package game;
+package Game;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import Game.*;
 
 /**
  * Created by David on 11/16/2015.
@@ -11,7 +12,7 @@ public class PlayerTest {
 
     @Before
     public void setUp() throws Exception {
-
+        Player testPlayer = new Player()
     }
 
     @After
