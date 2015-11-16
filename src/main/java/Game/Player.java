@@ -74,6 +74,7 @@ public class Player {
     }
 
     public Instruction generateInstruction() {
+
         // TODO - implement Player.generateInstruction
         throw new UnsupportedOperationException();
     }
