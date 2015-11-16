@@ -1,6 +1,7 @@
 package Game;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.IllegalFormatException;
 
 /**
  * Created by David on 11/16/2015.
@@ -17,7 +18,7 @@ public interface IGame {
 	 * 
 	 * @param name
 	 */
-	Team createTeam(String name);
+	Team createTeam(String name) throws IllegalFormatException;
 
 	/**
 	 * 
