@@ -6,6 +6,11 @@ public class Instruction {
     private int intendedValue;
     private boolean wasExecutedCorrectly = false;
 
+    public Instruction(Panel panel, int intendedValue) {
+        this.panel = panel;
+        this.intendedValue = intendedValue;
+    }
+
     public Panel getPanel() {
         return this.panel;
     }
@@ -21,5 +26,4 @@ public class Instruction {
     public void setWasExecutedCorrectly(boolean wasExecutedCorrectly) {
         this.wasExecutedCorrectly = wasExecutedCorrectly;
     }
-
 }

@@ -1,21 +1,23 @@
 package Game.adapters;
 
-import Game.*;
+import Game.Instruction;
 
 public class InstructionAdapter {
 
 	/**
-	 * 
-	 * @param instruction
+	 *
+	 * @param instruction Instrction that needs to be turned into a string
 	 */
-	public String toString(Instruction instruction) {
-		// TODO - implement InstructionAdapter.toString
-		throw new UnsupportedOperationException();
+	public static String toString(Instruction instruction) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("t:instruction;").append(instruction.getPanel().getId() + ";").append(instruction.getIntendedValue() + ";").append(instruction.getWasExecutedCorrectly() + ";");
+
+		return stringBuilder.toString();
 	}
 
 	/**
-	 * 
-	 * @param input
+	 *
+	 * @param input String that needs to be turned into an instruction object
 	 */
 	public Instruction toObject(String input) {
 		// TODO - implement InstructionAdapter.toObject
