@@ -2,11 +2,14 @@ package networking;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Handles incoming requests and sends outgoing requests
  */
 public class NetworkServer {
+    private static final Logger logger = Logger.getLogger(NetworkServer.class.getName());
 
     private Queue<NetworkMessage> messageQueue = new LinkedBlockingQueue<>();
     /**
@@ -51,6 +54,7 @@ public class NetworkServer {
      * Returns a message item
      */
     public NetworkMessage consumeMessage() {
+        logger.log(Level.INFO, "Network server is consuming a message");
         return messageQueue.poll();
     }
 
@@ -58,6 +62,7 @@ public class NetworkServer {
      * Returns a boolean that determines whether there are messages waiting
      */
     public boolean peek() {
+        logger.log(Level.INFO, "Network server is peeking at the message queue");
         return messageQueue.peek() != null;
     }
 
