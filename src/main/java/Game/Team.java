@@ -89,14 +89,16 @@ public class Team {
     }
 
     /**
-     * @param amount
+     * Change the lives by the amount of amount
+     * @param amount    amount may be positive or negative
      */
     public void changeLives(int amount) {
         lives += amount;
     }
 
     /**
-     * @param amount
+     * Change the time by the amount of amount
+     * @param amount    amount may be positive or negative
      */
     public int changeTime(int amount) {
         return time += amount;
