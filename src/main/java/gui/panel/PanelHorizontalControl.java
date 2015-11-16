@@ -39,8 +39,8 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
         try {
             fxmlLoader.load();
             textField.setText(panel.getText());
-            horizontalSlider.setMin(panel.getMin());
-            horizontalSlider.setMax(panel.getMax());
+            horizontalSlider.setMin(panel.getMinimumValue());
+            horizontalSlider.setMax(panel.getMaximumValue());
             horizontalSlider.setEffect(new ColorAdjust(0,0,1,1));
         } catch (IOException exception) {
             throw new RuntimeException(exception);
@@ -54,7 +54,6 @@ public class PanelHorizontalControl extends AbstractPanelControl implements IPan
     public void sliderValueChanged() {
         System.out.println(sliderName + " " + getSliderValue().intValue());
         Panel panel = getPanel();
-        panel.setCurrent(getSliderValue().intValue());
         gameController.checkInstruction(panel, getSliderValue().intValue());
     }
 

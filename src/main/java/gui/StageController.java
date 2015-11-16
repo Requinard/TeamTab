@@ -1,6 +1,6 @@
 package gui;
 
-import game.Game;
+import Game.ClientGame;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ public class StageController {
     Stage stage;
     IView currentView;
     Thread gameThread;
-    Game game;
+    ClientGame game;
 	ClientGame clientGame;
 
     public StageController(Stage primaryStage) throws UnsupportedEncodingException {
@@ -25,7 +25,11 @@ public class StageController {
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
+        /*
         game = new Game(this);
+           Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: newGame moet clientgame worden
+        */
 
     }
 
@@ -49,13 +53,20 @@ public class StageController {
     }
 
     public void resetGame(){
+        /*
         this.game = new Game(this);
+           Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: er moet de methode aanageroepen worden van de clientgame die de game reset
+        */
     }
 
+    /*
     public void setExistingGame(Game game){
         this.game = game;
     }
-
+        Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: de clientgame moet geset worden
+*/
 	/**
 	 * 
 	 * @param clientGame

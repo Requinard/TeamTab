@@ -1,7 +1,7 @@
 package gui;
 
-import game.Player;
-import game.Team;
+import Game.Player;
+import Game.Team;
 import gui.panel.IPanel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -141,10 +141,14 @@ public class GameController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                /*
                 if (!panelHolder.equals(view.stageController.game.getPlayerByName(StageController.playerName).getPanels())) {
                     fillGridWithPanels();
                     log.log(Level.INFO, "Gridview filled with panels");
                 }
+                Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo:De oude methode vervangenen met de nieuwe methodes
+                */
             }
         });
     }
@@ -173,6 +177,7 @@ public class GameController implements Initializable {
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
         log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
+     /*
         final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
         panelHolder = panels;
         int column = 0;
@@ -192,6 +197,10 @@ public class GameController implements Initializable {
             row++;
         }
         log.log(Level.INFO, "Loaded {0} panels in the gridPane", panels.size());
+
+           Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: de Arralist panels moet opgehaald worden vanuit de nieuwe game klassen, de rest van de code is wel nog valide
+        */
     }
 
     /**
@@ -202,8 +211,12 @@ public class GameController implements Initializable {
 
         Platform.runLater(new Runnable() {
             public void run() {
+                /*
                 if (view.stageController.game.getPlayerByName(StageController.playerName) != null)
                     instructionLabel.setText(view.stageController.game.getPlayerByName(StageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(StageController.playerName).getInstruction().getValue());
+             Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo:De oude methode vervangenen met de nieuwe methodes
+          */
             }
         });
     }
@@ -215,8 +228,12 @@ public class GameController implements Initializable {
     private void showTeamInstructionCount() {
         Platform.runLater(new Runnable() {
             public void run() {
+                /*
                 if (view.stageController.game.getPlayerByName(StageController.playerName) != null)
                     labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getCorrectInstruction() + "");
+               Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo:De oude methode vervangenen met de nieuwe methodes
+            */
             }
         });
     }
@@ -230,6 +247,7 @@ public class GameController implements Initializable {
             public void run() {
                 int levensTeam1;
                 int levensTeam2;
+                /*
                 if (view.stageController.game.getPlayerByName(StageController.playerName) != null) {
                     levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
                     levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
@@ -283,7 +301,9 @@ public class GameController implements Initializable {
                             Team2Leven3.setVisible(true);
                             break;
                     }
-                }
+                       Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: De if statement goed maken en de levens van de teams setten. De rest van de code is valide
+                }*/
             }
         });
     }
@@ -293,8 +313,12 @@ public class GameController implements Initializable {
      */
     private void setTeamNames()
     {
+        /*
         lblTeamName1.setText(view.stageController.game.allTeams().get(1).getName());
         lblTeamName2.setText(view.stageController.game.allTeams().get(0).getName());
+           Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: De labels voorzien van de juiste teamname
+        */
     }
 
     /**
@@ -306,7 +330,9 @@ public class GameController implements Initializable {
         runnable = new Runnable() {
             @Override
             public void run() {
+                /*
                 timer = new Timer(1000, new ActionListener() {
+
                     int counter = view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getTime();
 
                     @Override
@@ -333,7 +359,9 @@ public class GameController implements Initializable {
                             counter = team.getTime();
                         }
                     }
-                });
+                     Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: De methodes getPlayerByName vervangen en de methode instructionIsToLate vervangen
+                });*/
                 timer.start();
             }
         };
@@ -361,6 +389,7 @@ public class GameController implements Initializable {
 	 * @param sliderValue value of the panel
 	 */
     public void checkInstruction(Panel panel, int sliderValue) {
+        /*
         view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;
         for (Team teams : view.stageController.game.allTeams()) {
@@ -369,5 +398,8 @@ public class GameController implements Initializable {
                 view.pass(scoreView);
             }
         }
+         Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: De methodes getPlayerByName vervangen. Ook de methodes allTeams.
+        */
     }
 }

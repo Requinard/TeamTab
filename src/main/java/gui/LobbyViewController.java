@@ -1,7 +1,7 @@
 package gui;
 
-import game.Player;
-import game.Team;
+import Game.Player;
+import Game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -78,6 +78,7 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
         Platform.runLater(new Runnable() {
             public void run() {
+                /*
                 final Player currentPlayer = view.stageController.game.getPlayerByName(StageController.playerName);
                 for (Team a : view.stageController.game.allTeams()) {
                     if (a.isPlayerInTeam(currentPlayer)) {
@@ -94,6 +95,8 @@ public class LobbyViewController implements Initializable {
                         }
                     }
                 }
+                Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: De volgende methodes moeten vervangen worden : getPlayerByName() , allTeams(), isPlayerInTesam(), getName()*/
             }
         });
     }
@@ -113,6 +116,7 @@ public class LobbyViewController implements Initializable {
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
+                /*
                 view.stageController.game.startGame();
                 Platform.runLater(new Runnable() {
                     public void run() {
@@ -120,6 +124,9 @@ public class LobbyViewController implements Initializable {
                         view.pass(gameView);
                     }
                 });
+                    Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: game.StartGame moet vervangen worden
+                */
             }
         };
         runnable.run();
