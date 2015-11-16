@@ -96,17 +96,17 @@ public class TeamTest {
     public void testChangeTime() throws Exception {
         int currentTime = team.getTime();
         // Check if the amount of time at the start is 9
-        Assert.assertEquals("The starting amount of time is not 9", currentTime, 9);
+        Assert.assertEquals("The starting amount of time is not 9", 9, currentTime);
 
         // Decrease the time of a team
         team.changeTime(-3);
         currentTime = team.getTime();
-        Assert.assertEquals("The current amount of time has not been decreased", currentTime, 6);
+        Assert.assertEquals("The current amount of time has not been decreased", 6, currentTime);
 
         // Increase the time of a team
         team.changeTime(2);
         currentTime = team.getTime();
-        Assert.assertEquals("The current amount of time has not been increased", currentTime, 8);
+        Assert.assertEquals("The current amount of time has not been increased", 8, currentTime);
 
     }
 
