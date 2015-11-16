@@ -1,7 +1,5 @@
 package PanelControlTest;
 
-import Game.Panel;
-import gui.GameController;
 import gui.panel.PanelVerticalControl;
 
 import static org.junit.Assert.assertEquals;

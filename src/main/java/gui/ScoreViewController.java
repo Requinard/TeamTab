@@ -84,7 +84,7 @@ public class ScoreViewController implements Initializable {
     }
 
     /**
-     * When button back to lobby is pressed, Game hardReset and change to LobbyView
+     * When button back to lobby is pressed, game hardReset and change to LobbyView
      * @param mouseEvent
      */
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {

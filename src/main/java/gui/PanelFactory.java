@@ -1,6 +1,6 @@
 package gui;
 
-import Game.Panel;
+import game.Panel;
 import gui.panel.IPanel;
 import gui.panel.PanelButtonControl;
 import gui.panel.PanelHorizontalControl;

@@ -1,6 +1,6 @@
 package PanelControlTest;
 
-import Game.Panel;
+import game.Panel;
 import gui.GameController;
 import gui.panel.PanelButtonControl;
 import org.junit.Test;

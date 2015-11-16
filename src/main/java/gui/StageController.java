@@ -1,6 +1,6 @@
 package gui;
 
-import Game.Game;
+import game.Game;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;

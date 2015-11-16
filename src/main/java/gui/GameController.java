@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -77,6 +80,7 @@ public class GameController implements Initializable {
     private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
     private AudioPlayer explosionPlayer;
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
 
     /**
      * Called to initialize a controller after its root element has been
@@ -89,7 +93,7 @@ public class GameController implements Initializable {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     public void initialize(URL location, ResourceBundle resources) {
-
+        log.log(Level.INFO,"Start initializing the gamecontroller");
         panelFactory = new PanelFactory();
 
         buttonStartTimer.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -108,13 +112,16 @@ public class GameController implements Initializable {
         timerRefresh.schedule(timerTask, 0, 30);
 
         URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep.mp3");
-
+        log.log(Level.INFO, "Audiofile url set to: {0}", url.toString());
         try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
             explosionPlayer = new AudioPlayer(fileInputStream.toString());
+            log.log(Level.INFO,"explosion audioplayer created");
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
+            log.log(Level.SEVERE, e1.toString(), e1);
         } catch (IOException e1) {
             e1.printStackTrace();
+            log.log(Level.SEVERE, e1.toString(), e1);
         }
     }
 
@@ -122,10 +129,12 @@ public class GameController implements Initializable {
      * Call methods to refresh the View
      */
     private void refreshView() {
+        log.log(Level.FINER,"refreshView started");
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
         panelChecker();
+        log.log(Level.FINER, "refreshView ended");
     }
 
     /**
@@ -137,6 +146,7 @@ public class GameController implements Initializable {
             public void run() {
                 if (!panelHolder.equals(view.stageController.game.getPlayerByName(view.stageController.playerName).getPanels())) {
                     fillGridWithPanels();
+                    log.log(Level.INFO,"Gridview filled with panels");
                 }
             }
         });
@@ -148,10 +158,12 @@ public class GameController implements Initializable {
      * @param gameView
      */
     public void setView(GameView gameView) {
+        log.log(Level.FINER,"setView started");
         view = gameView;
         fillGridWithPanels();
         showTeamLevens();
         setTeamNames();
+        log.log(Level.FINER, "setView ended");
     }
 
     /**
@@ -159,13 +171,16 @@ public class GameController implements Initializable {
      * refreshes every Round
      */
     public void fillGridWithPanels() {
+        log.log(Level.INFO,"fillGridWithPanels started");
         gridPane.getChildren().clear();
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
+        log.log(Level.INFO,"gridPane children cleared, minsize set and alignment set");
         final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
         panelHolder = panels;
         int column = 0;
         int row = 0;
+        log.log(Level.INFO,"Add panels to the gridpane");
         for (Panel panel : panels) {
             IPanel iPanel = PanelFactory.getPanel(panel, this);
             System.out.println(panel.getText());
@@ -176,9 +191,10 @@ public class GameController implements Initializable {
                 column++;
                 gridPane.add((Node) iPanel, row, column);
             }
+            log.log(Level.FINER, "Added panel with text {0}", panel.getText());
             row++;
         }
-
+        log.log(Level.INFO, "Loaded {0} panels in the gridPane",panels.size());
     }
 
     /**
@@ -186,6 +202,7 @@ public class GameController implements Initializable {
      * refreshes ever 30 ms
      */
     private void showPlayerInstruction() {
+
         Platform.runLater(new Runnable() {
             public void run() {
                 if (view.stageController.game.getPlayerByName(StageController.playerName) != null)

@@ -1,6 +1,6 @@
 package gui.panel;
 
-import Game.Panel;
+import game.Panel;
 import gui.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
