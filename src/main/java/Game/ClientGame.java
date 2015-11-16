@@ -10,29 +10,32 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientGame implements IGame {
 
+    private List<Player> players;
+    private List<Team> teams;
+    private List<Panel> panels;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
-    private Collection<Player> players;
-	private Collection<Team> teams;
-	private Collection<Panel> panels;
 
     public ClientGame() {
-        // TODO - implement ClientGame.ClientGame
-        throw new UnsupportedOperationException();
+        players = new ArrayList<Player>();
+        teams = new ArrayList<Team>();
+        panels = new ArrayList<Panel>();
     }
 
-	public Collection<Player> getPlayers() {
-		return this.players;
+    public List<Player> getPlayers() {
+        return this.players;
 	}
 
-	public Collection<Team> getTeams() {
-		return this.teams;
+    public List<Team> getTeams() {
+        return this.teams;
 	}
 
-	public Collection<Panel> getPanels() {
-		return this.panels;
+    public List<Panel> getPanels() {
+        return this.panels;
 	}
 
 	/**
@@ -41,7 +44,10 @@ public class ClientGame implements IGame {
      * @param name the name of the team
      */
     @Override
-	public Team createTeam(String name) {
+    public Team createTeam(String name) throws UnsupportedOperationException {
+        if (name == null || name.isEmpty()) {
+            throw new UnsupportedOperationException("name of the is empty");
+        }
         Team team = new Team(name);
         // Add the team to the teams in the game
         teams.add(team);
