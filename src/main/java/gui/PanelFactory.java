@@ -1,10 +1,10 @@
 package gui;
 
-import game.Panel;
 import gui.panel.IPanel;
 import gui.panel.PanelButtonControl;
 import gui.panel.PanelHorizontalControl;
 import gui.panel.PanelVerticalControl;
+import Game.*;
 
 /**
  * Created by david on 17-10-15.
@@ -12,11 +12,10 @@ import gui.panel.PanelVerticalControl;
 public class PanelFactory {
 
     /**
-     *
-     * @param panel
-     * @param gameController
-     * @return
-     */
+	 * 
+	 * @param panel
+	 * @param gameController
+	 */
     public static IPanel getPanel(Panel panel, GameController gameController) {
         IPanel ret;
 

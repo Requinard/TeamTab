@@ -1,6 +1,5 @@
 package gui.panel;
 
-import game.Panel;
 import gui.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 
 import java.io.IOException;
+import Game.*;
 
 /**
  * Created by Kevin on 12-10-2015.

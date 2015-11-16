@@ -1,4 +1,4 @@
-package game;
+package Game;
 
 import java.util.Collection;
 import java.util.List;
@@ -45,22 +45,24 @@ public class Team {
     }
 
     /**
-     * @param player
-     */
+	 * 
+	 * @param player
+	 */
     public Player addPlayer(Player player) {
         // TODO - implement Team.addPlayer
         throw new UnsupportedOperationException();
     }
 
     /**
-     * @param player
-     */
+	 * 
+	 * @param player
+	 */
     public Player removePlayer(Player player) {
         // TODO - implement Team.removePlayer
         throw new UnsupportedOperationException();
     }
 
-    public List<Panel> generatePanels() {
+    public java.util.List<Panel> generatePanels() {
         // TODO - implement Team.generatePanels
         throw new UnsupportedOperationException();
     }
@@ -85,5 +87,10 @@ public class Team {
         // TODO - implement Team.hasChanged
         throw new UnsupportedOperationException();
     }
+
+	public boolean isAlive() {
+		// TODO - implement Team.isAlive
+		throw new UnsupportedOperationException();
+	}
 
 }

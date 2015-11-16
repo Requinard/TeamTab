@@ -1,6 +1,5 @@
 package gui;
 
-import game.Panel;
 import game.Player;
 import game.Team;
 import gui.panel.IPanel;
@@ -31,6 +30,7 @@ import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Game.*;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -354,12 +354,12 @@ public class GameController implements Initializable {
     }
 
     /**
-     * Check if instructions was correctly completed
-     * sets panelPused to true
-     * If lives of a team is 0 change to ScoreView
-     * @param panel         pressed/used panel
-     * @param sliderValue   value of the panel
-     */
+	 * Check if instructions was correctly completed
+	 * sets panelPused to true
+	 * If lives of a team is 0 change to ScoreView
+	 * @param panel pressed/used panel
+	 * @param sliderValue value of the panel
+	 */
     public void checkInstruction(Panel panel, int sliderValue) {
         view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;

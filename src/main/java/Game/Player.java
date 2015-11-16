@@ -1,4 +1,4 @@
-package game;
+package Game;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +32,7 @@ public class Player {
         return this.ip;
     }
 
-    public Collection<game.Panel> getPanels() {
+    public Collection<Panel> getPanels() {
         return this.panels;
     }
 
@@ -48,14 +48,15 @@ public class Player {
         return this.activeInstruction;
     }
 
-    public List<Panel> generatePanels() {
+    public java.util.List<Panel> generatePanels() {
         // TODO - implement Player.generatePanels
         throw new UnsupportedOperationException();
     }
 
     /**
-     * @param panel
-     */
+	 * 
+	 * @param panel
+	 */
     public boolean hasPanel(Panel panel) {
         // TODO - implement Player.hasPanel
         throw new UnsupportedOperationException();

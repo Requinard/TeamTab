@@ -1,11 +1,11 @@
-package game;
+package Game;
 
 public class Panel {
 
     private PanelTypeEnum panelType;
     private int minimumValue = 0;
     private int maximumValue = 1;
-    private boolean text;
+    private string text;
 
     public PanelTypeEnum getPanelType() {
         return this.panelType;
@@ -19,7 +19,7 @@ public class Panel {
         return this.maximumValue;
     }
 
-    public boolean isText() {
+    public string getText() {
         return this.text;
     }
 
