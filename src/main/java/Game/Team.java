@@ -92,21 +92,14 @@ public class Team {
      * @param amount
      */
     public void changeLives(int amount) {
-        if (lives > 0) {
-            lives += amount;
-        } else {
-
-        }
-
-        throw new UnsupportedOperationException();
+        lives += amount;
     }
 
     /**
      * @param amount
      */
     public int changeTime(int amount) {
-        // TODO - implement Team.changeTime
-        throw new UnsupportedOperationException();
+        return time += amount;
     }
 
     public boolean hasChanged() {
