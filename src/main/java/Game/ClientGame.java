@@ -46,7 +46,7 @@ public class ClientGame implements IGame {
     public Team createTeam(String name) throws UnsupportedOperationException {
         //check if name is empty
         if (name == null || name.isEmpty()) {
-            throw new UnsupportedOperationException("name of the is empty");
+            throw new UnsupportedOperationException("name of the team is empty");
         }
         Team team = new Team(name);
         // Add the team to the teams in the game
@@ -65,11 +65,11 @@ public class ClientGame implements IGame {
 	public Player createPlayer(String username, String ip) {
         //check if username is empty
         if (username == null || username.isEmpty()) {
-            throw new UnsupportedOperationException("name of the is empty");
+            throw new UnsupportedOperationException("name of the user is empty");
         }
         //check if ip is empty
         if (ip == null || ip.isEmpty()) {
-            throw new UnsupportedOperationException("name of the is empty");
+            throw new UnsupportedOperationException("ip address the is empty");
         }
         Player player = new Player(username, ip);
         // Add the player to the players in the game
