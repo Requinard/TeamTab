@@ -1,12 +1,13 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class Team {
 
-    private Player players;
-    private Collection<Panel> panels;
+    private List<Player> players;
+    private List<Panel> panels;
     private String name;
     private List<Instruction> activeInstructions;
     private int lives = 3;
@@ -16,11 +17,12 @@ public class Team {
      * @param name
      */
     public Team(int name) {
-        // TODO - implement Team.Team
+        players = new ArrayList<Player>();
+        panels = new ArrayList<Panel>();
         throw new UnsupportedOperationException();
     }
 
-    public Player getPlayers() {
+    public List<Player> getPlayers() {
         return this.players;
     }
 
@@ -45,33 +47,56 @@ public class Team {
     }
 
     /**
-	 * 
-	 * @param player
-	 */
+     * Checks if the list is empty or if the player is already in the team
+     * if there is a team and the person is not in it, the player is added to the team
+     * @param player
+     */
     public Player addPlayer(Player player) {
-        // TODO - implement Team.addPlayer
-        throw new UnsupportedOperationException();
+        if (players.size() == 0 || !players.contains(player)) {
+            players.add(player);
+            player.setTeam(this);
+            return player;
+        }
+        player = null;
+        return player;
     }
 
     /**
-	 * 
-	 * @param player
-	 */
+     * Removes player if it is in the team
+     * @param player
+     */
     public Player removePlayer(Player player) {
-        // TODO - implement Team.removePlayer
-        throw new UnsupportedOperationException();
+        if (players.contains(player)) {
+            players.remove(player);
+        }
+        return player;
     }
 
-    public java.util.List<Panel> generatePanels() {
-        // TODO - implement Team.generatePanels
-        throw new UnsupportedOperationException();
+    /**
+     * This method generates panels for the team based on the amount of players
+     * It can't contain the same panels.
+     *
+     * @param gamePanels this is a list of panels gotten from the Game
+     * @return panels       this is a list of panels that is given to a team
+     */
+    public List<Panel> generatePanels(List<Panel> gamePanels) {
+        for (Player player : players) {
+            List<Panel> panels = player.generatePanels(gamePanels);
+            gamePanels.removeAll(panels);
+        }
+        return panels;
     }
 
     /**
      * @param amount
      */
     public void changeLives(int amount) {
-        // TODO - implement Team.changeLives
+        if (lives > 0) {
+            lives += amount;
+        } else {
+
+        }
+
         throw new UnsupportedOperationException();
     }
 

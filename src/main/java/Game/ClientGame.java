@@ -1,29 +1,30 @@
 package Game;
 
-import java.util.*;
-import gui.panel.*;
+import gui.panel.AbstractPanelControl;
+
+import java.util.List;
 
 public class ClientGame implements IGame {
 
-	private Collection<Player> players;
-	private Collection<Team> teams;
-	private Collection<Panel> panels;
-
-	public Collection<Player> getPlayers() {
-		return this.players;
-	}
-
-	public Collection<Team> getTeams() {
-		return this.teams;
-	}
-
-	public Collection<Panel> getPanels() {
-		return this.panels;
-	}
+	private List<Player> players;
+	private List<Team> teams;
+	private List<Panel> panels;
 
 	public ClientGame() {
 		// TODO - implement ClientGame.ClientGame
 		throw new UnsupportedOperationException();
+	}
+
+	public List<Player> getPlayers() {
+		return this.players;
+	}
+
+	public List<Team> getTeams() {
+		return this.teams;
+	}
+
+	public List<Panel> getPanels() {
+		return this.panels;
 	}
 
 	/**
@@ -32,7 +33,7 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public Team createTeam(String name) {
-
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -42,7 +43,7 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public Player createPlayer(String username, String ip) {
-
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -56,7 +57,8 @@ public class ClientGame implements IGame {
 	}
 
 	private java.util.List<Panel> generatePanels() {
-
+		teams.stream().forEach(team -> team.generatePanels(panels));
+		return this.panels;
 	}
 
 	private void loadPanelsFromFile() {
@@ -76,7 +78,7 @@ public class ClientGame implements IGame {
 
 	@Override
 	public ClientGame startRound() {
-
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public boolean processPanel(Player player, Panel panel) {
-
+		throw new UnsupportedOperationException();
 	}
 
 	@Override()
@@ -101,7 +103,7 @@ public class ClientGame implements IGame {
 	 */
 	@Override
 	public boolean registerInvalidInstruction(Instruction instruction) {
-
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -110,7 +112,7 @@ public class ClientGame implements IGame {
 	 * @param panel Panel control that was clicked
 	 */
 	private boolean validateInstruction(Player player, AbstractPanelControl panel) {
-
+		throw new UnsupportedOperationException();
 	}
 
 }
