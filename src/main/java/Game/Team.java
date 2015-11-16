@@ -49,6 +49,7 @@ public class Team {
     /**
      * Checks if the list is empty or if the player is already in the team
      * if there is a team and the person is not in it, the player is added to the team
+     * Author Qun, Kaj
      * @param player
      */
     public Player addPlayer(Player player) {
@@ -63,6 +64,7 @@ public class Team {
 
     /**
      * Removes player if it is in the team
+     * Author Qun, Kaj
      * @param player
      */
     public Player removePlayer(Player player) {
@@ -75,7 +77,7 @@ public class Team {
     /**
      * This method generates panels for the team based on the amount of players
      * It can't contain the same panels.
-     *
+     * Author Qun, Kaj
      * @param gamePanels this is a list of panels gotten from the Game
      * @return panels       this is a list of panels that is given to a team
      */
@@ -89,6 +91,7 @@ public class Team {
 
     /**
      * Change the lives by the amount of amount
+     * Author Kaj
      * @param amount    amount may be positive or negative
      */
     public void changeLives(int amount) {
@@ -97,6 +100,7 @@ public class Team {
 
     /**
      * Change the time by the amount of amount
+     * Author Kaj
      * @param amount    amount may be positive or negative
      */
     public int changeTime(int amount) {
