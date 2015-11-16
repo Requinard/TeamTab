@@ -66,6 +66,9 @@ public class TeamTest {
 
     }
 
+    /**
+     * Author Frank Hartman
+     */
     @Test
     public void testChangeLives() throws Exception {
         int currentLives = team.getLives();
@@ -83,9 +86,28 @@ public class TeamTest {
         Assert.assertEquals("The current amount of lives has not been increased", currentLives, 4);
     }
 
+
+    /**
+     * Author Frank Hartman
+     *
+     * @throws Exception
+     */
     @Test
     public void testChangeTime() throws Exception {
-//
+        int currentTime = team.getTime();
+        // Check if the amount of time at the start is 9
+        Assert.assertEquals("The starting amount of time is not 9", currentTime, 9);
+
+        // Decrease the time of a team
+        team.changeTime(-3);
+        currentTime = team.getTime();
+        Assert.assertEquals("The current amount of time has not been decreased", currentTime, 6);
+
+        // Increase the time of a team
+        team.changeTime(2);
+        currentTime = team.getTime();
+        Assert.assertEquals("The current amount of time has not been increased", currentTime, 8);
+
     }
 
     @Test
