@@ -1,31 +1,16 @@
-package Game;
+package game;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.persistence.EnumType;
-
-import static org.junit.Assert.assertEquals;
-
 /**
- * Created by david on 12-10-15.
- * @author Frank Hartman
+ * Created by David on 11/16/2015.
  */
 public class PanelTest {
-    Panel panel1;
-    Panel panel2;
-    Instruction instruction1;
-    Instruction instruction2;
 
     @Before
     public void setUp() throws Exception {
-        panel1 = new Panel(1, 1, "a", 0, 1);
-        panel2 = new Panel(2, 1, "b", 0, 3);
-        instruction1 = new Instruction(panel1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
-        instruction2 = new Instruction(panel2, "Click off", 1);
-        instruction1.setPanel(panel1);
-        instruction2.setPanel(panel2);
 
     }
 
@@ -35,53 +20,22 @@ public class PanelTest {
     }
 
     @Test
-    public void testGetId() throws Exception {
-        assertEquals(1, panel1.getId());
-        assertEquals(2, panel2.getId());
-    }
-
-    @Test
-    public void testGetType() throws Exception {
-        assertEquals(PanelTypeEnum.HorizontalSlider, panel1.getType());
-        assertEquals(PanelTypeEnum.HorizontalSlider, panel2.getType());
-    }
-
-    @Test
-    public void testGetText() throws Exception {
-        assertEquals("a", panel1.getText());
-        assertEquals("b", panel2.getText());
-    }
-
-    @Test
-    public void testGetMin() throws Exception {
-        assertEquals(0, panel1.getMin());
-        assertEquals(0, panel2.getMin());
-    }
-
-    @Test
-    public void testGetMax() throws Exception {
-        assertEquals(1, panel1.getMax());
-        assertEquals(3, panel2.getMax());
-    }
-
-    @Test
-    public void testGetCurrent() throws Exception {
-        panel1.setCurrent(1);
-        assertEquals(1, panel1.getCurrent());
-    }
-
-    @Test
-    public void testSetCurrent() throws Exception {
+    public void testGetPanelType() throws Exception {
 
     }
 
     @Test
-    public void testGetInstruction() throws Exception {
-        //assertEquals(instruction1, panel1.getInstruction());
+    public void testGetMinimumValue() throws Exception {
+
     }
 
-    //@Test
-    //public void testPanel() {
-    //    Panel panel = new Panel(1, )
-    //}
+    @Test
+    public void testGetMaximumValue() throws Exception {
+
+    }
+
+    @Test
+    public void testIsText() throws Exception {
+
+    }
 }

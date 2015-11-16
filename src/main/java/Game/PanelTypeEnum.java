@@ -1,10 +1,10 @@
-package Game;
+package game;
 
-/**
- * Created by david on 19-10-15.
- */
 public enum PanelTypeEnum {
-    Button,
-    HorizontalSlider,
-    VerticalSlider,
+    ;
+
+    public int Button;
+    public int HorizontalSlider;
+    public int VerticalSlider;
+
 }

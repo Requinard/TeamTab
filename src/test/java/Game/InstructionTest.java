@@ -1,42 +1,21 @@
-package Game;
+package game;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
 /**
- * Created by david on 12-10-15.
+ * Created by David on 11/16/2015.
  */
 public class InstructionTest {
 
-    Instruction in1;
-    Instruction in2;
-    Panel pan1;
-    Panel pan2;
     @Before
     public void setUp() throws Exception {
-        in1 = new Instruction(pan1, "Click on", 0); //newvalue moet nog in de game logic afgehandeld worden
-        in2 = new Instruction(pan2, "Click off", 1);
-        pan1 = new Panel(1, 1, "a", 0, 1);
-        pan2 = new Panel(2, 1, "b", 0, 1);
-        in1.setPanel(pan1);
+
     }
 
     @After
     public void tearDown() throws Exception {
-
-    }
-
-    @Test
-    public void testToString() throws Exception {
-        assertEquals("Click on : a", in1.toString());
-        assertEquals("Click off", in2.toString());
-    }
-
-    @Test
-    public void testSetPanel() throws Exception {
 
     }
 
@@ -46,12 +25,37 @@ public class InstructionTest {
     }
 
     @Test
-    public void testGetCommando() throws Exception {
-        assertEquals("Click on", in1.getCommando());
+    public void testGetIntendedValue() throws Exception {
+
     }
 
     @Test
-    public void testGetNewValue() throws Exception {
+    public void testGetWasExecutedCorrectly() throws Exception {
+
+    }
+
+    @Test
+    public void testSetWasExecutedCorrectly() throws Exception {
+
+    }
+
+    @Test
+    public void testGetPanel1() throws Exception {
+
+    }
+
+    @Test
+    public void testGetIntendedValue1() throws Exception {
+
+    }
+
+    @Test
+    public void testGetWasExecutedCorrectly1() throws Exception {
+
+    }
+
+    @Test
+    public void testSetWasExecutedCorrectly1() throws Exception {
 
     }
 }

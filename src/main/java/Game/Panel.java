@@ -1,93 +1,26 @@
-package Game;
+package game;
 
-/**
- * Created by Qun on 12-10-2015.
- */
 public class Panel {
-    private int id;
-    private PanelTypeEnum type;
-    private String text;
-    private int min;
-    private int max;
-    private int current;
 
-    /**
-     * @param id          Panel number id
-     * @param type        Type of panel (Button, horizontal or vertical)
-     * @param text        Text that gives a description
-     * @param min         Minimum value a panel can have
-     * @param max         Maximum value a panel can have
-     * @author David
-     */
-    public Panel(int id, int type, String text, int min, int max) {
-        this.id = id;
-        this.type = PanelTypeEnum.values()[type];
-        this.text = text;
-        this.min = min;
-        this.max = max;
+    private PanelTypeEnum panelType;
+    private int minimumValue = 0;
+    private int maximumValue = 1;
+    private boolean text;
+
+    public PanelTypeEnum getPanelType() {
+        return this.panelType;
     }
 
-    /**
-     * Returns the ID of the panel
-     * @return id of the panel
-     */
-    public int getId() {
-        return id;
+    public int getMinimumValue() {
+        return this.minimumValue;
     }
 
-
-    /**
-    * @Returns the type of the panel
-     */
-    public PanelTypeEnum getType(){
-        return type;
+    public int getMaximumValue() {
+        return this.maximumValue;
     }
 
-    /**
-     * Returns the text on the panel
-     * @return text on the panel
-     */
-    public String getText(){
-        return text;
+    public boolean isText() {
+        return this.text;
     }
 
-
-    /**
-     * the min value of the control for example if you have a slidercontrol between 0-5 it returns 0
-     * @return minimum value of the control
-     */
-    public int getMin(){
-        return min;
-    }
-
-
-    /**
-     * the max value of the control for example if you have a slidercontrol between 0-5 it returns 5
-     * @return maximum value of the control
-     */
-    public int getMax(){
-        return max;
-    }
-
-    /**
-     * Returns current value of the control
-     * @return panelcontrol value
-     */
-    public int getCurrent(){return current;}
-
-    /**
-     * Sets the current value of the control
-     * @param value
-     */
-    public boolean setCurrent(int value) {
-        if(value <= max && value >= min)
-        {
-            current = value;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 }

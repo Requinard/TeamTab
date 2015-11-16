@@ -1,7 +1,7 @@
 package gui;
 
-import Game.Player;
-import Game.Team;
+import game.Player;
+import game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
