@@ -20,7 +20,6 @@ public class Team {
         this.name = name;
         players = new ArrayList<Player>();
         panels = new ArrayList<Panel>();
-        throw new UnsupportedOperationException();
     }
 
     public List<Player> getPlayers() {
