@@ -15,7 +15,7 @@ public class Team {
     /**
      * @param name
      */
-    public Team(int name) {
+    public Team(String name) {
         // TODO - implement Team.Team
         throw new UnsupportedOperationException();
     }

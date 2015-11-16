@@ -3,9 +3,19 @@ package Game;
 public class Panel {
 
     private PanelTypeEnum panelType;
+    private int id;
     private int minimumValue = 0;
     private int maximumValue = 1;
-    private string text;
+    private String text;
+
+
+    public Panel(int id, int minimumValue, int maximumValue, String text, PanelTypeEnum panelType) {
+        this.id = id;
+        this.minimumValue = minimumValue;
+        this.maximumValue = maximumValue;
+        this.text = text;
+        this.panelType = panelType;
+    }
 
     public PanelTypeEnum getPanelType() {
         return this.panelType;
@@ -19,7 +29,7 @@ public class Panel {
         return this.maximumValue;
     }
 
-    public string getText() {
+    public String getText() {
         return this.text;
     }
 
