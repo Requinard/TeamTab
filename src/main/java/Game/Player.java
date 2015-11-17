@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -12,45 +13,82 @@ public class Player {
     private Instruction activeInstruction;
 
     /**
-     * @param username
-     * @param ip
+     * Constructor of the player
+     * author Frank Hartman
+     * @param username the username of the player
+     * @param ip the ip address of the player
      */
     public Player(String username, String ip) {
-        // TODO - implement Player.Player
-        throw new UnsupportedOperationException();
+        this.username = username;
+        this.ip = ip;
+        panels = new ArrayList<Panel>();
+
     }
 
+    /**
+     * Get the username of the player
+     * author Frank Hartman
+     *
+     * @return the username
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Set the username of the player
+     * author Frank Hartman
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Get the IP of the player
+     * author Frank Hartman
+     * @return the ip of the player
+     */
     public String getIp() {
         return this.ip;
     }
 
+    /**
+     * Get the panels of the player
+     * author Frank Hartman
+     * @return the panels of the player
+     */
     public List<Panel> getPanels() {
         return this.panels;
     }
 
+    /**
+     * Get the team of the player
+     * author Frank Hartman
+     * @return
+     */
     public Team getTeam() {
         return this.team;
     }
 
+    /**
+     * Set the team of the player
+     * @param team the team of the player
+     */
     public void setTeam(Team team) {
         this.team = team;
     }
 
+    /**
+     * Give the active instruction of the player
+     * @return The instruction of the player
+     */
     public Instruction getActiveInstruction() {
         return this.activeInstruction;
     }
 
     /**
      * This method generates random panels for a player. A player gets 12 random panels
-     *
+     * author Qunfong
      * @param teamPanels Panels which are given for a team
      * @return Panels that have been added to a player his panels
      */
@@ -65,8 +103,8 @@ public class Player {
     }
 
     /**
-	 * 
-	 * @param panel
+     * Check if the player currently has a panel
+     * @param panel
 	 */
     public boolean hasPanel(Panel panel) {
         // TODO - implement Player.hasPanel
