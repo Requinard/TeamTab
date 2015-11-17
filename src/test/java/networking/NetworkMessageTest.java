@@ -1,13 +1,18 @@
 package networking;
 
+import com.pholser.junit.quickcheck.ForAll;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.contrib.theories.Theories;
+import org.junit.contrib.theories.Theory;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by David on 11/17/2015.
  */
+@RunWith(Theories.class)
 public class NetworkMessageTest {
     private String text = "Test text";
     private String newtext = "new text";
@@ -25,10 +30,10 @@ public class NetworkMessageTest {
         assertEquals(networkMessage.getText(), text);
     }
 
-    @Test
-    public void testSetText() throws Exception {
-        networkMessage.setText(newtext);
-        assertEquals(networkMessage.getText(), newtext);
+    @Theory
+    public void testSetText(@ForAll String newText) throws Exception {
+        networkMessage.setText(newText);
+        assertEquals(networkMessage.getText(), newText);
     }
 
     @Test
