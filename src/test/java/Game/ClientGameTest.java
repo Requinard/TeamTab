@@ -1,20 +1,31 @@
 package Game;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+
 /**
  * Created by Kaj Suiker on 16-11-2015.
  */
+
 public class ClientGameTest {
 
     ClientGame game;
+    List<Panel> panelsList;
+    List<Team> teamsList;
+
 
     @Before
     public void setUp() throws Exception {
         game = new ClientGame();
+        panelsList = new ArrayList<>();
+        teamsList = new ArrayList<>();
     }
 
     @After
@@ -47,11 +58,11 @@ public class ClientGameTest {
         //Tests if the correct name is given to the team
         Team team;
         team = game.createTeam("test1");
-        Assert.assertEquals("Incorrect name for team", "test1", team.getName());
+        assertEquals("Incorrect name for team", "test1", team.getName());
 
         //Tests if team is added to list of teams
         team = game.createTeam("test2");
-        Assert.assertEquals("Team is not added to list teams", game.getTeams().get(1), team);
+        assertEquals("Team is not added to list teams", game.getTeams().get(1), team);
     }
 
     /**
@@ -80,7 +91,14 @@ public class ClientGameTest {
 
     @Test
     public void testStartRound() throws Exception {
-
+        // check if the panels al loaded from the file and added to the panels list in ClienGame
+        panelsList = game.getPanels();
+        assertNotNull(panelsList);
+        // check if the method give all the team their panels
+        teamsList = game.getTeams();
+        for (Team team : teamsList) {
+            assertNotNull(team.getPanels());
+        }
     }
 
     @Test
