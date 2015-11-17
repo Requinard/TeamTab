@@ -123,6 +123,8 @@ public class ClientGame implements IGame {
                 Panel panel = new Panel(id, min, max, text, PanelTypeEnum.values()[type]);
 
                 panels.add(panel);
+                log.log(Level.INFO, "There are " + panels.size() + " panels added from the CSV file");
+
             }
 
         } catch (IOException e) {
