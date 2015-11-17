@@ -1,11 +1,15 @@
 package game;
 
+import Game.Panel;
 import Game.Player;
 import Game.Team;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by David on 11/16/2015.
@@ -59,7 +63,6 @@ public class PlayerTest {
     @Test
     public void testGetActiveInstruction() throws Exception {
 
-
     }
 
     @Test
@@ -74,6 +77,14 @@ public class PlayerTest {
 
     @Test
     public void testGenerateInstruction() throws Exception {
+
+    }
+
+    @Test
+    public void testSetPanels() throws Exception {
+        List<Panel> panels = new ArrayList<Panel>();
+        player.setPanels(panels);
+        Assert.assertEquals(panels, player.getPanels());
 
     }
 }

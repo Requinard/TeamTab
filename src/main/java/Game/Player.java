@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -21,7 +20,6 @@ public class Player {
     public Player(String username, String ip) {
         this.username = username;
         this.ip = ip;
-        panels = new ArrayList<Panel>();
 
     }
 
@@ -59,6 +57,14 @@ public class Player {
      */
     public List<Panel> getPanels() {
         return this.panels;
+    }
+
+    /**
+     * Set the panels of the player
+     * author Frank Hartman
+     */
+    public void setPanels(List<Panel> panels) {
+        this.panels = panels;
     }
 
     /**
