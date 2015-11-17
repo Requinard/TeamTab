@@ -7,6 +7,17 @@ public class Panel {
     private int minimumValue = 0;
     private int maximumValue = 1;
     private String text;
+
+    /**
+     * The constructor of a panel
+     * Author Frank Hartman
+     *
+     * @param id           The id of the panel
+     * @param minimumValue
+     * @param maximumValue
+     * @param text
+     * @param panelType
+     */
     public Panel(int id, int minimumValue, int maximumValue, String text, PanelTypeEnum panelType) {
         this.id = id;
         this.minimumValue = minimumValue;
@@ -15,22 +26,44 @@ public class Panel {
         this.panelType = panelType;
     }
 
+    /**
+     * Get the id of a panel
+     * Author Frank Hartman
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Get the panel type enum of a panel
+     * Author Frank Hartman
+     * @return the panelTypeEnum
+     */
     public PanelTypeEnum getPanelType() {
         return this.panelType;
     }
 
+    /**
+     * Get the minimum value of the panel
+     * Author Frank Hartman
+     * @return the minimum value of the panel
+     */
     public int getMinimumValue() {
         return this.minimumValue;
     }
 
+    /**
+     * Get the maximum value of the panel
+     * @return the maximum value of the panel
+     */
     public int getMaximumValue() {
         return this.maximumValue;
     }
 
+    /**
+     * Get the text from the panel
+     * @return The text
+     */
     public String getText() {
         return this.text;
     }

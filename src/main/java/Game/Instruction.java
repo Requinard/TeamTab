@@ -9,6 +9,7 @@ public class Instruction {
     public Instruction(Panel panel, int intendedValue) {
         this.panel = panel;
         this.intendedValue = intendedValue;
+
     }
 
     public Panel getPanel() {
