@@ -13,10 +13,10 @@ public class Panel {
      * Author Frank Hartman
      *
      * @param id           The id of the panel
-     * @param minimumValue
-     * @param maximumValue
-     * @param text
-     * @param panelType
+     * @param minimumValue The minimum value
+     * @param maximumValue The maximum value
+     * @param text         The text on the panel
+     * @param panelType    The panel type of the panel
      */
     public Panel(int id, int minimumValue, int maximumValue, String text, PanelTypeEnum panelType) {
         this.id = id;
