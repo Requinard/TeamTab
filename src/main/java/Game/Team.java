@@ -136,6 +136,6 @@ public class Team {
             lives = STARTLIVES;
 
         time = STARTTIME;
-        log.log(Level.INFO, "Team: " + name + " has been reset");
+        log.log(Level.INFO, "Team: " + name + " has been reset, hard reset = " + hard);
     }
 }
