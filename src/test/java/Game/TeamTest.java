@@ -134,6 +134,18 @@ public class TeamTest {
         Assert.assertEquals("The amount of time has not been reset to 9", 9, team.getTime());
         Assert.assertEquals("The amount of lives has not been reset to 3", 3, team.getLives());
 
+    }
 
+    @Test
+    public void testCorrectInstructionPreformed() throws Exception {
+        Panel panel = new Panel(1, 1, 5, "test", PanelTypeEnum.HorizontalSlider);
+        Instruction instruction = new Instruction(panel, 1);
+        //removal of instruction can't be test because it still can't be added
+        //Assert.assertTrue("Instruction has never in the active instructions list", team.getActiveInstructions().contains(instruction));
+        //team.correctInstructionPreformed(instruction);
+        //Assert.assertTrue("Instruction has not been removed from active instructions list", !team.getActiveInstructions().contains(instruction));
+
+        //tests if the score is added
+        //Assert.assertEquals("score has not been added", 1, team.getScore());
     }
 }

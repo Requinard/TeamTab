@@ -19,12 +19,14 @@ public class Team {
     private List<Instruction> activeInstructions;
     private int lives = STARTLIVES;
     private int time = STARTTIME;
+    private int score;
 
     /**
      * @param name
      */
     public Team(String name) {
         this.name = name;
+        this.score = 0;
         players = new ArrayList<Player>();
         panels = new ArrayList<Panel>();
     }
@@ -51,6 +53,10 @@ public class Team {
 
     public int getTime() {
         return this.time;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     /**
@@ -138,4 +144,17 @@ public class Team {
         time = STARTTIME;
         log.log(Level.INFO, "Team: " + name + " has been reset, hard reset = " + hard);
     }
+
+    /**
+     * Changes the activeInstructions
+     * Author Kaj
+     *
+     * @param instruction the instruction that was correctly preformed
+     */
+    public void correctInstructionPreformed(Instruction instruction) {
+        score++;
+        //activeInstructions.remove(instruction);
+    }
+
+
 }

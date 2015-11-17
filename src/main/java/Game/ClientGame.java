@@ -173,13 +173,23 @@ public class ClientGame implements IGame {
     }
 
 	/**
-	 * 
-	 * @param player
-	 * @param panel
-	 */
+     * With validateInstruction will this method check if the pressed panel was a active instruction for someone of his team
+     * If instruction was correct: gives a new instruction to the player that had the instruction
+     * Author Kaj
+     * @param player    player that pressed a panel
+     * @param panel     The pressed panel
+     */
 	@Override
 	public boolean processPanel(Player player, Panel panel) {
-        throw new UnsupportedOperationException();
+        boolean correctInstruction;
+        //check if the pressed panel was from a active instruction
+        correctInstruction = validateInstruction(player, panel);
+        if (correctInstruction) {
+            //possible list of correct instruction saved?
+            //new instruction for the player that had the instruction
+            //hoe is deze te vinden
+        }
+        return correctInstruction;
     }
 
 
@@ -217,10 +227,13 @@ public class ClientGame implements IGame {
 
 	/**
 	 * Takes an instruction and asserts whether the click was a valid instruction in your team.
+     * If correct, than the instruction will be removed from the list of active instruction from the team.
+     * If correct, score of team will go up by 1
      * Author Kaj
      * @param player Player that clicked on a panel
 	 * @param panel Panel control that was clicked
-	 */
+     * @return true is the panel had a active instruction
+     */
     private boolean validateInstruction(Player player, Panel panel) {
         boolean correctInstruction = false;
         Team team = player.getTeam();
@@ -229,6 +242,9 @@ public class ClientGame implements IGame {
             //check if the panel matches an active instruction
             if (instruction.getPanel() == panel) {
                 correctInstruction = true;
+                //the correct instruction will be removed from the active instructions list
+                //the score will get plus 1
+                team.correctInstructionPreformed(instruction);
                 log.log(Level.INFO, "Panel was correct");
                 return correctInstruction;
             }

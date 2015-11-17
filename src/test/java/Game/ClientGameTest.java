@@ -120,7 +120,7 @@ public class ClientGameTest {
 
     @Test
     public void testStartRound() throws Exception {
-        // check if the panels al loaded from the file and added to the panels list in ClienGame
+        // check if the panels al loaded from the file and added to the panels list in ClientGame
         panelsList = game.getPanels();
         assertNotNull(panelsList);
         // check if the method give all the team their panels
@@ -132,7 +132,11 @@ public class ClientGameTest {
 
     @Test
     public void testProcessPanel() throws Exception {
-
+        Player player = game.createPlayer("kaj", "0.0.0.0");
+        game.startRound();
+        //still no active instructions
+        //boolean correctInstruction = game.processPanel(player, player.getPanels().get(0));
+        //Assert.assertEquals("no active instruction", false, correctInstruction);
     }
 
     @Test
