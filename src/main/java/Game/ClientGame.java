@@ -1,6 +1,5 @@
 package Game;
 
-import gui.panel.AbstractPanelControl;
 import javassist.bytecode.stackmap.TypeData;
 import org.apache.commons.io.IOUtils;
 
@@ -218,12 +217,24 @@ public class ClientGame implements IGame {
 
 	/**
 	 * Takes an instruction and asserts whether the click was a valid instruction in your team.
-	 * @param player Player that clicked on a panel
+     * Author Kaj
+     * @param player Player that clicked on a panel
 	 * @param panel Panel control that was clicked
 	 */
-	private boolean validateInstruction(Player player, AbstractPanelControl panel) {
-
-        throw new UnsupportedOperationException();
+    private boolean validateInstruction(Player player, Panel panel) {
+        boolean correctInstruction = false;
+        Team team = player.getTeam();
+        //Get all active instructions from the players team
+        for (Instruction instruction : team.getActiveInstructions()) {
+            //check if the panel matches an active instruction
+            if (instruction.getPanel() == panel) {
+                correctInstruction = true;
+                log.log(Level.INFO, "Panel was correct");
+                return correctInstruction;
+            }
+        }
+        log.log(Level.INFO, "Panel was incorrect");
+        return correctInstruction;
     }
 
 }
