@@ -162,11 +162,27 @@ public class ClientGame implements IGame {
         throw new UnsupportedOperationException();
     }
 
-	@Override()
+
+    /**
+     * Check if the game has ended
+     * The game has been ended when all the teams, except for one have a zero amount of lives
+     * Author Frank Hartman
+     *
+     * @return true if the game has ended
+     */
+    @Override()
 	public boolean hasGameEnded() {
-		// TODO - implement ClientGame.hasGameEnded
-		throw new UnsupportedOperationException();
-	}
+        log.log(Level.INFO, "Check if the game has ended");
+        int count = 0;
+
+        for (Team team : teams) {
+            if (team.getLives() <= 0)
+                count++;
+        }
+
+        return count >= teams.size() - 1;
+
+    }
 
 	/**
 	 * Takes an instruction and marks it as invalid, thus generating a new instruction for a player

@@ -1,5 +1,6 @@
 package Game;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -108,6 +109,15 @@ public class ClientGameTest {
 
     @Test
     public void testHasGameEnded() throws Exception {
+        Team team1 = game.createTeam("Team1");
+        Team team2 = game.createTeam("Team2");
+        Team team3 = game.createTeam("Team3");
+
+        Assert.assertFalse(game.hasGameEnded());
+        team1.changeLives(-3);
+        Assert.assertFalse(game.hasGameEnded());
+        team2.changeLives(-5);
+        Assert.assertTrue(game.hasGameEnded());
 
     }
 
