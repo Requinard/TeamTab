@@ -114,4 +114,26 @@ public class TeamTest {
     public void testHasChanged() throws Exception {
 
     }
+
+    @Test
+    public void testIsAlive() throws Exception {
+
+    }
+
+    @Test
+    public void testReset() throws Exception {
+        // Soft resetting
+        team.changeTime(-4);
+        team.reset(false);
+        Assert.assertEquals("The amount of time has not been reset to 9", 9, team.getTime());
+
+        // Hard reset
+        team.changeTime(-2);
+        team.changeLives(-1);
+        team.reset(true);
+        Assert.assertEquals("The amount of time has not been reset to 9", 9, team.getTime());
+        Assert.assertEquals("The amount of lives has not been reset to 3", 3, team.getLives());
+
+
+    }
 }
