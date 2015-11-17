@@ -75,10 +75,38 @@ public class ClientGameTest {
         game.createTeam("");
     }
 
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
     @Test
     public void testCreatePlayer() throws Exception {
+        String username = "Kaj";
+        String ipAddress = "0.0.0.0";
 
+        Player player = game.createPlayer(username, ipAddress);
+        //checks if right parameters are given to Player
+        Assert.assertEquals("Wrong name given", username, player.getUsername());
+        Assert.assertEquals("Wrong ip address", ipAddress, player.getIp());
     }
+
+    /**
+     * Author Kaj
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testCreatePlayerNoName() {
+        game.createPlayer("", "0.0.0.0");
+    }
+
+    /**
+     * Author Kaj
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testCreatePlayerNoIpAddress() {
+        game.createPlayer("Kaj", null);
+    }
+
 
     @Test
     public void testAssignTeam() throws Exception {
