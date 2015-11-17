@@ -1,11 +1,16 @@
 package Game;
 
+import javassist.bytecode.stackmap.TypeData;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Player {
 
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     private String username;
     private String ip = "127.0.0.1";
     private List<Panel> panels;
@@ -109,19 +114,41 @@ public class Player {
         return panels;
     }
 
-    /**
-     * Check if the player currently has a panel
+    /** Author Kamil Wasylkiewicz
+     * Check if the player currently has the exact same panel as parameter
      * @param panel
 	 */
     public boolean hasPanel(Panel panel) {
-        // TODO - implement Player.hasPanel
-        throw new UnsupportedOperationException();
+        return panels.contains(panel);
     }
 
+    /**
+     * This method wil generate an instruction for this player based on a random panel and random value of the panel
+     * author Kamil Wasylkiewicz
+     *
+     * @return
+     */
     public Instruction generateInstruction() {
+        Random random = new Random();
+        try {
+            // Get a random panel
+            Panel instructionPanel = panels.get(random.nextInt(panels.size()));
+            // create a random between the min en max value of a panel, however random has no constructor with min and max value
+            // the solution is as follows
+            // (panel.getmaxvalue -  panel.getminvalue) + panel.getminvalue
+            // suppose example panel has minimal 2 and maximal 8 value
+            // random.nextint(8-2)+2
+            // this will always produce a random number from minimal 2 and maximal 8
+            int intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
+            // new instruction is made
+            activeInstruction = new Instruction(instructionPanel, intendedValue);
+            log.log(Level.INFO, "new instruction has been generated");
 
-        // TODO - implement Player.generateInstruction
-        throw new UnsupportedOperationException();
+            return activeInstruction;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return null;
     }
 
 }
