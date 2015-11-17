@@ -7,18 +7,17 @@ import org.apache.commons.io.IOUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientGame implements IGame {
 
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     private List<Player> players;
     private List<Team> teams;
     private List<Panel> panels;
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
 
     public ClientGame() {
         players = new ArrayList<Player>();
@@ -45,12 +44,14 @@ public class ClientGame implements IGame {
      */
     @Override
     public Team createTeam(String name) throws UnsupportedOperationException {
+        //check if name is empty
         if (name == null || name.isEmpty()) {
-            throw new UnsupportedOperationException("name of the is empty");
+            throw new UnsupportedOperationException("name of the team is empty");
         }
         Team team = new Team(name);
         // Add the team to the teams in the game
         teams.add(team);
+        log.log(Level.INFO, "team: " + name + " added to list teams");
         return team;
     }
 
@@ -62,9 +63,18 @@ public class ClientGame implements IGame {
      */
     @Override
 	public Player createPlayer(String username, String ip) {
+        //check if username is empty
+        if (username == null || username.isEmpty()) {
+            throw new UnsupportedOperationException("name of the user is empty");
+        }
+        //check if ip is empty
+        if (ip == null || ip.isEmpty()) {
+            throw new UnsupportedOperationException("ip address the is empty");
+        }
         Player player = new Player(username, ip);
         // Add the player to the players in the game
         players.add(player);
+        log.log(Level.INFO, "player: " + username + " added to list players");
         return player;
     }
 
