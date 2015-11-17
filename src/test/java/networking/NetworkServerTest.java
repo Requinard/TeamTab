@@ -2,6 +2,8 @@ package networking;
 
 import junit.framework.TestCase;
 
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.Queue;
 
 /**
@@ -9,10 +11,11 @@ import java.util.Queue;
  */
 public class NetworkServerTest extends TestCase {
 
-    private final NetworkServer networkServer = new NetworkServer(80085);
+    private NetworkServer networkServer;
 
     public void setUp() throws Exception {
         super.setUp();
+        networkServer = new NetworkServer(8085);
     }
 
     public void tearDown() throws Exception {
@@ -73,5 +76,40 @@ public class NetworkServerTest extends TestCase {
         peek = networkServer.peek();
 
         assertFalse("Peek should no longer return any elements", peek);
+    }
+
+    public void testGetMessageQueue() throws Exception {
+
+    }
+
+    public void testStartListeners() throws Exception {
+        final String sendMessage = "Dit is een testbericht";
+        // Send a message
+        networkServer.startListeners();
+
+        Socket socket = new Socket("localhost", networkServer.getPort());
+        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+        dataOutputStream.writeBytes(sendMessage);
+
+        dataOutputStream.close();
+        socket.close();
+
+        // Test to see if we received a message
+
+        // sleep for a bit so that the connection is handled
+        Thread.sleep(200);
+
+        NetworkMessage message = networkServer.consumeMessage();
+
+        assertNotNull("There was no message queued!", message);
+
+        assertEquals(message.getText(), sendMessage);
+
+
+    }
+
+    public void testStopListeners() throws Exception {
+        networkServer.stopListeners();
     }
 }
