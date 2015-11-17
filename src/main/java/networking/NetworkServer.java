@@ -1,9 +1,6 @@
 package networking;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Queue;
@@ -86,6 +83,8 @@ public class NetworkServer {
      * author: David
      */
     public void startListeners() throws IOException {
+        stopListeners();
+
         logger.log(Level.INFO, "Starting listeners");
 
         // Initialize all variables
@@ -107,6 +106,11 @@ public class NetworkServer {
      * author: David
      */
     public void stopListeners() {
+        try {
+            if (socket != null) socket.close();
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Socket could not be closed", e);
+        }
         executorService.shutdown();
         messageQueue.clear();
     }
@@ -120,8 +124,24 @@ public class NetworkServer {
      * @param receiver IP that a message will be sent to
      */
     public boolean send(String message, String receiver) {
-        // TODO - implement NetworkServer.send
-        throw new UnsupportedOperationException();
+        try {
+            Socket socket = new Socket(receiver, this.getPort());
+
+            // Get input streams
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+
+            outputStream.writeBytes(message);
+
+            outputStream.close();
+            socket.close();
+
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
     }
 
     /**

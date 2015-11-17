@@ -11,7 +11,7 @@ import java.util.Queue;
  */
 public class NetworkServerTest extends TestCase {
 
-    private NetworkServer networkServer;
+    private static NetworkServer networkServer;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -35,7 +35,17 @@ public class NetworkServerTest extends TestCase {
     }
 
     public void testSend() throws Exception {
+        NetworkServer networkServer = new NetworkServer(8088);
+        networkServer.startListeners();
+        String message = "testmessage";
 
+        networkServer.send(message, "localhost");
+
+        Thread.sleep(200);
+
+        NetworkMessage message1 = networkServer.consumeMessage();
+
+        assertNotNull(message1);
     }
 
     public void testConsumeMessage() throws Exception {
@@ -84,7 +94,10 @@ public class NetworkServerTest extends TestCase {
 
     public void testStartListeners() throws Exception {
         final String sendMessage = "Dit is een testbericht";
+
+        NetworkServer networkServer = new NetworkServer(8087);
         // Send a message
+        networkServer.stopListeners();
         networkServer.startListeners();
 
         Socket socket = new Socket("localhost", networkServer.getPort());
@@ -105,11 +118,11 @@ public class NetworkServerTest extends TestCase {
         assertNotNull("There was no message queued!", message);
 
         assertEquals(message.getText(), sendMessage);
-
-
     }
 
     public void testStopListeners() throws Exception {
-        networkServer.stopListeners();
+        NetworkServer networkServer1 = new NetworkServer(8086);
+        networkServer1.startListeners();
+        networkServer1.stopListeners();
     }
 }
