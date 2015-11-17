@@ -125,6 +125,7 @@ public class ClientGame implements IGame {
                 panels.add(panel);
                 log.log(Level.INFO, "There are " + panels.size() + " panels added from the CSV file");
 
+
             }
 
         } catch (IOException e) {
