@@ -133,8 +133,8 @@ public class ClientGameTest {
     @Test
     public void testProcessPanel() throws Exception {
         Player player = game.createPlayer("kaj", "0.0.0.0");
-        game.startRound();
-        //still no active instructions
+        //game.startRound();
+
         //boolean correctInstruction = game.processPanel(player, player.getPanels().get(0));
         //Assert.assertEquals("no active instruction", false, correctInstruction);
     }

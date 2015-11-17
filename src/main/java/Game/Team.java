@@ -146,7 +146,7 @@ public class Team {
     }
 
     /**
-     * Changes the activeInstructions
+     * Changes the activeInstructions and score
      * Author Kaj
      *
      * @param instruction the instruction that was correctly preformed

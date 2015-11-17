@@ -173,25 +173,25 @@ public class ClientGame implements IGame {
     }
 
 	/**
-     * With validateInstruction will this method check if the pressed panel was a active instruction for someone of his team
-     * If instruction was correct: gives a new instruction to the player that had the instruction
+     * this method will first check if the given panel matches one of the active instructions for the team of the player
+     * this will be done with te validateInstruction method
+     * If the instruction was correct a new instruction must be given to the player that had the active instruction.
      * Author Kaj
      * @param player    player that pressed a panel
      * @param panel     The pressed panel
+     * @return true if the pressed panel was correct
      */
 	@Override
 	public boolean processPanel(Player player, Panel panel) {
         boolean correctInstruction;
-        //check if the pressed panel was from a active instruction
+        //check if the pressed panel was from an active instruction
         correctInstruction = validateInstruction(player, panel);
         if (correctInstruction) {
             //possible list of correct instruction saved?
-            //new instruction for the player that had the instruction
-            //hoe is deze te vinden
+            //new instruction for the player that had the active instruction
         }
         return correctInstruction;
     }
-
 
     /**
      * Check if the game has ended

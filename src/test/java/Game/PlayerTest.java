@@ -86,18 +86,18 @@ public class PlayerTest {
             Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
             panels.add(panel);
         }
-        //Check if only 12 panels are assigned to the player
+        //Checks if only 12 panels are assigned to the player
         Assert.assertEquals("Wrong amount of panels for player", panelsForPlayer, player.generatePanels(panels).size());
     }
 
     /**
-     * Check if there are enough panels to assign to a player
+     * Checks if there are enough panels to assign to a player
      * Author Kaj
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testGeneratePanelsNotEnoughPanels() {
         List<Panel> panels = new ArrayList<Panel>();
-        //Fills a list with to few panels
+        //Fills a list with not enough panels
         for (int i = 0; i < 10; i++) {
             Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
             panels.add(panel);
