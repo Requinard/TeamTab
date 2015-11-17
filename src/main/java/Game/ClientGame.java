@@ -147,9 +147,27 @@ public class ClientGame implements IGame {
 
 	}
 
-	@Override
-	public ClientGame startRound() {
-        throw new UnsupportedOperationException();
+
+    /**
+     * Start a new round by loading all the panels from the CSV file and give this panels to the team
+     * The team will the distribute the panels to the players
+     * Author Kamil Wasylkiewicz
+     *
+     * @return
+     */
+    @Override
+    public ClientGame startRound() {
+        // first load all the panels from the CSV file into the list of panels
+        loadPanelsFromFile();
+        // iterate over all teams
+        for (Team team : teams) {
+            // give a team first a hard reset
+            team.reset(true);
+            // let the team give their players new panels
+            team.generatePanels(panels);
+        }
+        log.log(Level.INFO, "Round is started");
+        return this;
     }
 
 	/**
@@ -168,11 +186,13 @@ public class ClientGame implements IGame {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * Takes an instruction and marks it as invalid, thus generating a new instruction for a player
-	 * @param instruction The instruction that needs to be marked as invalid
-	 */
-	@Override
+    /**
+     * Author Kamil Wasylkiewicz
+     * Takes an instruction and marks it as invalid, thus generating a new instruction for a player
+     *
+     * @param instruction The instruction that needs to be marked as invalid     *
+     */
+    @Override
 	public boolean registerInvalidInstruction(Instruction instruction) {
         throw new UnsupportedOperationException();
     }
@@ -183,6 +203,7 @@ public class ClientGame implements IGame {
 	 * @param panel Panel control that was clicked
 	 */
 	private boolean validateInstruction(Player player, AbstractPanelControl panel) {
+
         throw new UnsupportedOperationException();
     }
 
