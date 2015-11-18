@@ -1,3 +1,5 @@
+
+
 package gui;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -16,6 +18,7 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
     private String filePath;
     private AdvancedPlayer player;
     private BufferedInputStream bufferedInputStream;
+    private Thread playerThread;
 
     /**
      * @param filePath  Path to audio file
@@ -28,11 +31,10 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
     /**
      * play the audio file
      */
-    public void play()
+    public boolean play()
     {
         try
         {
-
             try {
                 File file = new File(filePath);
                 FileInputStream fis = new FileInputStream(file);
@@ -53,15 +55,27 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
 
             this.player.setPlayBackListener(this);
 
-            Thread playerThread = new Thread(this, "AudioPlayerThread");
+            playerThread = new Thread(this, "AudioPlayerThread");
 
             playerThread.start();
+            return true;
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
+        return false;
     }
+
+    public void stop() throws JavaLayerException {
+        player.stop();
+        player.close();
+        playerThread.interrupt();
+    }
+
+
+
+    // Runnable members
 
     /**
      * run audio for player
@@ -71,10 +85,13 @@ public class AudioPlayer extends PlaybackListener implements Runnable {
         try
         {
             this.player.play();
+
         }
         catch (javazoom.jl.decoder.JavaLayerException ex)
         {
             ex.printStackTrace();
         }
     }
+
+
 }

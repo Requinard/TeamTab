@@ -1,14 +1,11 @@
 package gui;
 
-import Game.Player;
-import Game.Team;
-import gui.panel.IPanel;
+import Game.Panel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -19,8 +16,6 @@ import javafx.scene.layout.GridPane;
 import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +25,6 @@ import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Game.*;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
@@ -77,7 +71,7 @@ public class GameController implements Initializable {
     private TimerTask timerTask;
     private ArrayList<Panel> panelHolder;
     private boolean panelPushed;
-    private AudioPlayer explosionPlayer;
+    private AudioPlayer audioPlayer;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -111,7 +105,7 @@ public class GameController implements Initializable {
         URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep.mp3");
         log.log(Level.INFO, "Audiofile url set to: {0}", url.toString());
         try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
-            explosionPlayer = new AudioPlayer(fileInputStream.toString());
+            audioPlayer = new AudioPlayer(fileInputStream.toString());
             log.log(Level.INFO, "explosion audioplayer created");
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
@@ -278,7 +272,7 @@ public class GameController implements Initializable {
                     }
                     switch (levensTeam1) {
                         case 1:
-                            explosionPlayer.play();
+                            audioPlayer.play();
                             Team2Leven1.setVisible(false);
                             Team2Leven2.setVisible(true);
                             Team2Leven3.setVisible(true);
@@ -392,6 +386,8 @@ public class GameController implements Initializable {
         /*
         view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
         panelPushed = true;
+        audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
+        audioPlayer.play();
         for (Team teams : view.stageController.game.allTeams()) {
             if (teams.getLives() <= 0) {
                 ScoreView scoreView = new ScoreView(view.stageController);

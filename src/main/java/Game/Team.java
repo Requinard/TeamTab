@@ -19,12 +19,14 @@ public class Team {
     private List<Instruction> activeInstructions;
     private int lives = STARTLIVES;
     private int time = STARTTIME;
+    private int score;
 
     /**
      * @param name
      */
     public Team(String name) {
         this.name = name;
+        this.score = 0;
         players = new ArrayList<Player>();
         panels = new ArrayList<Panel>();
     }
@@ -53,6 +55,10 @@ public class Team {
         return this.time;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     /**
      * Checks if the list is empty or if the player is already in the team
      * if there is a team and the person is not in it, the player is added to the team
@@ -77,6 +83,11 @@ public class Team {
     public Player removePlayer(Player player) {
         if (players.contains(player)) {
             players.remove(player);
+            log.log(Level.INFO, "Player is removed from the team");
+        }
+        else{
+            player = null;
+            log.log(Level.INFO, "Player is not removed from the team");
         }
         return player;
     }
@@ -120,8 +131,9 @@ public class Team {
     }
 
 	public boolean isAlive() {
-		// TODO - implement Team.isAlive
-		throw new UnsupportedOperationException();
+        // TODO - implement Team.isAlive
+        throw new UnsupportedOperationException();
+
 	}
 
     /**
@@ -136,6 +148,19 @@ public class Team {
             lives = STARTLIVES;
 
         time = STARTTIME;
-        log.log(Level.INFO, "Team: " + name + " has been reset");
+        log.log(Level.INFO, "Team: " + name + " has been reset, hard reset = " + hard);
     }
+
+    /**
+     * Changes the activeInstructions and score
+     * Author Kaj
+     *
+     * @param instruction the instruction that was correctly preformed
+     */
+    public void correctInstructionPreformed(Instruction instruction) {
+        score++;
+        //activeInstructions.remove(instruction);
+    }
+
+
 }

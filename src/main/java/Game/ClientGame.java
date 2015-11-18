@@ -1,6 +1,5 @@
 package Game;
 
-import gui.panel.AbstractPanelControl;
 import javassist.bytecode.stackmap.TypeData;
 import org.apache.commons.io.IOUtils;
 
@@ -123,6 +122,9 @@ public class ClientGame implements IGame {
                 Panel panel = new Panel(id, min, max, text, PanelTypeEnum.values()[type]);
 
                 panels.add(panel);
+                log.log(Level.INFO, "There are " + panels.size() + " panels added from the CSV file");
+
+
             }
 
         } catch (IOException e) {
@@ -147,43 +149,108 @@ public class ClientGame implements IGame {
 
 	}
 
-	@Override
-	public ClientGame startRound() {
-        throw new UnsupportedOperationException();
+
+    /**
+     * Start a new round by loading all the panels from the CSV file and give this panels to the team
+     * The team will the distribute the panels to the players
+     * Author Kamil Wasylkiewicz
+     *
+     * @return
+     */
+    @Override
+    public ClientGame startRound() {
+        // first load all the panels from the CSV file into the list of panels
+        loadPanelsFromFile();
+        // iterate over all teams
+        for (Team team : teams) {
+            // give a team first a hard reset
+            team.reset(true);
+            // let the team give their players new panels
+            team.generatePanels(panels);
+        }
+        log.log(Level.INFO, "Round is started");
+        return this;
     }
 
 	/**
-	 * 
-	 * @param player
-	 * @param panel
-	 */
+     * this method will first check if the given panel matches one of the active instructions for the team of the player
+     * this will be done with te validateInstruction method
+     * If the instruction was correct a new instruction must be given to the player that had the active instruction.
+     * Author Kaj
+     * @param player    player that pressed a panel
+     * @param panel     The pressed panel
+     * @return true if the pressed panel was correct
+     */
 	@Override
 	public boolean processPanel(Player player, Panel panel) {
-        throw new UnsupportedOperationException();
+        boolean correctInstruction;
+        //check if the pressed panel was from an active instruction
+        correctInstruction = validateInstruction(player, panel);
+        if (correctInstruction) {
+            //possible list of correct instruction saved?
+            //new instruction for the player that had the active instruction
+        }
+        return correctInstruction;
     }
 
-	@Override()
+    /**
+     * Check if the game has ended
+     * The game has been ended when all the teams, except for one have a zero amount of lives
+     * Author Frank Hartman
+     *
+     * @return true if the game has ended
+     */
+    @Override()
 	public boolean hasGameEnded() {
-		// TODO - implement ClientGame.hasGameEnded
-		throw new UnsupportedOperationException();
-	}
+        log.log(Level.INFO, "Check if the game has ended");
+        int count = 0;
 
-	/**
-	 * Takes an instruction and marks it as invalid, thus generating a new instruction for a player
-	 * @param instruction The instruction that needs to be marked as invalid
-	 */
-	@Override
+        for (Team team : teams) {
+            if (team.getLives() <= 0)
+                count++;
+        }
+
+        return count >= teams.size() - 1;
+
+    }
+
+    /**
+     * Author Kamil Wasylkiewicz
+     * Takes an instruction and marks it as invalid, thus generating a new instruction for a player
+     *
+     * @param instruction The instruction that needs to be marked as invalid     *
+     */
+    @Override
 	public boolean registerInvalidInstruction(Instruction instruction) {
         throw new UnsupportedOperationException();
     }
 
 	/**
 	 * Takes an instruction and asserts whether the click was a valid instruction in your team.
-	 * @param player Player that clicked on a panel
+     * If correct, than the instruction will be removed from the list of active instruction from the team.
+     * If correct, score of team will go up by 1
+     * Author Kaj
+     * @param player Player that clicked on a panel
 	 * @param panel Panel control that was clicked
-	 */
-	private boolean validateInstruction(Player player, AbstractPanelControl panel) {
-        throw new UnsupportedOperationException();
+     * @return true is the panel had a active instruction
+     */
+    private boolean validateInstruction(Player player, Panel panel) {
+        boolean correctInstruction = false;
+        Team team = player.getTeam();
+        //Get all active instructions from the players team
+        for (Instruction instruction : team.getActiveInstructions()) {
+            //check if the panel matches an active instruction
+            if (instruction.getPanel() == panel) {
+                correctInstruction = true;
+                //the correct instruction will be removed from the active instructions list
+                //the score will get plus 1
+                team.correctInstructionPreformed(instruction);
+                log.log(Level.INFO, "Panel was correct");
+                return correctInstruction;
+            }
+        }
+        log.log(Level.INFO, "Panel was incorrect");
+        return correctInstruction;
     }
 
 }

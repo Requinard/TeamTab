@@ -5,15 +5,26 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by David on 11/16/2015.
  */
 public class TeamTest {
     Team team;
 
+    Player player1;
+    Player player2;
+
+    List<Panel> listPanels;
     @Before
     public void setUp() throws Exception {
         team = new Team("Appelmuppets");
+        player1 = new Player("Frank", "0.0.0.0");
+        player2 = new Player("Kevin", "1.1.1.1");
+        listPanels = new ArrayList<>();
+
     }
 
     @After
@@ -21,20 +32,19 @@ public class TeamTest {
 
     }
 
-    @Test
+   @Test
     public void testGetPlayers() throws Exception {
 
     }
 
     @Test
     public void testGetPanels() throws Exception {
+   }
 
-    }
-
-    @Test
+   @Test
     public void testGetName() throws Exception {
 
-    }
+   }
 
     @Test
     public void testGetActiveInstructions() throws Exception {
@@ -43,27 +53,31 @@ public class TeamTest {
 
     @Test
     public void testGetLives() throws Exception {
+   }
 
-    }
+   @Test
+    public void testGetTime() throws Exception {
+   }
 
     @Test
-    public void testGetTime() throws Exception {
-
-    }
+    public void testGetScore() throws Exception {
+   }
 
     @Test
     public void testAddPlayer() throws Exception {
-
     }
 
     @Test
     public void testRemovePlayer() throws Exception {
-
+        // Remove an existing player from a team
+        team.addPlayer(player1);
+        Assert.assertEquals("Player has not been removed",player1,team.removePlayer(player1));
+        // Remove a non existing player from a team
+        Assert.assertEquals("Player is removed from team", null, team.removePlayer(player2));
     }
 
-    @Test
+  @Test
     public void testGeneratePanels() throws Exception {
-
     }
 
     /**
@@ -113,5 +127,38 @@ public class TeamTest {
     @Test
     public void testHasChanged() throws Exception {
 
+    }
+
+    @Test
+    public void testIsAlive() throws Exception {
+    }
+
+    @Test
+    public void testReset() throws Exception {
+        // Soft resetting
+        team.changeTime(-4);
+        team.reset(false);
+        Assert.assertEquals("The amount of time has not been reset to 9", 9, team.getTime());
+
+        // Hard reset
+        team.changeTime(-2);
+        team.changeLives(-1);
+        team.reset(true);
+        Assert.assertEquals("The amount of time has not been reset to 9", 9, team.getTime());
+        Assert.assertEquals("The amount of lives has not been reset to 3", 3, team.getLives());
+
+    }
+
+    @Test
+    public void testCorrectInstructionPreformed() throws Exception {
+        Panel panel = new Panel(1, 1, 5, "test", PanelTypeEnum.HorizontalSlider);
+        Instruction instruction = new Instruction(panel, 1);
+        //removal of instruction can't be test because it still can't be added
+        //Assert.assertTrue("Instruction has never in the active instructions list", team.getActiveInstructions().contains(instruction));
+        //team.correctInstructionPreformed(instruction);
+        //Assert.assertTrue("Instruction has not been removed from active instructions list", !team.getActiveInstructions().contains(instruction));
+
+        //tests if the score is added
+        //Assert.assertEquals("score has not been added", 1, team.getScore());
     }
 }
