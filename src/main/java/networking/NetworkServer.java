@@ -69,6 +69,14 @@ public class NetworkServer {
         }
     }
 
+    /**
+     * Handles the input from a request
+     * author David
+     *
+     * @param clientSocket Socket that has input waiting
+     * @return string in buffer
+     * @throws IOException Exception when socket stream cannot be read
+     */
     @NotNull
     private String recv(Socket clientSocket) throws IOException {
         InputStream inputStream = clientSocket.getInputStream();
