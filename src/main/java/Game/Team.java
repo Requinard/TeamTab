@@ -31,33 +31,69 @@ public class Team {
         panels = new ArrayList<Panel>();
     }
 
+    /**
+     * Author Qun
+     * returns the players in the team
+     * @return  List containing all players of the team
+     */
     public List<Player> getPlayers() {
         return this.players;
     }
 
+    /**
+     * Author Qun
+     * returns all the panels the team has
+     * @return  List of all panels a team has
+     */
     public Collection<Panel> getPanels() {
         return this.panels;
     }
 
+    /**
+     * Author Qun
+     * returns the name of the team
+     * @return  The name of the team
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Author Qun
+     * returns all active instructions the team has
+     * @return  All active instructions of a team
+     */
     public List<Instruction> getActiveInstructions() {
         return this.activeInstructions;
     }
 
+    /**
+     * Author Qun
+     * returns the lives the team currently has
+     * @return  The amount of lives the team has
+     */
     public int getLives() {
         return this.lives;
     }
 
+    /**
+     * Author Qun
+     * returns the time the team has per round
+     * @return  The time the team has
+     */
     public int getTime() {
         return this.time;
     }
 
+    /**
+     * Author Qun
+     * returns the current score of the team
+     * @return  The score of the team
+     */
     public int getScore() {
         return score;
     }
+
 
     /**
      * Checks if the list is empty or if the player is already in the team

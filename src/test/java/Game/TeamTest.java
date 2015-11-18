@@ -32,36 +32,93 @@ public class TeamTest {
 
     }
 
-   @Test
+    /**
+     * Author Qun
+     * Returns all players in a team
+     * @throws Exception
+     */
+    @Test
     public void testGetPlayers() throws Exception {
+        //No players in team
+        Assert.assertEquals("Players found", 0, team.getPlayers().size());
+        //1 player in team
+        team.addPlayer(player1);
+        Assert.assertEquals("Player1 not found", player1, team.getPlayers().get(0));
+        Assert.assertEquals("Player not found in team", 1, team.getPlayers().size());
+        //2 players in team
+        team.addPlayer(player2);
+        Assert.assertEquals("Player1 not found", player2, team.getPlayers().get(1));
+        Assert.assertEquals("Player not found in team", 2, team.getPlayers().size());
 
     }
 
+    /**
+     * Author Qun
+     * Returns Panels from a team
+     * @throws Exception
+     */
     @Test
     public void testGetPanels() throws Exception {
-   }
+        //No panels in team
+        Assert.assertEquals("There are panels in team", 0, team.getPanels().size());
+        //1 Panel in team hoe zorg ik er voor dat het team 1 panel heeft.
+        //team.generatePanels()
+        //Assert.assertEquals("Amount of panels in team is not 1", 1,);
 
-   @Test
+    }
+
+    /**
+     * Author Qun
+     * Returns the name of the team
+     * @throws Exception
+     */
+    @Test
     public void testGetName() throws Exception {
-
-   }
+        Assert.assertEquals("Wrong teamname", "Appelmuppets", team.getName());
+        Team teamNoName = new Team("");
+        Assert.assertEquals("Wrong teamname", "", teamNoName.getName());
+        Team teamNameContainingNumbers = new Team("1234");
+        Assert.assertEquals("Wrong teamname", "1234", teamNameContainingNumbers.getName());
+    }
 
     @Test
     public void testGetActiveInstructions() throws Exception {
 
     }
 
+    /**
+     * Author Qun
+     * Returns the lives of a team
+     * @throws Exception
+     */
     @Test
     public void testGetLives() throws Exception {
-   }
+        //Default lives a team has
+        Assert.assertEquals("Team does not have 3 lives", 3, team.getLives());
+    }
 
-   @Test
+    /**
+     * Author Qun
+     * Returns the time of a team
+     * @throws Exception
+     */
+    @Test
     public void testGetTime() throws Exception {
-   }
+        //Default time a team has
+        Assert.assertEquals("Time is not 9 seconds", 9, team.getTime());
+    }
 
+    /**
+     * Author Qun
+     * Return the score of the team
+     * @throws Exception
+     */
     @Test
     public void testGetScore() throws Exception {
-   }
+        //Default score a team has
+        Assert.assertEquals("Score is not 0", 0, team.getScore());
+    }
+
 
     /**
      * Checks if the list is empty or if the player is already in the team
