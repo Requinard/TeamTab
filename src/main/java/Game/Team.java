@@ -135,11 +135,19 @@ public class Team {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Author Qun
+     * When the team doesn't have anymore lives, the team is not alive.
+     * @return  True if the team is still alive, false if team has lost
+     */
 	public boolean isAlive() {
-        // TODO - implement Team.isAlive
-        throw new UnsupportedOperationException();
-
-	}
+        if(getLives() <= 0){
+            log.log(Level.INFO, "Team is alive");
+            return true;
+        }
+        log.log(Level.INFO, "Team is not alive");
+        return false;
+    }
 
     /**
      * Reset the data of the team

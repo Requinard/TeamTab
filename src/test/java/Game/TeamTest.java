@@ -163,8 +163,18 @@ public class TeamTest {
 
     }
 
+    /**
+     * When the team doesn't have anymore lives, the team is not alive.
+     * @throws Exception
+     */
     @Test
     public void testIsAlive() throws Exception {
+        //Team doesn't have any more lives
+        team.changeLives(-3);
+        Assert.assertTrue("Team is not alive", team.isAlive());
+        //Team still has lives
+        team.changeLives(2);
+        Assert.assertFalse("Team is still alive",team.isAlive());
     }
 
     @Test
