@@ -2,7 +2,7 @@
 -----------------------------------------
 
 [![Build Status](https://travis-ci.org/Requinard/TeamTab.svg?branch=master)](https://travis-ci.org/Requinard/TeamTab)
-
+[![Coverage Status](https://coveralls.io/repos/Requinard/TeamTab/badge.svg?branch=master&service=github)](https://coveralls.io/github/Requinard/TeamTab?branch=master)  
 --------------------------
 
 ## External Documentation
