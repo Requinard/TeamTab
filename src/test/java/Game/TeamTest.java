@@ -90,9 +90,29 @@ public class TeamTest {
         Assert.assertEquals("Player is removed from team", null, team.removePlayer(player2));
     }
 
+    /**
+     * Author Qun
+     * This method generates panels for the team based on the amount of players
+     * It can't contain the same panels.
+     * @throws Exception
+     */
   @Test
     public void testGeneratePanels() throws Exception {
-    }
+      team.addPlayer(player1);
+      // Team has exactly enough panels to distribute over the players
+      for (int i = 0; i < 12; i++) {
+          Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
+          listPanels.add(panel);
+      }
+      Assert.assertEquals("Panels are distributed over the teammembers", 0, team.generatePanels(listPanels).size());
+      // Team has too much panels to distribute over the players
+      for (int i = 0; i < 14; i++) {
+          Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
+          listPanels.add(panel);
+      }
+      Assert.assertEquals("Panels are distributed over the teammembers", 2, team.generatePanels(listPanels).size());
+
+  }
 
     /**
      * Author Frank Hartman

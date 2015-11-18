@@ -103,11 +103,13 @@ public class Team {
      * @return panels       this is a list of panels that is given to a team
      */
     public List<Panel> generatePanels(List<Panel> gamePanels) {
+        List<Panel> gamePanelsCopy = gamePanels;
+        List<Panel> panelsGivenToPlayer;
         for (Player player : players) {
-            List<Panel> panels = player.generatePanels(gamePanels);
-            gamePanels.removeAll(panels);
+            panelsGivenToPlayer = player.generatePanels(gamePanels);
+            gamePanelsCopy.removeAll(panelsGivenToPlayer);
         }
-        return panels;
+        return gamePanelsCopy;
     }
 
     /**

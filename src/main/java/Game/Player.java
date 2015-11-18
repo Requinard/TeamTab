@@ -114,7 +114,13 @@ public class Player {
 
         for (int i = 0; i < PANELSPERPLAYER; i++) {
             //Gets random panel from teamPanels and adds this to the players panel
-            panels.add(teamPanels.get(random.nextInt(teamPanels.size())));
+            Panel randomSelectedPanel = teamPanels.get(random.nextInt(teamPanels.size()));
+            if(!panels.contains(randomSelectedPanel)) {
+                panels.add(randomSelectedPanel);
+            }
+            else{
+                i--;
+            }
         }
         log.log(Level.INFO, "Panels have been assigned to player");
         return panels;
