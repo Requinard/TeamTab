@@ -69,11 +69,14 @@ public class Team {
         if (players.size() == 0 || !players.contains(player)) {
             players.add(player);
             player.setTeam(this);
+            log.log(Level.INFO, "Player has been added to the team");
             return player;
         }
+        log.log(Level.INFO, "Player has not been added to the team");
         player = null;
         return player;
     }
+
 
     /**
      * Removes player if it is in the team

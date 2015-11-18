@@ -63,8 +63,22 @@ public class TeamTest {
     public void testGetScore() throws Exception {
    }
 
+    /**
+     * Checks if the list is empty or if the player is already in the team
+     * if there is a team and the person is not in it, the player is added to the team
+     * @throws Exception
+     */
     @Test
     public void testAddPlayer() throws Exception {
+        // Add player to a team
+        team.addPlayer(player1);
+        // Add player to a team
+        Assert.assertEquals("Player is not added to team", 1, team.getPlayers().size());
+        // Add the same player again
+        Assert.assertEquals("Player is added to team", null, team.addPlayer(player1));
+        // Add another unique player to the team
+        team.addPlayer(player2);
+        Assert.assertEquals("Player is not added to team", 2, team.getPlayers().size());
     }
 
     @Test
