@@ -4,9 +4,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +27,7 @@ public class NetworkServer {
     public NetworkServer(int port) {
         this.port = port;
         executorService = Executors.newFixedThreadPool(4);
-        messageQueue = new LinkedBlockingQueue<>();
+        messageQueue = new ConcurrentLinkedQueue<>();
     }
 
     public Queue<NetworkMessage> getMessageQueue() {
@@ -69,9 +69,7 @@ public class NetworkServer {
                 NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
 
                 logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
-                synchronized (this) {
-                    messageQueue.add(networkMessage);
-                }
+                messageQueue.add(networkMessage);
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IO Exception on port", e);
@@ -89,7 +87,7 @@ public class NetworkServer {
 
         // Initialize all variables
         executorService = Executors.newFixedThreadPool(4);
-        messageQueue = new LinkedBlockingQueue<>();
+        messageQueue = new ConcurrentLinkedQueue<>();
         socket = new ServerSocket(port);
 
         // Create runnable
@@ -152,9 +150,7 @@ public class NetworkServer {
      */
     public NetworkMessage consumeMessage() {
         logger.log(Level.INFO, "Network server is consuming a message");
-        synchronized (this) {
-            return messageQueue.poll();
-        }
+        return messageQueue.poll();
     }
 
     /**
@@ -165,8 +161,6 @@ public class NetworkServer {
      */
     public boolean peek() {
         logger.log(Level.INFO, "Network server is peeking at the message queue");
-        synchronized (this) {
-            return messageQueue.peek() != null;
-        }
+        return messageQueue.peek() != null;
     }
 }
