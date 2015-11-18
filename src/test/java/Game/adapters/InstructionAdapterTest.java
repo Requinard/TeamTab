@@ -15,7 +15,7 @@ public class InstructionAdapterTest extends TestCase {
         Instruction instruction = new Instruction(p, 1);
         String result = InstructionAdapter.toString(instruction);
 
-        assertEquals("Instrction string did not match supplied instruction", "t:instruction;1;1;false;", result);
+        assertEquals("Instrction string did not match supplied instruction", JsonAdapter.toString(instruction, Instruction.class), result);
     }
 
     public void testToObject() throws Exception {
