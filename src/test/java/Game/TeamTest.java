@@ -32,39 +32,110 @@ public class TeamTest {
 
     }
 
-   @Test
+    /**
+     * Author Qun
+     * Returns all players in a team
+     * @throws Exception
+     */
+    @Test
     public void testGetPlayers() throws Exception {
+        //No players in team
+        Assert.assertEquals("Players found", 0, team.getPlayers().size());
+        //1 player in team
+        team.addPlayer(player1);
+        Assert.assertEquals("Player1 not found", player1, team.getPlayers().get(0));
+        Assert.assertEquals("Player not found in team", 1, team.getPlayers().size());
+        //2 players in team
+        team.addPlayer(player2);
+        Assert.assertEquals("Player1 not found", player2, team.getPlayers().get(1));
+        Assert.assertEquals("Player not found in team", 2, team.getPlayers().size());
 
     }
 
+    /**
+     * Author Qun
+     * Returns Panels from a team
+     * @throws Exception
+     */
     @Test
     public void testGetPanels() throws Exception {
-   }
+        //No panels in team
+        Assert.assertEquals("There are panels in team", 0, team.getPanels().size());
+        //1 Panel in team hoe zorg ik er voor dat het team 1 panel heeft.
+        //team.generatePanels()
+        //Assert.assertEquals("Amount of panels in team is not 1", 1,);
 
-   @Test
+    }
+
+    /**
+     * Author Qun
+     * Returns the name of the team
+     * @throws Exception
+     */
+    @Test
     public void testGetName() throws Exception {
-
-   }
+        Assert.assertEquals("Wrong teamname", "Appelmuppets", team.getName());
+        Team teamNoName = new Team("");
+        Assert.assertEquals("Wrong teamname", "", teamNoName.getName());
+        Team teamNameContainingNumbers = new Team("1234");
+        Assert.assertEquals("Wrong teamname", "1234", teamNameContainingNumbers.getName());
+    }
 
     @Test
     public void testGetActiveInstructions() throws Exception {
 
     }
 
+    /**
+     * Author Qun
+     * Returns the lives of a team
+     * @throws Exception
+     */
     @Test
     public void testGetLives() throws Exception {
-   }
+        //Default lives a team has
+        Assert.assertEquals("Team does not have 3 lives", 3, team.getLives());
+    }
 
-   @Test
+    /**
+     * Author Qun
+     * Returns the time of a team
+     * @throws Exception
+     */
+    @Test
     public void testGetTime() throws Exception {
-   }
+        //Default time a team has
+        Assert.assertEquals("Time is not 9 seconds", 9, team.getTime());
+    }
 
+    /**
+     * Author Qun
+     * Return the score of the team
+     * @throws Exception
+     */
     @Test
     public void testGetScore() throws Exception {
-   }
+        //Default score a team has
+        Assert.assertEquals("Score is not 0", 0, team.getScore());
+    }
 
+
+    /**
+     * Checks if the list is empty or if the player is already in the team
+     * if there is a team and the person is not in it, the player is added to the team
+     * @throws Exception
+     */
     @Test
     public void testAddPlayer() throws Exception {
+        // Add player to a team
+        team.addPlayer(player1);
+        // Add player to a team
+        Assert.assertEquals("Player is not added to team", 1, team.getPlayers().size());
+        // Add the same player again
+        Assert.assertEquals("Player is added to team", null, team.addPlayer(player1));
+        // Add another unique player to the team
+        team.addPlayer(player2);
+        Assert.assertEquals("Player is not added to team", 2, team.getPlayers().size());
     }
 
     @Test
@@ -76,9 +147,29 @@ public class TeamTest {
         Assert.assertEquals("Player is removed from team", null, team.removePlayer(player2));
     }
 
+    /**
+     * Author Qun
+     * This method generates panels for the team based on the amount of players
+     * It can't contain the same panels.
+     * @throws Exception
+     */
   @Test
     public void testGeneratePanels() throws Exception {
-    }
+      team.addPlayer(player1);
+      // Team has exactly enough panels to distribute over the players
+      for (int i = 0; i < 12; i++) {
+          Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
+          listPanels.add(panel);
+      }
+      Assert.assertEquals("Panels are distributed over the teammembers", 0, team.generatePanels(listPanels).size());
+      // Team has too much panels to distribute over the players
+      for (int i = 0; i < 14; i++) {
+          Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
+          listPanels.add(panel);
+      }
+      Assert.assertEquals("Panels are distributed over the teammembers", 2, team.generatePanels(listPanels).size());
+
+  }
 
     /**
      * Author Frank Hartman
@@ -129,8 +220,18 @@ public class TeamTest {
 
     }
 
+    /**
+     * When the team doesn't have anymore lives, the team is not alive.
+     * @throws Exception
+     */
     @Test
     public void testIsAlive() throws Exception {
+        //Team doesn't have any more lives
+        team.changeLives(-3);
+        Assert.assertTrue("Team is not alive", team.isAlive());
+        //Team still has lives
+        team.changeLives(2);
+        Assert.assertFalse("Team is still alive",team.isAlive());
     }
 
     @Test

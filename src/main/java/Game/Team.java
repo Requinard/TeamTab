@@ -31,33 +31,69 @@ public class Team {
         panels = new ArrayList<Panel>();
     }
 
+    /**
+     * Author Qun
+     * returns the players in the team
+     * @return  List containing all players of the team
+     */
     public List<Player> getPlayers() {
         return this.players;
     }
 
+    /**
+     * Author Qun
+     * returns all the panels the team has
+     * @return  List of all panels a team has
+     */
     public Collection<Panel> getPanels() {
         return this.panels;
     }
 
+    /**
+     * Author Qun
+     * returns the name of the team
+     * @return  The name of the team
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Author Qun
+     * returns all active instructions the team has
+     * @return  All active instructions of a team
+     */
     public List<Instruction> getActiveInstructions() {
         return this.activeInstructions;
     }
 
+    /**
+     * Author Qun
+     * returns the lives the team currently has
+     * @return  The amount of lives the team has
+     */
     public int getLives() {
         return this.lives;
     }
 
+    /**
+     * Author Qun
+     * returns the time the team has per round
+     * @return  The time the team has
+     */
     public int getTime() {
         return this.time;
     }
 
+    /**
+     * Author Qun
+     * returns the current score of the team
+     * @return  The score of the team
+     */
     public int getScore() {
         return score;
     }
+
 
     /**
      * Checks if the list is empty or if the player is already in the team
@@ -69,11 +105,14 @@ public class Team {
         if (players.size() == 0 || !players.contains(player)) {
             players.add(player);
             player.setTeam(this);
+            log.log(Level.INFO, "Player has been added to the team");
             return player;
         }
+        log.log(Level.INFO, "Player has not been added to the team");
         player = null;
         return player;
     }
+
 
     /**
      * Removes player if it is in the team
@@ -100,11 +139,13 @@ public class Team {
      * @return panels       this is a list of panels that is given to a team
      */
     public List<Panel> generatePanels(List<Panel> gamePanels) {
+        List<Panel> gamePanelsCopy = gamePanels;
+        List<Panel> panelsGivenToPlayer;
         for (Player player : players) {
-            List<Panel> panels = player.generatePanels(gamePanels);
-            gamePanels.removeAll(panels);
+            panelsGivenToPlayer = player.generatePanels(gamePanels);
+            gamePanelsCopy.removeAll(panelsGivenToPlayer);
         }
-        return panels;
+        return gamePanelsCopy;
     }
 
     /**
@@ -130,11 +171,19 @@ public class Team {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Author Qun
+     * When the team doesn't have anymore lives, the team is not alive.
+     * @return  True if the team is still alive, false if team has lost
+     */
 	public boolean isAlive() {
-        // TODO - implement Team.isAlive
-        throw new UnsupportedOperationException();
-
-	}
+        if(getLives() <= 0){
+            log.log(Level.INFO, "Team is alive");
+            return true;
+        }
+        log.log(Level.INFO, "Team is not alive");
+        return false;
+    }
 
     /**
      * Reset the data of the team
