@@ -161,6 +161,7 @@ public class NetworkServer {
     public boolean sendRequest(NetworkRequest request, String receiver) {
         return send(request.toString(), receiver);
     }
+
     /**
      * Returns a message item
      * author: David

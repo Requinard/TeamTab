@@ -22,6 +22,8 @@ public class ClientGame implements IGame {
         players = new ArrayList<Player>();
         teams = new ArrayList<Team>();
         panels = new ArrayList<Panel>();
+
+        loadPanelsFromFile();
     }
 
     public List<Player> getPlayers() {
