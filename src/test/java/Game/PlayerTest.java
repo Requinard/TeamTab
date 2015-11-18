@@ -124,19 +124,21 @@ public class PlayerTest {
     @Test
     public void testGenerateInstruction() throws Exception {
         // create new panel and initialize new panels list
-        panel1 = new Panel(1, 2, 8, "Slider1", PanelTypeEnum.HorizontalSlider);
         listPanels = new ArrayList<>();
-        // add panel to list
-        listPanels.add(panel1);
+        for (int i = 0; i < 20; i++) {
+            Panel panel = new Panel(i, 1, 5, "Slider1", PanelTypeEnum.HorizontalSlider);
+            // add panel to list
+            listPanels.add(panel);
+        }
+
         // add player to team
         team1.addPlayer(player);
         // generate panels on this player
         team1.generatePanels(listPanels);
         // test values of generated panel
         instruction1 = player.generateInstruction();
-        Assert.assertEquals(instruction1.getPanel().getId(), 1);
-        Assert.assertEquals(instruction1.getPanel().getMinimumValue(), 2);
-        Assert.assertEquals(instruction1.getPanel().getMaximumValue(), 8);
+
+        Assert.assertTrue("Not a panel from the list of panels", player.getPanels().contains(instruction1.getPanel()));
         // clear the list from panels
         listPanels.clear();
         // remove player from team

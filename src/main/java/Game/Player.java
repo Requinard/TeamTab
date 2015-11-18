@@ -109,7 +109,7 @@ public class Player {
         Random random = new Random();
         //throws a exception if there are to few panels to assign
         if (teamPanels.size() < PANELSPERPLAYER) {
-            throw new UnsupportedOperationException("To few panels to assign to player");
+            throw new UnsupportedOperationException("Not enough panels to assign to a player");
         }
 
         for (int i = 0; i < PANELSPERPLAYER; i++) {
