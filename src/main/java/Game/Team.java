@@ -83,6 +83,11 @@ public class Team {
     public Player removePlayer(Player player) {
         if (players.contains(player)) {
             players.remove(player);
+            log.log(Level.INFO, "Player is removed from the team");
+        }
+        else{
+            player = null;
+            log.log(Level.INFO, "Player is not removed from the team");
         }
         return player;
     }
@@ -126,8 +131,9 @@ public class Team {
     }
 
 	public boolean isAlive() {
-		// TODO - implement Team.isAlive
-		throw new UnsupportedOperationException();
+        // TODO - implement Team.isAlive
+        throw new UnsupportedOperationException();
+
 	}
 
     /**

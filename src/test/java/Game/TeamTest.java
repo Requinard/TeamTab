@@ -1,9 +1,13 @@
 package Game;
 
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by David on 11/16/2015.
@@ -11,9 +15,17 @@ import org.junit.Test;
 public class TeamTest {
     Team team;
 
+    Player player1;
+    Player player2;
+
+    List<Panel> listPanels;
     @Before
     public void setUp() throws Exception {
         team = new Team("Appelmuppets");
+        player1 = new Player("Frank", "0.0.0.0");
+        player2 = new Player("Kevin", "1.1.1.1");
+        listPanels = new ArrayList<>();
+
     }
 
     @After
@@ -21,20 +33,19 @@ public class TeamTest {
 
     }
 
-    @Test
+   @Test
     public void testGetPlayers() throws Exception {
 
     }
 
     @Test
     public void testGetPanels() throws Exception {
+   }
 
-    }
-
-    @Test
+   @Test
     public void testGetName() throws Exception {
 
-    }
+   }
 
     @Test
     public void testGetActiveInstructions() throws Exception {
@@ -43,27 +54,31 @@ public class TeamTest {
 
     @Test
     public void testGetLives() throws Exception {
+   }
 
-    }
+   @Test
+    public void testGetTime() throws Exception {
+   }
 
     @Test
-    public void testGetTime() throws Exception {
-
-    }
+    public void testGetScore() throws Exception {
+   }
 
     @Test
     public void testAddPlayer() throws Exception {
-
     }
 
     @Test
     public void testRemovePlayer() throws Exception {
-
+        // Remove an existing player from a team
+        team.addPlayer(player1);
+        Assert.assertEquals("Player has not been removed",player1,team.removePlayer(player1));
+        // Remove a non existing player from a team
+        Assert.assertEquals("Player is removed from team", null, team.removePlayer(player2));
     }
 
-    @Test
+  @Test
     public void testGeneratePanels() throws Exception {
-
     }
 
     /**
@@ -117,7 +132,6 @@ public class TeamTest {
 
     @Test
     public void testIsAlive() throws Exception {
-
     }
 
     @Test
