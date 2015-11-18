@@ -143,4 +143,14 @@ public class NetworkServerTest extends TestCase {
         assertEquals("Incoming request type did not match the outgoing request type", request.getType(), networkRequest.getType());
         assertEquals("Incoming message did not match the outgoing message", request.toString(), networkRequest.toString());
     }
+
+    public void testSendRequest() throws Exception {
+        NetworkServer networkServer = new NetworkServer(8089);
+
+        networkServer.stopListeners();
+        networkServer.startListeners();
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/test", "payload");
+
+        assertTrue("Exception occurred during sending", networkServer.sendRequest(request, "localhost"));
+    }
 }

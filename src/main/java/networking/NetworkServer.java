@@ -149,10 +149,18 @@ public class NetworkServer {
             e.printStackTrace();
             return false;
         }
-
-
     }
 
+    /**
+     * Sends a network request over the wire
+     *
+     * @param request  NetworkRequest object that needs to be sent
+     * @param receiver IP of the receiving party
+     * @return Success of the operation
+     */
+    public boolean sendRequest(NetworkRequest request, String receiver) {
+        return send(request.toString(), receiver);
+    }
     /**
      * Returns a message item
      * author: David
