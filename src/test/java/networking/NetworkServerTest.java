@@ -125,4 +125,22 @@ public class NetworkServerTest extends TestCase {
         networkServer1.startListeners();
         networkServer1.stopListeners();
     }
+
+    public void testConsumeRequest() throws Exception {
+        // Create a message
+        networkServer.stopListeners();
+        networkServer.startListeners();
+        NetworkRequest networkRequest = new NetworkRequest(RequestType.GET, "/test", "payload");
+
+        networkServer.send(networkRequest.toString(), "localhost");
+
+        Thread.sleep(300);
+        // consume the request
+        NetworkRequest request = networkServer.consumeRequest();
+
+        assertNotNull("There were no messages received", request);
+
+        assertEquals("Incoming request type did not match the outgoing request type", request.getType(), networkRequest.getType());
+        assertEquals("Incoming message did not match the outgoing message", request.toString(), networkRequest.toString());
+    }
 }

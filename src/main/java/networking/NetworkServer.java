@@ -1,5 +1,7 @@
 package networking;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,7 +19,7 @@ public class NetworkServer {
     private static final Logger logger = Logger.getLogger(NetworkServer.class.getName());
 
     private Queue<NetworkMessage> messageQueue;
-    private ExecutorService executorService;
+    private ExecutorService executorService = Executors.newFixedThreadPool(4);
     private ServerSocket socket;
     /**
      * Port number
@@ -26,7 +28,6 @@ public class NetworkServer {
 
     public NetworkServer(int port) {
         this.port = port;
-        executorService = Executors.newFixedThreadPool(4);
         messageQueue = new ConcurrentLinkedQueue<>();
     }
 
@@ -53,27 +54,35 @@ public class NetworkServer {
                 // Accept incoming connections
                 Socket clientSocket = this.socket.accept();
 
-                InputStream inputStream = clientSocket.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                String full = "";
-
-                // Read the data into a string
-                while ((line = bufferedReader.readLine()) != null) {
-                    full += line.trim();
-                    logger.log(Level.FINE, "Network packet received", line);
-                }
+                String full = recv(clientSocket);
 
                 // Read it into an object
                 NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
 
                 logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
-                messageQueue.add(networkMessage);
+                synchronized (this) {
+                    messageQueue.add(networkMessage);
+                }
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IO Exception on port", e);
         }
+    }
+
+    @NotNull
+    private String recv(Socket clientSocket) throws IOException {
+        InputStream inputStream = clientSocket.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line;
+        String full = "";
+
+        // Read the data into a string
+        while ((line = bufferedReader.readLine()) != null) {
+            full += line.trim();
+            logger.log(Level.FINE, "Network packet received", line);
+        }
+        return full;
     }
 
     /**
@@ -81,12 +90,14 @@ public class NetworkServer {
      * author: David
      */
     public void startListeners() throws IOException {
+        final int THREADPOOLSIZE = 4;
+
         stopListeners();
 
         logger.log(Level.INFO, "Starting listeners");
 
         // Initialize all variables
-        executorService = Executors.newFixedThreadPool(4);
+        executorService = Executors.newFixedThreadPool(THREADPOOLSIZE);
         messageQueue = new ConcurrentLinkedQueue<>();
         socket = new ServerSocket(port);
 
@@ -150,7 +161,24 @@ public class NetworkServer {
      */
     public NetworkMessage consumeMessage() {
         logger.log(Level.INFO, "Network server is consuming a message");
-        return messageQueue.poll();
+        synchronized (this) {
+            return messageQueue.poll();
+        }
+    }
+
+
+    /**
+     * Gets the latest network message as a request type
+     * author: David
+     *
+     * @return The latest network request if there is one
+     */
+    public NetworkRequest consumeRequest() {
+        NetworkMessage networkMessage = consumeMessage();
+        if (networkMessage != null)
+            return new NetworkRequest(networkMessage);
+        else
+            return null;
     }
 
     /**

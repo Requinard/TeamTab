@@ -36,4 +36,9 @@ public class NetworkMessage {
         this.receiver = receiver;
     }
 
+    @Override
+    public String toString() {
+        return this.text;
+    }
+
 }
