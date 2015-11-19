@@ -80,12 +80,17 @@ public class ClientGame implements IGame {
     }
 
 	/**
-     * Assign a player to a team in the game
+     * Assign a player to a team in the game and removes the player from his current team if he is in one
      * @param player The player that wants to be assigned to a team
      * @param team The team that the player wants to join
      */
     @Override
 	public void assignTeam(Player player, Team team) {
+        for(Team currentTeam: teams) {
+            if(currentTeam.getPlayers().contains(player)) {
+                currentTeam.removePlayer(player);
+            }
+        }
         team.addPlayer(player);
     }
 
