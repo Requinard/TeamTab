@@ -2,6 +2,7 @@ package Game;
 
 import javassist.bytecode.stackmap.TypeData;
 import org.apache.commons.io.IOUtils;
+import sun.rmi.runtime.Log;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -104,10 +105,12 @@ public class ClientGame implements IGame {
      * @return true if panels are correctly loaded
      */
     private boolean loadPanelsFromFile() {
+        log.log(Level.INFO,"Started loading panels");
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
         try (FileInputStream fileInputStream = new FileInputStream(location.getPath().replace("%20", " "))) {
             String full = IOUtils.toString(fileInputStream);
+            log.log(Level.INFO, "loaded panels from {0}", location.toString());
 
             // go over each line
             for (String s : full.split("\n")) {
@@ -129,13 +132,12 @@ public class ClientGame implements IGame {
                 Panel panel = new Panel(id, min, max, text, PanelTypeEnum.values()[type]);
 
                 panels.add(panel);
-                log.log(Level.INFO, "There are " + panels.size() + " panels added from the CSV file");
-
-
+                log.log(Level.FINER, "Added panel with text {0}", panel.getText());
             }
-
+            log.log(Level.INFO, "There are {0} panels added from the CSV file",String.valueOf(panels.size()));
         } catch (IOException e) {
             e.printStackTrace();
+            log.log(Level.SEVERE,e.toString(),e);
         }
 
         return panels.size() > 0;
