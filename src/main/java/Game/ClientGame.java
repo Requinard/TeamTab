@@ -96,7 +96,10 @@ public class ClientGame implements IGame {
     }
 
 	private java.util.List<Panel> generatePanels() {
-        throw new UnsupportedOperationException();
+        for (Team team : teams) {
+            team.generatePanels(panels);
+        }
+        return panels;
     }
 
     /**

@@ -177,6 +177,7 @@ public class Team {
         return time += amount;
     }
 
+
     public boolean hasChanged() {
         // TODO - implement Team.hasChanged
         throw new UnsupportedOperationException();
