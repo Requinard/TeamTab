@@ -159,20 +159,11 @@ public class Team {
     }
 
     /**
-     * Give the player a new instruction and remove his old instruction from the active instruction
+     * Give the player a new instruction
      * @param player The player that will get a new instruction
      * @return true if the player has the new instruction
      */
     public boolean generateInstructionForPlayer(Player player) {
-        Instruction oldInstruction = player.getActiveInstruction();
-
-        if (oldInstruction != null) {
-            // Remove the current instruction from the active instructions
-            activeInstructions.remove(player.getActiveInstruction());
-            log.log(Level.INFO, "Removed the old instruction from the active instructions");
-        }
-
-
         // Generate a new instruction for the player and add this instruction to the active instruction
         Instruction instruction = player.generateInstruction();
         activeInstructions.add(instruction);

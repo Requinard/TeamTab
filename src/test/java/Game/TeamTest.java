@@ -235,7 +235,7 @@ public class TeamTest {
         Assert.assertTrue("Team is not alive", team.isAlive());
         //Team still has lives
         team.changeLives(2);
-        Assert.assertFalse("Team is still alive",team.isAlive());
+        Assert.assertFalse("Team is still alive", team.isAlive());
     }
 
     @Test
@@ -256,21 +256,24 @@ public class TeamTest {
 
     @Test
     public void testValidateInstruction() throws Exception {
-        Panel panel = new Panel(1, 1, 5, "test", PanelTypeEnum.HorizontalSlider);
-        Instruction instruction = new Instruction(panel, 1);
-        //removal of instruction can't be test because it still can't be added
-        //Assert.assertTrue("Instruction has never in the active instructions list", team.getActiveInstructions().contains(instruction));
-        //team.correctInstructionPreformed(instruction);
-        //Assert.assertTrue("Instruction has not been removed from active instructions list", !team.getActiveInstructions().contains(instruction));
+        for (int i = 0; i < 36; i++) {
+            Panel panel = new Panel(i, 0, 1, "Panel" + i, PanelTypeEnum.values()[1]);
+            listPanels.add(panel);
+        }
 
-        //tests if the score is added
-        //Assert.assertEquals("score has not been added", 1, team.getScore());
+        team.addPlayer(player1);
+        team.generatePanels(listPanels);
+        //gives a active instruction to player2 and adds instruction to list of active instructions
+        team.generateInstructionForPlayer(player1);
+        //checks if the instruction is valid, if so removes the instruction from the list of active instruction
+        Assert.assertTrue("the activeInstruction of player1 is not in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
+        //checks if the remove instruction is still valid
+        Assert.assertFalse("the activeInstruction of player1 is in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
+
     }
 
     @Test
     public void testGenerateInstructionForPlayer() throws Exception {
-        List<Instruction> teamInstructions = team.getActiveInstructions();
-
         for (int i = 0; i < 36; i++) {
             Panel panel = new Panel(i, 0, 1, "Panel" + i, PanelTypeEnum.values()[1]);
             listPanels.add(panel);
