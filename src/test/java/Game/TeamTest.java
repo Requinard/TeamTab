@@ -156,19 +156,17 @@ public class TeamTest {
   @Test
     public void testGeneratePanels() throws Exception {
       team.addPlayer(player1);
+      List<Panel> createdPanels = new ArrayList<Panel>();
       // Team has exactly enough panels to distribute over the players
-      for (int i = 0; i < 12; i++) {
-          Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
-          listPanels.add(panel);
-      }
-      Assert.assertEquals("Panels are distributed over the teammembers", 0, team.generatePanels(listPanels).size());
-      // Team has too much panels to distribute over the players
       for (int i = 0; i < 14; i++) {
           Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
-          listPanels.add(panel);
+          createdPanels.add(panel);
       }
-      Assert.assertEquals("Panels are distributed over the teammembers", 2, team.generatePanels(listPanels).size());
+      //return all panels
+      Assert.assertEquals("Panels are distributed over the teammembers", 14, team.generatePanels(createdPanels).size());
 
+      //player only has 12
+      Assert.assertEquals("Player has to many, or not enough panels", 12, player1.getPanels().size());
   }
 
     /**
@@ -266,9 +264,9 @@ public class TeamTest {
         //gives a active instruction to player2 and adds instruction to list of active instructions
         team.generateInstructionForPlayer(player1);
         //checks if the instruction is valid, if so removes the instruction from the list of active instruction
-        Assert.assertTrue("the activeInstruction of player1 is not in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
+        Assert.assertNotNull("the activeInstruction of player1 is not in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
         //checks if the remove instruction is still valid
-        Assert.assertFalse("the activeInstruction of player1 is in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
+        Assert.assertNull("the activeInstruction of player1 is in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
 
     }
 

@@ -187,13 +187,23 @@ public class ClientGameTest {
         }
     }
 
+    /**
+     * author Kaj
+     *
+     * @throws Exception
+     */
     @Test
     public void testProcessPanel() throws Exception {
-        Player player = game.createPlayer("kaj", "0.0.0.0");
-        //game.startRound();
+        Player player1 = game.createPlayer("Kaj1", "0.0.0.0");
+        Player player2 = game.createPlayer("Kaj2", "0.0.0.0");
+        Team team1 = game.createTeam("Team1");
+        Team team2 = game.createTeam("Team2");
+        game.assignTeam(player1, team1);
+        game.assignTeam(player2, team2);
+        game.startRound();
 
-        //boolean correctInstruction = game.processPanel(player, player.getPanels().get(0));
-        //Assert.assertEquals("no active instruction", false, correctInstruction);
+        //check if the active instuction panel for player 1 is a correct panel
+        Assert.assertTrue("players instruction is not a active instuction", game.processPanel(player1, player1.getActiveInstruction().getPanel()));
     }
 
     @Test

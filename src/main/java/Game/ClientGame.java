@@ -187,8 +187,6 @@ public class ClientGame implements IGame {
      */
     @Override
     public ClientGame startRound() {
-        // first load all the panels from the CSV file into the list of panels
-        loadPanelsFromFile();
         // iterate over all teams
         for (Team team : teams) {
             // give a team first a hard reset
@@ -211,14 +209,16 @@ public class ClientGame implements IGame {
      */
 	@Override
 	public boolean processPanel(Player player, Panel panel) {
-        boolean correctInstruction;
+        Instruction correctInstruction;
         //check if the pressed panel was from an active instruction
         correctInstruction = validateInstruction(player, panel);
-        if (correctInstruction) {
-            //possible list of correct instruction saved?
-            //new instruction for the player that had the active instruction
+        if (correctInstruction != null) {
+            //list of correct instructions
+            correctInstructions.add(correctInstruction);
+            //gives the player that had the instruction (not necessarily the one that pressed the panel) a new instruction
+            player.getTeam().generateInstructionForPlayer(correctInstruction.getPlayer());
         }
-        return correctInstruction;
+        return correctInstruction != null;
     }
 
     /**
@@ -259,9 +259,9 @@ public class ClientGame implements IGame {
      * Author Kaj
      * @param player Player that clicked on a panel
 	 * @param panel Panel control that was clicked
-     * @return true is the panel had a active instruction
+     * @return instruction that was correctly performed, else null
      */
-    private boolean validateInstruction(Player player, Panel panel) {
+    private Instruction validateInstruction(Player player, Panel panel) {
         log.log(Level.INFO, "validating instruction for panel: {0} started", panel.getText());
         return player.getTeam().validateInstruction(panel);
     }

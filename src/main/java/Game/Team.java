@@ -149,13 +149,15 @@ public class Team {
      * @return panels       this is a list of panels that is given to a team
      */
     public List<Panel> generatePanels(List<Panel> gamePanels) {
-        List<Panel> gamePanelsCopy = gamePanels;
+        List<Panel> gamePanelsCopy = new ArrayList<Panel>();
+        gamePanelsCopy.addAll(gamePanels);
         List<Panel> panelsGivenToPlayer;
         for (Player player : players) {
             panelsGivenToPlayer = player.generatePanels(gamePanels);
+            generateInstructionForPlayer(player);
             gamePanelsCopy.removeAll(panelsGivenToPlayer);
         }
-        return gamePanelsCopy;
+        return gamePanels;
     }
 
     /**
@@ -239,16 +241,18 @@ public class Team {
      * @param panel the pressed panel
      * @return true if the pressed panel was a active instruction
      */
-    public boolean validateInstruction(Panel panel) {
+    public Instruction validateInstruction(Panel panel) {
+        Instruction correctInstruction = null;
         for (Instruction instruction : activeInstructions) {
             if (instruction.getPanel().equals(panel)) {
                 score++;
+                correctInstruction = instruction;
                 activeInstructions.remove(instruction);
                 log.log(Level.INFO, "validating instruction ended, panel: {0} was correct", panel.getText());
-                return true;
+                return correctInstruction;
             }
         }
         log.log(Level.INFO, "validating instruction ended, panel: {0} was incorrect", panel.getText());
-        return false;
+        return correctInstruction;
     }
 }
