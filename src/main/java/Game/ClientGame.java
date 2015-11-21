@@ -17,11 +17,13 @@ public class ClientGame implements IGame {
     private List<Player> players;
     private List<Team> teams;
     private List<Panel> panels;
+    private List<Instruction> correctInstructions;
 
     public ClientGame() {
         players = new ArrayList<Player>();
         teams = new ArrayList<Team>();
         panels = new ArrayList<Panel>();
+        correctInstructions = new ArrayList<Instruction>();
 
         loadPanelsFromFile();
     }

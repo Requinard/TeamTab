@@ -1,8 +1,5 @@
 package Game;
 
-import Game.Instruction;
-import Game.Panel;
-import Game.PanelTypeEnum;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,11 +10,13 @@ import org.junit.Test;
 public class InstructionTest {
     Panel panel;
     Instruction instruction;
+    Player player;
 
     @Before
     public void setUp() throws Exception {
         panel = new Panel(1, 0, 1, "cut wire", PanelTypeEnum.values()[1]);
-        instruction = new Instruction(panel, 1);
+        player = new Player("Kaj", "0.0.0.0");
+        instruction = new Instruction(panel, 1, player);
     }
 
     @Test
@@ -28,6 +27,11 @@ public class InstructionTest {
     @Test
     public void testGetIntendedValue() throws Exception {
         Assert.assertEquals("Can not get the intended value of a instruction", 1, instruction.getIntendedValue());
+    }
+
+    @Test
+    public void testGetPlayer() throws Exception {
+        Assert.assertEquals("Can not get the player of a instruction", player, instruction.getPlayer());
     }
 
     @Test

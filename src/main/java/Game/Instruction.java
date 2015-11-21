@@ -5,6 +5,7 @@ public class Instruction {
     private Panel panel;
     private int intendedValue;
     private boolean wasExecutedCorrectly = false;
+    private Player player;
 
     /**
      * Constructor of a instruction
@@ -13,10 +14,10 @@ public class Instruction {
      * @param panel         The panel of the instruction
      * @param intendedValue The value of the instruction
      */
-    public Instruction(Panel panel, int intendedValue) {
+    public Instruction(Panel panel, int intendedValue, Player player) {
         this.panel = panel;
         this.intendedValue = intendedValue;
-
+        this.player = player;
     }
 
     /**
@@ -35,6 +36,16 @@ public class Instruction {
      */
     public int getIntendedValue() {
         return this.intendedValue;
+    }
+
+    /**
+     * get the player of this instruction
+     * author Kaj
+     *
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
     }
 
     /**

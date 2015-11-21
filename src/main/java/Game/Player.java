@@ -153,7 +153,7 @@ public class Player {
             // this will always produce a random number from minimal 2 and maximal 8
             int intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
             // new instruction is made
-            activeInstruction = new Instruction(instructionPanel, intendedValue);
+            activeInstruction = new Instruction(instructionPanel, intendedValue, this);
             log.log(Level.INFO, "new instruction has been generated");
 
             return activeInstruction;
