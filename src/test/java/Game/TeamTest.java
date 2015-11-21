@@ -142,7 +142,7 @@ public class TeamTest {
     public void testRemovePlayer() throws Exception {
         // Remove an existing player from a team
         team.addPlayer(player1);
-        Assert.assertEquals("Player has not been removed",player1,team.removePlayer(player1));
+        Assert.assertEquals("Player has not been removed", player1, team.removePlayer(player1));
         // Remove a non existing player from a team
         Assert.assertEquals("Player is removed from team", null, team.removePlayer(player2));
     }
@@ -276,9 +276,9 @@ public class TeamTest {
             listPanels.add(panel);
         }
 
-        team.generatePanels(listPanels);
         team.addPlayer(player1);
         team.addPlayer(player2);
+        team.generatePanels(listPanels);
 
         Assert.assertTrue(team.generateInstructionForPlayer(player1));
     }

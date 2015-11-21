@@ -29,6 +29,7 @@ public class Team {
         this.score = 0;
         players = new ArrayList<Player>();
         panels = new ArrayList<Panel>();
+        activeInstructions = new ArrayList<Instruction>();
     }
 
     /**
@@ -207,10 +208,7 @@ public class Team {
      * @return true of it changed
      */
     public boolean hasChanged() {
-
-        return STARTLIVES != lives || STARTTIME != time || activeInstructions != null || score > 0;
-
-
+        return STARTLIVES != lives || STARTTIME != time || !activeInstructions.isEmpty() || score > 0;
     }
 
     /**
