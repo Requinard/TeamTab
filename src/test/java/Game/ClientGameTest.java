@@ -44,9 +44,15 @@ public class ClientGameTest {
 
     }
 
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
     @Test
     public void testGetPanels() throws Exception {
-
+        //check if the list of panels is not empty
+        Assert.assertTrue("Can't get list of panels from the game", !game.getPanels().isEmpty());
     }
 
     /**
@@ -107,10 +113,24 @@ public class ClientGameTest {
         game.createPlayer("Kaj", null);
     }
 
-
+    /**
+     * Author Kaj
+     * @throws Exception
+     */
     @Test
     public void testAssignTeam() throws Exception {
+        Player player = game.createPlayer("Kaj", "0.0.0.0");
+        Team team = game.createTeam("Team1");
+        //check if the list of players is empty
+        Assert.assertTrue("List of players in team is not empty", team.getPlayers().isEmpty());
 
+        //check if player has been added
+        game.assignTeam(player, team);
+        Assert.assertTrue("Player not added to list of players in team", team.getPlayers().contains(player));
+
+        //check if double assigning to a team is possible
+        game.assignTeam(player, team);
+        Assert.assertEquals("team has double players", 1, team.getPlayers().size());
     }
 
     @Test
