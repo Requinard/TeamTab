@@ -214,15 +214,22 @@ public class Team {
     }
 
     /**
-     * Changes the activeInstructions and score
+     * Checks if the panel belongs to a active instruction
+     * if so, score + 1, remove the instruction from the active list and return true
      * Author Kaj
-     *
-     * @param instruction the instruction that was correctly preformed
+     * @param panel the pressed panel
+     * @return true if the pressed panel was a active instruction
      */
-    public void correctInstructionPreformed(Instruction instruction) {
-        score++;
-        //activeInstructions.remove(instruction);
+    public boolean validateInstruction(Panel panel) {
+        for (Instruction instruction : activeInstructions) {
+            if (instruction.getPanel().equals(panel)) {
+                score++;
+                activeInstructions.remove(instruction);
+                log.log(Level.INFO, "validating instruction ended, panel: {0} was correct", panel.getText());
+                return true;
+            }
+        }
+        log.log(Level.INFO, "validating instruction ended, panel: {0} was incorrect", panel.getText());
+        return false;
     }
-
-
 }

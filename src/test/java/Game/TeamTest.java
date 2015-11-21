@@ -251,7 +251,7 @@ public class TeamTest {
     }
 
     @Test
-    public void testCorrectInstructionPreformed() throws Exception {
+    public void testValidateInstruction() throws Exception {
         Panel panel = new Panel(1, 1, 5, "test", PanelTypeEnum.HorizontalSlider);
         Instruction instruction = new Instruction(panel, 1);
         //removal of instruction can't be test because it still can't be added

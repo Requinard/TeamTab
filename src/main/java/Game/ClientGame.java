@@ -253,30 +253,14 @@ public class ClientGame implements IGame {
 
 	/**
 	 * Takes an instruction and asserts whether the click was a valid instruction in your team.
-     * If correct, than the instruction will be removed from the list of active instruction from the team.
-     * If correct, score of team will go up by 1
+     * If correct, true will be returned
      * Author Kaj
      * @param player Player that clicked on a panel
 	 * @param panel Panel control that was clicked
      * @return true is the panel had a active instruction
      */
     private boolean validateInstruction(Player player, Panel panel) {
-        boolean correctInstruction = false;
-        Team team = player.getTeam();
-        //Get all active instructions from the players team
-        for (Instruction instruction : team.getActiveInstructions()) {
-            //check if the panel matches an active instruction
-            if (instruction.getPanel() == panel) {
-                correctInstruction = true;
-                //the correct instruction will be removed from the active instructions list
-                //the score will get plus 1
-                team.correctInstructionPreformed(instruction);
-                log.log(Level.INFO, "Panel was correct");
-                return correctInstruction;
-            }
-        }
-        log.log(Level.INFO, "Panel was incorrect");
-        return correctInstruction;
+        log.log(Level.INFO, "validating instruction for panel: {0} started", panel.getText());
+        return player.getTeam().validateInstruction(panel);
     }
-
 }
