@@ -87,7 +87,44 @@ public class ClientGameTest {
 
     @Test
     public void testReset() throws Exception {
+        Team team1 = game.createTeam("team1");
+        Team team2 = game.createTeam("team2");
+        int timeTeam1 = team1.getTime();
+        int timeTeam2 = team2.getTime();
+        int livesTeam1 = team1.getLives();
+        int livesTeam2 = team2.getLives();
 
+
+        // The soft reset should only reset the time of all the teams in the game
+        team1.changeTime(-3);
+        team2.changeTime(-2);
+
+        Assert.assertEquals(timeTeam1 - 3, team1.getTime());
+        Assert.assertEquals(timeTeam2 - 2, team2.getTime());
+
+        game.reset(false);
+
+        // Checks if the time has been reset to the beginning
+        Assert.assertEquals(timeTeam1, team1.getTime());
+        Assert.assertEquals(timeTeam2, team2.getTime());
+
+        // The hard reset should reset the time and lives of all the teams in the game
+        team1.changeTime(-5);
+        team2.changeTime(-4);
+        Assert.assertEquals(timeTeam1 - 5, team1.getTime());
+        Assert.assertEquals(timeTeam2 - 4, team2.getTime());
+
+        team1.changeLives(-2);
+        team2.changeLives(-1);
+        Assert.assertEquals(livesTeam1 - 2, team1.getLives());
+        Assert.assertEquals(livesTeam2 - 1, team2.getLives());
+
+        game.reset(true);
+
+        Assert.assertEquals(timeTeam1, team1.getTime());
+        Assert.assertEquals(timeTeam2, team2.getTime());
+        Assert.assertEquals(livesTeam1, team1.getLives());
+        Assert.assertEquals(livesTeam2, team2.getLives());
     }
 
     @Test
