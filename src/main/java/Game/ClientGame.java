@@ -34,6 +34,13 @@ public class ClientGame implements IGame {
         return this.teams;
 	}
 
+    /**
+     * Gets all panels of the game
+     * These are all the panels loaded from the CSV
+     * Author Kaj
+     *
+     * @return the list of panels
+     */
     public List<Panel> getPanels() {
         return this.panels;
 	}
@@ -86,12 +93,14 @@ public class ClientGame implements IGame {
      */
     @Override
 	public void assignTeam(Player player, Team team) {
+        log.log(Level.INFO, "assigning player: {0} to team started", player.getUsername());
         for(Team currentTeam: teams) {
             if(currentTeam.getPlayers().contains(player)) {
                 currentTeam.removePlayer(player);
             }
         }
         team.addPlayer(player);
+        log.log(Level.INFO, "assign player to team ended, Player assigned to team: {0}", team.getName());
     }
 
     /**
