@@ -2,7 +2,6 @@ package Game;
 
 import javassist.bytecode.stackmap.TypeData;
 import org.apache.commons.io.IOUtils;
-import sun.rmi.runtime.Log;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -95,7 +94,13 @@ public class ClientGame implements IGame {
         team.addPlayer(player);
     }
 
-	private java.util.List<Panel> generatePanels() {
+    /**
+     * Give the loaded panels to every team in the game
+     * author Frank Hartman
+     *
+     * @return The list of panels in the game
+     */
+    private java.util.List<Panel> generatePanels() {
         for (Team team : teams) {
             team.generatePanels(panels);
         }
