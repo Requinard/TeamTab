@@ -217,6 +217,10 @@ public class TeamTest {
 
     @Test
     public void testHasChanged() throws Exception {
+        Assert.assertFalse(team.hasChanged());
+
+        team.changeLives(-2);
+        Assert.assertTrue(team.hasChanged());
 
     }
 
@@ -261,5 +265,21 @@ public class TeamTest {
 
         //tests if the score is added
         //Assert.assertEquals("score has not been added", 1, team.getScore());
+    }
+
+    @Test
+    public void testGenerateInstructionForPlayer() throws Exception {
+        List<Instruction> teamInstructions = team.getActiveInstructions();
+
+        for (int i = 0; i < 36; i++) {
+            Panel panel = new Panel(i, 0, 1, "Panel" + i, PanelTypeEnum.values()[1]);
+            listPanels.add(panel);
+        }
+
+        team.generatePanels(listPanels);
+        team.addPlayer(player1);
+        team.addPlayer(player2);
+
+        Assert.assertTrue(team.generateInstructionForPlayer(player1));
     }
 }
