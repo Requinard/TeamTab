@@ -3,11 +3,15 @@ package gui;
 import Game.ClientGame;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javassist.bytecode.stackmap.TypeData;
 import javazoom.jl.decoder.JavaLayerException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Game.*;
 
 /**
@@ -15,10 +19,12 @@ import Game.*;
  */
 public class StageController {
 
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
 
     static String playerName;
+    static Player currentPlayer;
     Stage stage;
     IView currentView;
     Thread gameThread;
@@ -31,13 +37,9 @@ public class StageController {
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
-        /*
-        game = new Game(this);
-           Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: newGame moet clientgame worden
-        */
-
+        clientGame = new ClientGame();
         timerRefresh = new java.util.Timer();
+
         timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -61,8 +63,8 @@ public class StageController {
     }
 
     public void loadScene(Scene scene) {
-
-        stage.setTitle("Test");
+        log.log(Level.INFO, "The {0} is loaded", stage.getTitle());
+        stage.setTitle("Defusal Squad startscreen");
         stage.setScene(scene);
         stage.show();
         stage.toFront();
@@ -71,27 +73,23 @@ public class StageController {
     public void refreshView() {
     }
 
+    /**
+     * Author Qun
+     * Hard resets the whole game
+     */
     public void resetGame(){
-        /*
-        this.game = new Game(this);
-           Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: er moet de methode aanageroepen worden van de clientgame die de game reset
-        */
+        log.log(Level.INFO, "reset game for teams : {0}", clientGame.getTeams());
+        this.clientGame = new ClientGame();
     }
 
-    /*
-    public void setExistingGame(Game game){
-        this.game = game;
-    }
-        Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: de clientgame moet geset worden
-*/
+
 	/**
-	 *
+     * Author Qun
+	 * This sets the game for the player
 	 * @param clientGame
 	 */
 	public void setExistingGame(ClientGame clientGame) {
-
+        this.clientGame = clientGame;
 	}
 
 

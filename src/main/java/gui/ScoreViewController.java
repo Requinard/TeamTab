@@ -94,17 +94,14 @@ public class ScoreViewController implements Initializable {
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                /*
-                view.stageController.game.hardReset();
+                view.stageController.clientGame.reset(true);
                 Platform.runLater(new Runnable() {
                     public void run() {
                         LobbyView lobbyView = new LobbyView((view.stageController));
                         view.pass(lobbyView);
                     }
                 });
-                 Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: .hardReset() moet vervangen worden
-                */
+
             }
         };
         runnable.run();

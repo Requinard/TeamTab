@@ -1,6 +1,8 @@
 package gui;
 
 import Game.Panel;
+import Game.Player;
+import Game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -135,14 +137,12 @@ public class GameController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                /*
-                if (!panelHolder.equals(view.stageController.game.getPlayerByName(StageController.playerName).getPanels())) {
+                for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
+                    if (currentPlayer.getUsername() == StageController.playerName && !panelHolder.equals(currentPlayer.getPanels())){
                     fillGridWithPanels();
-                    log.log(Level.INFO, "Gridview filled with panels");
+                    log.log(Level.INFO, "Gridview filled with {0} panels", currentPlayer.getPanels().size());
                 }
-                Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo:De oude methode vervangenen met de nieuwe methodes
-                */
+                }
             }
         });
     }
@@ -303,16 +303,17 @@ public class GameController implements Initializable {
     }
 
     /**
+     * //TODO fix it so it works for multiple teams
      * Sets the name of the teams that are playing
      */
     private void setTeamNames()
     {
-        /*
-        lblTeamName1.setText(view.stageController.game.allTeams().get(1).getName());
-        lblTeamName2.setText(view.stageController.game.allTeams().get(0).getName());
-           Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: De labels voorzien van de juiste teamname
-        */
+        //for(int i=0;i<= view.stageController.clientGame.getTeams().size();i++){
+            //String textField = "lblTeamName";
+       // }
+        lblTeamName1.setText(view.stageController.clientGame.getTeams().get(1).getName());
+        lblTeamName2.setText(view.stageController.clientGame.getTeams().get(0).getName());
+        log.log(Level.INFO, "The names of team {0} and {1} are set ",new Object[] {view.stageController.clientGame.getTeams().get(1).getName(),view.stageController.clientGame.getTeams().get(0).getName()});
     }
 
     /**

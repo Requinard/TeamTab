@@ -1,6 +1,7 @@
 package gui;
 
 import Game.Player;
+import Game.Team;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,15 +9,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
  */
 public class StartViewController implements Initializable {
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+
     private final String pattern = "[\n\r \t]+";
     @FXML
     private Button buttonStart;
@@ -78,25 +84,22 @@ public class StartViewController implements Initializable {
                     String teamName = teamNameTextField.getText();
                     System.out.println("StartView - Teamname is set to: " + teamName);
 
-                    //DIT WERKT ALLEEN VOOR DE EERSTE ITERATIE
-                    view.stageController.game.createTeam(teamName);
-                    /*
-                    Player newPlayer = view.stageController.game.createAndGetThisPlayer(StageController.playerName, teamName);
+                    //Team is created
+                    Team currentTeam = view.stageController.clientGame.createTeam(teamName);
+                    log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
-                    Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo:createAndGetThisPlayer moet vervangen worden
-                    */
-                    //Team teamByTeamName = view.stageController.game.getTeamByName(teamName);
-                    /*
-                    view.stageController.game.addPlayerToTeam(newPlayer);
+                    //Player is created
+                    view.stageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, teamName);
+                    log.log(Level.INFO, "Player {0} is created", view.stageController.currentPlayer.getUsername());
 
-                    Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: addPlayerToTeam moet vervangen worden
-                    */
+                    //Player gets assigned to the team
+                    view.stageController.clientGame.assignTeam(view.stageController.currentPlayer,currentTeam);
+                    log.log(Level.INFO, "Player {0} is assigned to {1}",new Object[] {view.stageController.currentPlayer.getUsername(),view.stageController.currentPlayer.getTeam()});
                     Platform.runLater(new Runnable() {
                         public void run() {
                             LobbyView lobbyView = new LobbyView((view.stageController));
                             view.pass(lobbyView);
+                            log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
                         }
                     });
                 }
@@ -112,8 +115,7 @@ public class StartViewController implements Initializable {
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                /*
-                view.stageController.game.reset();
+               // view.stageController.game.reset();
                 Platform.runLater(new Runnable() {
                     public void run() {
                         MainView mainView = new MainView((view.stageController));
@@ -121,9 +123,6 @@ public class StartViewController implements Initializable {
 
                     }
                 });
-                Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: de game moet gereset worden met de nieuwe reset methode
-                */
             }
         };
         runnable.run();

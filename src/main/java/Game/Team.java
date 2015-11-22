@@ -211,8 +211,8 @@ public class Team {
      * @return True if the team is still alive, false if team has lost
      */
     public boolean isAlive() {
-        if (getLives() <= 0) {
-            log.log(Level.INFO, "Team is alive");
+        if (getLives() > 0) {
+            log.log(Level.INFO, "Team has {0} lives", lives);
             return true;
         }
         log.log(Level.INFO, "Team is not alive");

@@ -78,25 +78,22 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
         Platform.runLater(new Runnable() {
             public void run() {
-                /*
-                final Player currentPlayer = view.stageController.game.getPlayerByName(StageController.playerName);
-                for (Team a : view.stageController.game.allTeams()) {
-                    if (a.isPlayerInTeam(currentPlayer)) {
-                        team1Name.setText(a.getName());
-                        for (Player p : a.getPlayers()) {
-                            playersTeam1Name.setText(p.getName() + "\n");
+
+                for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
+                    if (currentPlayer.getUsername() == StageController.playerName) {
+                        team1Name.setText(currentPlayer.getTeam().getName());
+                        for (Player playersInTeam1 : currentPlayer.getTeam().getPlayers()) {
+                            playersTeam1Name.setText(playersInTeam1.getUsername() + "\n");
                         }
                     } else {
-                        team2Name.setText(a.getName());
+                        team2Name.setText(currentPlayer.getTeam().getName());
                         {
-                            for (Player b : a.getPlayers()) {
-                                playersTeam2Names.setText(b.getName() + "\n");
+                            for (Player PlayersInTeam2 : currentPlayer.getTeam().getPlayers()) {
+                                playersTeam2Names.setText(PlayersInTeam2.getUsername() + "\n");
                             }
                         }
                     }
                 }
-                Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: De volgende methodes moeten vervangen worden : getPlayerByName() , allTeams(), isPlayerInTesam(), getName()*/
             }
         });
     }
@@ -116,17 +113,14 @@ public class LobbyViewController implements Initializable {
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                /*
-                view.stageController.game.startGame();
+
+                view.stageController.clientGame.startRound();
                 Platform.runLater(new Runnable() {
                     public void run() {
                         GameView gameView = new GameView((view.stageController));
                         view.pass(gameView);
                     }
                 });
-                    Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: game.StartGame moet vervangen worden
-                */
             }
         };
         runnable.run();
