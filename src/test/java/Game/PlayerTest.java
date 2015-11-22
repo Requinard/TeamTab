@@ -125,7 +125,7 @@ public class PlayerTest {
     public void testGenerateInstruction() throws Exception {
         // create new panel and initialize new panels list
         listPanels = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 12; i++) {
             Panel panel = new Panel(i, 1, 5, "Slider1", PanelTypeEnum.HorizontalSlider);
             // add panel to list
             listPanels.add(panel);
@@ -135,6 +135,8 @@ public class PlayerTest {
         team1.addPlayer(player);
         // generate panels on this player
         team1.generatePanels(listPanels);
+
+
         // test values of generated panel
         instruction1 = player.generateInstruction();
 
