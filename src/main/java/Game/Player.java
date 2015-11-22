@@ -143,8 +143,10 @@ public class Player {
     public Instruction generateInstruction() {
         Random random = new Random();
         try {
+            // Get all the team panels
+            List<Panel> teamPanels = (List<Panel>) team.getPanels();
             // Get a random panel
-            Panel instructionPanel = panels.get(random.nextInt(panels.size()));
+            Panel instructionPanel = teamPanels.get(random.nextInt(panels.size()));
             // create a random between the min en max value of a panel, however random has no constructor with min and max value
             // the solution is as follows
             // (panel.getmaxvalue -  panel.getminvalue) + panel.getminvalue
