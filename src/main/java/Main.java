@@ -32,6 +32,5 @@ public class Main extends Application{
         Handler fh = new FileHandler("log.xml");
         Logger.getLogger("").addHandler(fh);
         new StageController(primaryStage);
-
     }
 }

@@ -1,4 +1,4 @@
-package networking;
+package networking.server;
 
 import org.jetbrains.annotations.NotNull;
 

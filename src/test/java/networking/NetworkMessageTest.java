@@ -1,6 +1,7 @@
 package networking;
 
 import com.pholser.junit.quickcheck.ForAll;
+import networking.server.NetworkMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.contrib.theories.Theories;
