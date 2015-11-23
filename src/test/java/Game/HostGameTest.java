@@ -242,9 +242,7 @@ public class HostGameTest {
         team1.generatePanels(listPanels);
         // create instruciton
         Instruction instruction = new Instruction(listPanels.get(1), 1, player1);
-        assertEquals(true, game.registerInvalidInstruction(player1, instruction));
-        // assert with different player that has not the instruction
-        Player player2 = game.createPlayer("NotSoKamil", "0.0.0.0");
-        assertEquals(false, game.registerInvalidInstruction(player2, instruction));
+        game.registerInvalidInstruction(instruction);
+        Assert.assertNotSame("The player did not get a new instruction", instruction, player1.getActiveInstruction());
     }
 }

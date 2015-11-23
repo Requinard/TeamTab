@@ -56,6 +56,6 @@ public interface IGame {
 	 * @param instruction the instruction that was to late
 	 * @param player the player that was to late with the instruction
 	 */
-	boolean registerInvalidInstruction(Player player, Instruction instruction);
+	void registerInvalidInstruction(Instruction instruction);
 
 }
