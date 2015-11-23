@@ -1,10 +1,8 @@
 package networking.mediator;
 
-import Game.ClientGame;
-import Game.Instruction;
-import Game.Player;
-import Game.Team;
+import Game.*;
 import Game.adapters.InstructionAdapter;
+import Game.adapters.PanelAdapter;
 import Game.adapters.PlayerAdapter;
 import Game.adapters.TeamAdapter;
 import networking.server.NetworkRequest;
@@ -71,6 +69,12 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
     public void assignTeam(Team team) {
         NetworkRequest request = new NetworkRequest(RequestType.POST, "/teams/assign", TeamAdapter.toString(team));
+
+        networkServer.send(request.toString(), clientGame.getHostIP());
+    }
+
+    public void processPanel(Panel panel) {
+        NetworkRequest request = new NetworkRequest(RequestType.POST, "/panels/", PanelAdapter.toString(panel));
 
         networkServer.send(request.toString(), clientGame.getHostIP());
     }

@@ -99,6 +99,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public boolean processPanel(Player player, Panel panel) {
+        clientMediator.processPanel(panel);
         return false;
     }
 
