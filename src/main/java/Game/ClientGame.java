@@ -103,9 +103,24 @@ public class ClientGame implements IGame {
         return false;
     }
 
-    @Override
+    /**
+     * Check if the game has ended
+     * The game has been ended when all the teams, except for one have a zero amount of lives
+     * Author Frank Hartman
+     *
+     * @return true if the game has ended
+     */
+    @Override()
     public boolean hasGameEnded() {
-        return false;
+        int count = 0;
+
+        for (Team team : teams) {
+            if (team.getLives() <= 0)
+                count++;
+        }
+
+        return count >= teams.size() - 1;
+
     }
 
     /**
