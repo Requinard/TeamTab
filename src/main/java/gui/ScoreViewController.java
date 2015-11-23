@@ -1,7 +1,6 @@
 package gui;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 
@@ -41,11 +39,7 @@ public class ScoreViewController implements Initializable {
      * @param resources The resources used to localize the root object, or <tt>null</tt>
      */
     public void initialize(URL location, ResourceBundle resources) {
-        buttonBackLobby.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonBackLobbyOnClick(event);
-            }
-        });
+        buttonBackLobby.setOnMouseClicked(this::buttonBackLobbyOnClick);
 
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
@@ -81,7 +75,7 @@ public class ScoreViewController implements Initializable {
 
     /**
      * Sets the scoreView
-     * @param scoreView
+     * @param scoreView     View where the player can see the score
      */
     public void setView(ScoreView scoreView) {
         view = scoreView;
@@ -89,23 +83,16 @@ public class ScoreViewController implements Initializable {
 
     /**
      * When button back to lobby is pressed, game hardReset and change to LobbyView
-     * @param mouseEvent
+     * @param mouseEvent       This mouseEvent brings the player back to the MainView
      */
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-                /*
-                view.stageController.game.hardReset();
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        LobbyView lobbyView = new LobbyView((view.stageController));
-                        view.pass(lobbyView);
-                    }
-                });
-                 Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: .hardReset() moet vervangen worden
-                */
-            }
+        runnable = () -> {
+            view.stageController.hostGame.reset(true);
+            Platform.runLater(() -> {
+                LobbyView lobbyView = new LobbyView((view.stageController));
+                view.pass(lobbyView);
+            });
+
         };
         runnable.run();
     }

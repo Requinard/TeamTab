@@ -230,10 +230,10 @@ public class TeamTest {
     public void testIsAlive() throws Exception {
         //Team doesn't have any more lives
         team.changeLives(-3);
-        Assert.assertTrue("Team is not alive", team.isAlive());
+        Assert.assertFalse("Team is not alive", team.isAlive());
         //Team still has lives
         team.changeLives(2);
-        Assert.assertFalse("Team is still alive", team.isAlive());
+        Assert.assertTrue("Team is not alive",team.isAlive());
     }
 
     @Test
@@ -258,7 +258,6 @@ public class TeamTest {
             Panel panel = new Panel(i, 0, 1, "Panel" + i, PanelTypeEnum.values()[1]);
             listPanels.add(panel);
         }
-
         team.addPlayer(player1);
         team.generatePanels(listPanels);
         //gives a active instruction to player2 and adds instruction to list of active instructions
@@ -267,11 +266,12 @@ public class TeamTest {
         Assert.assertNotNull("the activeInstruction of player1 is not in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
         //checks if the remove instruction is still valid
         Assert.assertNull("the activeInstruction of player1 is in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
-
     }
 
     @Test
     public void testGenerateInstructionForPlayer() throws Exception {
+        List<Instruction> teamInstructions = team.getActiveInstructions();
+
         for (int i = 0; i < 36; i++) {
             Panel panel = new Panel(i, 0, 1, "Panel" + i, PanelTypeEnum.values()[1]);
             listPanels.add(panel);
