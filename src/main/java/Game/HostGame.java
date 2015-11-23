@@ -17,13 +17,13 @@ public class HostGame implements IGame {
     private List<Player> players;
     private List<Team> teams;
     private List<Panel> panels;
-    private List<Instruction> correctInstructions;
+    private List<Instruction> instructions;
 
     public HostGame() {
         players = new ArrayList<Player>();
         teams = new ArrayList<Team>();
         panels = new ArrayList<Panel>();
-        correctInstructions = new ArrayList<Instruction>();
+        instructions = new ArrayList<Instruction>();
 
         loadPanelsFromFile();
     }
@@ -35,6 +35,10 @@ public class HostGame implements IGame {
     public List<Team> getTeams() {
         return this.teams;
 	}
+
+    public List<Instruction> getInstructions() {
+        return this.instructions;
+    }
 
     /**
      * Gets all panels of the game
@@ -215,7 +219,8 @@ public class HostGame implements IGame {
         correctInstruction = validateInstruction(player, panel);
         if (correctInstruction != null) {
             //list of correct instructions
-            correctInstructions.add(correctInstruction);
+            correctInstruction.setWasExecutedCorrectly(true);
+            instructions.add(correctInstruction);
             //gives the player that had the instruction (not necessarily the one that pressed the panel) a new instruction
             player.getTeam().generateInstructionForPlayer(correctInstruction.getPlayer());
         } else {
@@ -261,6 +266,7 @@ public class HostGame implements IGame {
         Team team = player.getTeam();
         // The instruction was not executed correctly and will be set to false
         instruction.setWasExecutedCorrectly(false);
+        instructions.add(instruction);
         changeTimeForTeam(team, -1);
         // Generate new instruction for the player
         player.generateInstruction();
