@@ -190,7 +190,7 @@ public class HostGame implements IGame {
         // iterate over all teams
         for (Team team : teams) {
             // give a team first a hard reset
-            team.reset(true);
+            team.reset(false);
             // let the team give their players new panels
             team.generatePanels(panels);
         }
