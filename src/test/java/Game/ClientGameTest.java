@@ -36,12 +36,15 @@ public class ClientGameTest {
 
     @Test
     public void testGetPlayers() throws Exception {
-
+        game.createPlayer("Vito", "localhost");
+        game.createPlayer("Corleone", "localhost");
+        assertEquals(2, game.getPlayers().size());
     }
 
     @Test
     public void testGetTeams() throws Exception {
-
+        game.createTeam("Vito's");
+        assertEquals(1, game.getTeams().size());
     }
 
     /**
