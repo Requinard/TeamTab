@@ -13,6 +13,8 @@ public class ClientGame implements IGame {
 
     private ClientMediator clientMediator;
     private List<Team> teams;
+    private List<Player> players;
+    private List<Panel> panels;
     private String hostIP;
 
     public ClientGame() {
@@ -27,7 +29,7 @@ public class ClientGame implements IGame {
 
     @Override
     public Collection<Player> getPlayers() {
-        return null;
+        return this.players;
     }
 
     public void setPlayers(List<Player> players) {
@@ -45,7 +47,7 @@ public class ClientGame implements IGame {
 
     @Override
     public Collection<Panel> getPanels() {
-        return null;
+        return this.panels;
     }
 
     /**
