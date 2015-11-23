@@ -18,16 +18,14 @@ public class PlayerAdapter {
      * @param player
      */
     public String toString(Player player) {
-        // TODO - implement PlayerAdapter.toString
-        throw new UnsupportedOperationException();
+        return JsonAdapter.toString(player, Player.class);
     }
 
     /**
      * @param input
      */
     public Player toObject(String input) {
-        // TODO - implement PlayerAdapter.toObject
-        throw new UnsupportedOperationException();
+        return (Player) JsonAdapter.toObject(input, Player.class);
     }
 
 }
