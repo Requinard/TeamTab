@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -73,7 +74,7 @@ public class GameController implements Initializable {
     private PanelFactory panelFactory;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
-    private ArrayList<Panel> panelHolder;
+    private List<Panel> panelHolder;
     private boolean panelPushed;
     private AudioPlayer audioPlayer;
 
@@ -133,7 +134,9 @@ public class GameController implements Initializable {
      */
     private void panelChecker() {
         Platform.runLater(() -> {
-            if (!panelHolder.equals(StageController.currentPlayer.getPanels())) {
+
+            if (!StageController.currentPlayer.getPanels().equals(panelHolder)) {
+                panelHolder = StageController.currentPlayer.getPanels();
                 fillGridWithPanels();
                 log.log(Level.INFO, "Gridview filled with {0} panels", StageController.currentPlayer.getPanels().size());
             }
@@ -167,7 +170,7 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
 
         final ArrayList<Panel> panels = (ArrayList<Panel>) StageController.currentPlayer.getPanels();
-        panelHolder = panels;
+
         int column = 0;
         int row = 0;
         log.log(Level.INFO, "Add panels to the gridpane");
@@ -185,7 +188,8 @@ public class GameController implements Initializable {
             row++;
         }
         log.log(Level.INFO, "Loaded {0} panels in the gridPane", panels.size());
-
+        panelHolder = new ArrayList<>();
+        panelHolder.addAll(panels);
     }
 
     /**
