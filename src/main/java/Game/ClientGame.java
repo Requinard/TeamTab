@@ -1,7 +1,6 @@
 package Game;
 
 import networking.mediator.ClientMediator;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,8 +24,8 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
-     *
-     * @return
+     * Gets the IP adress of the host
+     * @return the IP of the host
      */
     public String getHostIP() {
         return hostIP;
@@ -34,7 +33,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Kaj
-     * @return
+     * @return the players in the game
      */
     @Override
     public Collection<Player> getPlayers() {
@@ -43,10 +42,11 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
-     * @param players
+     * Set the players in the game
+     * @param players The players that will be set
      */
     public void setPlayers(List<Player> players) {
-        throw new NotImplementedException();
+        this.players = players;
     }
 
     /**
@@ -59,7 +59,8 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
-     * @param teams
+     * Set the teams in the game
+     * @param teams The teams that will be set
      */
     public void setTeams(List<Team> teams) {
         this.teams = teams;
@@ -75,7 +76,9 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
+     * Create a team in the game
      * @param name the name of the team
+     * @return The team that was created
      */
     @Override
     public Team createTeam(String name) throws IllegalFormatException {
@@ -98,6 +101,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
+     * Assign a player to a team in the game
      * @param player the player that will be assigned to the team
      * @param team   the team that will get the player
      */
@@ -134,7 +138,6 @@ public class ClientGame implements IGame {
         clientMediator.processPanel(panel);
         return false;
     }
-
     /**
      * Author Kaj
      * Check if the game has ended
@@ -158,6 +161,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
+     * Register a invalid instruction when the player is running out of time
      * @param instruction the instruction that was to late
      */
     @Override
