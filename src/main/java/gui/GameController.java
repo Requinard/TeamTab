@@ -1,8 +1,6 @@
 package gui;
 
-import Game.Instruction;
 import Game.Panel;
-import Game.Player;
 import Game.Team;
 import gui.panel.IPanel;
 import javafx.application.Platform;
@@ -82,7 +80,7 @@ public class GameController implements Initializable {
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     *
+     * <p/>
      * start a timer for refreshView
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -145,6 +143,7 @@ public class GameController implements Initializable {
     /**
      * Sets the GameView
      * refreshes the View
+     *
      * @param gameView the view where the game is played
      */
     public void setView(GameView gameView) {
@@ -286,8 +285,7 @@ public class GameController implements Initializable {
      * //TODO fix it so it works for multiple teams
      * Sets the name of the teams that are playing
      */
-    private void setTeamNames()
-    {
+    private void setTeamNames() {
         lblTeamName1.setText(view.stageController.hostGame.getTeams().get(1).getName());
         lblTeamName2.setText(view.stageController.hostGame.getTeams().get(0).getName());
         log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.hostGame.getTeams().get(1).getName(), view.stageController.hostGame.getTeams().get(0).getName()});
@@ -295,6 +293,7 @@ public class GameController implements Initializable {
 
     /**
      * When button StartTimer is pressed start a timer which counts down the amount of time you have to fulfill a instruction
+     *
      * @param mouseEvent starts the timer for the game
      */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
@@ -317,11 +316,8 @@ public class GameController implements Initializable {
                         timeLabel.setText(Integer.toString(counter));
                     });
                     if (counter == 0) {
-                        //TODO replace this method with new method Kamil is going to commit
-                        Player player = StageController.currentPlayer;
-                        Instruction instruction = new Instruction(new Panel(1000, 0, 1, "Wrong Panel", null), 1, player);
-                        view.stageController.hostGame.registerInvalidInstruction(instruction);
-                        Team team = player.getTeam();
+                        view.stageController.hostGame.registerInvalidInstruction(StageController.currentPlayer.getActiveInstruction());
+                        Team team = StageController.currentPlayer.getTeam();
                         counter = team.getTime();
                     }
                 }
@@ -334,36 +330,37 @@ public class GameController implements Initializable {
     /**
      * Trigger for if a panel was pressed or a slider was used
      * sets panelPushed back to false after one time
+     *
      * @return true if a panel was pressed or used
      */
     private boolean correctIn() {
         if (panelPushed) {
             panelPushed = false;
-            log.log(Level.INFO, "panel is pushed");
+            log.log(Level.FINE, "panel is pushed");
             return true;
         }
-        log.log(Level.INFO, "panel is not pushed");
+        log.log(Level.FINE, "panel is not pushed");
         return false;
     }
 
     /**
-	 * Check if instructions was correctly completed
-	 * sets panelPused to true
-	 * If lives of a team is 0 change to ScoreView
-	 * @param panel pressed/used panel
-	 * @param sliderValue value of the panel
-	 */
+     * Check if instructions was correctly completed
+     * sets panelPused to true
+     * If lives of a team is 0 change to ScoreView
+     *
+     * @param panel       pressed/used panel
+     * @param sliderValue value of the panel
+     */
     public void checkInstruction(Panel panel, int sliderValue) {
 
         view.stageController.hostGame.processPanel(StageController.currentPlayer, panel);
         panelPushed = true;
         audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
         audioPlayer.play();
-        for (Team teams : view.stageController.hostGame.getTeams()) {
-            if (teams.getLives() <= 0) {
-                ScoreView scoreView = new ScoreView(view.stageController);
-                view.pass(scoreView);
-            }
+        if (view.stageController.hostGame.hasGameEnded()) {
+            ScoreView scoreView = new ScoreView(view.stageController);
+            view.pass(scoreView);
         }
+
     }
 }

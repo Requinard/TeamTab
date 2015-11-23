@@ -58,7 +58,7 @@ public class ScoreViewController implements Initializable {
     private void fillScoreBoard(){
         System.out.println("OK");
         System.out.println(StageController.playerName);
-        /*
+/*
         final ArrayList<String> scoreBoard = view.stageController.game.endGame(view.stageController.game.getTeamOfPlayer());
         Platform.runLater(new Runnable() {
             @Override
@@ -67,10 +67,7 @@ public class ScoreViewController implements Initializable {
                     scoreArea.appendText(score + "\n");
                 }
             }
-        });
-         Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: de scoreboard moet geset worden door .endGame() en .getTeamOfPlayer() te vervangen, de rest van de code is wel valide
-        */
+        });*/
     }
 
     /**
