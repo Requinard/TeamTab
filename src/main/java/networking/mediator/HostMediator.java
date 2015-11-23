@@ -60,7 +60,7 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     @Override
-    public void handleTeam(NetworkRequest networkRequest) {
+    public void handleTeams(NetworkRequest networkRequest) {
 
     }
 
