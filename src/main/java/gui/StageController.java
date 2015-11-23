@@ -1,6 +1,6 @@
 package gui;
 
-import Game.ClientGame;
+import Game.HostGame;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javassist.bytecode.stackmap.TypeData;
@@ -28,8 +28,10 @@ public class StageController {
     Stage stage;
     IView currentView;
     Thread gameThread;
-    ClientGame game;
-	ClientGame clientGame;
+    HostGame game;
+    HostGame hostGame;
+    private java.util.Timer timerRefresh;
+    private TimerTask timerTask;
     private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
 
     public StageController(Stage primaryStage) throws UnsupportedEncodingException {
@@ -90,6 +92,11 @@ public class StageController {
 	 */
 	public void setExistingGame(ClientGame clientGame) {
         this.clientGame = clientGame;
+	 *
+     * @param hostGame
+     */
+    public void setExistingGame(HostGame hostGame) {
+
 	}
 
 

@@ -1,6 +1,6 @@
 package Game.adapters;
 
-import Game.ClientGame;
+import Game.HostGame;
 import Game.Player;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class JsonAdapterTest {
 
         System.out.println(JsonAdapter.toString(p));
 
-        ClientGame g = new ClientGame();
+        HostGame g = new HostGame();
 
         System.out.println(JsonAdapter.toString(g.getPanels(), ArrayList.class));
     }

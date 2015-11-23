@@ -40,7 +40,7 @@ public interface IGame {
 	 */
 	void reset(boolean hard);
 
-	ClientGame startRound();
+	HostGame startRound();
 
 	/**
 	 *
