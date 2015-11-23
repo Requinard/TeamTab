@@ -60,6 +60,10 @@ public class NetworkRequest {
         this.payload = matcher.group(2);
     }
 
+    public NetworkMessage getNetworkMessage() {
+        return networkMessage;
+    }
+
     public RequestType getType() {
         return this.type;
     }
