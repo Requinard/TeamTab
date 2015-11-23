@@ -17,6 +17,8 @@ public class Player {
     private Team team;
     private Instruction activeInstruction;
 
+    private boolean playerStatus = false;
+
     /**
      * Constructor of the player
      * author Frank Hartman
@@ -27,6 +29,14 @@ public class Player {
         this.username = username;
         this.ip = ip;
         panels = new ArrayList<>();
+    }
+
+    /**
+     * Set the status of the player
+     * Author Frank Hartman
+     */
+    public void setPlayerStatus(boolean playerStatus) {
+        this.playerStatus = playerStatus;
     }
 
     /**
@@ -135,7 +145,7 @@ public class Player {
     /**
      * Author Kamil Wasylkiewicz
      * Check if the player currently has the exact same panel as parameter
-     * @param panel
+     * @param panel The panel to be set
      */
     public boolean hasPanel(Panel panel) {
         return panels.contains(panel);
