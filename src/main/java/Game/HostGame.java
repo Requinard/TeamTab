@@ -213,7 +213,10 @@ public class HostGame implements IGame {
         Instruction correctInstruction;
         //check if the pressed panel was from an active instruction
         correctInstruction = validateInstruction(player, panel);
+
         if (correctInstruction != null) {
+            //check if there is a win streak
+            changeTimeForTeam(player.getTeam(), 0);
             //list of correct instructions
             correctInstruction.setWasExecutedCorrectly(true);
             instructions.add(correctInstruction);
@@ -290,13 +293,31 @@ public class HostGame implements IGame {
      * @return true if the given team lost a life
      */
     private boolean changeTimeForTeam(Team team, int time) {
+        log.log(Level.INFO, "staring chang time for team");
         team.changeTime(time);
+        //win streak of 3, your team gets one second plus
+        if (team.getScore() % 3 == 0 && team.getTime() < 9 && team.getScore() != 0) {
+            team.changeTime(1);
+            log.log(Level.INFO, "win streak of 3");
+        }
+        //win streak of 5, every other team gets minus one second
+        if (team.getScore() % 5 == 0 && team.getScore() != 0) {
+            //for all other teams
+            for (Team team1 : teams) {
+                if (!team1.equals(team)) {
+                    team1.changeTime(-1);
+                }
+            }
+            log.log(Level.INFO, "win streak of 5");
+        }
 
-        if (team.getTime() <= 3) {
-            team.changeLives(-1);
-            // Start a new round when the
-            startRound();
-            return true;
+        for (Team team1 : teams) {
+            if (team1.getTime() <= 3) {
+                team1.changeLives(-1);
+                // Start a new round when the
+                startRound();
+                return true;
+            }
         }
         return false;
     }
