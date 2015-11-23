@@ -1,12 +1,19 @@
 package Game;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.Collection;
 import java.util.IllegalFormatException;
+import java.util.List;
 
 public class ClientGame implements IGame {
     @Override
     public Collection<Player> getPlayers() {
         return null;
+    }
+
+    public void setPlayers(List<Player> players) {
+        throw new NotImplementedException();
     }
 
     @Override
