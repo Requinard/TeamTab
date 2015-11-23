@@ -1,12 +1,30 @@
 package Game;
 
+import networking.mediator.ClientMediator;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IllegalFormatException;
 import java.util.List;
 
 public class ClientGame implements IGame {
+    public Player localePlayer;
+
+    private ClientMediator clientMediator;
+    private List<Team> teams;
+    private String hostIP;
+
+    public ClientGame() {
+        localePlayer = null;
+        clientMediator = new ClientMediator(this);
+        teams = new ArrayList<>();
+    }
+
+    public String getHostIP() {
+        return hostIP;
+    }
+
     @Override
     public Collection<Player> getPlayers() {
         return null;
@@ -18,7 +36,11 @@ public class ClientGame implements IGame {
 
     @Override
     public Collection<Team> getTeams() {
-        return null;
+        return this.teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     @Override
@@ -40,7 +62,9 @@ public class ClientGame implements IGame {
      */
     @Override
     public Player createPlayer(String username, String ip) {
-        return null;
+        Player player = new Player(username, ip);
+        clientMediator.createPlayer(player);
+        return player;
     }
 
     /**
@@ -49,7 +73,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public void assignTeam(Player player, Team team) {
-
+        clientMediator.assignTeam(team);
     }
 
     /**

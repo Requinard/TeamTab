@@ -35,6 +35,9 @@ public abstract class BaseMediator implements IMediator {
     private void handle(NetworkRequest networkRequest) {
         switch (networkRequest.getUrl()) {
             case "/player/":
+                handlePlayers(networkRequest);
+                break;
+
         }
     }
 }

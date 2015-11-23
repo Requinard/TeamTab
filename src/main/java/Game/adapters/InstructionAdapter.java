@@ -21,11 +21,11 @@ public class InstructionAdapter {
     /**
      * @param input String that needs to be turned into an instruction object
      */
-    public Instruction toObject(String input) {
+    public static Instruction toObject(String input) {
         return (Instruction) JsonAdapter.toObject(input, Instruction.class);
     }
 
-    public List<Instruction> toObjects(String input) {
+    public static List<Instruction> toObjects(String input) {
         return (List<Instruction>) JsonAdapter.toObject(input, ArrayList.class);
     }
 

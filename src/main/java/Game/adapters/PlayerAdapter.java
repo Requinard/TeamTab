@@ -17,14 +17,14 @@ public class PlayerAdapter {
     /**
      * @param player
      */
-    public String toString(Player player) {
+    public static String toString(Player player) {
         return JsonAdapter.toString(player, Player.class);
     }
 
     /**
      * @param input
      */
-    public Player toObject(String input) {
+    public static Player toObject(String input) {
         return (Player) JsonAdapter.toObject(input, Player.class);
     }
 
