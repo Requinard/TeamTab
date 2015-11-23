@@ -150,11 +150,11 @@ public class Team {
      */
     public List<Panel> generatePanels(List<Panel> gamePanels) {
         List<Panel> gamePanelsCopy = new ArrayList<Panel>();
-        this.panels = gamePanels;
         gamePanelsCopy.addAll(gamePanels);
         List<Panel> panelsGivenToPlayer;
         for (Player player : players) {
             panelsGivenToPlayer = player.generatePanels(gamePanels);
+            this.panels.addAll(player.getPanels());
             generateInstructionForPlayer(player);
             gamePanelsCopy.removeAll(panelsGivenToPlayer);
         }
