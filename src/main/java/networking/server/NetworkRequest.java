@@ -1,4 +1,4 @@
-package networking;
+package networking.server;
 
 import java.util.UnknownFormatConversionException;
 import java.util.regex.Matcher;
