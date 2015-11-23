@@ -36,10 +36,6 @@ public class HostGame implements IGame {
         return this.teams;
 	}
 
-    public List<Instruction> getInstructions() {
-        return this.instructions;
-    }
-
     /**
      * Gets all panels of the game
      * These are all the panels loaded from the CSV
@@ -304,5 +300,30 @@ public class HostGame implements IGame {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Gives a list with the score of every player in the game
+     * Author Frank Hartman
+     *
+     * @return A list with the players and there score
+     */
+    public List<String> getScoreboard() {
+        List<String> scoreboard = new ArrayList<>();
+
+        for (Player player : players) {
+            int playerScore = 0;
+            for (Instruction instruction : instructions) {
+                // Increase the score of the player if the instruction was executed correctly
+                if (instruction.getPlayer().equals(player) && instruction.getWasExecutedCorrectly())
+                    playerScore++;
+                else if (instruction.getPlayer().equals(player) && !instruction.getWasExecutedCorrectly())
+                    playerScore--;
+            }
+            // Add the team with the player and his score to the list
+            scoreboard.add(player.getTeam().getName() + " - " + player.getUsername() + " : " + playerScore);
+        }
+
+        return scoreboard;
     }
 }
