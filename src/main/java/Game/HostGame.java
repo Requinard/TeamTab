@@ -247,10 +247,22 @@ public class HostGame implements IGame {
      * Takes an instruction and marks it as invalid, thus generating a new instruction for a player
      *
      * @param instruction The instruction that needs to be marked as invalid     *
+     * @param player the player of which the instruction belongs
+     * @return true if instruction belongs to player and generates a new instruction
      */
     @Override
-	public boolean registerInvalidInstruction(Instruction instruction) {
-        throw new UnsupportedOperationException();
+    public boolean registerInvalidInstruction(Player player, Instruction instruction) {
+        log.log(Level.INFO, "registering invalid Instruction for " + player.getUsername() + " ,panel name " + instruction.getPanel().getText());
+
+        // controleer eerst of de player toegewezen was aan de betreffende instructie
+        if (instruction.getPlayer().equals(player)) {
+            // zet vervolgens dat de instructie niet juist is uitgevoerd en laat een nieuwe instructie genereren
+            instruction.setWasExecutedCorrectly(false);
+            // nieuwe instructie genereren
+            player.generateInstruction();
+            return true;
+        }
+        return false;
     }
 
 	/**

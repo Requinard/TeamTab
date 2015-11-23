@@ -150,6 +150,7 @@ public class Player {
         Random random = new Random();
         // Get all the team panels
         List<Panel> teamPanels = (List<Panel>) team.getPanels();
+
         // Get a random panel
         Panel instructionPanel = teamPanels.get(random.nextInt(panels.size()));
         // create a random between the min en max value of a panel, however random has no constructor with min and max value
@@ -161,6 +162,9 @@ public class Player {
         int intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
         // new instruction is made
         activeInstruction = new Instruction(instructionPanel, intendedValue, this);
+        if (team.getActiveInstructions().contains(activeInstruction)) {
+            generateInstruction();
+        }
         log.log(Level.INFO, "Instruction " + activeInstruction.getPanel().getText() + " set to " + activeInstruction.getIntendedValue());
 
         return activeInstruction;
