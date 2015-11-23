@@ -320,7 +320,7 @@ public class GameController implements Initializable {
                         //TODO replace this method with new method Kamil is going to commit
                         Player player = StageController.currentPlayer;
                         Instruction instruction = new Instruction(new Panel(1000, 0, 1, "Wrong Panel", null), 1, player);
-                        view.stageController.hostGame.registerInvalidInstruction(StageController.currentPlayer, instruction);
+                        view.stageController.hostGame.registerInvalidInstruction(instruction);
                         Team team = player.getTeam();
                         counter = team.getTime();
                     }
