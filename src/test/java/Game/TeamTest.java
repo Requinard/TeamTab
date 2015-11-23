@@ -156,19 +156,17 @@ public class TeamTest {
   @Test
     public void testGeneratePanels() throws Exception {
       team.addPlayer(player1);
+      List<Panel> createdPanels = new ArrayList<Panel>();
       // Team has exactly enough panels to distribute over the players
-      for (int i = 0; i < 12; i++) {
-          Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
-          listPanels.add(panel);
-      }
-      Assert.assertEquals("Panels are distributed over the teammembers", 0, team.generatePanels(listPanels).size());
-      // Team has too much panels to distribute over the players
       for (int i = 0; i < 14; i++) {
           Panel panel = new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider);
-          listPanels.add(panel);
+          createdPanels.add(panel);
       }
-      Assert.assertEquals("Panels are distributed over the teammembers", 2, team.generatePanels(listPanels).size());
+      //return all panels
+      Assert.assertEquals("Panels are distributed over the teammembers", 14, team.generatePanels(createdPanels).size());
 
+      //player only has 12
+      Assert.assertEquals("Player has to many, or not enough panels", 12, player1.getPanels().size());
   }
 
     /**
@@ -256,15 +254,18 @@ public class TeamTest {
 
     @Test
     public void testValidateInstruction() throws Exception {
-        Panel panel = new Panel(1, 1, 5, "test", PanelTypeEnum.HorizontalSlider);
-        Instruction instruction = new Instruction(panel, 1);
-        //removal of instruction can't be test because it still can't be added
-        //Assert.assertTrue("Instruction has never in the active instructions list", team.getActiveInstructions().contains(instruction));
-        //team.correctInstructionPreformed(instruction);
-        //Assert.assertTrue("Instruction has not been removed from active instructions list", !team.getActiveInstructions().contains(instruction));
-
-        //tests if the score is added
-        //Assert.assertEquals("score has not been added", 1, team.getScore());
+        for (int i = 0; i < 36; i++) {
+            Panel panel = new Panel(i, 0, 1, "Panel" + i, PanelTypeEnum.values()[1]);
+            listPanels.add(panel);
+        }
+        team.addPlayer(player1);
+        team.generatePanels(listPanels);
+        //gives a active instruction to player2 and adds instruction to list of active instructions
+        team.generateInstructionForPlayer(player1);
+        //checks if the instruction is valid, if so removes the instruction from the list of active instruction
+        Assert.assertNotNull("the activeInstruction of player1 is not in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
+        //checks if the remove instruction is still valid
+        Assert.assertNull("the activeInstruction of player1 is in the team list of active instructions", team.validateInstruction(player1.getActiveInstruction().getPanel()));
     }
 
     @Test

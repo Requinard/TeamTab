@@ -3,7 +3,6 @@ package gui;
 import Game.Player;
 import Game.Team;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -45,17 +44,9 @@ public class StartViewController implements Initializable {
      */
     public void initialize(URL location, ResourceBundle resources) {
 
-        buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonStartOnClick(event);
-            }
-        });
+        buttonStart.setOnMouseClicked(this::buttonStartOnClick);
 
-        buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonBackOnClick(event);
-            }
-        });
+        buttonBack.setOnMouseClicked(this::buttonBackOnClick);
 
         AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
         audioPlayer.play();
@@ -63,7 +54,7 @@ public class StartViewController implements Initializable {
 
     /**
      * Sets the startView
-     * @param startView
+     * @param startView     The startView for the player, the view where he can fill in username
      */
     public void setView(StartView startView) {
         view = startView;
@@ -71,38 +62,38 @@ public class StartViewController implements Initializable {
 
     /**
      * When button start is pressed checks if teanname is filled in and change to LobbyView
-     * @param mouseEvent
+     * @param mouseEvent    Sends the player to the lobbyView
      */
     public void buttonStartOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-                if (teamNameTextField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Kies een teamname");
-                } else if (teamNameTextField.getText().matches(pattern)) {
-                    JOptionPane.showMessageDialog(null, "Je string bevat karakters die niet toegestaan zijn!");
-                } else {
-                    String teamName = teamNameTextField.getText();
-                    System.out.println("StartView - Teamname is set to: " + teamName);
+        runnable = () -> {
+            if (teamNameTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Kies een teamname");
+            } else if (teamNameTextField.getText().matches(pattern)) {
+                JOptionPane.showMessageDialog(null, "Je string bevat karakters die niet toegestaan zijn!");
+            } else {
+                String teamName = teamNameTextField.getText();
+                System.out.println("StartView - Teamname is set to: " + teamName);
 
-                    //Team is created
-                    Team currentTeam = view.stageController.clientGame.createTeam(teamName);
-                    log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
+                //Team is created
+                Team currentTeam = view.stageController.hostGame.createTeam(teamName);
+                log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
-                    //Player is created
-                    view.stageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, teamName);
-                    log.log(Level.INFO, "Player {0} is created", view.stageController.currentPlayer.getUsername());
+                //Player is created
+                StageController.currentPlayer = view.stageController.hostGame.createPlayer(StageController.playerName, teamName);
+                log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
 
-                    //Player gets assigned to the team
-                    view.stageController.clientGame.assignTeam(view.stageController.currentPlayer,currentTeam);
-                    log.log(Level.INFO, "Player {0} is assigned to {1}",new Object[] {view.stageController.currentPlayer.getUsername(),view.stageController.currentPlayer.getTeam()});
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            LobbyView lobbyView = new LobbyView((view.stageController));
-                            view.pass(lobbyView);
-                            log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
-                        }
-                    });
-                }
+                //Player gets assigned to the team
+                view.stageController.hostGame.assignTeam(StageController.currentPlayer, currentTeam);
+                log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
+
+                //Testdata for second team is added
+                testData();
+
+                Platform.runLater(() -> {
+                    LobbyView lobbyView = new LobbyView((view.stageController));
+                    view.pass(lobbyView);
+                    log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
+                });
             }
         };
         runnable.run();
@@ -110,21 +101,31 @@ public class StartViewController implements Initializable {
 
     /**
      * When button back is pressed change to MainView
-     * @param mouseEvent
+     * @param mouseEvent    Brings back player from startview to mainview
      */
     public void buttonBackOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-               // view.stageController.game.reset();
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        MainView mainView = new MainView((view.stageController));
-                        view.pass(mainView);
-
-                    }
-                });
-            }
+        runnable = () -> {
+            // view.stageController.game.reset();
+            Platform.runLater(() -> {
+                MainView mainView = new MainView((view.stageController));
+                view.pass(mainView);
+                log.log(Level.INFO, "Going from TeamView to StartView succeeded");
+            });
         };
         runnable.run();
+    }
+
+    public void testData() {
+        log.log(Level.INFO, "Second team is being initialized");
+        //Team is created
+        Team currentTeam = view.stageController.hostGame.createTeam("Private");
+        log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
+
+        //Player is created
+        Player player = view.stageController.hostGame.createPlayer("Ryan", "Private");
+        log.log(Level.INFO, "Player {0} is created", player.getUsername());
+        //Player gets assigned to the team
+        view.stageController.hostGame.assignTeam(player, currentTeam);
+        log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
     }
 }

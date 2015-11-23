@@ -1,10 +1,10 @@
 package gui;
 
 import Game.HostGame;
+import Game.Player;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javassist.bytecode.stackmap.TypeData;
-import javazoom.jl.decoder.JavaLayerException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.UnsupportedEncodingException;
@@ -12,23 +12,17 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Game.*;
-
 /**
  * Created by Kevin on 5-10-2015.
  */
 public class StageController {
 
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
-    private java.util.Timer timerRefresh;
-    private TimerTask timerTask;
-
     static String playerName;
     static Player currentPlayer;
     Stage stage;
     IView currentView;
     Thread gameThread;
-    HostGame game;
     HostGame hostGame;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
@@ -39,7 +33,7 @@ public class StageController {
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
-        clientGame = new ClientGame();
+        hostGame = new HostGame();
         timerRefresh = new java.util.Timer();
 
         timerTask = new TimerTask() {
@@ -80,25 +74,17 @@ public class StageController {
      * Hard resets the whole game
      */
     public void resetGame(){
-        log.log(Level.INFO, "reset game for teams : {0}", clientGame.getTeams());
-        this.clientGame = new ClientGame();
+        log.log(Level.INFO, "reset game for teams : {0}", hostGame.getTeams());
+        this.hostGame = new HostGame();
     }
 
 
 	/**
      * Author Qun
 	 * This sets the game for the player
-	 * @param clientGame
-	 */
-	public void setExistingGame(ClientGame clientGame) {
-        this.clientGame = clientGame;
-	 *
-     * @param hostGame
+     * @param hostGame  The game
      */
     public void setExistingGame(HostGame hostGame) {
-
-	}
-
-
-
+        this.hostGame = hostGame;
+    }
 }
