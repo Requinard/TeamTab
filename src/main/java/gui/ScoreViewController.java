@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 
@@ -58,8 +59,8 @@ public class ScoreViewController implements Initializable {
     private void fillScoreBoard(){
         System.out.println("OK");
         System.out.println(StageController.playerName);
-/*
-        final ArrayList<String> scoreBoard = view.stageController.game.endGame(view.stageController.game.getTeamOfPlayer());
+
+        final List<String> scoreBoard = view.stageController.hostGame.getScoreboard();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +68,7 @@ public class ScoreViewController implements Initializable {
                     scoreArea.appendText(score + "\n");
                 }
             }
-        });*/
+        });
     }
 
     /**

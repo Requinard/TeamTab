@@ -358,6 +358,7 @@ public class GameController implements Initializable {
         audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
         audioPlayer.play();
         if (view.stageController.hostGame.hasGameEnded()) {
+            timerTask.cancel();
             ScoreView scoreView = new ScoreView(view.stageController);
             view.pass(scoreView);
         }
