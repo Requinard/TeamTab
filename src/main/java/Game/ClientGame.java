@@ -128,5 +128,6 @@ public class ClientGame implements IGame {
      */
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
+        clientMediator.registerInvalidInstruction(instruction);
     }
 }
