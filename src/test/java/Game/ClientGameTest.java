@@ -222,6 +222,26 @@ public class ClientGameTest {
 
     @Test
     public void testRegisterInvalidInstruction() throws Exception {
-
+        // create list of panels
+        List<Panel> listPanels = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            Panel panel = new Panel(i, 1, 5, "Slider1", PanelTypeEnum.HorizontalSlider);
+            // add panel to list
+            listPanels.add(panel);
+        }
+        // create player
+        Player player1 = game.createPlayer("Kamil", "0.0.0.0");
+        // create team
+        Team team1 = new Team("TestTeam");
+        // add player to team
+        team1.addPlayer(player1);
+        // generate panels for player
+        team1.generatePanels(listPanels);
+        // create instruciton
+        Instruction instruction = new Instruction(listPanels.get(1), 1, player1);
+        assertEquals(true, game.registerInvalidInstruction(player1, instruction));
+        // assert with different player that has not the instruction
+        Player player2 = game.createPlayer("NotSoKamil", "0.0.0.0");
+        assertEquals(false, game.registerInvalidInstruction(player2, instruction));
     }
 }
