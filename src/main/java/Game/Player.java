@@ -162,6 +162,9 @@ public class Player {
         int intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
         // new instruction is made
         activeInstruction = new Instruction(instructionPanel, intendedValue, this);
+        if (team.getActiveInstructions().contains(activeInstruction)) {
+            generateInstruction();
+        }
         log.log(Level.INFO, "Instruction " + activeInstruction.getPanel().getText() + " set to " + activeInstruction.getIntendedValue());
 
         return activeInstruction;
