@@ -265,7 +265,7 @@ public class HostGame implements IGame {
         instructions.add(instruction);
         changeTimeForTeam(team, -1);
         // Generate new instruction for the player
-        player.generateInstruction();
+        team.generateInstructionForPlayer(player);
     }
 
 	/**
