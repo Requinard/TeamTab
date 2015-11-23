@@ -242,9 +242,34 @@ public class HostGameTest {
         team1.generatePanels(listPanels);
         // create instruciton
         Instruction instruction = new Instruction(listPanels.get(1), 1, player1);
-        assertEquals(true, game.registerInvalidInstruction(player1, instruction));
-        // assert with different player that has not the instruction
-        Player player2 = game.createPlayer("NotSoKamil", "0.0.0.0");
-        assertEquals(false, game.registerInvalidInstruction(player2, instruction));
+        game.registerInvalidInstruction(instruction);
+        Assert.assertNotSame("The player did not get a new instruction", instruction, player1.getActiveInstruction());
+    }
+
+
+    @Test
+    public void testGetScoreboard() throws Exception {
+        Team team1 = game.createTeam("team1");
+        Team team2 = game.createTeam("team2");
+
+        Player player1 = game.createPlayer("player1", "127.0.0.1");
+        Player player2 = game.createPlayer("player2", "127.0.0.1");
+
+        game.assignTeam(player1, team1);
+        game.assignTeam(player2, team2);
+
+        game.startRound();
+
+        Instruction invalidInstruction = player1.getActiveInstruction();
+
+        game.registerInvalidInstruction(invalidInstruction);
+        game.processPanel(player2, player2.getActiveInstruction().getPanel());
+        game.processPanel(player2, player2.getActiveInstruction().getPanel());
+
+        List<String> scores = game.getScoreboard();
+        Assert.assertEquals("team1 - player1 : -1", scores.get(0));
+        Assert.assertEquals("team2 - player2 : 2", scores.get(1));
+
+
     }
 }

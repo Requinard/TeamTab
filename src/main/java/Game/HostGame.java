@@ -17,13 +17,13 @@ public class HostGame implements IGame {
     private List<Player> players;
     private List<Team> teams;
     private List<Panel> panels;
-    private List<Instruction> correctInstructions;
+    private List<Instruction> instructions;
 
     public HostGame() {
         players = new ArrayList<Player>();
         teams = new ArrayList<Team>();
         panels = new ArrayList<Panel>();
-        correctInstructions = new ArrayList<Instruction>();
+        instructions = new ArrayList<Instruction>();
 
         loadPanelsFromFile();
     }
@@ -190,7 +190,7 @@ public class HostGame implements IGame {
         // iterate over all teams
         for (Team team : teams) {
             // give a team first a hard reset
-            team.reset(true);
+            team.reset(false);
             // let the team give their players new panels
             team.generatePanels(panels);
         }
@@ -203,6 +203,7 @@ public class HostGame implements IGame {
      * this will be done with te validateInstruction method
      * If the instruction was correct a new instruction must be given to the player that had the active instruction.
      * Author Kaj
+     * Author Frank Hartman
      * @param player    player that pressed a panel
      * @param panel     The pressed panel
      * @return true if the pressed panel was correct
@@ -214,10 +215,14 @@ public class HostGame implements IGame {
         correctInstruction = validateInstruction(player, panel);
         if (correctInstruction != null) {
             //list of correct instructions
-            correctInstructions.add(correctInstruction);
+            correctInstruction.setWasExecutedCorrectly(true);
+            instructions.add(correctInstruction);
             //gives the player that had the instruction (not necessarily the one that pressed the panel) a new instruction
             player.getTeam().generateInstructionForPlayer(correctInstruction.getPlayer());
+        } else {
+            changeTimeForTeam(player.getTeam(), -1);
         }
+
         return correctInstruction != null;
     }
 
@@ -244,25 +249,23 @@ public class HostGame implements IGame {
 
     /**
      * Author Kamil Wasylkiewicz
+     * Author Frank Hartman
      * Takes an instruction and marks it as invalid, thus generating a new instruction for a player
      *
-     * @param instruction The instruction that needs to be marked as invalid     *
-     * @param player the player of which the instruction belongs
+     * @param instruction The instruction that needs to be marked as invalid
      * @return true if instruction belongs to player and generates a new instruction
      */
     @Override
-    public boolean registerInvalidInstruction(Player player, Instruction instruction) {
-        log.log(Level.INFO, "registering invalid Instruction for " + player.getUsername() + " ,panel name " + instruction.getPanel().getText());
-
-        // controleer eerst of de player toegewezen was aan de betreffende instructie
-        if (instruction.getPlayer().equals(player)) {
-            // zet vervolgens dat de instructie niet juist is uitgevoerd en laat een nieuwe instructie genereren
-            instruction.setWasExecutedCorrectly(false);
-            // nieuwe instructie genereren
-            player.generateInstruction();
-            return true;
-        }
-        return false;
+    public void registerInvalidInstruction(Instruction instruction) {
+        log.log(Level.INFO, "registering invalid Instruction for " + instruction.getPlayer().getUsername() + " ,panel name " + instruction.getPanel().getText());
+        Player player = instruction.getPlayer();
+        Team team = player.getTeam();
+        // The instruction was not executed correctly and will be set to false
+        instruction.setWasExecutedCorrectly(false);
+        instructions.add(instruction);
+        changeTimeForTeam(team, -1);
+        // Generate new instruction for the player
+        team.generateInstructionForPlayer(player);
     }
 
 	/**
@@ -276,5 +279,50 @@ public class HostGame implements IGame {
     private Instruction validateInstruction(Player player, Panel panel) {
         log.log(Level.INFO, "validating instruction for panel: {0} started", panel.getText());
         return player.getTeam().validateInstruction(panel);
+    }
+
+    /**
+     * Change the time for a team and check the amount of time
+     * Author Frank Hartman
+     *
+     * @param team The team that gets a different amount of time
+     * @param time The time amount of time
+     * @return true if the given team lost a life
+     */
+    private boolean changeTimeForTeam(Team team, int time) {
+        team.changeTime(time);
+
+        if (team.getTime() <= 3) {
+            team.changeLives(-1);
+            // Start a new round when the
+            startRound();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Gives a list with the score of every player in the game
+     * Author Frank Hartman
+     *
+     * @return A list with the players and there score
+     */
+    public List<String> getScoreboard() {
+        List<String> scoreboard = new ArrayList<>();
+
+        for (Player player : players) {
+            int playerScore = 0;
+            for (Instruction instruction : instructions) {
+                // Increase the score of the player if the instruction was executed correctly
+                if (instruction.getPlayer().equals(player) && instruction.getWasExecutedCorrectly())
+                    playerScore++;
+                else if (instruction.getPlayer().equals(player) && !instruction.getWasExecutedCorrectly())
+                    playerScore--;
+            }
+            // Add the team with the player and his score to the list
+            scoreboard.add(player.getTeam().getName() + " - " + player.getUsername() + " : " + playerScore);
+        }
+
+        return scoreboard;
     }
 }

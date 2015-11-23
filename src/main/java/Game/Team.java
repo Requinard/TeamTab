@@ -221,8 +221,8 @@ public class Team {
      * @return True if the team is still alive, false if team has lost
      */
     public boolean isAlive() {
-        if (getLives() <= 0) {
-            log.log(Level.INFO, "Team is alive");
+        if (getLives() > 0) {
+            log.log(Level.INFO, "Team has {0} lives", lives);
             return true;
         }
         log.log(Level.INFO, "Team is not alive");
@@ -237,9 +237,10 @@ public class Team {
      */
     public void reset(boolean hard) {
         // If it is a hard reset then reset the lives
-        if (hard)
+        if (hard) {
             lives = STARTLIVES;
-
+            score = 0;
+        }
         time = STARTTIME;
         log.log(Level.INFO, String.format("Team: %s has been reset, hard reset = %s", name, hard));
     }

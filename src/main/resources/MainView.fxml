@@ -10,15 +10,15 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-     <ImageView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+     <ImageView layoutX="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
        <image>
          <Image url="@images/MainScreen/MainScreen.jpg" />
        </image>
      </ImageView>
 
-     <TextField fx:id="userName" alignment="CENTER" layoutX="686.0" layoutY="405.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" promptText="User name" visible="true" AnchorPane.bottomAnchor="538.0" AnchorPane.leftAnchor="686.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="405.0">
+     <TextField fx:id="userName" alignment="CENTER" layoutX="686.0" layoutY="405.0" maxHeight="81.0" maxWidth="442.0" minHeight="81.0" minWidth="442.0" opacity="0.22" prefHeight="81.0" prefWidth="442.0" promptText="User name" visible="true" AnchorPane.leftAnchor="686.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="405.0">
          <font>
             <Font size="36.0" />
          </font>
@@ -30,7 +30,7 @@
             </DisplacementMap>
          </effect></TextField>
 
-     <Button fx:id="buttonJoin" ellipsisString="..." layoutX="171.0" layoutY="248.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" AnchorPane.bottomAnchor="641.0" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="618.0" AnchorPane.topAnchor="248.0">
+     <Button fx:id="buttonJoin" ellipsisString="..." layoutX="171.0" layoutY="248.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="248.0">
          <graphic>
          <ImageView fitHeight="127.0" fitWidth="475.0" focusTraversable="false" smooth="true" visible="true">
            <image>
@@ -39,7 +39,7 @@
          </ImageView>
          </graphic></Button>
 
-     <Button fx:id="buttonStart" ellipsisString="..." layoutX="673.0" layoutY="248.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" AnchorPane.bottomAnchor="651.0" AnchorPane.leftAnchor="673.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="248.0">
+     <Button fx:id="buttonStart" ellipsisString="..." layoutX="769.0" layoutY="248.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="511.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="248.0">
          <graphic>
          <ImageView fitHeight="117.0" fitWidth="475.0" focusTraversable="false" smooth="true" visible="true">
            <image>

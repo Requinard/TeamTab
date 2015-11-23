@@ -111,6 +111,7 @@ public class Player {
      * @return Panels that have been added to a player his panels
      */
     public java.util.List<Panel> generatePanels(List<Panel> teamPanels) {
+        this.panels.clear();
         final int PANELSPERPLAYER = 12;
         Random random = new Random();
         //throws a exception if there are to few panels to assign

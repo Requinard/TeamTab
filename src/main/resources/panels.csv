@@ -1,23 +1,52 @@
 #id,type,text,min,max
 1,1, "Detonate", 0, 1
 2,1, "Redwire", 0, 1
-3,1, "Detonate", 0, 1
-4,1, "Redwire", 0, 1
-5,1, "Detonate", 0, 1
-6,1, "Redwire", 0, 1
-7,1, "Detonate", 0, 1
-8,1, "Redwire", 0, 1
-9,1, "Detonate", 0, 1
-10,1, "Redwire", 0, 1
-11,1, "Detonate", 0, 1
-12,1, "Redwire", 0, 1
-13,1, "Detonate", 0, 1
-14,1, "Redwire", 0, 1
-15,1, "Detonate", 0, 1
-16,1, "Redwire", 0, 1
-17,1, "Detonate", 0, 1
-18,1, "Redwire", 0, 1
-19,1, "Detonate", 0, 1
-20,1, "Redwire", 0, 1
-21,1, "Detonate", 0, 1
-22,1, "Redwire", 0, 1
+3,0, "Yellow Button", 0, 1
+4,2, "Green slider", 2, 5
+5,2, "Yellow Slider", 2, 4
+6,0, "Blue Detonate", 0, 1
+7,2, "Blue Slider", 2, 5
+8,0, "Yellow wire", 0, 1
+9,0, "Blue wire", 0, 1
+10,0,"Green Button", 0, 1
+11,0,"Red Button", 0, 1
+12,0,"Green Light", 0, 1
+13,0,"Yellow Zone", 0, 1
+14,0,"Red Emergency Button", 0, 1
+15,0,"Green Emergency Button", 0, 1
+16,0,"Blue Emergency Button", 0, 1
+17,0,"Yellow Emergency Button", 0, 1
+18,0,"White Brake", 0, 1
+19,0,"Yellow Brake", 0, 1
+20,0,"Red Brake", 0, 1
+21,0,"Green Brake", 0, 1
+22,0,"Purple Brake", 0, 1
+23,0,"Purple Button", 0, 1
+24,1,"Purple wire", 2, 6
+25,0,"Meltdown", 0, 1
+26,0,"Emergency", 0, 1
+27,0,"Fire alert", 0, 1
+28,0,"Cool down", 0, 1
+29,2,"Heat up", 2, 4
+30,0,"Start evactuation", 0, 1
+31,0,"Save persons", 0, 1
+32,0,"Start evactuation plan", 0, 1
+33,0,"Set fire out", 0, 1
+34,0,"Call fire department", 0, 1
+35,0,"Escape", 0, 1
+36,2,"Break out", 2, 4
+37,0,"Emergency rations", 0, 1
+38,0,"Use hose", 0, 1
+39,0,"Close door", 0, 1
+40,0,"Prepare", 0, 1
+41,0,"Save the house", 0, 1
+42,0,"Save children", 0, 1
+43,1,"Set light", 2, 8
+44,1,"Set cooling", 2, 10
+45,1,"Set height waterlevel", 2, 6
+46,1,"Set Heat", 2, 9
+47,0,"Raise awareness", 0, 1
+48,0,"Get cooling", 0, 1
+49,0,"Get heat", 0, 1
+50,0,"Clear entrance", 0, 1
+

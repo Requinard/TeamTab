@@ -80,11 +80,9 @@ public class ClientGame implements IGame {
     }
 
     /**
-     * @param player      the player that was to late with the instruction
      * @param instruction the instruction that was to late
      */
     @Override
-    public boolean registerInvalidInstruction(Player player, Instruction instruction) {
-        return false;
+    public void registerInvalidInstruction(Instruction instruction) {
     }
 }

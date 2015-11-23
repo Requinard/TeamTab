@@ -1,11 +1,13 @@
 package gui;
 
 import Game.Panel;
+import Game.Team;
+import gui.panel.IPanel;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -16,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,7 +80,7 @@ public class GameController implements Initializable {
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     *
+     * <p/>
      * start a timer for refreshView
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -87,11 +91,7 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Start initializing the gamecontroller");
         panelFactory = new PanelFactory();
 
-        buttonStartTimer.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonStartTimerOnClick(event);
-            }
-        });
+        buttonStartTimer.setOnMouseClicked(this::buttonStartTimerOnClick);
 
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
@@ -132,17 +132,10 @@ public class GameController implements Initializable {
      * checks if grid with panels is filled
      */
     private void panelChecker() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                /*
-                if (!panelHolder.equals(view.stageController.game.getPlayerByName(StageController.playerName).getPanels())) {
-                    fillGridWithPanels();
-                    log.log(Level.INFO, "Gridview filled with panels");
-                }
-                Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo:De oude methode vervangenen met de nieuwe methodes
-                */
+        Platform.runLater(() -> {
+            if (!panelHolder.equals(StageController.currentPlayer.getPanels())) {
+                fillGridWithPanels();
+                log.log(Level.INFO, "Gridview filled with {0} panels", StageController.currentPlayer.getPanels().size());
             }
         });
     }
@@ -150,7 +143,8 @@ public class GameController implements Initializable {
     /**
      * Sets the GameView
      * refreshes the View
-     * @param gameView
+     *
+     * @param gameView the view where the game is played
      */
     public void setView(GameView gameView) {
         log.log(Level.FINER, "setView started");
@@ -171,8 +165,8 @@ public class GameController implements Initializable {
         gridPane.setMinSize(0, 0);
         gridPane.setAlignment(Pos.CENTER);
         log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
-     /*
-        final ArrayList<Panel> panels = view.stageController.game.getPlayerByName(StageController.playerName).getPanels();
+
+        final ArrayList<Panel> panels = (ArrayList<Panel>) StageController.currentPlayer.getPanels();
         panelHolder = panels;
         int column = 0;
         int row = 0;
@@ -192,9 +186,6 @@ public class GameController implements Initializable {
         }
         log.log(Level.INFO, "Loaded {0} panels in the gridPane", panels.size());
 
-           Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: de Arralist panels moet opgehaald worden vanuit de nieuwe game klassen, de rest van de code is wel nog valide
-        */
     }
 
     /**
@@ -203,15 +194,11 @@ public class GameController implements Initializable {
      */
     private void showPlayerInstruction() {
 
-        Platform.runLater(new Runnable() {
-            public void run() {
-                /*
-                if (view.stageController.game.getPlayerByName(StageController.playerName) != null)
-                    instructionLabel.setText(view.stageController.game.getPlayerByName(StageController.playerName).getInstruction().toString() + " to: " + view.stageController.game.getPlayerByName(StageController.playerName).getInstruction().getValue());
-             Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo:De oude methode vervangenen met de nieuwe methodes
-          */
-            }
+        Platform.runLater(() -> {
+            if (StageController.currentPlayer.getUsername() != null)
+                log.log(Level.FINE, "Retrieving instruction for player {0}", StageController.currentPlayer.getUsername());
+            instructionLabel.setText(StageController.currentPlayer.getActiveInstruction().getPanel().getText() + " to: " + StageController.currentPlayer.getActiveInstruction().getIntendedValue());
+            log.log(Level.FINE, "Instruction {0} is shown to player {0}", new Object[]{StageController.currentPlayer.getActiveInstruction().getPanel().getText(), StageController.currentPlayer.getUsername()});
         });
     }
 
@@ -220,15 +207,11 @@ public class GameController implements Initializable {
      * refreshes ever 30 ms
      */
     private void showTeamInstructionCount() {
-        Platform.runLater(new Runnable() {
-            public void run() {
-                /*
-                if (view.stageController.game.getPlayerByName(StageController.playerName) != null)
-                    labelCorrectInstructions.setText(view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getCorrectInstruction() + "");
-               Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo:De oude methode vervangenen met de nieuwe methodes
-            */
-            }
+        Platform.runLater(() -> {
+            if (StageController.currentPlayer.getUsername() != null)
+                log.log(Level.FINE, "Retrieving score for player {0}", StageController.currentPlayer.getUsername());
+            labelCorrectInstructions.setText(StageController.currentPlayer.getTeam().getScore() + "");
+            log.log(Level.FINE, "Team {0} has a scored {1} point", new Object[]{StageController.currentPlayer.getTeam().getName(), StageController.currentPlayer.getTeam().getScore()});
         });
     }
 
@@ -237,127 +220,109 @@ public class GameController implements Initializable {
      * refreshes ever 30 ms
      */
     private void showTeamLevens() {
-        Platform.runLater(new Runnable() {
-            public void run() {
-                int levensTeam1;
-                int levensTeam2;
-                /*
-                if (view.stageController.game.getPlayerByName(StageController.playerName) != null) {
-                    levensTeam1 = view.stageController.game.allTeams().get(0).getLives();
-                    levensTeam2 = view.stageController.game.allTeams().get(1).getLives();
+        Platform.runLater(() -> {
+            int levensTeam1;
+            int levensTeam2;
 
-                    switch (levensTeam2) {
-                        case 1:
-                            Team1Leven1.setVisible(false);
-                            Team1Leven2.setVisible(true);
-                            Team1Leven3.setVisible(true);
-                            break;
-                        case 2: {
-                            Team1Leven1.setVisible(false);
-                            Team1Leven2.setVisible(false);
-                            Team1Leven3.setVisible(true);
-                            break;
-                        }
-                        case 3: {
-                            Team1Leven3.setVisible(false);
-                            Team1Leven2.setVisible(false);
-                            Team1Leven1.setVisible(false);
-                            break;
-                        }
-                        default:
-                            Team1Leven1.setVisible(true);
-                            Team1Leven2.setVisible(true);
-                            Team1Leven3.setVisible(true);
-                            break;
+            if (StageController.currentPlayer.getUsername() != null) {
+                levensTeam1 = view.stageController.hostGame.getTeams().get(0).getLives();
+                levensTeam2 = view.stageController.hostGame.getTeams().get(1).getLives();
+
+                switch (levensTeam2) {
+                    case 1:
+                        Team1Leven1.setVisible(false);
+                        Team1Leven2.setVisible(true);
+                        Team1Leven3.setVisible(true);
+                        break;
+                    case 2: {
+                        Team1Leven1.setVisible(false);
+                        Team1Leven2.setVisible(false);
+                        Team1Leven3.setVisible(true);
+                        break;
                     }
-                    switch (levensTeam1) {
-                        case 1:
-                            audioPlayer.play();
-                            Team2Leven1.setVisible(false);
-                            Team2Leven2.setVisible(true);
-                            Team2Leven3.setVisible(true);
-                            break;
-                        case 2: {
-                            Team2Leven2.setVisible(false);
-                            Team2Leven1.setVisible(false);
-                            Team2Leven3.setVisible(true);
-                            break;
-                        }
-                        case 3: {
-                            Team2Leven3.setVisible(false);
-                            Team2Leven2.setVisible(false);
-                            Team2Leven1.setVisible(false);
-                            break;
-                        }
-                        default:
-                            Team2Leven1.setVisible(true);
-                            Team2Leven2.setVisible(true);
-                            Team2Leven3.setVisible(true);
-                            break;
+                    case 3: {
+                        Team1Leven3.setVisible(false);
+                        Team1Leven2.setVisible(false);
+                        Team1Leven1.setVisible(false);
+                        break;
                     }
-                       Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: De if statement goed maken en de levens van de teams setten. De rest van de code is valide
-                }*/
+                    default:
+                        Team1Leven1.setVisible(true);
+                        Team1Leven2.setVisible(true);
+                        Team1Leven3.setVisible(true);
+                        break;
+                }
+                switch (levensTeam1) {
+                    case 1:
+                        audioPlayer.play();
+                        Team2Leven1.setVisible(false);
+                        Team2Leven2.setVisible(true);
+                        Team2Leven3.setVisible(true);
+                        break;
+                    case 2: {
+                        Team2Leven2.setVisible(false);
+                        Team2Leven1.setVisible(false);
+                        Team2Leven3.setVisible(true);
+                        break;
+                    }
+                    case 3: {
+                        Team2Leven3.setVisible(false);
+                        Team2Leven2.setVisible(false);
+                        Team2Leven1.setVisible(false);
+                        break;
+                    }
+                    default:
+                        Team2Leven1.setVisible(true);
+                        Team2Leven2.setVisible(true);
+                        Team2Leven3.setVisible(true);
+                        break;
+                }
             }
         });
     }
 
     /**
+     * //TODO fix it so it works for multiple teams
      * Sets the name of the teams that are playing
      */
-    private void setTeamNames()
-    {
-        /*
-        lblTeamName1.setText(view.stageController.game.allTeams().get(1).getName());
-        lblTeamName2.setText(view.stageController.game.allTeams().get(0).getName());
-           Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: De labels voorzien van de juiste teamname
-        */
+    private void setTeamNames() {
+        lblTeamName1.setText(view.stageController.hostGame.getTeams().get(1).getName());
+        lblTeamName2.setText(view.stageController.hostGame.getTeams().get(0).getName());
+        log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.hostGame.getTeams().get(1).getName(), view.stageController.hostGame.getTeams().get(0).getName()});
     }
 
     /**
      * When button StartTimer is pressed start a timer which counts down the amount of time you have to fulfill a instruction
-     * @param mouseEvent
+     *
+     * @param mouseEvent starts the timer for the game
      */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
         buttonStartTimer.setVisible(false);
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                /*
-                timer = new Timer(1000, new ActionListener() {
+        runnable = () -> {
+            timer = new Timer(1000, new ActionListener() {
 
-                    int counter = view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getTime();
+                int counter = StageController.currentPlayer.getTeam().getTime();
 
-                    @Override
-                    public void actionPerformed(ActionEvent actionEvent) {
-
-                        counter--;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                //check if counter must be reset because a button or slider was used
-                                if (correctIn()) {
-                                    counter = view.stageController.game.getPlayerByName(StageController.playerName).getTeam().getTime();
-                                }
-                                progressBar.setProgress(counter * 0.1);
-                                timeLabel.setText(Integer.toString(counter));
-                            }
-                        });
-                        if (counter == 0) {
-                            //dit moet worden verandert door een subtract time methode
-                            Player player = view.stageController.game.getPlayerByName(StageController.playerName);
-
-                            view.stageController.game.instructionIsToLate(player);
-                            Team team = player.getTeam();
-                            counter = team.getTime();
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
+                    counter--;
+                    Platform.runLater(() -> {
+                        //check if counter must be reset because a button or slider was used
+                        if (correctIn()) {
+                            counter = StageController.currentPlayer.getTeam().getTime();
                         }
+                        progressBar.setProgress(counter * 0.1);
+                        timeLabel.setText(Integer.toString(counter));
+                    });
+                    if (counter == 0) {
+                        view.stageController.hostGame.registerInvalidInstruction(StageController.currentPlayer.getActiveInstruction());
+                        Team team = StageController.currentPlayer.getTeam();
+                        counter = team.getTime();
                     }
-                     Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: De methodes getPlayerByName vervangen en de methode instructionIsToLate vervangen
-                });*/
-                timer.start();
-            }
+                }
+            });
+            timer.start();
         };
         runnable.run();
     }
@@ -365,37 +330,38 @@ public class GameController implements Initializable {
     /**
      * Trigger for if a panel was pressed or a slider was used
      * sets panelPushed back to false after one time
+     *
      * @return true if a panel was pressed or used
      */
     private boolean correctIn() {
         if (panelPushed) {
             panelPushed = false;
+            log.log(Level.FINE, "panel is pushed");
             return true;
         }
+        log.log(Level.FINE, "panel is not pushed");
         return false;
     }
 
     /**
-	 * Check if instructions was correctly completed
-	 * sets panelPused to true
-	 * If lives of a team is 0 change to ScoreView
-	 * @param panel pressed/used panel
-	 * @param sliderValue value of the panel
-	 */
+     * Check if instructions was correctly completed
+     * sets panelPused to true
+     * If lives of a team is 0 change to ScoreView
+     *
+     * @param panel       pressed/used panel
+     * @param sliderValue value of the panel
+     */
     public void checkInstruction(Panel panel, int sliderValue) {
-        /*
-        view.stageController.game.checkInstruction(panel, view.stageController.game.getPlayerByName(StageController.playerName), sliderValue);
+
+        view.stageController.hostGame.processPanel(StageController.currentPlayer, panel);
         panelPushed = true;
         audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
         audioPlayer.play();
-        for (Team teams : view.stageController.game.allTeams()) {
-            if (teams.getLives() <= 0) {
-                ScoreView scoreView = new ScoreView(view.stageController);
-                view.pass(scoreView);
-            }
+        if (view.stageController.hostGame.hasGameEnded()) {
+            timerTask.cancel();
+            ScoreView scoreView = new ScoreView(view.stageController);
+            view.pass(scoreView);
         }
-         Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: De methodes getPlayerByName vervangen. Ook de methodes allTeams.
-        */
+
     }
 }

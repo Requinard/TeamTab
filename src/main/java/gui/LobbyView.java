@@ -48,7 +48,7 @@ public class LobbyView extends AbstractView implements IView {
 
         lobbyViewController = loader.getController();
         lobbyViewController.setView(this);
-        log.log(Level.INFO, "Loaded JoinView in view");
+        log.log(Level.INFO, "Loaded LobbyView in view");
         return true;
     }
 
