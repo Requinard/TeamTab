@@ -34,13 +34,13 @@ public class HostMediator extends BaseMediator implements IMediator {
         //TODO: start handling network requests
         switch (networkRequest.getUrl()) {
             case "/player/":
-                handlePlayer(networkRequest);
+                handlePlayers(networkRequest);
                 break;
 
         }
     }
-
-    private void handlePlayer(NetworkRequest networkRequest) {
+    @Override
+    public void handlePlayers(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.GET) {
             // Retrieve players
             List<Player> players = hostGame.getPlayers();
@@ -55,7 +55,22 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     @Override
-    public void handlePlayers(NetworkRequest networkRequest) {
+    public void handleInstruction(NetworkRequest networkRequest) {
+
+    }
+
+    @Override
+    public void handleTeam(NetworkRequest networkRequest) {
+
+    }
+
+    @Override
+    public void handlePanels(NetworkRequest networkRequest) {
+
+    }
+
+    @Override
+    public void handleStatus(NetworkRequest networkRequest) {
 
     }
 }

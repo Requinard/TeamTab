@@ -25,4 +25,24 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
         clientGame.setPlayers(players);
     }
+
+    @Override
+    public void handleInstruction(NetworkRequest networkRequest) {
+
+    }
+
+    @Override
+    public void handleTeam(NetworkRequest networkRequest) {
+
+    }
+
+    @Override
+    public void handlePanels(NetworkRequest networkRequest) {
+
+    }
+
+    @Override
+    public void handleStatus(NetworkRequest networkRequest) {
+
+    }
 }
