@@ -84,4 +84,10 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
         networkServer.send(request.toString(), clientGame.getHostIP());
     }
+
+    public void setPlayerStatus(Player localePlayer) {
+        NetworkRequest request = new NetworkRequest(RequestType.POST, "/players/changeStatus/", PlayerAdapter.toString(localePlayer));
+
+        networkServer.send(request.toString(), clientGame.getHostIP());
+    }
 }
