@@ -53,7 +53,9 @@ public class ClientGame implements IGame {
      */
     @Override
     public Team createTeam(String name) throws IllegalFormatException {
-        return null;
+        Team team = new Team(name);
+        clientMediator.createTeam(team);
+        return team;
     }
 
     /**
