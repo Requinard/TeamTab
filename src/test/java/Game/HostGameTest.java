@@ -15,16 +15,16 @@ import static junit.framework.Assert.assertNotNull;
  * Created by Kaj Suiker on 16-11-2015.
  */
 
-public class ClientGameTest {
+public class HostGameTest {
 
-    ClientGame game;
+    HostGame game;
     List<Panel> panelsList;
     List<Team> teamsList;
 
 
     @Before
     public void setUp() throws Exception {
-        game = new ClientGame();
+        game = new HostGame();
         panelsList = new ArrayList<>();
         teamsList = new ArrayList<>();
     }
@@ -180,7 +180,7 @@ public class ClientGameTest {
 
     @Test
     public void testStartRound() throws Exception {
-        // check if the panels al loaded from the file and added to the panels list in ClientGame
+        // check if the panels al loaded from the file and added to the panels list in HostGame
         panelsList = game.getPanels();
         assertNotNull(panelsList);
         // check if the method give all the team their panels

@@ -20,7 +20,6 @@ public class Player {
     /**
      * Constructor of the player
      * author Frank Hartman
-     *
      * @param username the username of the player
      * @param ip       the ip address of the player
      */
@@ -135,8 +134,7 @@ public class Player {
     /**
      * Author Kamil Wasylkiewicz
      * Check if the player currently has the exact same panel as parameter
-     *
-     * @param panel the panel that needs to be checked
+     * @param panel
      */
     public boolean hasPanel(Panel panel) {
         return panels.contains(panel);

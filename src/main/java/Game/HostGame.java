@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClientGame implements IGame {
+public class HostGame implements IGame {
 
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     private List<Player> players;
@@ -19,7 +19,7 @@ public class ClientGame implements IGame {
     private List<Panel> panels;
     private List<Instruction> correctInstructions;
 
-    public ClientGame() {
+    public HostGame() {
         players = new ArrayList<Player>();
         teams = new ArrayList<Team>();
         panels = new ArrayList<Panel>();
@@ -186,7 +186,7 @@ public class ClientGame implements IGame {
      * @return
      */
     @Override
-    public ClientGame startRound() {
+    public HostGame startRound() {
         // iterate over all teams
         for (Team team : teams) {
             // give a team first a hard reset

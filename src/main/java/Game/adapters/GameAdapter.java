@@ -1,12 +1,12 @@
 package Game.adapters;
 
-import Game.*;
+import Game.HostGame;
 
 public class GameAdapter {
 
 
 
-	public ClientGame toObject() {
+	public HostGame toObject() {
 		// TODO - implement GameAdapter.toObject
 		throw new UnsupportedOperationException();
 	}
@@ -15,7 +15,7 @@ public class GameAdapter {
 	 * 
 	 * @param game
 	 */
-	public String ToString(ClientGame game) {
+	public String ToString(HostGame game) {
 		throw new UnsupportedOperationException();
 	}
 

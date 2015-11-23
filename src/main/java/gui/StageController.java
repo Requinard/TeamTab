@@ -1,29 +1,26 @@
 package gui;
 
-import Game.ClientGame;
+import Game.HostGame;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javazoom.jl.decoder.JavaLayerException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.UnsupportedEncodingException;
 import java.util.TimerTask;
-import Game.*;
 
 /**
  * Created by Kevin on 5-10-2015.
  */
 public class StageController {
 
-    private java.util.Timer timerRefresh;
-    private TimerTask timerTask;
-
     static String playerName;
     Stage stage;
     IView currentView;
     Thread gameThread;
-    ClientGame game;
-	ClientGame clientGame;
+    HostGame game;
+    HostGame hostGame;
+    private java.util.Timer timerRefresh;
+    private TimerTask timerTask;
     private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
 
     public StageController(Stage primaryStage) throws UnsupportedEncodingException {
@@ -88,9 +85,9 @@ public class StageController {
 */
 	/**
 	 *
-	 * @param clientGame
-	 */
-	public void setExistingGame(ClientGame clientGame) {
+     * @param hostGame
+     */
+    public void setExistingGame(HostGame hostGame) {
 
 	}
 
