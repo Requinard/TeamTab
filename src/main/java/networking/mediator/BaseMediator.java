@@ -46,7 +46,7 @@ public abstract class BaseMediator implements IMediator {
             case "/panels/":
                 handleTeams(networkRequest);
                 break;
-            case "/status/":
+            default:
                 handleStatus(networkRequest);
                 break;
         }
