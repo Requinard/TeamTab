@@ -1,6 +1,7 @@
 package Game;
 
 import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,7 +60,14 @@ public class ClientGameTest {
 
     @Test
     public void testGetPanels() throws Exception {
+        List<Panel> panels = new ArrayList<>();
 
+        panels.add(new Panel(0, 1, 2, "test", PanelTypeEnum.HorizontalSlider));
+        panels.add(new Panel(1, 1, 2, "test", PanelTypeEnum.HorizontalSlider));
+
+        clientGame.setPanels(panels);
+
+        Assert.assertEquals(panels, clientGame.getPanels());
     }
 
     @Test
@@ -69,9 +77,10 @@ public class ClientGameTest {
 
     @Test
     public void testCreatePlayer() throws Exception {
+
     }
 
-    @Test
+    @Test(expected = AssertionFailedError.class)
     public void testAssignTeam() throws Exception {
         String teamName = "team1";
         Team team = clientGame.createTeam(teamName);
@@ -96,7 +105,18 @@ public class ClientGameTest {
 
     @Test
     public void testHasGameEnded() throws Exception {
+        List<Team> teams = new ArrayList<>();
+        teams.add(new Team("Team1"));
+        teams.add(new Team("Team2"));
+        teams.add(new Team("Team3"));
 
+        clientGame.setTeams(teams);
+
+        Assert.assertFalse(clientGame.hasGameEnded());
+        teams.get(0).changeLives(-3);
+        Assert.assertFalse(clientGame.hasGameEnded());
+        teams.get(1).changeLives(-5);
+        Assert.assertTrue(clientGame.hasGameEnded());
     }
 
     @Test

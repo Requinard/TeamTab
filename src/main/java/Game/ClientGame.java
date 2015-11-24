@@ -20,11 +20,13 @@ public class ClientGame implements IGame {
         localePlayer = null;
         clientMediator = new ClientMediator(this);
         teams = new ArrayList<>();
+        panels = new ArrayList<>();
     }
 
     /**
      * Author Frank Hartman
      * Gets the IP adress of the host
+     *
      * @return the IP of the host
      */
     public String getHostIP() {
@@ -33,6 +35,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Kaj
+     * gets all the players in the game
      * @return the players in the game
      */
     @Override
@@ -51,6 +54,8 @@ public class ClientGame implements IGame {
 
     /**
      * Author Kaj
+     * gets all the teams in the game
+     * @return the teams in the game
      */
     @Override
     public Collection<Team> getTeams() {
@@ -68,10 +73,21 @@ public class ClientGame implements IGame {
 
     /**
      * Author Kaj
+     * Gets all the panels in the game
+     * @return the panels of the game
      */
     @Override
     public Collection<Panel> getPanels() {
         return this.panels;
+    }
+
+    /**
+     * Author Kaj
+     * sets the list of panels
+     * @param panels list of panels of the game
+     */
+    public void setPanels(List<Panel> panels) {
+        this.panels = panels;
     }
 
     /**
@@ -89,6 +105,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Kaj
+     * create a player in the game
      * @param username the username of the player
      * @param ip       the ip adres of the player
      */
@@ -121,7 +138,8 @@ public class ClientGame implements IGame {
 
     /**
      * Author Kaj
-     * @return
+     * not necessary
+     * @return null not necessary
      */
     @Override
     public HostGame startRound() {
@@ -156,7 +174,6 @@ public class ClientGame implements IGame {
         }
 
         return count >= teams.size() - 1;
-
     }
 
     /**
@@ -166,14 +183,15 @@ public class ClientGame implements IGame {
      */
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
+        instruction = localePlayer.getActiveInstruction();
         clientMediator.registerInvalidInstruction(instruction);
     }
 
 
     /**
      * Author Kaj
-     *
-     * @param playerStatus
+     * change the status of the player to show that he is ready to start the game
+     * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
         localePlayer.setPlayerStatus(playerStatus);

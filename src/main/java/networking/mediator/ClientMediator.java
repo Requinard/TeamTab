@@ -33,6 +33,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
     public void handleInstruction(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.SEND) {
             Instruction instruction = InstructionAdapter.toObject(networkRequest.getPayload());
+            //not necessary
         }
     }
 
@@ -47,7 +48,11 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
     @Override
     public void handlePanels(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.SEND) {
+            List<Panel> panels = PanelAdapter.toObjects(networkRequest.getPayload());
 
+            clientGame.setPanels(panels);
+        }
     }
 
     @Override
