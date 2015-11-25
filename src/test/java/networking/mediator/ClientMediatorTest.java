@@ -7,7 +7,6 @@ import networking.server.NetworkRequest;
 import networking.server.RequestType;
 import org.junit.Before;
 import org.junit.Test;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ClientMediatorTest {
         clientMediator = new ClientMediator(clientGame);
     }
 
-    @Test(expected = NotImplementedException.class)
+    @Test
     public void testHandlePlayers() throws Exception {
         List<Player> playerList = new ArrayList<>();
 

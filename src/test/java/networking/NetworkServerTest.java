@@ -131,6 +131,7 @@ public class NetworkServerTest extends TestCase {
     }
 
     public void testConsumeRequest() throws Exception {
+        NetworkServer networkServer = new NetworkServer(8090);
         // Create a message
         networkServer.stopListeners();
         networkServer.startListeners();
