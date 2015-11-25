@@ -36,4 +36,104 @@ public class ClientMediatorTest {
 
         clientMediator.handlePlayers(networkRequest);
     }
+
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testHandleInstruction() throws Exception {
+
+    }
+
+    /**
+     * Author Frank Hartman
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testHandleTeams() throws Exception {
+
+    }
+
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testHandlePanels() throws Exception {
+
+    }
+
+    /**
+     * Author Frank Hartman
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testHandleStatus() throws Exception {
+
+    }
+
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testCreatePlayer() throws Exception {
+
+    }
+
+    /**
+     * Author Frank Hartman
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testCreateTeam() throws Exception {
+
+    }
+
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testAssignTeam() throws Exception {
+
+    }
+
+    /**
+     * Author Frank Hartman
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testProcessPanel() throws Exception {
+
+    }
+
+    /**
+     * Author Kaj
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRegisterInvalidInstruction() throws Exception {
+
+    }
+
+    /**
+     * Author Frank Hartman
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSetPlayerStatus() throws Exception {
+
+    }
 }
