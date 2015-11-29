@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ClientGame implements IGame {
     public Player localePlayer;
+    //instruction of this player
+    public Instruction localInstruction;
 
     private ClientMediator clientMediator;
     private List<Team> teams;

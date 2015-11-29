@@ -1,7 +1,8 @@
 package networking.mediator;
 
-import Game.ClientGame;
-import Game.Player;
+import Game.*;
+import Game.adapters.InstructionAdapter;
+import Game.adapters.PanelAdapter;
 import Game.adapters.PlayerAdapter;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
@@ -44,7 +45,11 @@ public class ClientMediatorTest {
      */
     @Test
     public void testHandleInstruction() throws Exception {
+        Instruction instruction = new Instruction(null, 1, null);
 
+        NetworkRequest networkRequest = new NetworkRequest(RequestType.SEND, "/instruction/", InstructionAdapter.toString(instruction));
+
+        clientMediator.handleInstruction(networkRequest);
     }
 
     /**
@@ -64,7 +69,15 @@ public class ClientMediatorTest {
      */
     @Test
     public void testHandlePanels() throws Exception {
+        List<Panel> panels = new ArrayList<>();
 
+        for (int i = 0; i < 12; i++) {
+            panels.add(new Panel(i, 1, 5, "panel", PanelTypeEnum.HorizontalSlider));
+        }
+
+        NetworkRequest networkRequest = new NetworkRequest(RequestType.SEND, "/panels/", PanelAdapter.toString(panels));
+
+        clientMediator.handlePanels(networkRequest);
     }
 
     /**
@@ -84,7 +97,9 @@ public class ClientMediatorTest {
      */
     @Test
     public void testCreatePlayer() throws Exception {
+        Player player = new Player("Kaj", "0.0.0.0");
 
+        clientMediator.createPlayer(player);
     }
 
     /**
@@ -104,7 +119,9 @@ public class ClientMediatorTest {
      */
     @Test
     public void testAssignTeam() throws Exception {
+        Team team = new Team("team1");
 
+        clientMediator.assignTeam(team);
     }
 
     /**
@@ -124,7 +141,13 @@ public class ClientMediatorTest {
      */
     @Test
     public void testRegisterInvalidInstruction() throws Exception {
+        Panel panel = new Panel(1, 0, 5, "test", PanelTypeEnum.HorizontalSlider);
 
+        Player player = new Player("Kaj", "0.0.0.0");
+
+        Instruction instruction = new Instruction(panel, 3, player);
+
+        clientMediator.registerInvalidInstruction(instruction);
     }
 
     /**

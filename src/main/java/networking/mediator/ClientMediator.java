@@ -33,7 +33,8 @@ public class ClientMediator extends BaseMediator implements IMediator {
     public void handleInstruction(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.SEND) {
             Instruction instruction = InstructionAdapter.toObject(networkRequest.getPayload());
-            //not necessary
+
+            clientGame.localInstruction = instruction;
         }
     }
 
