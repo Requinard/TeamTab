@@ -36,26 +36,36 @@ public class GameFinder {
         for (int i = 1; i < 255; i++) {
             String host = subnet + "." + prefix + "." + i;
             pool.execute(() -> {
-                    SocketAddress sockaddr = new InetSocketAddress(host, 8085);
-                    Socket socket = new Socket();
-                    try{
-                        socket.connect(sockaddr,timeout);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                openServers.add(host);
-                            }
-                        });
-                    }
-                    catch (IOException ex)
-                    {
-                        //unreachable host
-                    }
+                SocketAddress sockaddr = new InetSocketAddress(host, 8085);
+                Socket socket = new Socket();
+                try {
+                    socket.connect(sockaddr, timeout);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            openServers.add(host);
+                        }
+                    });
+                } catch (IOException ex) {
+                    //unreachable host
+                }
             });
             if (prefix < 224 && i == 254) {
                 i = 1;
                 prefix++;
             }
         }
+    }
+    public boolean findSingleGame(String ipAddress){
+        boolean connectionValid = false;
+        SocketAddress sockaddr = new InetSocketAddress(ipAddress, 8085);
+        Socket socket = new Socket();
+        try {
+            socket.connect(sockaddr, 1000);
+            connectionValid = true;
+        } catch (IOException ex) {
+            //unreachable host
+        }
+        return connectionValid;
     }
 }

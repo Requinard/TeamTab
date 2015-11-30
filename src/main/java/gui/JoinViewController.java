@@ -1,10 +1,7 @@
 package gui;
 
-import com.sun.deploy.net.protocol.ProtocolType;
-import io.netty.handler.codec.haproxy.HAProxyProxiedProtocol;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,12 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import networking.finder.GameFinder;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
+import javax.swing.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -37,9 +30,14 @@ public class JoinViewController implements Initializable {
     private TextField availableGames;
     @FXML
     private ListView listGames;
+    @FXML
+    private TextField tfCustomIP;
+    @FXML
+    private Button btnJoinCustom;
 
     private JoinView view;
     private Runnable runnable;
+    GameFinder gameFinder;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -50,13 +48,12 @@ public class JoinViewController implements Initializable {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     public void initialize(URL location, ResourceBundle resources) {
-
+        gameFinder = new GameFinder();
         buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonBackOnClick(event);
             }
         });
-
         buttonJoin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonJoinOnClick(event);
@@ -68,9 +65,20 @@ public class JoinViewController implements Initializable {
                 buttonSearchOnClick(event);
             }
         });
-
+        btnJoinCustom.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+            btnJoinCustom(event);
+            }
+        });
     }
-
+    private void btnJoinCustom(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+                searchOneGame();
+            }
+        };
+        runnable.run();
+    }
     /**
      * When button search is pressed look for available lobby's
      * @param mouseEvent
@@ -78,12 +86,11 @@ public class JoinViewController implements Initializable {
     private void buttonSearchOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-            searchGames();
+            searchAllGames();
             }
         };
         runnable.run();
     }
-
     /**
      * Sets the joinView
      * @param joinView
@@ -129,11 +136,22 @@ public class JoinViewController implements Initializable {
         };
         runnable.run();
     }
-    private void searchGames()
+    private void searchAllGames()
     {
-        GameFinder gameFinder = new GameFinder();
         ObservableList openServers = FXCollections.observableArrayList();
         gameFinder.findGames(openServers);
         listGames.setItems(openServers);
+    }
+    private void searchOneGame()
+    {
+        if(gameFinder.findSingleGame(tfCustomIP.getText()))
+        {
+            JOptionPane.showMessageDialog(null,"Game Found");
+            //naar de lobby van die game connecten
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Game Not Found");
+        }
     }
 }
