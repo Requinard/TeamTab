@@ -59,15 +59,17 @@ public class NetworkServer {
                 String full = recv(clientSocket);
 
                 // Read it into an object
-                NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
+                NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString().trim(), clientSocket.getLocalSocketAddress().toString().trim());
 
-                logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
+                logger.log(Level.INFO, "Server received the following data {0}", networkMessage);
                 synchronized (this) {
+                    System.out.println(networkMessage);
                     messageQueue.add(networkMessage);
                 }
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IO Exception on port", e);
+            System.out.println(e);
         }
     }
 

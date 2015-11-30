@@ -30,7 +30,9 @@ public class MediatorIntergrationTest {
     @Test
     public void joinGameTest() throws InterruptedException {
         clientGame.setHostIp("127.0.0.1");
-        hostGame.createTeam("appels");
+        //hostGame.createTeam("appels");
+
+
         clientGame.createPlayer("frank1", "127.0.0.1");
 
         Thread.sleep(2000);
@@ -40,7 +42,7 @@ public class MediatorIntergrationTest {
         Thread.sleep(2000);
 
         assertTrue(clientGame.getPlayers().size() > 0);
-        assertTrue(clientGame.getTeams().size() > 0);
+        //assertTrue(clientGame.getTeams().size() > 0);
 
 
     }
