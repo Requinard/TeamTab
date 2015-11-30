@@ -180,7 +180,7 @@ public class NetworkServer {
      * @return NetworkMessage that was first in the queue. Null if there was none
      */
     public NetworkMessage consumeMessage() {
-        logger.log(Level.INFO, "Network server is consuming a message");
+        logger.log(Level.FINER, "Network server is consuming a message");
         synchronized (this) {
             return messageQueue.poll();
         }
