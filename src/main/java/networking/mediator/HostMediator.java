@@ -171,11 +171,12 @@ public class HostMediator extends BaseMediator implements IMediator {
         if (networkRequest.getType() == RequestType.POST) {
             // converting the incoming json to panel
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
-            for (Player player : hostGame.getPlayers())
+            for (Player player : hostGame.getPlayers()) {
                 //Processes the panel, it check which player it is by checking his IP adress
-                if (player.getIp().equals(PlayerAdapter.toObject(networkRequest.getPayload()).getIp())) {
+                /*if (networkRequest.getNetworkMessage().getSender()) {
                     hostGame.processPanel(player, panel);
-                }
+                }*/
+            }
         }
     }
 
