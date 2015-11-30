@@ -4,6 +4,7 @@ import Game.*;
 import Game.adapters.InstructionAdapter;
 import Game.adapters.PanelAdapter;
 import Game.adapters.PlayerAdapter;
+import Game.adapters.TeamAdapter;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
 import org.junit.Before;
@@ -59,6 +60,14 @@ public class ClientMediatorTest {
      */
     @Test
     public void testHandleTeams() throws Exception {
+        Team team1 = new Team("team1");
+        Team team2 = new Team("team2");
+
+        List<Team> teams = new ArrayList<>();
+
+        NetworkRequest networkRequest = new NetworkRequest(RequestType.SEND, "/teams/", TeamAdapter.toString(teams));
+
+        clientMediator.handleStatus(networkRequest);
 
     }
 
@@ -109,7 +118,9 @@ public class ClientMediatorTest {
      */
     @Test
     public void testCreateTeam() throws Exception {
+        Team team = new Team("team");
 
+        clientMediator.createTeam(team);
     }
 
     /**
@@ -131,7 +142,9 @@ public class ClientMediatorTest {
      */
     @Test
     public void testProcessPanel() throws Exception {
+        Panel panel = new Panel(1, 0, 1, "panel", PanelTypeEnum.values()[1]);
 
+        clientMediator.processPanel(panel);
     }
 
     /**
@@ -157,6 +170,9 @@ public class ClientMediatorTest {
      */
     @Test
     public void testSetPlayerStatus() throws Exception {
+        Player player = new Player("Frank", "127.0.0.1");
+        player.setPlayerStatus(true);
 
+        clientMediator.setPlayerStatus(player);
     }
 }
