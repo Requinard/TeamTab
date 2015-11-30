@@ -21,6 +21,40 @@ public class HostMediator extends BaseMediator implements IMediator {
         this.hostGame = hostGame;
     }
 
+    /**
+     * Author Qun
+     * This method changes the status of the player
+     * So when all players are ready the game can be started
+     *
+     * @param networkRequest the incoming request to change playerstatus
+     */
+    public void handlePlayersChangeStatus(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.POST) {
+            // Makes a player object from the inputstream
+            Player incomingPlayer = PlayerAdapter.toObject(networkRequest.getPayload());
+            for (Player player : hostGame.getPlayers()) {
+                if (incomingPlayer.getIp().equals(player.getIp())) {
+                    player.setPlayerStatus(incomingPlayer.getPlayerStatus());
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Author Qun
+     * This method receives a networkrequest to create player
+     * After that it created the player with username and ip adress
+     *
+     * @param networkRequest the incoming request to create players
+     */
+    public void handlePlayersCreatePlayer(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.POST) {
+            // Makes a player object from the inputstream
+            Player player = PlayerAdapter.toObject(networkRequest.getPayload());
+            hostGame.createPlayer(player.getUsername(), player.getIp());
+        }
+    }
     @Override
     public void handlePlayers(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.GET) {
@@ -95,9 +129,9 @@ public class HostMediator extends BaseMediator implements IMediator {
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
             for (Player player : hostGame.getPlayers()) {
                 //Processes the panel, it check which player it is by checking his IP adress
-                /*if (networkRequest.getNetworkMessage().getSender()) {
+                if (player.getIp().equals(networkRequest.getNetworkMessage().getSender())) {
                     hostGame.processPanel(player, panel);
-                }*/
+                }
             }
         }
     }
