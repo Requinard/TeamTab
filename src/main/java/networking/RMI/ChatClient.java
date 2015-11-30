@@ -36,9 +36,10 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
      *
      * @param chatUI the GUI that will be for the user
      */
-    public void setGUI(ChatUI chatUI) {
+    public boolean setGUI(ChatUI chatUI) {
         log.log(Level.INFO, "ChatClient: gui is set for user " + name);
         this.chatUI = chatUI;
+        return true;
     }
 
     /**
@@ -49,9 +50,10 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
     @Override
-    public void tell(String tell) throws RemoteException {
+    public boolean tell(String tell) throws RemoteException {
         log.log(Level.INFO, "ChatClient: " + name + " says " + tell);
         chatUI.writeMsg(tell);
+        return true;
     }
 
     /**
@@ -74,8 +76,9 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
     @Override
-    public void updateUsers(Vector newUser) throws RemoteException {
+    public boolean updateUsers(Vector newUser) throws RemoteException {
         log.log(Level.INFO, "ChatClient: user updated: " + newUser.toString());
         chatUI.updateUsers(newUser);
+        return true;
     }
 }
