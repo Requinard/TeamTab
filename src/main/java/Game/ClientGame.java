@@ -23,6 +23,7 @@ public class ClientGame implements IGame {
         mediator = new ClientMediator(this);
         teams = new ArrayList<>();
         panels = new ArrayList<>();
+        players = new ArrayList<>();
 
         mediatorThread = mediator.mediate();
     }

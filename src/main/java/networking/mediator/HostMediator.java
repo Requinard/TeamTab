@@ -19,6 +19,8 @@ public class HostMediator extends BaseMediator implements IMediator {
     public HostMediator(HostGame hostGame) {
         super();
         this.hostGame = hostGame;
+
+
     }
 
     /**
@@ -41,8 +43,30 @@ public class HostMediator extends BaseMediator implements IMediator {
 
     }
 
+    private void handleAll() {
+        List<Player> players = hostGame.getPlayers();
+        List<Team> teams = hostGame.getTeams();
+        String json;
+        NetworkRequest send;
+
+
+        // send the players
+        json = PlayerAdapter.toString(players);
+        send = new NetworkRequest(RequestType.SEND, "/players/", json);
+        networkServer.send(send.toString(), "127.0.0.1");
+
+        // send the teams
+        json = TeamAdapter.toString(teams);
+        send = new NetworkRequest(RequestType.SEND, "/teams/", json);
+        networkServer.send(send.toString(), "127.0.0.1");
+
+
+    }
+
     @Override
     public void handlePlayers(NetworkRequest networkRequest) {
+
+
         if (networkRequest.getType() == RequestType.GET) {
             // Retrieve players
             List<Player> players = hostGame.getPlayers();
@@ -50,7 +74,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             // JSONify players
             String json = PlayerAdapter.toString(players);
 
-            NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
+            NetworkRequest response = new NetworkRequest(RequestType.SEND, "/players/", json);
 
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
 
@@ -60,8 +84,11 @@ public class HostMediator extends BaseMediator implements IMediator {
         if (networkRequest.getType() == RequestType.POST) {
             // Makes a player object from the inputstream
             Player player = PlayerAdapter.toObject(networkRequest.getPayload());
-            hostGame.createPlayer(player.getUsername(), player.getIp());
+            hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender());
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
+        handleAll();
     }
 
     @Override
@@ -76,11 +103,12 @@ public class HostMediator extends BaseMediator implements IMediator {
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
 
             networkServer.send(response.toString(), ip);
-        }
-        if (networkRequest.getType() == RequestType.POST) {
+        } else if (networkRequest.getType() == RequestType.POST) {
             //todo In de api kijken of het hier om gaat
             Instruction expiredInstruction = InstructionAdapter.toObject(networkRequest.getPayload());
             hostGame.registerInvalidInstruction(expiredInstruction);
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
@@ -94,6 +122,8 @@ public class HostMediator extends BaseMediator implements IMediator {
 
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
@@ -115,8 +145,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
 
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
-        }
-        if (networkRequest.getType() == RequestType.POST) {
+        } else if (networkRequest.getType() == RequestType.POST) {
             // converting the incoming json to panel
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
             for (Player player : hostGame.getPlayers()) {
@@ -125,6 +154,8 @@ public class HostMediator extends BaseMediator implements IMediator {
                     hostGame.processPanel(player, panel);
                 }
             }
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
@@ -132,6 +163,8 @@ public class HostMediator extends BaseMediator implements IMediator {
     public void handleStatus(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.GET) {
             //todo Deze zal pas later worden geimplementeerd op het moment dat we precies weten welke informatie nodig is
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
