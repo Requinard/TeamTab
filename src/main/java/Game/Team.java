@@ -153,7 +153,7 @@ public class Team {
         gamePanelsCopy.addAll(gamePanels);
         List<Panel> panelsGivenToPlayer;
         for (Player player : players) {
-            panelsGivenToPlayer = player.generatePanels(gamePanels);
+            panelsGivenToPlayer = player.generatePanels(gamePanelsCopy);
             this.panels.addAll(player.getPanels());
             generateInstructionForPlayer(player);
             gamePanelsCopy.removeAll(panelsGivenToPlayer);

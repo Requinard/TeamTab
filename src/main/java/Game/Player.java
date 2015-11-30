@@ -32,6 +32,15 @@ public class Player {
     }
 
     /**
+     * Author Qun
+     * gets the playerstatus from the player
+     * @return
+     */
+    public boolean getPlayerStatus() {
+        return playerStatus;
+    }
+
+    /**
      * Set the status of the player
      * Author Frank Hartman
      */
