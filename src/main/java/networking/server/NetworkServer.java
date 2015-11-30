@@ -21,7 +21,7 @@ public class NetworkServer {
 
     private PriorityBlockingQueue<NetworkMessage> messageQueue;
     private ExecutorService executorService = Executors.newFixedThreadPool(4);
-    private ServerSocket socket;
+    private ServerSocket  socket;
     /**
      * Port number
      */
