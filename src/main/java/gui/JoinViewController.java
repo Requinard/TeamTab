@@ -1,6 +1,8 @@
 package gui;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import networking.finder.GameFinder;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,9 +30,14 @@ public class JoinViewController implements Initializable {
     private TextField availableGames;
     @FXML
     private ListView listGames;
+    @FXML
+    private TextField tfCustomIP;
+    @FXML
+    private Button btnJoinCustom;
 
     private JoinView view;
     private Runnable runnable;
+    GameFinder gameFinder;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -39,13 +48,12 @@ public class JoinViewController implements Initializable {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     public void initialize(URL location, ResourceBundle resources) {
-
+        gameFinder = new GameFinder();
         buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonBackOnClick(event);
             }
         });
-
         buttonJoin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 buttonJoinOnClick(event);
@@ -57,9 +65,25 @@ public class JoinViewController implements Initializable {
                 buttonSearchOnClick(event);
             }
         });
-
+        btnJoinCustom.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+            btnJoinCustom(event);
+            }
+        });
     }
 
+    /**
+     * When button joinCustom is pressed it will connect to the given ip
+     * @param mouseEvent
+     */
+    private void btnJoinCustom(MouseEvent mouseEvent) {
+        runnable = new Runnable() {
+            public void run() {
+                searchOneGame();
+            }
+        };
+        runnable.run();
+    }
     /**
      * When button search is pressed look for available lobby's
      * @param mouseEvent
@@ -67,15 +91,11 @@ public class JoinViewController implements Initializable {
     private void buttonSearchOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-//                ArrayList<String> games = view.stageController.game.joinGameViewTeams();
-//                for(String s : games){
-//                    //listGames.set(s + "\n");
-//                }
+            searchAllGames();
             }
         };
         runnable.run();
     }
-
     /**
      * Sets the joinView
      * @param joinView
@@ -120,5 +140,32 @@ public class JoinViewController implements Initializable {
             }
         };
         runnable.run();
+    }
+
+    /**
+     * When this method is called the system will search for all available games on the subnet and will add these to the listview
+     * Author: Kevin
+     */
+    private void searchAllGames()
+    {
+        ObservableList openServers = FXCollections.observableArrayList();
+        gameFinder.findGames(openServers);
+        listGames.setItems(openServers);
+    }
+
+    /**
+     * When this mehod is called it will check if the textfield is empty
+     * if this is not the case it will search for an available game on the given IP address and connect to it if it's found
+     * Author: Kevin
+     */
+    private void searchOneGame() {
+        if (!tfCustomIP.getText().isEmpty()) {
+            if (gameFinder.findSingleGame(tfCustomIP.getText())) {
+                JOptionPane.showMessageDialog(null, "Game Found");
+                //naar de lobby van die game connecten
+            } else {
+                JOptionPane.showMessageDialog(null, "Game Not Found");
+            }
+        }
     }
 }

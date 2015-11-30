@@ -26,6 +26,8 @@ public class ClientMediator extends BaseMediator implements IMediator {
             List<Player> players = PlayerAdapter.toObjects(networkRequest.getPayload());
 
             clientGame.setPlayers(players);
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
@@ -44,6 +46,8 @@ public class ClientMediator extends BaseMediator implements IMediator {
             List<Team> teams = TeamAdapter.toObjects(networkRequest.getPayload());
 
             clientGame.setTeams(teams);
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
@@ -53,16 +57,28 @@ public class ClientMediator extends BaseMediator implements IMediator {
             List<Panel> panels = PanelAdapter.toObjects(networkRequest.getPayload());
 
             clientGame.setPanels(panels);
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
     @Override
     public void handleStatus(NetworkRequest networkRequest) {
+        return;
+    }
+
+    @Override
+    public void handleTeamsAssign(NetworkRequest networkRequest) {
+        return;
+    }
+
+    @Override
+    public void handleTeamsCreate(NetworkRequest networkRequest) {
 
     }
 
     public void createPlayer(Player player) {
-        NetworkRequest request = new NetworkRequest(RequestType.POST, "/players/createPlayer", PlayerAdapter.toString(player));
+        NetworkRequest request = new NetworkRequest(RequestType.POST, "/players/", PlayerAdapter.toString(player));
 
         networkServer.send(request.toString(), clientGame.getHostIP());
     }

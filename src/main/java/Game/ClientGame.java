@@ -8,21 +8,24 @@ import java.util.IllegalFormatException;
 import java.util.List;
 
 public class ClientGame implements IGame {
-    public Player localePlayer;
+    public Player localPlayer;
     //instruction of this player
     public Instruction localInstruction;
-
-    private ClientMediator clientMediator;
+    Thread mediatorThread;
+    private ClientMediator mediator;
     private List<Team> teams;
     private List<Player> players;
     private List<Panel> panels;
     private String hostIP;
 
     public ClientGame() {
-        localePlayer = null;
-        clientMediator = new ClientMediator(this);
+        localPlayer = null;
+        mediator = new ClientMediator(this);
         teams = new ArrayList<>();
         panels = new ArrayList<>();
+        players = new ArrayList<>();
+
+        mediatorThread = mediator.mediate();
     }
 
     /**
@@ -33,6 +36,10 @@ public class ClientGame implements IGame {
      */
     public String getHostIP() {
         return hostIP;
+    }
+
+    public void setHostIp(String hostIP) {
+        this.hostIP = hostIP;
     }
 
     /**
@@ -101,7 +108,7 @@ public class ClientGame implements IGame {
     @Override
     public Team createTeam(String name) throws IllegalFormatException {
         Team team = new Team(name);
-        clientMediator.createTeam(team);
+        mediator.createTeam(team);
         return team;
     }
 
@@ -114,7 +121,7 @@ public class ClientGame implements IGame {
     @Override
     public Player createPlayer(String username, String ip) {
         Player player = new Player(username, ip);
-        clientMediator.createPlayer(player);
+        mediator.createPlayer(player);
         return player;
     }
 
@@ -126,7 +133,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public void assignTeam(Player player, Team team) {
-        clientMediator.assignTeam(team);
+        mediator.assignTeam(team);
     }
 
     /**
@@ -155,7 +162,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public boolean processPanel(Player player, Panel panel) {
-        clientMediator.processPanel(panel);
+        mediator.processPanel(panel);
         return false;
     }
     /**
@@ -185,8 +192,8 @@ public class ClientGame implements IGame {
      */
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
-        instruction = localePlayer.getActiveInstruction();
-        clientMediator.registerInvalidInstruction(instruction);
+        instruction = localPlayer.getActiveInstruction();
+        mediator.registerInvalidInstruction(instruction);
     }
 
 
@@ -196,7 +203,7 @@ public class ClientGame implements IGame {
      * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
-        localePlayer.setPlayerStatus(playerStatus);
-        clientMediator.setPlayerStatus(localePlayer);
+        localPlayer.setPlayerStatus(playerStatus);
+        mediator.setPlayerStatus(localPlayer);
     }
 }

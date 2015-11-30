@@ -29,4 +29,9 @@ public class PanelAdapter {
 
     }
 
+    public static Panel toObjectsSinglePanel(String input) {
+        return (Panel) JsonAdapter.toObject(input, Panel.class);
+
+    }
+
 }

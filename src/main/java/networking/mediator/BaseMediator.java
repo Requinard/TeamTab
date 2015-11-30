@@ -23,32 +23,51 @@ public abstract class BaseMediator implements IMediator {
         }
     }
 
+    public Thread mediate() {
+        Thread thread = new Thread(() -> listen());
+        thread.start();
+
+        return thread;
+    }
+
     public void listen() {
         while (true) {
             NetworkRequest networkRequest = networkServer.consumeRequest();
-
+            //System.out.println(networkRequest);
             if (networkRequest != null)
                 handle(networkRequest);
         }
     }
 
     private void handle(NetworkRequest networkRequest) {
-        switch (networkRequest.getUrl()) {
-            case "/players/":
-                handlePlayers(networkRequest);
-                break;
-            case "/instruction/":
-                handleInstruction(networkRequest);
-                break;
-            case "/teams/":
-                handleTeams(networkRequest);
-                break;
-            case "/panels/":
-                handleTeams(networkRequest);
-                break;
-            default:
-                handleStatus(networkRequest);
-                break;
+        System.out.println("Message:");
+        System.out.println(networkRequest.toString());
+        System.out.println(networkRequest.getUrl());
+        System.out.println(networkRequest.getNetworkMessage());
+        System.out.println("////////////");
+        if (networkRequest.getUrl().equals("/players/")) {
+            handlePlayers(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/instruction/")) {
+            handleInstruction(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/teams/")) {
+            handleTeams(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/teams/assign")) {
+            handleTeamsAssign(networkRequest);
+
+            handleTeamsCreate(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/teams/create/")) {
+            handleTeamsCreate(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/panels/")) {
+            handlePanels(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/status/")) {
+            handleStatus(networkRequest);
+
         }
     }
 }

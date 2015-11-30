@@ -153,7 +153,7 @@ public class Team {
         gamePanelsCopy.addAll(gamePanels);
         List<Panel> panelsGivenToPlayer;
         for (Player player : players) {
-            panelsGivenToPlayer = player.generatePanels(gamePanels);
+            panelsGivenToPlayer = player.generatePanels(gamePanelsCopy);
             this.panels.addAll(player.getPanels());
             generateInstructionForPlayer(player);
             gamePanelsCopy.removeAll(panelsGivenToPlayer);
@@ -255,7 +255,7 @@ public class Team {
     public Instruction validateInstruction(Panel panel) {
         Instruction correctInstruction = null;
         for (Instruction instruction : activeInstructions) {
-            if (instruction.getPanel().equals(panel)) {
+            if (instruction.getPanel().getId() == (panel.getId())) {
                 score++;
                 correctInstruction = instruction;
                 activeInstructions.remove(instruction);

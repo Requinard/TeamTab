@@ -5,10 +5,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Comparator;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,9 +19,9 @@ import java.util.logging.Logger;
 public class NetworkServer {
     private static final Logger logger = Logger.getLogger(NetworkServer.class.getName());
 
-    private Queue<NetworkMessage> messageQueue;
+    private PriorityBlockingQueue<NetworkMessage> messageQueue;
     private ExecutorService executorService = Executors.newFixedThreadPool(4);
-    private ServerSocket socket;
+    private ServerSocket  socket;
     /**
      * Port number
      */
@@ -28,7 +29,8 @@ public class NetworkServer {
 
     public NetworkServer(int port) {
         this.port = port;
-        messageQueue = new ConcurrentLinkedQueue<>();
+        Comparator comparator = new PriorityComparator();
+        messageQueue = new PriorityBlockingQueue<>(100, comparator);
     }
 
     public Queue<NetworkMessage> getMessageQueue() {
@@ -60,6 +62,7 @@ public class NetworkServer {
                 NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
 
                 logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
+                System.out.println(networkMessage);
                 synchronized (this) {
                     messageQueue.add(networkMessage);
                 }
@@ -106,7 +109,8 @@ public class NetworkServer {
 
         // Initialize all variables
         executorService = Executors.newFixedThreadPool(THREADPOOLSIZE);
-        messageQueue = new ConcurrentLinkedQueue<>();
+        Comparator comparator = new PriorityComparator();
+        messageQueue = new PriorityBlockingQueue<>(100, comparator);
         socket = new ServerSocket(port);
 
         // Create runnable
@@ -177,7 +181,7 @@ public class NetworkServer {
      * @return NetworkMessage that was first in the queue. Null if there was none
      */
     public NetworkMessage consumeMessage() {
-        logger.log(Level.INFO, "Network server is consuming a message");
+        logger.log(Level.FINER, "Network server is consuming a message");
         synchronized (this) {
             return messageQueue.poll();
         }
@@ -198,6 +202,16 @@ public class NetworkServer {
             return null;
     }
 
+    public NetworkRequest requeueRequest(NetworkRequest request) {
+        NetworkMessage networkMessage = request.getNetworkMessage();
+
+        networkMessage.setHighPriority();
+
+        messageQueue.add(networkMessage);
+
+        return request;
+    }
+
     /**
      * Returns a boolean that determines whether there are messages waiting
      * author: David
@@ -209,3 +223,4 @@ public class NetworkServer {
         return messageQueue.peek() != null;
     }
 }
+
