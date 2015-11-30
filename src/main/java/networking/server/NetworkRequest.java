@@ -34,6 +34,7 @@ public class NetworkRequest {
      * @param networkMessage Message that was received by the server
      */
     public NetworkRequest(NetworkMessage networkMessage) throws UnknownFormatConversionException {
+        System.out.println(networkMessage.toString());
         this.networkMessage = networkMessage;
 
         // Parse the message
@@ -43,6 +44,7 @@ public class NetworkRequest {
 
         if (matcher.matches() == false)
             throw new UnknownFormatConversionException("Network request could not be parsed!");
+
 
         switch (matcher.group(1)) {
             case "POST":

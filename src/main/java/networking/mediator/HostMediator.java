@@ -110,6 +110,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
+        handleAll();
     }
 
     @Override
@@ -125,6 +126,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
+        handleAll();
     }
 
     /**
@@ -157,6 +159,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
+        handleAll();
     }
 
     @Override
@@ -166,6 +169,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
+        handleAll();
     }
 
     public void handleTeamsCreate(NetworkRequest networkRequest) {
@@ -180,6 +184,7 @@ public class HostMediator extends BaseMediator implements IMediator {
                 hostGame.assignTeam(getPlayer(networkRequest.getNetworkMessage().getSender()), team);
             }
         }
+        handleAll();
     }
 
     //gets player by IP

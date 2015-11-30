@@ -92,7 +92,7 @@ public class HostGame implements IGame {
         Player player = new Player(username, ip);
         // Add the player to the players in the game
         players.add(player);
-        //log.log(Level.INFO, "player: " + username + " added to list players");
+        log.log(Level.INFO, "player: " + username + " added to list players");
         return player;
     }
 
