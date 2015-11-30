@@ -29,9 +29,10 @@ public class GameFinder {
     public void findGames(ObservableList list) {
         ObservableList openServers = list;
 
-        String subnet = "145.93";
+        String subnet = "192.168";
         int timeout = 100;
-        int prefix = 96;
+        int prefix = 223 ;
+        
         for (int i = 1; i < 255; i++) {
             String host = subnet + "." + prefix + "." + i;
             pool.execute(() -> {
@@ -51,7 +52,7 @@ public class GameFinder {
                         //unreachable host
                     }
             });
-            if (prefix < 102 && i == 254) {
+            if (prefix < 224 && i == 254) {
                 i = 1;
                 prefix++;
             }
