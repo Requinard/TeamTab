@@ -42,8 +42,6 @@ public class NetworkRequest {
 
         Matcher matcher = p.matcher(networkMessage.getText());
 
-        System.out.println(matcher.group(2).toString() + "blablabla");
-
         if (matcher.matches() == false)
             throw new UnknownFormatConversionException("Network request could not be parsed!");
 
