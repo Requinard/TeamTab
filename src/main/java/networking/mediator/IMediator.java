@@ -14,4 +14,10 @@ public interface IMediator {
     void handleTeams(NetworkRequest networkRequest);
     void handlePanels(NetworkRequest networkRequest);
     void handleStatus(NetworkRequest networkRequest);
+
+    void handleTeamsAssign(NetworkRequest networkRequest);
+
+    void handleTeamsCreate(NetworkRequest networkRequest);
+
+    Thread mediate();
 }

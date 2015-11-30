@@ -23,6 +23,13 @@ public abstract class BaseMediator implements IMediator {
         }
     }
 
+    public Thread mediate() {
+        Thread thread = new Thread(() -> listen());
+        thread.start();
+
+        return thread;
+    }
+
     public void listen() {
         while (true) {
             NetworkRequest networkRequest = networkServer.consumeRequest();
@@ -33,8 +40,9 @@ public abstract class BaseMediator implements IMediator {
     }
 
     private void handle(NetworkRequest networkRequest) {
+
         switch (networkRequest.getUrl()) {
-            case "/players/":
+            case "/player/":
                 handlePlayers(networkRequest);
                 break;
             case "/instruction/":
@@ -43,10 +51,15 @@ public abstract class BaseMediator implements IMediator {
             case "/teams/":
                 handleTeams(networkRequest);
                 break;
-            case "/panels/":
-                handleTeams(networkRequest);
+            case "/teams/assign":
+                handleTeamsAssign(networkRequest);
+            case "/teams/create/":
+                handleTeamsCreate(networkRequest);
                 break;
-            default:
+            case "/panels/":
+                handlePanels(networkRequest);
+                break;
+            case "/status/":
                 handleStatus(networkRequest);
                 break;
         }

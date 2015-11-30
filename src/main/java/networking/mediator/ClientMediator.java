@@ -58,6 +58,16 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
     @Override
     public void handleStatus(NetworkRequest networkRequest) {
+        return;
+    }
+
+    @Override
+    public void handleTeamsAssign(NetworkRequest networkRequest) {
+        return;
+    }
+
+    @Override
+    public void handleTeamsCreate(NetworkRequest networkRequest) {
 
     }
 

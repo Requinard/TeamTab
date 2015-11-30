@@ -1,6 +1,8 @@
 package Game;
 
 import javassist.bytecode.stackmap.TypeData;
+import networking.mediator.HostMediator;
+import networking.mediator.IMediator;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
@@ -18,6 +20,8 @@ public class HostGame implements IGame {
     private List<Team> teams;
     private List<Panel> panels;
     private List<Instruction> instructions;
+    private IMediator mediator;
+    private Thread mediatorThread;
 
     public HostGame() {
         players = new ArrayList<Player>();
@@ -26,6 +30,10 @@ public class HostGame implements IGame {
         instructions = new ArrayList<Instruction>();
 
         loadPanelsFromFile();
+
+        mediator = new HostMediator(this);
+
+        mediatorThread = mediator.mediate();
     }
 
     public List<Player> getPlayers() {
