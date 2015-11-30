@@ -12,7 +12,7 @@ public class Player {
 
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     private String username;
-    private String ip = "127.0.0.1";
+    private String ip;
     private List<Panel> panels;
     private Team team;
     private Instruction activeInstruction;

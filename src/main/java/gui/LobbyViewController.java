@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javassist.bytecode.stackmap.TypeData;
@@ -35,6 +36,10 @@ public class LobbyViewController implements Initializable {
     private TextField playersTeam2Names;
     @FXML
     private Button buttonHaalTeamsOp;
+    @FXML
+    private Button buttonChat;
+    @FXML
+    private Label ipLabel;
     private LobbyView view;
     private Runnable runnable;
     private java.util.Timer timerRefresh;
@@ -43,7 +48,7 @@ public class LobbyViewController implements Initializable {
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     *
+     * <p>
      * Start a timer for initiateLobby
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -53,6 +58,8 @@ public class LobbyViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
+        buttonChat.setOnMouseClicked(this::buttonChatOnClick);
+
 
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
@@ -91,12 +98,14 @@ public class LobbyViewController implements Initializable {
                     }
                 }
             }
+            ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
     }
 
     /**
      * Sets the lobbyView
-     * @param lobbyView     The view of the lobby
+     *
+     * @param lobbyView The view of the lobby
      */
     public void setView(LobbyView lobbyView) {
         view = lobbyView;
@@ -104,7 +113,8 @@ public class LobbyViewController implements Initializable {
 
     /**
      * When button ready is pressed startGame and change to GameView
-     * @param mouseEvent        Passes the view to the gameView
+     *
+     * @param mouseEvent Passes the view to the gameView
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
@@ -112,6 +122,7 @@ public class LobbyViewController implements Initializable {
             view.stageController.hostGame.startRound();
             Platform.runLater(new Runnable() {
                 public void run() {
+                    StageController.chatAppDefusalSquad.closeChatApp();
                     GameView gameView = new GameView((view.stageController));
                     view.pass(gameView);
                     log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
@@ -123,13 +134,28 @@ public class LobbyViewController implements Initializable {
 
     /**
      * When button back pressed change to StartView
-     * @param mouseEvent    Returns the player from lobbyview to startview
+     *
+     * @param mouseEvent Returns the player from lobbyview to startview
      */
     private void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = () -> Platform.runLater(() -> {
             StartView startView = new StartView((view.stageController));
             view.pass(startView);
             log.log(Level.INFO, "Going from LobbyView to StartView succeeded");
+        });
+        runnable.run();
+    }
+
+    /**
+     * when the buttons is clicked it will start the chatApp GUI
+     * Author Kamil Wasylkiewicz
+     *
+     * @param mouseEvent
+     */
+    private void buttonChatOnClick(MouseEvent mouseEvent) {
+        log.log(Level.INFO, "Lobbyview: Chat app GUI is starting");
+        runnable = () -> Platform.runLater(() -> {
+            StageController.chatAppDefusalSquad.startChatApp();
         });
         runnable.run();
     }
