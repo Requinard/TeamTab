@@ -5,11 +5,16 @@ public class NetworkMessage {
     private String text;
     private String sender;
     private String receiver;
+    private boolean priority = false;
 
     public NetworkMessage(String text, String sender, String receiver) {
         this.text = text;
         this.sender = sender;
         this.receiver = receiver;
+    }
+
+    public boolean setHighPriority() {
+        return priority = true;
     }
 
     public String getText() {

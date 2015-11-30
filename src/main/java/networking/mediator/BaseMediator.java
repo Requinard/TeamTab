@@ -41,27 +41,29 @@ public abstract class BaseMediator implements IMediator {
 
     private void handle(NetworkRequest networkRequest) {
 
-        switch (networkRequest.getUrl()) {
-            case "/player/":
-                handlePlayers(networkRequest);
-                break;
-            case "/instruction/":
-                handleInstruction(networkRequest);
-                break;
-            case "/teams/":
-                handleTeams(networkRequest);
-                break;
-            case "/teams/assign":
-                handleTeamsAssign(networkRequest);
-            case "/teams/create/":
-                handleTeamsCreate(networkRequest);
-                break;
-            case "/panels/":
-                handlePanels(networkRequest);
-                break;
-            case "/status/":
-                handleStatus(networkRequest);
-                break;
+        if (networkRequest.getUrl().equals("/players/")) {
+            handlePlayers(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/instruction/")) {
+            handleInstruction(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/teams/")) {
+            handleTeams(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/teams/assign")) {
+            handleTeamsAssign(networkRequest);
+
+            handleTeamsCreate(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/teams/create/")) {
+            handleTeamsCreate(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/panels/")) {
+            handlePanels(networkRequest);
+
+        } else if (networkRequest.getUrl().equals("/status/")) {
+            handleStatus(networkRequest);
+
         }
     }
 }

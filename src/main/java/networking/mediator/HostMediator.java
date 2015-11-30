@@ -41,20 +41,6 @@ public class HostMediator extends BaseMediator implements IMediator {
 
     }
 
-    /**
-     * Author Qun
-     * This method receives a networkrequest to create player
-     * After that it created the player with username and ip adress
-     *
-     * @param networkRequest the incoming request to create players
-     */
-    public void handlePlayersCreatePlayer(NetworkRequest networkRequest) {
-        if (networkRequest.getType() == RequestType.POST) {
-            // Makes a player object from the inputstream
-            Player player = PlayerAdapter.toObject(networkRequest.getPayload());
-            hostGame.createPlayer(player.getUsername(), player.getIp());
-        }
-    }
     @Override
     public void handlePlayers(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.GET) {
@@ -69,6 +55,12 @@ public class HostMediator extends BaseMediator implements IMediator {
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
 
 
+        }
+
+        if (networkRequest.getType() == RequestType.POST) {
+            // Makes a player object from the inputstream
+            Player player = PlayerAdapter.toObject(networkRequest.getPayload());
+            hostGame.createPlayer(player.getUsername(), player.getIp());
         }
     }
 

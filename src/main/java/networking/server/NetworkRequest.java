@@ -44,7 +44,7 @@ public class NetworkRequest {
         if (matcher.matches() == false)
             throw new UnknownFormatConversionException("Network request could not be parsed!");
 
-        switch (matcher.group(0)) {
+        switch (matcher.group(1)) {
             case "POST":
                 this.type = RequestType.POST;
                 break;
@@ -56,8 +56,8 @@ public class NetworkRequest {
                 break;
         }
 
-        this.url = matcher.group(1);
-        this.payload = matcher.group(2);
+        this.url = matcher.group(2);
+        this.payload = matcher.group(3);
     }
 
     public NetworkMessage getNetworkMessage() {

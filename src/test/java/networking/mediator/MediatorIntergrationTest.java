@@ -33,7 +33,7 @@ public class MediatorIntergrationTest {
         clientGame.setHostIp("127.0.0.1");
         clientGame.createPlayer("frank1", "127.0.0.1");
 
-        Thread.sleep(5000);
+        Thread.sleep(20000);
 
         assertTrue(hostGame.getPlayers().size() > 0);
     }
