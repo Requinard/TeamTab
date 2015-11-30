@@ -255,7 +255,7 @@ public class Team {
     public Instruction validateInstruction(Panel panel) {
         Instruction correctInstruction = null;
         for (Instruction instruction : activeInstructions) {
-            if (instruction.getPanel().equals(panel)) {
+            if (instruction.getPanel().getId() == (panel.getId())) {
                 score++;
                 correctInstruction = instruction;
                 activeInstructions.remove(instruction);

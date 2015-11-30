@@ -1,6 +1,11 @@
 package gui;
 
+import com.sun.deploy.net.protocol.ProtocolType;
+import io.netty.handler.codec.haproxy.HAProxyProxiedProtocol;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,8 +13,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import networking.finder.GameFinder;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -67,10 +78,7 @@ public class JoinViewController implements Initializable {
     private void buttonSearchOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-//                ArrayList<String> games = view.stageController.game.joinGameViewTeams();
-//                for(String s : games){
-//                    //listGames.set(s + "\n");
-//                }
+            searchGames();
             }
         };
         runnable.run();
@@ -120,5 +128,12 @@ public class JoinViewController implements Initializable {
             }
         };
         runnable.run();
+    }
+    private void searchGames()
+    {
+        GameFinder gameFinder = new GameFinder();
+        ObservableList openServers = FXCollections.observableArrayList();
+        gameFinder.findGames(openServers);
+        listGames.setItems(openServers);
     }
 }
