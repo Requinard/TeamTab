@@ -71,6 +71,11 @@ public class JoinViewController implements Initializable {
             }
         });
     }
+
+    /**
+     * When button joinCustom is pressed it will connect to the given ip
+     * @param mouseEvent
+     */
     private void btnJoinCustom(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
@@ -136,22 +141,31 @@ public class JoinViewController implements Initializable {
         };
         runnable.run();
     }
+
+    /**
+     * When this method is called the system will search for all available games on the subnet and will add these to the listview
+     * Author: Kevin
+     */
     private void searchAllGames()
     {
         ObservableList openServers = FXCollections.observableArrayList();
         gameFinder.findGames(openServers);
         listGames.setItems(openServers);
     }
-    private void searchOneGame()
-    {
-        if(gameFinder.findSingleGame(tfCustomIP.getText()))
-        {
-            JOptionPane.showMessageDialog(null,"Game Found");
-            //naar de lobby van die game connecten
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null,"Game Not Found");
+
+    /**
+     * When this mehod is called it will check if the textfield is empty
+     * if this is not the case it will search for an available game on the given IP address and connect to it if it's found
+     * Author: Kevin
+     */
+    private void searchOneGame() {
+        if (!tfCustomIP.getText().isEmpty()) {
+            if (gameFinder.findSingleGame(tfCustomIP.getText())) {
+                JOptionPane.showMessageDialog(null, "Game Found");
+                //naar de lobby van die game connecten
+            } else {
+                JOptionPane.showMessageDialog(null, "Game Not Found");
+            }
         }
     }
 }

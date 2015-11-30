@@ -26,6 +26,10 @@ import java.util.concurrent.Future;
 public class GameFinder {
     ExecutorService pool = Executors.newFixedThreadPool(10);
 
+    /**
+     *Finds all the hosts which are on the subnet
+     *@param list is the listview which will receive all the ip's of available games
+     */
     public void findGames(ObservableList list) {
         ObservableList openServers = list;
 
