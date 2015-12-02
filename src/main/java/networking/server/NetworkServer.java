@@ -58,13 +58,15 @@ public class NetworkServer {
 
                 String full = recv(clientSocket);
 
-                // Read it into an object
-                NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
+                if (!full.isEmpty()) {
+                    // Read it into an object
+                    NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
 
-                logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
-                System.out.println(networkMessage);
-                synchronized (this) {
-                    messageQueue.add(networkMessage);
+                    logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
+                    System.out.println(networkMessage);
+                    synchronized (this) {
+                        messageQueue.add(networkMessage);
+                    }
                 }
             }
         } catch (IOException e) {
