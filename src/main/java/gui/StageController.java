@@ -1,46 +1,47 @@
 package gui;
 
+import Game.ClientGame;
 import Game.HostGame;
 import Game.Player;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javassist.bytecode.stackmap.TypeData;
+import networking.RMI.ChatAppDefusalSquad;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by Kevin on 5-10-2015.
  */
 public class StageController {
 
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     static String playerName;
     static Player currentPlayer;
+    static ChatAppDefusalSquad chatAppDefusalSquad;
     Stage stage;
     IView currentView;
     Thread gameThread;
+    ClientGame game;
+    ClientGame clientGame;
     HostGame hostGame;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
     private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
 
-    public StageController(Stage primaryStage) throws UnsupportedEncodingException {
+    public StageController(Stage primaryStage) throws UnsupportedEncodingException, UnknownHostException, java.rmi.UnknownHostException {
 
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
         hostGame = new HostGame();
+        chatAppDefusalSquad = new ChatAppDefusalSquad();
         timerRefresh = new java.util.Timer();
-
         timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
-                    //playBackgroundMusic();
                     audioPlayer.play();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -59,8 +60,8 @@ public class StageController {
     }
 
     public void loadScene(Scene scene) {
-        log.log(Level.INFO, "The {0} is loaded", stage.getTitle());
-        stage.setTitle("Defusal Squad startscreen");
+
+        stage.setTitle("Test");
         stage.setScene(scene);
         stage.show();
         stage.toFront();
@@ -69,22 +70,28 @@ public class StageController {
     public void refreshView() {
     }
 
-    /**
-     * Author Qun
-     * Hard resets the whole game
-     */
     public void resetGame(){
-        log.log(Level.INFO, "reset game for teams : {0}", hostGame.getTeams());
-        this.hostGame = new HostGame();
+        /*
+        this.game = new Game(this);
+           Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: er moet de methode aanageroepen worden van de clientgame die de game reset
+        */
     }
 
+    /*
+    public void setExistingGame(Game game){
+        this.game = game;
+    }
+        Deze code is uitgecomment zodat we weten welke oude methode er stond
+                todo: de clientgame moet geset worden
+*/
 
-	/**
-     * Author Qun
-	 * This sets the game for the player
-     * @param hostGame  The game
+    /**
+     * @param clientGame
      */
-    public void setExistingGame(HostGame hostGame) {
-        this.hostGame = hostGame;
+    public void setExistingGame(ClientGame clientGame) {
+
     }
+
+
 }

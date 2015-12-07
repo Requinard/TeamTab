@@ -11,7 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,10 +34,12 @@ public class StartViewController implements Initializable {
     private StartView view;
     private Runnable runnable;
 
+    private String ipAddress = "";
+
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     *
+     * <p>
      * start audio
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -54,7 +58,8 @@ public class StartViewController implements Initializable {
 
     /**
      * Sets the startView
-     * @param startView     The startView for the player, the view where he can fill in username
+     *
+     * @param startView The startView for the player, the view where he can fill in username
      */
     public void setView(StartView startView) {
         view = startView;
@@ -62,7 +67,8 @@ public class StartViewController implements Initializable {
 
     /**
      * When button start is pressed checks if teanname is filled in and change to LobbyView
-     * @param mouseEvent    Sends the player to the lobbyView
+     *
+     * @param mouseEvent Sends the player to the lobbyView
      */
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
@@ -78,8 +84,17 @@ public class StartViewController implements Initializable {
                 Team currentTeam = view.stageController.hostGame.createTeam(teamName);
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
+                // get real ipaddress of player
+                InetAddress localhost = null;
+                try {
+                    localhost = InetAddress.getLocalHost();
+                    ipAddress = localhost.getHostAddress();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
                 //Player is created
-                StageController.currentPlayer = view.stageController.hostGame.createPlayer(StageController.playerName, teamName);
+                StageController.currentPlayer = view.stageController.hostGame.createPlayer(StageController.playerName, ipAddress);
                 log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
 
                 //Player gets assigned to the team
@@ -88,6 +103,11 @@ public class StartViewController implements Initializable {
 
                 //Testdata for second team is added
                 testData();
+
+                // create and start the RMI registry with hostgame IP
+                StageController.chatAppDefusalSquad.setIpAddress(StageController.currentPlayer.getIp());
+                StageController.chatAppDefusalSquad.createAndBindRegistry();
+                log.log(Level.INFO, "RMI chat loaded");
 
                 Platform.runLater(() -> {
                     LobbyView lobbyView = new LobbyView((view.stageController));
@@ -101,7 +121,8 @@ public class StartViewController implements Initializable {
 
     /**
      * When button back is pressed change to MainView
-     * @param mouseEvent    Brings back player from startview to mainview
+     *
+     * @param mouseEvent Brings back player from startview to mainview
      */
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
