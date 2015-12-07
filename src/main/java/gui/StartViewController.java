@@ -55,9 +55,6 @@ public class StartViewController implements Initializable {
 
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
 
-        AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
-        audioPlayer.play();
-
         clientGame = new ClientGame();
         hostGame = new HostGame();
     }
@@ -93,18 +90,6 @@ public class StartViewController implements Initializable {
                 Team currentTeam = view.stageController.clientGame.createTeam(teamName);
                 Team otherTeam = view.stageController.clientGame.createTeam("Bots");
 
-                // Add current player
-                try {
-                    view.stageController.clientGame.setHostIp(InetAddress.getLocalHost().getHostAddress());
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-
-                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
-                //view.stageController.clientGame.assignTeam(player, currentTeam);
-
-                log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
-
                 // get real ipaddress of player
                 InetAddress localhost = null;
                 try {
@@ -113,6 +98,22 @@ public class StartViewController implements Initializable {
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
+
+                // Add current player
+                try {
+                    view.stageController.clientGame.setHostIp(InetAddress.getLocalHost().getHostAddress());
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+                view.stageController.clientGame.setHostIp(ipAddress);
+                log.log(Level.INFO, "Host ipaddress has been set to {0}", ipAddress);
+
+                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+                //view.stageController.clientGame.assignTeam(player, currentTeam);
+
+                log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
+
 
                 //Player is created
                 //StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);

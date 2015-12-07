@@ -11,17 +11,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javassist.bytecode.stackmap.TypeData;
 import networking.finder.GameFinder;
 
 import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
  */
 public class JoinViewController implements Initializable {
     GameFinder gameFinder;
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     @FXML
     private Button buttonBack;
     @FXML
@@ -97,6 +101,7 @@ public class JoinViewController implements Initializable {
             }
         };
         runnable.run();
+
     }
     /**
      * Sets the joinView
@@ -134,8 +139,11 @@ public class JoinViewController implements Initializable {
     private void buttonJoinOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-                view.stageController.clientGame.setHostIp(listGames.getSelectionModel().getSelectedItem().toString());
+                String hostIp = listGames.getSelectionModel().getSelectedItem().toString();
+                view.stageController.clientGame.setHostIp(hostIp);
+                log.log(Level.INFO, "Host ip on the client has been set to: {0}", hostIp );
                 view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+
                 Platform.runLater(new Runnable() {
                     public void run() {
                         LobbyView lobbyView = new LobbyView(view.stageController);
@@ -156,6 +164,7 @@ public class JoinViewController implements Initializable {
         ObservableList openServers = FXCollections.observableArrayList();
         gameFinder.findGames(openServers);
         listGames.setItems(openServers);
+        log.log(Level.INFO, "Amount of servers that have been found: {0}", openServers.size());
     }
 
     /**

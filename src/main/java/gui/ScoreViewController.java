@@ -7,15 +7,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javassist.bytecode.stackmap.TypeData;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Vito Corleone on 6-10-2015.
  */
 public class ScoreViewController implements Initializable {
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+
     @FXML
     private Button buttonBackLobby;
     @FXML
@@ -93,6 +98,8 @@ public class ScoreViewController implements Initializable {
             });
 
         };
+
+        log.log(Level.INFO, "Returning back to the lobbyview");
         runnable.run();
     }
 }

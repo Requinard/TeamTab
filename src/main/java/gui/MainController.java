@@ -7,16 +7,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by david on 6-10-15.
  */
 
 public class MainController implements Initializable {
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
 
     private final String pattern = "[ \n\r\t]+";
     @FXML
@@ -74,7 +78,8 @@ public class MainController implements Initializable {
                     StageController.playerName = userName.getText();
                     Platform.runLater(new Runnable() {
                         public void run() {
-                            System.out.println("MainView - Username is set to: " + StageController.playerName);
+                            log.log(Level.INFO, "Username has been set to : {0}", StageController.playerName);
+
                             JoinView joinView = new JoinView(view.stageController);
                             view.pass(joinView);
                         }
@@ -101,7 +106,7 @@ public class MainController implements Initializable {
                     Platform.runLater(new Runnable() {
                         public void run() {
                             StageController.playerName = userName.getText();
-                            System.out.println("MainView - Username is set to: " + StageController.playerName);
+                            log.log(Level.INFO, "Username is set to: " + StageController.playerName );
                             StartView startView = new StartView(view.stageController);
                             view.pass(startView);
                         }
