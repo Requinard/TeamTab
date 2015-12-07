@@ -101,7 +101,6 @@ public class ChatUI {
                     } catch (RemoteException ex) {
                         log.log(Level.INFO, "ChatUI: Cannot bind chat application");
                         log.log(Level.INFO, "ChatUI: RemoteException: " + ex.getMessage());
-
                         return;
                     } catch (NotBoundException ex) {
                         log.log(Level.INFO, "ChatUI: Cannot bind chat application");
@@ -148,7 +147,6 @@ public class ChatUI {
         if (chatClient != null) {
             chatServer.logOut(chatClient);
             log.log(Level.INFO, "ChatUI: client logging out");
-
         }
     }
 
@@ -179,9 +177,15 @@ public class ChatUI {
      *
      * @param st
      */
-    public void writeMsg(String st) {
+    public boolean writeMsg(String st) {
         log.log(Level.INFO, "ChatUI: writing " + st);
-        tx.setText(tx.getText() + "\n" + st);
+        try {
+            tx.setText(tx.getText() + "\n" + st);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     /**
@@ -191,7 +195,7 @@ public class ChatUI {
      * @param vector the vector with all the clients
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
-    public void updateUsers(Vector vector) throws RemoteException {
+    public boolean updateUsers(Vector vector) throws RemoteException {
         DefaultListModel listModel = new DefaultListModel();
         if (vector != null) {
             log.log(Level.INFO, "ChatUI: updating users");
@@ -201,10 +205,12 @@ public class ChatUI {
                     listModel.addElement(tmp);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return false;
                 }
             }
         }
         lst.setModel(listModel);
+        return true;
     }
 
 
@@ -308,8 +314,14 @@ public class ChatUI {
      * this method will close the GUI
      * Author Kamil
      */
-    public void closeChatApp() {
+    public boolean closeChatApp() {
         log.log(Level.INFO, "ChatUI: closing chatapp");
-        frame.setVisible(false);
+        try {
+            frame.setVisible(false);
+            return true;
+        } catch (Exception e) {
+            log.log(Level.INFO, "ChatUI: cannot close chatapp");
+            return false;
+        }
     }
 }

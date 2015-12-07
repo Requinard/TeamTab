@@ -42,7 +42,6 @@ public class StageController {
             @Override
             public void run() {
                 try {
-                    //playBackgroundMusic();
                     audioPlayer.play();
                 } catch (Exception e) {
                     e.printStackTrace();

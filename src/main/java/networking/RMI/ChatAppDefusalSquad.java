@@ -86,18 +86,19 @@ public class ChatAppDefusalSquad {
      * this method will start the chat GUI
      * Author Kamil
      */
-    public void startChatApp() {
+    public boolean startChatApp() {
         log.log(Level.INFO, "ChatAppDefusalSquad: statapplication is starting");
         chatUI = new ChatUI(ipAddress);
+        return true;
     }
 
     /**
      * This method will call the close GUI method
      * Author Kamil
      */
-    public void closeChatApp() {
+    public boolean closeChatApp() {
         log.log(Level.INFO, "ChatAppDefusalSquad: chatapplication is closing");
-        chatUI.closeChatApp();
+        return chatUI.closeChatApp();
     }
 
     /**

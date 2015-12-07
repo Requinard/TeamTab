@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 public class ChatServer extends UnicastRemoteObject implements IChatServer {
     // logger for the class
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+
     // vector object
     private Vector vectorsList = new Vector();
 
@@ -30,7 +31,6 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     /**
      * This method will login an new chatclient
      * Author Kamil
-     *
      * @param chatClient the client that needs to be logged in
      * @return true if the login was succesfull
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
@@ -45,24 +45,25 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     }
 
     /**
-     * This method will publis a given string to all the clients
-     * Author Kamil
-     *
+     * This method will publish a given string to all the clients
+     * Author Kamil     *
      * @param text the test message that needs to be published
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
     @Override
-    public void publish(String text) throws RemoteException {
+    public boolean publish(String text) throws RemoteException {
         log.log(Level.INFO, "ChatServer: all the clients get a update of the connected client");
         log.log(Level.INFO, "ChatServer: " + text);
         for (int i = 0; i < vectorsList.size(); i++) {
             try {
                 IChatClient tmp = (IChatClient) vectorsList.get(i);
                 tmp.tell(text);
+                return true;
             } catch (Exception e) {
                 log.log(Level.INFO, "ChatClient: cant publish message " + e.getMessage());
             }
         }
+        return false;
     }
 
     /**
@@ -95,11 +96,11 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
     @Override
-    public void logOut(IChatClient chatClient) throws RemoteException {
+    public boolean logOut(IChatClient chatClient) throws RemoteException {
         log.log(Level.INFO, "ChatServer: logged out " + chatClient.getName());
-
         publish(chatClient.getName() + " has disconnected.");
         vectorsList.remove(chatClient);
         getConnected();
+        return true;
     }
 }

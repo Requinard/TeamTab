@@ -39,6 +39,6 @@ public class ChatClientTest {
     public void testUpdateUsers() throws Exception {
         Vector vector = new Vector<>();
         chatClient.setGUI(chatUI);
-        Assert.assertEquals("Could not set the gui for the chatclient", true, chatClient.updateUsers(vector));
+        Assert.assertEquals("Could not update the Vectors", true, chatClient.updateUsers(vector));
     }
 }
