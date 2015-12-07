@@ -180,6 +180,7 @@ public class HostMediator extends BaseMediator implements IMediator {
     public void handleTeamsCreate(NetworkRequest networkRequest) {
         Team team = TeamAdapter.toObject(networkRequest.getPayload());
         hostGame.createTeam(team.getName());
+        handleAll();
     }
 
     public void handleTeamsAssign(NetworkRequest networkRequest) {
