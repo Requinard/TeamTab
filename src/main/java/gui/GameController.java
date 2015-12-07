@@ -229,8 +229,8 @@ public class GameController implements Initializable {
             int levensTeam2;
 
             if (StageController.currentPlayer.getUsername() != null) {
-                levensTeam1 = view.stageController.hostGame.getTeams().get(0).getLives();
-                levensTeam2 = view.stageController.hostGame.getTeams().get(1).getLives();
+                levensTeam1 = view.stageController.clientGame.getTeams().get(0).getLives();
+                levensTeam2 = view.stageController.clientGame.getTeams().get(1).getLives();
 
                 switch (levensTeam2) {
                     case 1:
@@ -290,9 +290,9 @@ public class GameController implements Initializable {
      * Sets the name of the teams that are playing
      */
     private void setTeamNames() {
-        lblTeamName1.setText(view.stageController.hostGame.getTeams().get(1).getName());
-        lblTeamName2.setText(view.stageController.hostGame.getTeams().get(0).getName());
-        log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.hostGame.getTeams().get(1).getName(), view.stageController.hostGame.getTeams().get(0).getName()});
+        lblTeamName1.setText(view.stageController.clientGame.getTeams().get(1).getName());
+        lblTeamName2.setText(view.stageController.clientGame.getTeams().get(0).getName());
+        log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.clientGame.getTeams().get(1).getName(), view.stageController.clientGame.getTeams().get(0).getName()});
     }
 
     /**
@@ -320,7 +320,7 @@ public class GameController implements Initializable {
                         timeLabel.setText(Integer.toString(counter));
                     });
                     if (counter == 0) {
-                        view.stageController.hostGame.registerInvalidInstruction(StageController.currentPlayer.getActiveInstruction());
+                        view.stageController.clientGame.registerInvalidInstruction(StageController.currentPlayer.getActiveInstruction());
                         Team team = StageController.currentPlayer.getTeam();
                         counter = team.getTime();
                     }
@@ -357,11 +357,11 @@ public class GameController implements Initializable {
      */
     public void checkInstruction(Panel panel, int sliderValue) {
 
-        view.stageController.hostGame.processPanel(StageController.currentPlayer, panel);
+        view.stageController.clientGame.processPanel(StageController.currentPlayer, panel);
         panelPushed = true;
         audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
         audioPlayer.play();
-        if (view.stageController.hostGame.hasGameEnded()) {
+        if (view.stageController.clientGame.hasGameEnded()) {
             timerTask.cancel();
             ScoreView scoreView = new ScoreView(view.stageController);
             view.pass(scoreView);

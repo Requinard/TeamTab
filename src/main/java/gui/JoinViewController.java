@@ -1,5 +1,6 @@
 package gui;
 
+import Game.ClientGame;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import java.util.ResourceBundle;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class JoinViewController implements Initializable {
+    GameFinder gameFinder;
     @FXML
     private Button buttonBack;
     @FXML
@@ -34,10 +36,9 @@ public class JoinViewController implements Initializable {
     private TextField tfCustomIP;
     @FXML
     private Button btnJoinCustom;
-
     private JoinView view;
     private Runnable runnable;
-    GameFinder gameFinder;
+    private ClientGame clientGame;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -70,6 +71,7 @@ public class JoinViewController implements Initializable {
             btnJoinCustom(event);
             }
         });
+        clientGame = new ClientGame();
     }
 
     /**
@@ -102,6 +104,7 @@ public class JoinViewController implements Initializable {
      */
     public void setView(JoinView joinView) {
         view = joinView;
+        view.stageController.setClientGame(clientGame);
     }
 
     /**
@@ -111,7 +114,8 @@ public class JoinViewController implements Initializable {
     private void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-
+                clientGame = null;
+                view.stageController.setClientGame(null);
                 Platform.runLater(new Runnable() {
                     public void run() {
                         MainView mainView = new MainView(view.stageController);
@@ -130,7 +134,8 @@ public class JoinViewController implements Initializable {
     private void buttonJoinOnClick(MouseEvent mouseEvent) {
         runnable = new Runnable() {
             public void run() {
-
+                view.stageController.clientGame.setHostIp(listGames.getSelectionModel().getSelectedItem().toString());
+                view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
                 Platform.runLater(new Runnable() {
                     public void run() {
                         LobbyView lobbyView = new LobbyView(view.stageController);

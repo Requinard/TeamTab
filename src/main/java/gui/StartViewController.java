@@ -1,6 +1,7 @@
 package gui;
 
-import Game.Player;
+import Game.ClientGame;
+import Game.HostGame;
 import Game.Team;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -33,6 +34,8 @@ public class StartViewController implements Initializable {
     private TextField teamNameTextField;
     private StartView view;
     private Runnable runnable;
+    private HostGame hostGame;
+    private ClientGame clientGame;
 
     private String ipAddress = "";
 
@@ -54,6 +57,9 @@ public class StartViewController implements Initializable {
 
         AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
         audioPlayer.play();
+
+        clientGame = new ClientGame();
+        hostGame = new HostGame();
     }
 
     /**
@@ -63,6 +69,9 @@ public class StartViewController implements Initializable {
      */
     public void setView(StartView startView) {
         view = startView;
+        view.stageController.setClientGame(clientGame);
+        view.stageController.setHostGame(hostGame);
+        view.stageController.resetGame();
     }
 
     /**
@@ -81,7 +90,7 @@ public class StartViewController implements Initializable {
                 System.out.println("StartView - Teamname is set to: " + teamName);
 
                 //Team is created
-                Team currentTeam = view.stageController.hostGame.createTeam(teamName);
+                Team currentTeam = view.stageController.clientGame.createTeam(teamName);
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
                 // get real ipaddress of player
@@ -94,15 +103,15 @@ public class StartViewController implements Initializable {
                 }
 
                 //Player is created
-                StageController.currentPlayer = view.stageController.hostGame.createPlayer(StageController.playerName, ipAddress);
+                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
                 log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
 
                 //Player gets assigned to the team
-                view.stageController.hostGame.assignTeam(StageController.currentPlayer, currentTeam);
+                view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);
                 log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
 
                 //Testdata for second team is added
-                testData();
+                //testData();
 
                 // create and start the RMI registry with hostgame IP
                 StageController.chatAppDefusalSquad.setIpAddress(StageController.currentPlayer.getIp());
@@ -127,6 +136,9 @@ public class StartViewController implements Initializable {
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
             // view.stageController.game.reset();
+            hostGame = null;
+            clientGame = null;
+            view.stageController.setClientGame(null);
             Platform.runLater(() -> {
                 MainView mainView = new MainView((view.stageController));
                 view.pass(mainView);
@@ -136,17 +148,19 @@ public class StartViewController implements Initializable {
         runnable.run();
     }
 
+    /*
     public void testData() {
         log.log(Level.INFO, "Second team is being initialized");
         //Team is created
-        Team currentTeam = view.stageController.hostGame.createTeam("Private");
+        Team currentTeam = view.stageController.clientGame.createTeam("Private");
         log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
         //Player is created
-        Player player = view.stageController.hostGame.createPlayer("Ryan", "Private");
+        Player player = view.stageController.clientGame.createPlayer("Ryan", "Private");
         log.log(Level.INFO, "Player {0} is created", player.getUsername());
         //Player gets assigned to the team
-        view.stageController.hostGame.assignTeam(player, currentTeam);
+        view.stageController.clientGame.assignTeam(player, currentTeam);
         log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
     }
+    */
 }

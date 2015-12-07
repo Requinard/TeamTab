@@ -23,7 +23,6 @@ public class StageController {
     Stage stage;
     IView currentView;
     Thread gameThread;
-    ClientGame game;
     ClientGame clientGame;
     HostGame hostGame;
     private java.util.Timer timerRefresh;
@@ -35,6 +34,7 @@ public class StageController {
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
+        clientGame = new ClientGame();
         hostGame = new HostGame();
         chatAppDefusalSquad = new ChatAppDefusalSquad();
         timerRefresh = new java.util.Timer();
@@ -49,6 +49,14 @@ public class StageController {
             }
         };
         timerRefresh.schedule(timerTask, 0, 20000);
+    }
+
+    public void setClientGame(ClientGame clientGame) {
+        this.clientGame = clientGame;
+    }
+
+    public void setHostGame(HostGame hostGame) {
+        this.hostGame = hostGame;
     }
 
     public void loadScene(@NotNull IView nextView) {

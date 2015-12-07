@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 
@@ -60,7 +59,8 @@ public class ScoreViewController implements Initializable {
         System.out.println("OK");
         System.out.println(StageController.playerName);
 
-        final List<String> scoreBoard = view.stageController.hostGame.getScoreboard();
+        /*
+        final List<String> scoreBoard = view.stageController.clientGame.getScoreboard();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -69,6 +69,7 @@ public class ScoreViewController implements Initializable {
                 }
             }
         });
+        */
     }
 
     /**
@@ -85,7 +86,7 @@ public class ScoreViewController implements Initializable {
      */
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
-            view.stageController.hostGame.reset(true);
+            view.stageController.clientGame.reset(true);
             Platform.runLater(() -> {
                 LobbyView lobbyView = new LobbyView((view.stageController));
                 view.pass(lobbyView);

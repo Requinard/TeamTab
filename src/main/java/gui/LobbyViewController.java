@@ -78,7 +78,7 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
         Platform.runLater(() -> {
             log.log(Level.FINE, "Lobby is being initialized");
-            for (Player currentPlayer : view.stageController.hostGame.getPlayers()) {
+            for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
                 if (currentPlayer.getUsername().equals(StageController.currentPlayer.getUsername())) {
                     team1Name.setText(currentPlayer.getTeam().getName());
                     log.log(Level.FINER, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
@@ -118,8 +118,8 @@ public class LobbyViewController implements Initializable {
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
-            view.stageController.hostGame.reset(true);
-            view.stageController.hostGame.startRound();
+            view.stageController.clientGame.reset(true);
+            view.stageController.clientGame.startRound();
             Platform.runLater(new Runnable() {
                 public void run() {
                     StageController.chatAppDefusalSquad.closeChatApp();

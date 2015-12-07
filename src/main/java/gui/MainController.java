@@ -100,9 +100,8 @@ public class MainController implements Initializable {
                 } else {
                     Platform.runLater(new Runnable() {
                         public void run() {
-                            view.stageController.resetGame();
-                            view.stageController.playerName = userName.getText();
-                            System.out.println("MainView - Username is set to: " + view.stageController.playerName);
+                            StageController.playerName = userName.getText();
+                            System.out.println("MainView - Username is set to: " + StageController.playerName);
                             StartView startView = new StartView(view.stageController);
                             view.pass(startView);
                         }

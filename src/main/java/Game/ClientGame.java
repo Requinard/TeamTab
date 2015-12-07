@@ -3,7 +3,6 @@ package Game;
 import networking.mediator.ClientMediator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.IllegalFormatException;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class ClientGame implements IGame {
      * @return the players in the game
      */
     @Override
-    public Collection<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return this.players;
     }
 
@@ -63,6 +62,7 @@ public class ClientGame implements IGame {
      */
     public void setPlayers(List<Player> players) {
         this.players = players;
+        System.out.println("fsfasfafs");
     }
 
     /**
@@ -71,7 +71,7 @@ public class ClientGame implements IGame {
      * @return the teams in the game
      */
     @Override
-    public Collection<Team> getTeams() {
+    public List<Team> getTeams() {
         return this.teams;
     }
 
@@ -90,7 +90,7 @@ public class ClientGame implements IGame {
      * @return the panels of the game
      */
     @Override
-    public Collection<Panel> getPanels() {
+    public List<Panel> getPanels() {
         return this.panels;
     }
 
