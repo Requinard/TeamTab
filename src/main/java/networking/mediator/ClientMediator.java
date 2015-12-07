@@ -5,9 +5,13 @@ import Game.adapters.InstructionAdapter;
 import Game.adapters.PanelAdapter;
 import Game.adapters.PlayerAdapter;
 import Game.adapters.TeamAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -30,6 +34,10 @@ public class ClientMediator extends BaseMediator implements IMediator {
             List<Player> players = PlayerAdapter.toObjects(networkRequest.getPayload());
 
             clientGame.setPlayers(players);
+
+            NetworkRequest getTeamRequest = new NetworkRequest(RequestType.GET, "/teams/players/", null);
+
+            networkServer.sendRequest(getTeamRequest, networkRequest.getNetworkMessage().getSender());
         } else {
             networkServer.requeueRequest(networkRequest);
         }
@@ -41,6 +49,20 @@ public class ClientMediator extends BaseMediator implements IMediator {
             Instruction instruction = InstructionAdapter.toObject(networkRequest.getPayload());
 
             clientGame.localInstruction = instruction;
+        }
+    }
+
+    @Override
+    public void handleTeamPlayers(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.SEND) {
+            HashMap<String, List<String>> map;
+
+            Type t = new TypeToken<HashMap<String, List<String>>>() {
+            }.getType();
+
+            map = new Gson().fromJson(networkRequest.getPayload(), t);
+
+            clientGame.setTeams(map);
         }
     }
 

@@ -34,7 +34,7 @@ public class NetworkRequest {
      * @param networkMessage Message that was received by the server
      */
     public NetworkRequest(NetworkMessage networkMessage) throws UnknownFormatConversionException {
-        System.out.println(networkMessage.toString());
+        //System.out.println(networkMessage.toString());
         this.networkMessage = networkMessage;
 
         // Parse the message

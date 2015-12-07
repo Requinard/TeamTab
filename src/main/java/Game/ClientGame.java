@@ -3,6 +3,7 @@ package Game;
 import networking.mediator.ClientMediator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.IllegalFormatException;
 import java.util.List;
 
@@ -213,5 +214,32 @@ public class ClientGame implements IGame {
     public void changePlayerStatus(boolean playerStatus) {
         localPlayer.setPlayerStatus(playerStatus);
         mediator.setPlayerStatus(localPlayer);
+    }
+
+    public Team getTeam(String teamName){
+        for(Team team: this.teams){
+            if(team.getName().equals(teamName)) return team;
+        }
+        return null;
+    }
+
+    public Player getPlayer(String playerName){
+        for(Player player: players){
+            if(player.getUsername().equals(playerName)) return player;
+        }
+        return null;
+    }
+
+    public void setTeams(HashMap<String, List<String>> map) {
+        for(String teamName: map.keySet()){
+            Team team = getTeam(teamName);
+
+            for (String playerName : map.get(teamName)) {
+                Player player = this.getPlayer(playerName);
+                player.setTeam(team);
+
+                team.addPlayer(player);
+            }
+        }
     }
 }

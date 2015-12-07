@@ -58,7 +58,6 @@ public class StartViewController implements Initializable {
         AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
         audioPlayer.play();
 
-        clientGame = new ClientGame();
         hostGame = new HostGame();
     }
 
@@ -69,7 +68,6 @@ public class StartViewController implements Initializable {
      */
     public void setView(StartView startView) {
         view = startView;
-        view.stageController.setClientGame(clientGame);
         view.stageController.setHostGame(hostGame);
         view.stageController.resetGame();
     }
@@ -90,17 +88,11 @@ public class StartViewController implements Initializable {
                 System.out.println("StartView - Teamname is set to: " + teamName);
 
                 //Team is created
-                Team currentTeam = view.stageController.clientGame.createTeam(teamName);
-                Team otherTeam = view.stageController.clientGame.createTeam("Bots");
+                Team currentTeam = view.stageController.hostGame.createTeam(teamName);
+                Team otherTeam = view.stageController.hostGame.createTeam("Bots");
 
                 // Add current player
-                try {
-                    view.stageController.clientGame.setHostIp(InetAddress.getLocalHost().getHostAddress());
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
 
-                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
                 //view.stageController.clientGame.assignTeam(player, currentTeam);
 
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
@@ -113,21 +105,10 @@ public class StartViewController implements Initializable {
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
-
-                //Player is created
-                //StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
-                log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
-
-                //Player gets assigned to the team
-                //view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);
-                log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
-
                 //Testdata for second team is added
                 //testData();
 
                 // create and start the RMI registry with hostgame IP
-                StageController.chatAppDefusalSquad.setIpAddress(StageController.currentPlayer.getIp());
-                StageController.chatAppDefusalSquad.createAndBindRegistry();
                 log.log(Level.INFO, "RMI chat loaded");
 
                 Platform.runLater(() -> {
@@ -149,8 +130,6 @@ public class StartViewController implements Initializable {
         runnable = () -> {
             // view.stageController.game.reset();
             hostGame = null;
-            clientGame = null;
-            view.stageController.setClientGame(null);
             Platform.runLater(() -> {
                 MainView mainView = new MainView((view.stageController));
                 view.pass(mainView);
