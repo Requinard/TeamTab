@@ -16,12 +16,16 @@ import java.util.List;
 public class HostMediator extends BaseMediator implements IMediator {
     HostGame hostGame;
 
-    public HostMediator(HostGame hostGame) {
-        super();
+    public HostMediator(HostGame hostGame, int port) {
+        super(port);
         this.hostGame = hostGame;
+    }
 
+    public HostMediator(HostGame hostGame) {
+        this(hostGame, 8085);
 
     }
+
 
     /**
      * Author Qun

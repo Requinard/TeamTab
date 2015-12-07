@@ -19,7 +19,7 @@ public class NetworkServerTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        networkServer = new NetworkServer(8085);
+        networkServer = new NetworkServer(8091);
     }
 
     public void tearDown() throws Exception {

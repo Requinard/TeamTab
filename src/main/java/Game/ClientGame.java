@@ -18,7 +18,7 @@ public class ClientGame implements IGame {
     private List<Panel> panels;
     private String hostIP;
 
-    public ClientGame() {
+    public ClientGame(int portnumber) {
         localPlayer = null;
         mediator = new ClientMediator(this);
         teams = new ArrayList<>();
@@ -26,6 +26,10 @@ public class ClientGame implements IGame {
         players = new ArrayList<>();
 
         mediatorThread = mediator.mediate();
+    }
+
+    public ClientGame() {
+        this(8085);
     }
 
     /**

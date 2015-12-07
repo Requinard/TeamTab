@@ -1,19 +1,30 @@
 package networking.server;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NetworkServerSingleton {
-
-    private static NetworkServer networkServer;
+    private static Map<Integer, NetworkServer> servers;
 
     public static NetworkServer getNetworkServer() throws IOException {
-        if (networkServer == null) {
-            networkServer = new NetworkServer(8085);
-        }
-
-        networkServer.startListeners();
-
-        return networkServer;
+        return getNetworkServer(8085);
     }
+
+    public static NetworkServer getNetworkServer(int port) throws IOException {
+        if (servers == null)
+            servers = new HashMap<>();
+
+        if (servers.containsKey(port)) {
+            return servers.get(port);
+        } else {
+            NetworkServer server = new NetworkServer(port);
+            server.startListeners();
+            servers.put(port, server);
+            return server;
+        }
+    }
+
+
 
 }

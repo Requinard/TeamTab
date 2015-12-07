@@ -16,8 +16,12 @@ public abstract class BaseMediator implements IMediator {
     Logger logger = Logger.getLogger(BaseMediator.class.getName());
 
     public BaseMediator() {
+        this(8085);
+    }
+
+    public BaseMediator(int port) {
         try {
-            networkServer = NetworkServerSingleton.getNetworkServer();
+            networkServer = NetworkServerSingleton.getNetworkServer(port);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error opening server", e);
         }

@@ -14,9 +14,13 @@ import java.util.List;
 public class ClientMediator extends BaseMediator implements IMediator {
     ClientGame clientGame;
 
-    public ClientMediator(ClientGame clientGame) {
+    public ClientMediator(ClientGame clientGame, int port) {
         super();
         this.clientGame = clientGame;
+    }
+
+    public ClientMediator(ClientGame clientGame) {
+        this(clientGame, 8085);
     }
 
 

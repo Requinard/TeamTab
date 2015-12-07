@@ -24,6 +24,10 @@ public class HostGame implements IGame {
     private Thread mediatorThread;
 
     public HostGame() {
+        this(8085);
+    }
+
+    public HostGame(int port) {
         players = new ArrayList<Player>();
         teams = new ArrayList<Team>();
         panels = new ArrayList<Panel>();
@@ -31,18 +35,18 @@ public class HostGame implements IGame {
 
         loadPanelsFromFile();
 
-        mediator = new HostMediator(this);
+        mediator = new HostMediator(this, port);
 
         mediatorThread = mediator.mediate();
     }
 
     public List<Player> getPlayers() {
         return this.players;
-	}
+    }
 
     public List<Team> getTeams() {
         return this.teams;
-	}
+    }
 
     /**
      * Gets all panels of the game
@@ -53,11 +57,12 @@ public class HostGame implements IGame {
      */
     public List<Panel> getPanels() {
         return this.panels;
-	}
+    }
 
-	/**
+    /**
      * Create a team and add this team to the teams in the game
      * Author Frank Hartman
+     *
      * @param name the name of the team
      */
     @Override
@@ -73,14 +78,15 @@ public class HostGame implements IGame {
         return team;
     }
 
-	/**
+    /**
      * Create a player and add this player to the players in the game
      * Author Frank Hartman
+     *
      * @param username The username of the player
-     * @param ip The ip address of the player
+     * @param ip       The ip address of the player
      */
     @Override
-	public Player createPlayer(String username, String ip) {
+    public Player createPlayer(String username, String ip) {
         //check if username is empty
         if (username == null || username.isEmpty()) {
             throw new UnsupportedOperationException("name of the user is empty");
@@ -96,16 +102,17 @@ public class HostGame implements IGame {
         return player;
     }
 
-	/**
+    /**
      * Assign a player to a team in the game and removes the player from his current team if he is in one
+     *
      * @param player The player that wants to be assigned to a team
-     * @param team The team that the player wants to join
+     * @param team   The team that the player wants to join
      */
     @Override
-	public void assignTeam(Player player, Team team) {
+    public void assignTeam(Player player, Team team) {
         log.log(Level.INFO, "assigning player: {0} to team started", player.getUsername());
-        for(Team currentTeam: teams) {
-            if(currentTeam.getPlayers().contains(player)) {
+        for (Team currentTeam : teams) {
+            if (currentTeam.getPlayers().contains(player)) {
                 currentTeam.removePlayer(player);
             }
         }
@@ -132,7 +139,7 @@ public class HostGame implements IGame {
      * @return true if panels are correctly loaded
      */
     private boolean loadPanelsFromFile() {
-        log.log(Level.INFO,"Started loading panels");
+        log.log(Level.INFO, "Started loading panels");
         URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
         try (FileInputStream fileInputStream = new FileInputStream(location.getPath().replace("%20", " "))) {
@@ -161,29 +168,30 @@ public class HostGame implements IGame {
                 panels.add(panel);
                 log.log(Level.FINER, "Added panel with text {0}", panel.getText());
             }
-            log.log(Level.INFO, "There are {0} panels added from the CSV file",String.valueOf(panels.size()));
+            log.log(Level.INFO, "There are {0} panels added from the CSV file", String.valueOf(panels.size()));
         } catch (IOException e) {
             e.printStackTrace();
-            log.log(Level.SEVERE,e.toString(),e);
+            log.log(Level.SEVERE, e.toString(), e);
         }
 
         return panels.size() > 0;
     }
 
-	/**
-	 * Resets lives, time and instructions for all teams.
+    /**
+     * Resets lives, time and instructions for all teams.
      * Author Frank Hartman
+     *
      * @param hard Indicates that this is a hard reset. Destroy all data
-	 */
-	@Override()
-	public void reset(boolean hard) {
+     */
+    @Override()
+    public void reset(boolean hard) {
 
         log.log(Level.INFO, "Resetting teams");
         for (Team team : teams) {
             team.reset(hard);
         }
 
-	}
+    }
 
 
     /**
@@ -206,18 +214,19 @@ public class HostGame implements IGame {
         return this;
     }
 
-	/**
+    /**
      * this method will first check if the given panel matches one of the active instructions for the team of the player
      * this will be done with te validateInstruction method
      * If the instruction was correct a new instruction must be given to the player that had the active instruction.
      * Author Kaj
      * Author Frank Hartman
-     * @param player    player that pressed a panel
-     * @param panel     The pressed panel
+     *
+     * @param player player that pressed a panel
+     * @param panel  The pressed panel
      * @return true if the pressed panel was correct
      */
-	@Override
-	public boolean processPanel(Player player, Panel panel) {
+    @Override
+    public boolean processPanel(Player player, Panel panel) {
         Instruction correctInstruction;
         //check if the pressed panel was from an active instruction
         correctInstruction = validateInstruction(player, panel);
@@ -245,7 +254,7 @@ public class HostGame implements IGame {
      * @return true if the game has ended
      */
     @Override()
-	public boolean hasGameEnded() {
+    public boolean hasGameEnded() {
         log.log(Level.INFO, "Check if the game has ended");
         int count = 0;
 
@@ -279,12 +288,13 @@ public class HostGame implements IGame {
         team.generateInstructionForPlayer(player);
     }
 
-	/**
-	 * Takes an instruction and asserts whether the click was a valid instruction in your team.
+    /**
+     * Takes an instruction and asserts whether the click was a valid instruction in your team.
      * If correct, true will be returned
      * Author Kaj
+     *
      * @param player Player that clicked on a panel
-	 * @param panel Panel control that was clicked
+     * @param panel  Panel control that was clicked
      * @return instruction that was correctly performed, else null
      */
     private Instruction validateInstruction(Player player, Panel panel) {
