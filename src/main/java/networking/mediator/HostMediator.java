@@ -7,6 +7,7 @@ import Game.adapters.PlayerAdapter;
 import Game.adapters.TeamAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javassist.bytecode.stackmap.TypeData;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
 
@@ -15,11 +16,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by David on 11/23/2015.
  */
 public class HostMediator extends BaseMediator implements IMediator {
+    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
     HostGame hostGame;
     TimerTask timerTask1;
     java.util.Timer timerRefresh1;
@@ -27,7 +31,7 @@ public class HostMediator extends BaseMediator implements IMediator {
     public HostMediator(HostGame hostGame, int port) {
         super(port);
         this.hostGame = hostGame;
-
+        log.log(Level.INFO,"hostgame set");
         timerRefresh1 = new java.util.Timer();
         timerTask1 = new TimerTask() {
             @Override
@@ -50,14 +54,17 @@ public class HostMediator extends BaseMediator implements IMediator {
      * So when all players are ready the game can be started
      *
      * @param networkRequest the incoming request to change playerstatus
-     */
+    */
     public void handlePlayersChangeStatus(NetworkRequest networkRequest) {
+        log.log(Level.INFO, "handlePlayerChangeStatus is called");
         if (networkRequest.getType() == RequestType.POST) {
             // Makes a player object from the inputstream
             Player incomingPlayer = PlayerAdapter.toObject(networkRequest.getPayload());
+            log.log(Level.INFO, "networkRequest is translated to player {0}", incomingPlayer.toString());
             for (Player player : hostGame.getPlayers()) {
                 if (incomingPlayer.getIp().equals(player.getIp())) {
                     player.setPlayerStatus(incomingPlayer.getPlayerStatus());
+                    log.log(Level.INFO, "The playerstatus in the hostgame player has changed");
                 }
             }
         }
@@ -65,125 +72,152 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     private void handleAll() {
-
-
+        log.log(Level.FINER,"handleAll is called");
         List<Player> players = hostGame.getPlayers();
+        log.log(Level.FINER, "hostgame contains {0} players", players.size());
         List<Team> teams = hostGame.getTeams();
+        log.log(Level.INFO, "hostgame contains {0} teams", teams.size());
         String json;
         NetworkRequest send;
 
         if (players.size() > 0 && teams.size() > 0) {
             // send the players
-
+            log.log(Level.FINER, "players and teams contains more than 0");
             json = PlayerAdapter.toString(players);
             send = new NetworkRequest(RequestType.SEND, "/players/", json);
             networkServer.send(send.toString(), "127.0.0.1");
+            log.log(Level.FINER, "network message is send");
         }
-
-
+        else
+        {
+            log.log(Level.SEVERE, "Hostgame players or/and teams size is 0");
+        }
         if (teams.size() > 0) {
             // send the teams
-
             json = TeamAdapter.toString(teams);
             send = new NetworkRequest(RequestType.SEND, "/teams/", json);
             networkServer.send(send.toString(), "127.0.0.1");
+            log.log(Level.FINER, "networkRequest has been sent to {0}","127.0.0.1");
         }
-
+        else
+        {
+            log.log(Level.SEVERE, "Hostgame teams size is 0");
+        }
     }
 
     @Override
     public void handlePlayers(NetworkRequest networkRequest) {
-
-
+        log.log(Level.FINER, "handlePlayers is called");
         if (networkRequest.getType() == RequestType.GET) {
+            log.log(Level.FINER, "networkRequest type is GET");
             // Retrieve players
             List<Player> players = hostGame.getPlayers();
-
+            log.log(Level.FINER,"hostgame players contains {0} players",players.size());
             // JSONify players
             String json = PlayerAdapter.toString(players);
 
             NetworkRequest response = new NetworkRequest(RequestType.SEND, "/players/", json);
 
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
-
+            log.log(Level.FINER,"networkRequest is sent to {0}", networkRequest.getNetworkMessage().getSender() );
 
         }
 
         if (networkRequest.getType() == RequestType.POST) {
+            log.log(Level.FINER, "networkRequest type is POST");
             // Makes a player object from the inputstream
             Player player = PlayerAdapter.toObject(networkRequest.getPayload());
+            log.log(Level.FINER, "networkRequest is translated to player: {0}",player.toString());
             hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender());
-            autoAssignTeam(player);
+            log.log(Level.FINER, "player is created in the hostgame");
+            hostGame.autoAssignTeam(player);
+            log.log(Level.FINER, "player has been auto-assigned to a team");
         } else {
             networkServer.requeueRequest(networkRequest);
+            log.log(Level.FINE,"else statement reached, requeueRequest uitgevoerd");
         }
         //handleAll();
     }
 
     @Override
     public void handleInstruction(NetworkRequest networkRequest) {
+        log.log(Level.FINER, "handleInstruction is called");
         if (networkRequest.getType() == RequestType.GET) {
+            log.log(Level.FINER,"networkRequset type is GET");
             String ip = networkRequest.getNetworkMessage().getSender();
-            Instruction latestInstruction = getPlayer(ip).getActiveInstruction();
-
+            Instruction latestInstruction = hostGame.getPlayer(ip).getActiveInstruction();
+            log.log(Level.FINER,"latest instruction of the player is:{0}",latestInstruction.toString());
             //JSonify instruction
             String json = InstructionAdapter.toString(latestInstruction);
-
+            log.log(Level.FINER,"instruction got jsonified");
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
 
             networkServer.send(response.toString(), ip);
+            log.log(Level.FINER,"networkRequest has been send");
         } else if (networkRequest.getType() == RequestType.POST) {
             //todo In de api kijken of het hier om gaat
+            log.log(Level.FINER,"networkRequest type is POST");
             Instruction expiredInstruction = InstructionAdapter.toObject(networkRequest.getPayload());
+            log.log(Level.FINER,"expiredInstruction is {0}", expiredInstruction.toString());
             hostGame.registerInvalidInstruction(expiredInstruction);
         } else {
             networkServer.requeueRequest(networkRequest);
+            log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
         //handleAll();
     }
 
     @Override
     public void handleTeamPlayers(NetworkRequest networkRequest) {
+        log.log(Level.FINER,"handleTeamPlayers is called");
         if (networkRequest.getType() == RequestType.GET) {
+            log.log(Level.FINER,"RequestType is GET");
             List<Team> teams = hostGame.getTeams();
-
+            log.log(Level.FINER,"hostGame teams has {0} teams", teams.size());
             HashMap<String, List<String>> map = new HashMap<>();
 
             for (Team team : teams) {
                 List<String> usernames = new ArrayList<>();
-
+                log.log(Level.FINER, "created usernamesList team:{0}",team.getName());
                 for (Player p : team.getPlayers()) {
                     usernames.add(p.getUsername());
+                    log.log(Level.FINER,"added player `{0}` in usernamesList",p.getUsername());
                 }
 
                 map.put(team.getName(), usernames);
+                log.log(Level.FINER,"map put in hasmap for team {0}",team.getName());
             }
 
             Type t = new TypeToken<HashMap<String, List<String>>>() {
             }.getType();
 
             String json = new Gson().toJson(map, t).toString();
-
+            log.log(Level.FINER,"json made for map");
             NetworkRequest response = new NetworkRequest(RequestType.SEND, "/teams/players/", json);
-
             networkServer.sendRequest(response, networkRequest.getNetworkMessage().getSender());
+            log.log(Level.FINER, "NetworkRequest send");
         } else {
             networkServer.requeueRequest(networkRequest);
+            log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
     }
 
     @Override
     public void handleTeams(NetworkRequest networkRequest) {
+        log.log(Level.FINER,"handleTeams is called");
         if (networkRequest.getType() == RequestType.GET) {
+            log.log(Level.FINER,"RequestType is GET");
             //Retrieve teams
             List<Team> teams = hostGame.getTeams();
-
+            log.log(Level.FINER,"hostGame teams has {0} teams",teams.size());
             String json = TeamAdapter.toString(teams);
 
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
+            log.log(Level.FINER,"NetworkRequest send");
         } else {
             networkServer.requeueRequest(networkRequest);
+            log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
         //handleAll();
     }
@@ -197,27 +231,34 @@ public class HostMediator extends BaseMediator implements IMediator {
      */
     @Override
     public void handlePanels(NetworkRequest networkRequest) {
+        log.log(Level.FINER,"handlePanels is called");
         if (networkRequest.getType() == RequestType.GET) {
+            log.log(Level.FINER,"RequestType is GET");
             // Retrieve panels
             List<Panel> panels = hostGame.getPanels();
-
+            log.log(Level.FINER,"hostGame panels has {} panels",panels.size());
             // JSONify panels
             String json = PanelAdapter.toString(panels);
 
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
 
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
+            log.log(Level.FINER, "NetworkRequest send");
         } else if (networkRequest.getType() == RequestType.POST) {
+            log.log(Level.FINER,"RequestType is POST");
             // converting the incoming json to panel
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
+            log.log(Level.FINER,"panel {0} is created from the networkRequestPayload", panel.toString());
             for (Player player : hostGame.getPlayers()) {
                 //Processes the panel, it check which player it is by checking his IP adress
                 if (player.getIp().equals(networkRequest.getNetworkMessage().getSender())) {
                     hostGame.processPanel(player, panel);
+                    log.log(Level.FINER, "panel is processed for player {0}",player.getUsername());
                 }
             }
         } else {
             networkServer.requeueRequest(networkRequest);
+            log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
         //handleAll();
     }
@@ -233,52 +274,24 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     public void handleTeamsCreate(NetworkRequest networkRequest) {
+        log.log(Level.INFO,"handleTeamsCreate is called");
         Team team = TeamAdapter.toObject(networkRequest.getPayload());
+        log.log(Level.INFO,"team `{0}` is made from networkRequestPayload",team.getName());
         hostGame.createTeam(team.getName());
+        log.log(Level.INFO,"Team `{0}` added to the hostGame",team.getName());
         //handleAll();
     }
 
     public void handleTeamsAssign(NetworkRequest networkRequest) {
+        log.log(Level.INFO,"handleTeamAssign is called");
         Team teamRequest = TeamAdapter.toObject(networkRequest.getPayload());
+        log.log(Level.INFO,"team `{0}` is made from networkRequestPayload",teamRequest.getName());
         for (Team team : hostGame.getTeams()) {
             if (team.getName() == teamRequest.getName()) {
-                hostGame.assignTeam(getPlayer(networkRequest.getNetworkMessage().getSender()), team);
+                hostGame.assignTeam(hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()), team);
+                log.log(Level.INFO,"Team `{0}` assigned to hostGame",team.getName());
             }
         }
         //handleAll();
-    }
-
-
-    //gets player by IP
-    public Player getPlayer(String ipadress) {
-        Player returnPlayer = null;
-        for (Player player : hostGame.getPlayers()) {
-            if (player.getIp().equals(ipadress))
-                returnPlayer = player;
-        }
-        return returnPlayer;
-    }
-    // TODO KEVEN FIX DEZE KUTZOOI WAT DE NEUK
-
-
-    // TODO KEVIN FIX DEZE NEUK OOK
-    public void autoAssignTeam(Player player) {
-        List<Team> teams = hostGame.getTeams();
-        if (teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
-            teams.get(0).addPlayer(player);
-            for (Player p : hostGame.getPlayers()) {
-                if (p == player) {
-                    p.setTeam(teams.get(0));
-                }
-            }
-        } else {
-            teams.get(1).addPlayer(player);
-            for (Player p : hostGame.getPlayers()) {
-                if (p == player) {
-                    p.setTeam(teams.get(1));
-                }
-            }
-        }
-        handleAll();
     }
 }

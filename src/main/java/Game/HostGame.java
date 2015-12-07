@@ -364,4 +364,30 @@ public class HostGame implements IGame {
 
         return scoreboard;
     }
+    public void autoAssignTeam(Player player) {
+        if (teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
+            teams.get(0).addPlayer(player);
+            for (Player p : players) {
+                if (p == player) {
+                    p.setTeam(teams.get(0));
+                }
+            }
+        } else {
+            teams.get(1).addPlayer(player);
+            for (Player p : players) {
+                if (p == player) {
+                    p.setTeam(teams.get(1));
+                }
+            }
+        }
+    }
+    //gets player by IP
+    public Player getPlayer(String ipadress) {
+        Player returnPlayer = null;
+        for (Player player : players) {
+            if (player.getIp().equals(ipadress))
+                returnPlayer = player;
+        }
+        return returnPlayer;
+    }
 }
