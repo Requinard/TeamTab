@@ -5,9 +5,14 @@ import Game.adapters.InstructionAdapter;
 import Game.adapters.PanelAdapter;
 import Game.adapters.PlayerAdapter;
 import Game.adapters.TeamAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -69,8 +74,6 @@ public class HostMediator extends BaseMediator implements IMediator {
 
         if (players.size() > 0 && teams.size() > 0) {
             // send the players
-
-            players.get(0).setTeam(hostGame.getTeams().get(0));
 
             json = PlayerAdapter.toString(players);
             send = new NetworkRequest(RequestType.SEND, "/players/", json);
@@ -140,6 +143,36 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     @Override
+    public void handleTeamPlayers(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.GET) {
+            List<Team> teams = hostGame.getTeams();
+
+            HashMap<String, List<String>> map = new HashMap<>();
+
+            for (Team team : teams) {
+                List<String> usernames = new ArrayList<>();
+
+                for (Player p : team.getPlayers()) {
+                    usernames.add(p.getUsername());
+                }
+
+                map.put(team.getName(), usernames);
+            }
+
+            Type t = new TypeToken<HashMap<String, List<String>>>() {
+            }.getType();
+
+            String json = new Gson().toJson(map, t).toString();
+
+            NetworkRequest response = new NetworkRequest(RequestType.SEND, "/teams/players/", json);
+
+            networkServer.sendRequest(response, networkRequest.getNetworkMessage().getSender());
+        } else {
+            networkServer.requeueRequest(networkRequest);
+        }
+    }
+
+    @Override
     public void handleTeams(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.GET) {
             //Retrieve teams
@@ -159,7 +192,8 @@ public class HostMediator extends BaseMediator implements IMediator {
      * Author Qun
      * The GET returns all panels a game has
      * The Post processes a the panel a player pressed
-     * @param networkRequest    the incoming request to get and also process panels
+     *
+     * @param networkRequest the incoming request to get and also process panels
      */
     @Override
     public void handlePanels(NetworkRequest networkRequest) {
@@ -214,6 +248,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         //handleAll();
     }
 
+
     //gets player by IP
     public Player getPlayer(String ipadress) {
         Player returnPlayer = null;
@@ -223,15 +258,27 @@ public class HostMediator extends BaseMediator implements IMediator {
         }
         return returnPlayer;
     }
+    // TODO KEVEN FIX DEZE KUTZOOI WAT DE NEUK
+
+
+    // TODO KEVIN FIX DEZE NEUK OOK
     public void autoAssignTeam(Player player) {
-    List<Team> teams = hostGame.getTeams();
-    if(teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
-        teams.get(0).addPlayer(player);
-        player.setTeam(teams.get(0));
-    }
-    else{
-        teams.get(1).addPlayer(player);
-        player.setTeam(teams.get(1));
-    }
+        List<Team> teams = hostGame.getTeams();
+        if (teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
+            teams.get(0).addPlayer(player);
+            for (Player p : hostGame.getPlayers()) {
+                if (p == player) {
+                    p.setTeam(teams.get(0));
+                }
+            }
+        } else {
+            teams.get(1).addPlayer(player);
+            for (Player p : hostGame.getPlayers()) {
+                if (p == player) {
+                    p.setTeam(teams.get(1));
+                }
+            }
+        }
+        handleAll();
     }
 }

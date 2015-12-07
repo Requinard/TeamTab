@@ -66,7 +66,6 @@ public class StartViewController implements Initializable {
      */
     public void setView(StartView startView) {
         view = startView;
-        view.stageController.setClientGame(clientGame);
         view.stageController.setHostGame(hostGame);
         view.stageController.resetGame();
     }
@@ -87,8 +86,8 @@ public class StartViewController implements Initializable {
                 System.out.println("StartView - Teamname is set to: " + teamName);
 
                 //Team is created
-                Team currentTeam = view.stageController.clientGame.createTeam(teamName);
-                Team otherTeam = view.stageController.clientGame.createTeam("Bots");
+                Team currentTeam = view.stageController.hostGame.createTeam(teamName);
+                Team otherTeam = view.stageController.hostGame.createTeam("Bots");
 
                 // get real ipaddress of player
                 InetAddress localhost = null;
@@ -100,11 +99,6 @@ public class StartViewController implements Initializable {
                 }
 
                 // Add current player
-                try {
-                    view.stageController.clientGame.setHostIp(InetAddress.getLocalHost().getHostAddress());
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
 
                 view.stageController.clientGame.setHostIp(ipAddress);
                 log.log(Level.INFO, "Host ipaddress has been set to {0}", ipAddress);
@@ -127,8 +121,6 @@ public class StartViewController implements Initializable {
                 //testData();
 
                 // create and start the RMI registry with hostgame IP
-                StageController.chatAppDefusalSquad.setIpAddress(StageController.currentPlayer.getIp());
-                StageController.chatAppDefusalSquad.createAndBindRegistry();
                 log.log(Level.INFO, "RMI chat loaded");
 
                 Platform.runLater(() -> {
@@ -150,8 +142,6 @@ public class StartViewController implements Initializable {
         runnable = () -> {
             // view.stageController.game.reset();
             hostGame = null;
-            clientGame = null;
-            view.stageController.setClientGame(null);
             Platform.runLater(() -> {
                 MainView mainView = new MainView((view.stageController));
                 view.pass(mainView);
