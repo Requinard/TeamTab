@@ -58,7 +58,7 @@ public abstract class BaseMediator implements IMediator {
         } else if (networkRequest.getUrl().equals("/teams/")) {
             handleTeams(networkRequest);
 
-        } else if (networkRequest.getUrl().equals("/teams/assign")) {
+        } else if (networkRequest.getUrl().equals("/teams/assign/")) {
             handleTeamsAssign(networkRequest);
 
             handleTeamsCreate(networkRequest);

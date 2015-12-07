@@ -88,13 +88,13 @@ public class ClientMediator extends BaseMediator implements IMediator {
     }
 
     public void createTeam(Team team) {
-        NetworkRequest request = new NetworkRequest(RequestType.POST, "/teams/create", TeamAdapter.toString(team));
+        NetworkRequest request = new NetworkRequest(RequestType.POST, "/teams/create/", TeamAdapter.toString(team));
 
         networkServer.send(request.toString(), clientGame.getHostIP());
     }
 
     public void assignTeam(Team team) {
-        NetworkRequest request = new NetworkRequest(RequestType.POST, "/teams/assign", TeamAdapter.toString(team));
+        NetworkRequest request = new NetworkRequest(RequestType.POST, "/teams/assign/", TeamAdapter.toString(team));
 
         networkServer.send(request.toString(), clientGame.getHostIP());
     }
