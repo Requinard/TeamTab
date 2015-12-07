@@ -100,7 +100,8 @@ public class StartViewController implements Initializable {
                     e.printStackTrace();
                 }
 
-                view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+                //view.stageController.clientGame.assignTeam(player, currentTeam);
 
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
@@ -114,11 +115,11 @@ public class StartViewController implements Initializable {
                 }
 
                 //Player is created
-                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
+                //StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
                 log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
 
                 //Player gets assigned to the team
-                view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);
+                //view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);
                 log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
 
                 //Testdata for second team is added

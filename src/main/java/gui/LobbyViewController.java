@@ -62,6 +62,11 @@ public class LobbyViewController implements Initializable {
 
 
         timerRefresh = new java.util.Timer();
+        try {
+            Thread.sleep(1);
+        } catch (Exception e) {
+
+        }
         timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -76,19 +81,28 @@ public class LobbyViewController implements Initializable {
      * With a the list of all players in the team
      */
     private void initiateLobby() {
+
         Platform.runLater(() -> {
+
             log.log(Level.FINE, "Lobby is being initialized");
+
             for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
                 if (currentPlayer.getUsername().equals(StageController.currentPlayer.getUsername())) {
+
                     team1Name.setText(currentPlayer.getTeam().getName());
                     log.log(Level.FINER, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
-                    for (Player playerInTeam1 : currentPlayer.getTeam().getPlayers()) {
-                        playersTeam1Name.setText(playerInTeam1.getUsername() + "\n");
-                        log.log(Level.FINER, "Player {0} in team {1} is added to the lobby", new Object[]{playerInTeam1.getUsername(), playerInTeam1.getTeam().getName()});
+                    for (Player player : view.stageController.clientGame.getPlayers()) {
+                        if (player.getTeam().getName().equals(currentPlayer.getTeam().getName())) {
+                            playersTeam1Name.setText(player.getUsername() + "\n");
+                        }
                     }
+                    //for (Player playerInTeam1 : ) {
+                    //playersTeam1Name.setText(playerInTeam1.getUsername() + "\n");
+                    //log.log(Level.FINER, "Player {0} in team {1} is added to the lobby", new Object[]{playerInTeam1.getUsername(), playerInTeam1.getTeam().getName()});
+                    //}
                 } else {
 
-                    team2Name.setText(currentPlayer.getTeam().getName());
+                    team2Name.setText(currentPlayer.getUsername());
                     log.log(Level.FINE, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
                     {
                         for (Player playerInTeam2 : currentPlayer.getTeam().getPlayers()) {

@@ -266,4 +266,9 @@ public class Team {
         log.log(Level.INFO, "validating instruction ended, panel: {0} was incorrect", panel.getText());
         return correctInstruction;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

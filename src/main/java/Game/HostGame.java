@@ -66,7 +66,7 @@ public class HostGame implements IGame {
      * @param name the name of the team
      */
     @Override
-    public Team createTeam(String name) throws UnsupportedOperationException {
+    public synchronized Team createTeam(String name) throws UnsupportedOperationException {
         //check if name is empty
         if (name == null || name.isEmpty()) {
             throw new UnsupportedOperationException("name of the team is empty");
@@ -86,7 +86,7 @@ public class HostGame implements IGame {
      * @param ip       The ip address of the player
      */
     @Override
-    public Player createPlayer(String username, String ip) {
+    public synchronized Player createPlayer(String username, String ip) {
         //check if username is empty
         if (username == null || username.isEmpty()) {
             throw new UnsupportedOperationException("name of the user is empty");
@@ -109,7 +109,7 @@ public class HostGame implements IGame {
      * @param team   The team that the player wants to join
      */
     @Override
-    public void assignTeam(Player player, Team team) {
+    public synchronized void assignTeam(Player player, Team team) {
         log.log(Level.INFO, "assigning player: {0} to team started", player.getUsername());
         for (Team currentTeam : teams) {
             if (currentTeam.getPlayers().contains(player)) {

@@ -9,16 +9,28 @@ import networking.server.NetworkRequest;
 import networking.server.RequestType;
 
 import java.util.List;
+import java.util.TimerTask;
 
 /**
  * Created by David on 11/23/2015.
  */
 public class HostMediator extends BaseMediator implements IMediator {
     HostGame hostGame;
+    TimerTask timerTask1;
+    java.util.Timer timerRefresh1;
 
     public HostMediator(HostGame hostGame, int port) {
         super(port);
         this.hostGame = hostGame;
+
+        timerRefresh1 = new java.util.Timer();
+        timerTask1 = new TimerTask() {
+            @Override
+            public void run() {
+                handleAll();
+            }
+        };
+        timerRefresh1.schedule(timerTask1, 0, 1000);
     }
 
     public HostMediator(HostGame hostGame) {
@@ -49,22 +61,30 @@ public class HostMediator extends BaseMediator implements IMediator {
 
     private void handleAll() {
 
+
         List<Player> players = hostGame.getPlayers();
         List<Team> teams = hostGame.getTeams();
         String json;
         NetworkRequest send;
 
+        if (players.size() > 0 && teams.size() > 0) {
+            // send the players
 
-        // send the players
-        json = PlayerAdapter.toString(players);
-        send = new NetworkRequest(RequestType.SEND, "/players/", json);
-        networkServer.send(send.toString(), "127.0.0.1");
+            players.get(0).setTeam(hostGame.getTeams().get(0));
 
-        // send the teams
-        json = TeamAdapter.toString(teams);
-        send = new NetworkRequest(RequestType.SEND, "/teams/", json);
-        networkServer.send(send.toString(), "127.0.0.1");
+            json = PlayerAdapter.toString(players);
+            send = new NetworkRequest(RequestType.SEND, "/players/", json);
+            networkServer.send(send.toString(), "127.0.0.1");
+        }
 
+
+        if (teams.size() > 0) {
+            // send the teams
+
+            json = TeamAdapter.toString(teams);
+            send = new NetworkRequest(RequestType.SEND, "/teams/", json);
+            networkServer.send(send.toString(), "127.0.0.1");
+        }
 
     }
 
@@ -93,7 +113,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
-        handleAll();
+        //handleAll();
     }
 
     @Override
@@ -115,7 +135,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
-        handleAll();
+        //handleAll();
     }
 
     @Override
@@ -131,7 +151,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
-        handleAll();
+        //handleAll();
     }
 
     /**
@@ -164,7 +184,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
-        handleAll();
+        //handleAll();
     }
 
     @Override
@@ -174,13 +194,13 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
-        handleAll();
+        //handleAll();
     }
 
     public void handleTeamsCreate(NetworkRequest networkRequest) {
         Team team = TeamAdapter.toObject(networkRequest.getPayload());
         hostGame.createTeam(team.getName());
-        handleAll();
+        //handleAll();
     }
 
     public void handleTeamsAssign(NetworkRequest networkRequest) {
@@ -190,7 +210,7 @@ public class HostMediator extends BaseMediator implements IMediator {
                 hostGame.assignTeam(getPlayer(networkRequest.getNetworkMessage().getSender()), team);
             }
         }
-        handleAll();
+        //handleAll();
     }
 
     //gets player by IP

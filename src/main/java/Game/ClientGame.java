@@ -61,8 +61,11 @@ public class ClientGame implements IGame {
      * @param players The players that will be set
      */
     public synchronized void setPlayers(List<Player> players) {
-        this.players = players;
-        System.out.println("fsfasfafs");
+        if (!players.isEmpty() || players != null || players.size() != 0) {
+            this.players = players;
+
+        }
+        System.out.println("size: " + players.size());
     }
 
     /**
@@ -71,7 +74,7 @@ public class ClientGame implements IGame {
      * @return the teams in the game
      */
     @Override
-    public List<Team> getTeams() {
+    public synchronized List<Team> getTeams() {
         return this.teams;
     }
 
@@ -80,7 +83,7 @@ public class ClientGame implements IGame {
      * Set the teams in the game
      * @param teams The teams that will be set
      */
-    public void setTeams(List<Team> teams) {
+    public synchronized void setTeams(List<Team> teams) {
         this.teams = teams;
     }
 
@@ -137,6 +140,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public void assignTeam(Player player, Team team) {
+        //player.setTeam(team);
         mediator.assignTeam(team);
     }
 

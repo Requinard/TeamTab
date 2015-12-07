@@ -34,8 +34,6 @@ public class StageController {
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
-        clientGame = new ClientGame();
-        hostGame = new HostGame();
         chatAppDefusalSquad = new ChatAppDefusalSquad();
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
