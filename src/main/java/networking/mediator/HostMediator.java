@@ -110,6 +110,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             // Makes a player object from the inputstream
             Player player = PlayerAdapter.toObject(networkRequest.getPayload());
             hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender());
+            autoAssignTeam(player);
         } else {
             networkServer.requeueRequest(networkRequest);
         }
@@ -221,5 +222,16 @@ public class HostMediator extends BaseMediator implements IMediator {
                 returnPlayer = player;
         }
         return returnPlayer;
+    }
+    public void autoAssignTeam(Player player) {
+    List<Team> teams = hostGame.getTeams();
+    if(teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
+        teams.get(0).addPlayer(player);
+        player.setTeam(teams.get(0));
+    }
+    else{
+        teams.get(1).addPlayer(player);
+        player.setTeam(teams.get(1));
+    }
     }
 }
