@@ -52,9 +52,9 @@ public class MediatorIntergrationTest {
     @Test
     public void getTeamsTest() throws InterruptedException {
         clientGame.createTeam("Team1");
-        Thread.sleep(50);
+        Thread.sleep(2000);
         assertTrue(hostGame.getTeams().size() > 0);
-        Thread.sleep(50);
+        Thread.sleep(2000);
         assertTrue(clientGame.getTeams().size() > 0);
     }
 }

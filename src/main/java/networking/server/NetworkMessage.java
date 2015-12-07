@@ -13,6 +13,10 @@ public class NetworkMessage {
         this.receiver = receiver;
     }
 
+    public boolean isPriority() {
+        return priority;
+    }
+
     public boolean setHighPriority() {
         return priority = true;
     }

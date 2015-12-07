@@ -2,12 +2,11 @@ package networking.server;
 
 import java.util.Comparator;
 
-public class PriorityComparator implements Comparator<Boolean> {
-    @Override
-    public int compare(Boolean aBoolean, Boolean t1) {
-        if (aBoolean == false && t1 == true)
+public class PriorityComparator implements Comparator<NetworkMessage> {
+    public int compare(NetworkMessage firstMessage, NetworkMessage secondMessage) {
+        if (firstMessage.isPriority() == false && secondMessage.isPriority() == true)
             return -1;
-        else if (aBoolean == true && t1 == false)
+        else if (firstMessage.isPriority() == true && secondMessage.isPriority() == false)
             return 1;
         return 0;
     }
