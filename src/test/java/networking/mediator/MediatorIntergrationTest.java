@@ -35,11 +35,11 @@ public class MediatorIntergrationTest {
 
         clientGame.createPlayer("frank1", "127.0.0.1");
 
-        Thread.sleep(50);
+        Thread.sleep(2000);
 
         assertTrue(hostGame.getPlayers().size() > 0);
 
-        //Thread.sleep(20);
+        Thread.sleep(2000);
 
         //assertTrue(clientGame.getPlayers().size() > 0);
         //assertTrue(clientGame.getTeams().size() > 0);

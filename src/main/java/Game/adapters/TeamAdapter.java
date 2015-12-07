@@ -1,7 +1,9 @@
 package Game.adapters;
 
 import Game.Team;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class TeamAdapter {
@@ -22,6 +24,7 @@ public class TeamAdapter {
     }
 
     public static List<Team> toObjects(String input) {
-        return (List<Team>) JsonAdapter.toObject(input, List.class);
+        Type teamListType = new TypeToken<List<Team>>(){}.getType();
+        return (List<Team>) JsonAdapter.toObject(input, teamListType);
     }
 }

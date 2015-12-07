@@ -44,11 +44,6 @@ public abstract class BaseMediator implements IMediator {
     }
 
     private void handle(NetworkRequest networkRequest) {
-        System.out.println("Message:");
-        System.out.println(networkRequest.toString());
-        System.out.println(networkRequest.getUrl());
-        System.out.println(networkRequest.getNetworkMessage());
-        System.out.println("////////////");
         if (networkRequest.getUrl().equals("/players/")) {
             handlePlayers(networkRequest);
 

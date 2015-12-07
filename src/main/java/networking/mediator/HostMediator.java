@@ -48,7 +48,7 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     private void handleAll() {
-        /*
+
         List<Player> players = hostGame.getPlayers();
         List<Team> teams = hostGame.getTeams();
         String json;
@@ -64,7 +64,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         json = TeamAdapter.toString(teams);
         send = new NetworkRequest(RequestType.SEND, "/teams/", json);
         networkServer.send(send.toString(), "127.0.0.1");
-*/
+
 
     }
 

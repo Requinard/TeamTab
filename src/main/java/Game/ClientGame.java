@@ -51,7 +51,7 @@ public class ClientGame implements IGame {
      * @return the players in the game
      */
     @Override
-    public List<Player> getPlayers() {
+    public synchronized List<Player> getPlayers() {
         return this.players;
     }
 
@@ -60,7 +60,7 @@ public class ClientGame implements IGame {
      * Set the players in the game
      * @param players The players that will be set
      */
-    public void setPlayers(List<Player> players) {
+    public synchronized void setPlayers(List<Player> players) {
         this.players = players;
         System.out.println("fsfasfafs");
     }

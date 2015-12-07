@@ -91,6 +91,17 @@ public class StartViewController implements Initializable {
 
                 //Team is created
                 Team currentTeam = view.stageController.clientGame.createTeam(teamName);
+                Team otherTeam = view.stageController.clientGame.createTeam("Bots");
+
+                // Add current player
+                try {
+                    view.stageController.clientGame.setHostIp(InetAddress.getLocalHost().getHostAddress());
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+                view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
                 // get real ipaddress of player

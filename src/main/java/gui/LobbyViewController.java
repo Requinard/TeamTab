@@ -87,6 +87,7 @@ public class LobbyViewController implements Initializable {
                         log.log(Level.FINER, "Player {0} in team {1} is added to the lobby", new Object[]{playerInTeam1.getUsername(), playerInTeam1.getTeam().getName()});
                     }
                 } else {
+
                     team2Name.setText(currentPlayer.getTeam().getName());
                     log.log(Level.FINE, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
                     {
