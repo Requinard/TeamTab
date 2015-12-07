@@ -356,7 +356,7 @@ public class GameController implements Initializable {
      * @param sliderValue value of the panel
      */
     public void checkInstruction(Panel panel, int sliderValue) {
-
+        log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
         view.stageController.clientGame.processPanel(StageController.currentPlayer, panel);
         panelPushed = true;
         audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
