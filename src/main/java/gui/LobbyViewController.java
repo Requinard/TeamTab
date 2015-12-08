@@ -1,6 +1,5 @@
 package gui;
 
-import Game.ClientGame;
 import Game.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -45,7 +44,6 @@ public class LobbyViewController implements Initializable {
     private Runnable runnable;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
-    private ClientGame clientGame;
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -60,7 +58,6 @@ public class LobbyViewController implements Initializable {
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
         buttonChat.setOnMouseClicked(this::buttonChatOnClick);
-        clientGame = new ClientGame();
 
         timerRefresh = new java.util.Timer();
         try {
@@ -125,7 +122,6 @@ public class LobbyViewController implements Initializable {
      */
     public void setView(LobbyView lobbyView) {
         view = lobbyView;
-        view.stageController.setClientGame(clientGame);
     }
 
     /**

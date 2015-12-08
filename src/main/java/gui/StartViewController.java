@@ -55,8 +55,8 @@ public class StartViewController implements Initializable {
 
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
 
-        clientGame = new ClientGame();
-        hostGame = new HostGame();
+        clientGame = new ClientGame(8085);
+        hostGame = new HostGame(8085);
     }
 
     /**
@@ -67,6 +67,15 @@ public class StartViewController implements Initializable {
     public void setView(StartView startView) {
         view = startView;
         view.stageController.setHostGame(hostGame);
+        view.stageController.setClientGame(clientGame);
+        InetAddress localhost = null;
+        try {
+            localhost = InetAddress.getLocalHost();
+            ipAddress = localhost.getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        view.stageController.clientGame.setHostIp(ipAddress);
         view.stageController.resetGame();
     }
 
@@ -103,7 +112,8 @@ public class StartViewController implements Initializable {
                 view.stageController.clientGame.setHostIp(ipAddress);
                 log.log(Level.INFO, "Host ipaddress has been set to {0}", ipAddress);
 
-                StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+                //view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+
                 //view.stageController.clientGame.assignTeam(player, currentTeam);
 
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
@@ -111,7 +121,7 @@ public class StartViewController implements Initializable {
 
                 //Player is created
                 //StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
-                log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
+                //log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
 
                 //Player gets assigned to the team
                 //view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);

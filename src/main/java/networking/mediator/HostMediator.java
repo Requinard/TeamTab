@@ -79,14 +79,21 @@ public class HostMediator extends BaseMediator implements IMediator {
         log.log(Level.INFO, "hostgame contains {0} teams", teams.size());
         String json;
         NetworkRequest send;
-
+        boolean a = false;
         if (players.size() > 0 && teams.size() > 0) {
+            for (Player player : players) {
+                if (player.getTeam() == null) {
+                    a = true;
+                }
+            }
             // send the players
-            log.log(Level.FINER, "players and teams contains more than 0");
-            json = PlayerAdapter.toString(players);
-            send = new NetworkRequest(RequestType.SEND, "/players/", json);
-            networkServer.send(send.toString(), "127.0.0.1");
-            log.log(Level.FINER, "network message is send");
+            if (!a) {
+                log.log(Level.FINER, "players and teams contains more than 0");
+                json = PlayerAdapter.toString(players);
+                send = new NetworkRequest(RequestType.SEND, "/players/", json);
+                networkServer.send(send.toString(), "127.0.0.1");
+                log.log(Level.FINER, "network message is send");
+            }
         }
         else
         {
@@ -127,10 +134,10 @@ public class HostMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "networkRequest type is POST");
             // Makes a player object from the inputstream
             Player player = PlayerAdapter.toObject(networkRequest.getPayload());
-            log.log(Level.FINER, "networkRequest is translated to player: {0}",player.toString());
+            log.log(Level.FINER, "networkRequest is translated to player: {0}", player.toString());
             hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender());
             log.log(Level.FINER, "player is created in the hostgame");
-            hostGame.autoAssignTeam(player);
+            //hostGame.autoAssignTeam(player);
             log.log(Level.FINER, "player has been auto-assigned to a team");
         } else {
             networkServer.requeueRequest(networkRequest);
@@ -169,7 +176,7 @@ public class HostMediator extends BaseMediator implements IMediator {
 
     @Override
     public void handleTeamPlayers(NetworkRequest networkRequest) {
-        log.log(Level.FINER,"handleTeamPlayers is called");
+        log.log(Level.FINER, "handleTeamPlayers is called");
         if (networkRequest.getType() == RequestType.GET) {
             log.log(Level.FINER,"RequestType is GET");
             List<Team> teams = hostGame.getTeams();
@@ -204,7 +211,7 @@ public class HostMediator extends BaseMediator implements IMediator {
 
     @Override
     public void handleTeams(NetworkRequest networkRequest) {
-        log.log(Level.FINER,"handleTeams is called");
+        log.log(Level.FINER, "handleTeams is called");
         if (networkRequest.getType() == RequestType.GET) {
             log.log(Level.FINER,"RequestType is GET");
             //Retrieve teams

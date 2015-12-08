@@ -96,8 +96,10 @@ public class HostGame implements IGame {
             throw new UnsupportedOperationException("ip address the is empty");
         }
         Player player = new Player(username, ip);
+        autoAssignTeam(player);
         // Add the player to the players in the game
         players.add(player);
+
         log.log(Level.INFO, "player: " + username + " added to list players");
         return player;
     }
