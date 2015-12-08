@@ -34,4 +34,12 @@ public class PanelAdapter {
 
     }
 
+    public Panel makeSendable(Panel panel) {
+        return null;
+    }
+
+    public List<Panel> makeSendable(List<Panel> panels) {
+        return null;
+    }
+
 }

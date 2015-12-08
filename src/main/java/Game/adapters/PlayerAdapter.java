@@ -33,4 +33,12 @@ public class PlayerAdapter {
         return (Player) JsonAdapter.toObject(input, Player.class);
     }
 
+    public Player makeSendable(Player player) {
+       return null;
+    }
+
+    public List<Player> makeSendable(List<Player> player) {
+        return null;
+    }
+
 }

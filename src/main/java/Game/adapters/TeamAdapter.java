@@ -27,4 +27,13 @@ public class TeamAdapter {
         Type teamListType = new TypeToken<List<Team>>(){}.getType();
         return (List<Team>) JsonAdapter.toObject(input, teamListType);
     }
+
+
+    public Team makeSendable(Team team) {
+        return null;
+    }
+
+    public List<Team> makeSendable(List<Team> teams) {
+        return null;
+    }
 }
