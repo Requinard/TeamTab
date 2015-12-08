@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-     <ImageView>
-       <image>
-         <Image url="@images/JoinGame/Background.jpg" />
-       </image>
-     </ImageView>
-     <Button fx:id="buttonJoin" ellipsisString="..." layoutX="739.0" layoutY="828.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
-       <graphic>
-         <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
-           <image>
-             <Image url="@images/JoinGame/ButtonJoin.jpg" />
-           </image>
-         </ImageView>
-       </graphic>
-     </Button>
-     <Button fx:id="buttonBack" ellipsisString="..." layoutX="86.0" layoutY="828.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
-       <graphic>
-         <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
-           <image>
-             <Image url="@images/JoinGame/ButtonBack.jpg" />
-           </image>
-         </ImageView>
-       </graphic>
-     </Button>
-      <Button fx:id="buttonSearch" layoutX="145.0" layoutY="149.0" mnemonicParsing="false" text="Search games" />
-      <ListView fx:id="listGames" layoutX="149.0" layoutY="220.0" prefHeight="591.0" prefWidth="939.0" style="-fx-background-color: transparent;" />
-      <TextField fx:id="tfCustomIP" layoutX="846.0" layoutY="162.0" />
-      <Label layoutX="776.0" layoutY="166.0" text="Custom IP:" textFill="WHITE" />
-      <Button fx:id="btnJoinCustom" layoutX="1001.0" layoutY="162.0" mnemonicParsing="false" text="Join" />
-   </children>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <ImageView>
+      <image>
+        <Image url="@images/JoinGame/Background.jpg"/>
+      </image>
+    </ImageView>
+    <Button fx:id="buttonJoin" ellipsisString="..." layoutX="739.0" layoutY="636.0" mnemonicParsing="false"
+            prefHeight="315.0" prefWidth="494.0"
+            style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+      <graphic>
+        <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
+          <image>
+            <Image url="@images/JoinGame/ButtonJoin.jpg"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button fx:id="buttonBack" ellipsisString="..." layoutX="86.0" layoutY="828.0" mnemonicParsing="false"
+            prefHeight="90.0" prefWidth="474.0"
+            style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true">
+      <graphic>
+        <ImageView fitHeight="117.0001220703125" fitWidth="474.0" focusTraversable="false" smooth="true" visible="true">
+          <image>
+            <Image url="@images/JoinGame/ButtonBack.jpg"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button fx:id="buttonSearch" layoutX="145.0" layoutY="149.0" mnemonicParsing="false" text="Search games"/>
+    <ListView fx:id="listGames" layoutX="149.0" layoutY="220.0" prefHeight="591.0" prefWidth="939.0"
+              style="-fx-background-color: transparent;"/>
+    <TextField fx:id="tfCustomIP" layoutX="846.0" layoutY="162.0"/>
+    <Label layoutX="776.0" layoutY="166.0" text="Custom IP:" textFill="WHITE"/>
+    <Button fx:id="btnJoinCustom" layoutX="1001.0" layoutY="162.0" mnemonicParsing="false" text="Join"/>
+  </children>
 </AnchorPane>
