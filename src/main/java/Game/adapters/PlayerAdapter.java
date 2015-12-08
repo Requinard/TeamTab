@@ -1,6 +1,7 @@
 package Game.adapters;
 
 import Game.Player;
+import Game.Team;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -33,12 +34,19 @@ public class PlayerAdapter {
         return (Player) JsonAdapter.toObject(input, Player.class);
     }
 
-    public Player makeSendable(Player player) {
+    public static Player makeSendable(Player player) {
        return null;
     }
 
-    public List<Player> makeSendable(List<Player> player) {
-        return null;
+    public static List<Player> makeSendable(List<Player> players) {
+        List<Player> tempPlayer = new ArrayList<>();
+        for (Player player : players) {
+            Player player1 = new Player(player.getUsername(), player.getIp());
+            player1.setTeam(new Team(player.getTeam().getName()));
+            tempPlayer.add(player1);
+
+        }
+        return tempPlayer;
     }
 
 }

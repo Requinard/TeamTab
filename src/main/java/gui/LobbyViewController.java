@@ -85,36 +85,14 @@ public class LobbyViewController implements Initializable {
             log.log(Level.FINE, "Lobby is being initialized");
 
             for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
-                team1Name.setText(currentPlayer.getTeam().getName());
-                playersTeam1Name.setText(currentPlayer.getUsername());
-                /*
-                if (currentPlayer.getUsername().equals(StageController.currentPlayer.getUsername())) {
-
-
-
-                    log.log(Level.FINER, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
-                    for (Player player : view.stageController.clientGame.getPlayers()) {
-                        if (player.getTeam().getName().equals(currentPlayer.getTeam().getName())) {
-                            playersTeam1Name.setText(player.getUsername() + "\n");
-                        }
-                    }
-                    //for (Player playerInTeam1 : ) {
-                    //playersTeam1Name.setText(playerInTeam1.getUsername() + "\n");
-                    //log.log(Level.FINER, "Player {0} in team {1} is added to the lobby", new Object[]{playerInTeam1.getUsername(), playerInTeam1.getTeam().getName()});
-                    //}
-                } else {
-
-                    team2Name.setText(currentPlayer.getUsername());
-                    log.log(Level.FINE, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
-                    {
-                        for (Player playerInTeam2 : currentPlayer.getTeam().getPlayers()) {
-                            playersTeam2Names.setText(playerInTeam2.getUsername() + "\n");
-                            log.log(Level.FINER, "Player {0} in team {1} is added to the lobby", new Object[]{playerInTeam2.getUsername(), playerInTeam2.getTeam().getName()});
-
-                        }
-                    }
+                team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
+                team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
+                if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
+                    playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
                 }
-                    */
+                if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
+                    playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
+                }
             }
             ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });

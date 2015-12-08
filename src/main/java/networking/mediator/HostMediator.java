@@ -90,12 +90,8 @@ public class HostMediator extends BaseMediator implements IMediator {
             // send the players
             if (!a) {
                 log.log(Level.FINER, "players and teams contains more than 0");
-                ArrayList<Player> tempPlayer = new ArrayList<>();
-                tempPlayer.addAll(players);
-                for (Player player : tempPlayer) {
-                    player.getTeam().setPlayers(null);
-                }
-                json = PlayerAdapter.toString(tempPlayer);
+
+                json = PlayerAdapter.toString(PlayerAdapter.makeSendable(players));
                 send = new NetworkRequest(RequestType.SEND, "/players/", json);
                 networkServer.send(send.toString(), "192.168.229.1");
                 log.log(Level.FINER, "network message is send");
@@ -107,7 +103,8 @@ public class HostMediator extends BaseMediator implements IMediator {
         }
         if (teams.size() > 0) {
             // send the teams
-            json = TeamAdapter.toString(teams);
+
+            json = TeamAdapter.toString(TeamAdapter.makeSendable(teams));
             send = new NetworkRequest(RequestType.SEND, "/teams/", json);
             networkServer.send(send.toString(), "192.168.229.1");
             log.log(Level.FINER, "networkRequest has been sent to {0}","127.0.0.1");

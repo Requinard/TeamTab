@@ -4,6 +4,7 @@ import Game.Team;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamAdapter {
@@ -29,11 +30,15 @@ public class TeamAdapter {
     }
 
 
-    public Team makeSendable(Team team) {
+    public static Team makeSendable(Team team) {
         return null;
     }
 
-    public List<Team> makeSendable(List<Team> teams) {
-        return null;
+    public static List<Team> makeSendable(List<Team> teams) {
+        List<Team> tempTeam = new ArrayList<>();
+        for (Team team : teams) {
+            tempTeam.add(new Team(team.getName()));
+        }
+        return tempTeam;
     }
 }

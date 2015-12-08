@@ -34,11 +34,11 @@ public class PanelAdapter {
 
     }
 
-    public Panel makeSendable(Panel panel) {
+    public static Panel makeSendable(Panel panel) {
         return null;
     }
 
-    public List<Panel> makeSendable(List<Panel> panels) {
+    public static List<Panel> makeSendable(List<Panel> panels) {
         return null;
     }
 

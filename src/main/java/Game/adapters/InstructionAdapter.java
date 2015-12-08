@@ -29,11 +29,11 @@ public class InstructionAdapter {
         return (List<Instruction>) JsonAdapter.toObject(input, ArrayList.class);
     }
 
-    public Instruction makeSendable(Instruction instruction) {
+    public static Instruction makeSendable(Instruction instruction) {
         return null;
     }
 
-    public List<Instruction> makeSendable(List<Instruction> instructions) {
+    public static List<Instruction> makeSendable(List<Instruction> instructions) {
         return null;
     }
 
