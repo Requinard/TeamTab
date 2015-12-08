@@ -31,6 +31,9 @@ public class Player {
         panels = new ArrayList<>();
     }
 
+    public Player() {
+    }
+
     /**
      * Author Qun
      * gets the playerstatus from the player

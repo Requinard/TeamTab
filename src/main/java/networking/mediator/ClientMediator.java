@@ -43,9 +43,9 @@ public class ClientMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "client players contains: {0} players", players.size());
             clientGame.setPlayers(players);
             log.log(Level.FINER, "client players have been set");
-            NetworkRequest getTeamRequest = new NetworkRequest(RequestType.GET, "/teams/players/", null);
+            //NetworkRequest getTeamRequest = new NetworkRequest(RequestType.GET, "/teams/players/", null);
 
-            networkServer.sendRequest(getTeamRequest, networkRequest.getNetworkMessage().getSender());
+            //networkServer.sendRequest(getTeamRequest, networkRequest.getNetworkMessage().getSender());
             log.log(Level.FINER, "client handlePlayers has ended, networkRequest has been send");
         } else {
             networkServer.requeueRequest(networkRequest);

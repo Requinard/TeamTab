@@ -42,6 +42,10 @@ public class Team {
         return this.players;
     }
 
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
     /**
      * Author Qun
      * returns all the panels the team has

@@ -32,7 +32,8 @@ public class MediatorIntergrationTest {
     public void joinGameTest() throws InterruptedException {
         //hostGame.createTeam("appels");
 
-
+        hostGame.createTeam("a");
+        hostGame.createTeam("b");
         clientGame.createPlayer("frank1", "127.0.0.1");
 
         Thread.sleep(2000);

@@ -55,8 +55,8 @@ public class StartViewController implements Initializable {
 
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
 
-        clientGame = new ClientGame(8085);
-        hostGame = new HostGame(8085);
+        clientGame = new ClientGame();
+        hostGame = new HostGame();
     }
 
     /**
@@ -112,7 +112,7 @@ public class StartViewController implements Initializable {
                 view.stageController.clientGame.setHostIp(ipAddress);
                 log.log(Level.INFO, "Host ipaddress has been set to {0}", ipAddress);
 
-                //view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+                view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
 
                 //view.stageController.clientGame.assignTeam(player, currentTeam);
 
@@ -125,7 +125,7 @@ public class StartViewController implements Initializable {
 
                 //Player gets assigned to the team
                 //view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);
-                log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
+                //eelog.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
 
                 //Testdata for second team is added
                 //testData();

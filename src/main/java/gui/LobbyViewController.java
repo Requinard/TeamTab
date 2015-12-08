@@ -85,9 +85,13 @@ public class LobbyViewController implements Initializable {
             log.log(Level.FINE, "Lobby is being initialized");
 
             for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
+                team1Name.setText(currentPlayer.getTeam().getName());
+                playersTeam1Name.setText(currentPlayer.getUsername());
+                /*
                 if (currentPlayer.getUsername().equals(StageController.currentPlayer.getUsername())) {
 
-                    team1Name.setText(currentPlayer.getTeam().getName());
+
+
                     log.log(Level.FINER, "Team {0} is set in the lobby", currentPlayer.getTeam().getName());
                     for (Player player : view.stageController.clientGame.getPlayers()) {
                         if (player.getTeam().getName().equals(currentPlayer.getTeam().getName())) {
@@ -110,6 +114,7 @@ public class LobbyViewController implements Initializable {
                         }
                     }
                 }
+                    */
             }
             ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
