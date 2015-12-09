@@ -17,8 +17,8 @@ public class MediatorIntergrationTest {
 
     @Before
     public void setUp() throws Exception {
-        hostGame = new HostGame(8095);
-        clientGame = new ClientGame(8095);
+        hostGame = new HostGame();
+        clientGame = new ClientGame();
         clientGame.setHostIp("127.0.0.1");
     }
 
@@ -34,9 +34,15 @@ public class MediatorIntergrationTest {
 
         hostGame.createTeam("a");
         hostGame.createTeam("b");
+        Thread.sleep(2000);
         clientGame.createPlayer("frank1", "127.0.0.1");
 
         Thread.sleep(2000);
+
+        while(true) {
+            if ((hostGame.getPlayers().size() > 0))
+                break;
+        }
 
         assertTrue(hostGame.getPlayers().size() > 0);
 
