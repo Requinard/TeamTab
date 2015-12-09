@@ -45,10 +45,11 @@ public class LobbyViewController implements Initializable {
     private Runnable runnable;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
+
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     * <p>
+     * <p/>
      * Start a timer for initiateLobby
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -59,8 +60,6 @@ public class LobbyViewController implements Initializable {
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
         buttonChat.setOnMouseClicked(this::buttonChatOnClick);
-
-
 
 
         timerRefresh = new java.util.Timer();
@@ -107,12 +106,34 @@ public class LobbyViewController implements Initializable {
 
 
             }
+            if (view.stageController.clientGame.getPlayers().size() > 0) {
+                boolean allActive = true;
+                for (Player player : view.stageController.clientGame.getPlayers()) {
+                    if (!player.getPlayerStatus()) {
+                        allActive = false;
+                    }
+                }
+                if (allActive) {
+                    StartGame();
+                }
+            }
 
-            //for (Player player : view.stageController.clientGame.changePlayerStatus()){
-
-            //}
             //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
+    }
+
+    public void StartGame() {
+        runnable = () -> {
+            Platform.runLater(new Runnable() {
+                public void run() {
+                    //StageController.chatAppDefusalSquad.closeChatApp();
+                    GameView gameView = new GameView((view.stageController));
+                    view.pass(gameView);
+                    log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
+                }
+            });
+        };
+        runnable.run();
     }
 
     /**
@@ -148,9 +169,6 @@ public class LobbyViewController implements Initializable {
                 return;
             }
         }
-
-
-
     }
 
     /**
