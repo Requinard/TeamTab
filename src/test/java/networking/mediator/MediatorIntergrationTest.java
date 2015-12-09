@@ -2,6 +2,7 @@ package networking.mediator;
 
 import Game.ClientGame;
 import Game.HostGame;
+import Game.Player;
 import Game.Team;
 import org.junit.After;
 import org.junit.Before;
@@ -142,5 +143,31 @@ public class MediatorIntergrationTest {
             }
         }
         assertEquals(clientGame.getTeams().get(1).isAlive(), false);
+    }
+    /*
+    Test if you can remove a player from a team and add the same player to a different team.
+     */
+    @Test
+    public void TeamModifyPlayer() throws InterruptedException{
+        hostGame.createTeam("Team1");
+        hostGame.createTeam("Team2");
+        clientGame.createPlayer("P1", "0.0.0.0"); //het aanmaken vna een player is verplicht want ander weet de server niet naar welk ip hij packages moet doorsturen
+        clientGame.createPlayer("P2", "0.0.0.0"); //Aanmaken van een tweede speler
+        while(true) {
+            if ((clientGame.getTeams().size() > 1)) {
+                break;
+            }
+        }
+        assertEquals(clientGame.getPlayers().size(), 2); //checks if there are two players in total in the game
+        Player player = hostGame.getTeams().get(1).getPlayers().get(0);
+        hostGame.getTeams().get(1).removePlayer(player); //removes the player from team 1
+        hostGame.getTeams().get(0).addPlayer(player);   //adds the player to team 1
+        while(true) {
+            if (clientGame.getTeams().get(1).getPlayers().size() <1) {
+                break;
+            }
+        }
+        assertEquals(clientGame.getTeams().get(1).getPlayers().size(),0);
+        assertEquals(clientGame.getTeams().get(0).getPlayers().size(),2);
     }
 }
