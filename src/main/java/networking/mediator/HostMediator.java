@@ -74,29 +74,28 @@ public class HostMediator extends BaseMediator implements IMediator {
     private void handleAll() {
         log.log(Level.FINER,"handleAll is called");
         List<Player> players = hostGame.getPlayers();
+        ArrayList<String> activeIp = new ArrayList<>();
+        for (Player player : players) {
+            activeIp.add(player.getIp().substring(1));
+        }
         log.log(Level.FINER, "hostgame contains {0} players", players.size());
         List<Team> teams = hostGame.getTeams();
         log.log(Level.INFO, "hostgame contains {0} teams", teams.size());
         String json;
         NetworkRequest send;
-        boolean a = false;
+
         if (players.size() > 0 && teams.size() > 0) {
-            String s = "a";
-            for (Player player : players) {
-                if (player.getTeam() == null) {
-                    a = true;
-                }
-            }
-            // send the players
-            if (!a) {
+
                 log.log(Level.FINER, "players and teams contains more than 0");
 
                 json = PlayerAdapter.toString(PlayerAdapter.makeSendable(players));
                 send = new NetworkRequest(RequestType.SEND, "/players/", json);
-                networkServer.send(send.toString(), "127.0.0.1");
+            for (String ipAdress : activeIp) {
+                networkServer.send(send.toString(), ipAdress);
+            }
                 //networkServer.send(send.toString(), "192.168.223.19");
                 log.log(Level.FINER, "network message is send");
-            }
+
         }
         else
         {
@@ -107,7 +106,9 @@ public class HostMediator extends BaseMediator implements IMediator {
 
             json = TeamAdapter.toString(TeamAdapter.makeSendable(teams));
             send = new NetworkRequest(RequestType.SEND, "/teams/", json);
-            networkServer.send(send.toString(), "192.168.223.10");
+            for (String ipAdress : activeIp) {
+                networkServer.send(send.toString(), ipAdress);
+            }
             //networkServer.send(send.toString(), "192.168.223.19");
             log.log(Level.FINER, "networkRequest has been sent to {0}","127.0.0.1");
         }
@@ -142,7 +143,6 @@ public class HostMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "networkRequest is translated to player: {0}", player.toString());
             hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender());
             log.log(Level.FINER, "player is created in the hostgame");
-            //hostGame.autoAssignTeam(player);
             log.log(Level.FINER, "player has been auto-assigned to a team");
         } else {
             networkServer.requeueRequest(networkRequest);

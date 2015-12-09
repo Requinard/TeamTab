@@ -88,7 +88,11 @@ public class LobbyViewController implements Initializable {
                 if (view.stageController.clientGame.getTeams().size() > 1) {
                     team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
                     team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
+                    if (!currentPlayer.getPlayerStatus()) {
+                        //view.stageController.clientGame
+                    }
                     if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
+
                         playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
                     }
                     if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
