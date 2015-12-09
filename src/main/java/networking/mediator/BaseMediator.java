@@ -30,7 +30,7 @@ public abstract class BaseMediator implements IMediator {
     public Thread mediate() {
         Thread thread = new Thread(() -> {
             listen();
-        }, "Mediator thread");
+        }, this.getClass().getName());
         thread.start();
 
         return thread;
@@ -38,14 +38,19 @@ public abstract class BaseMediator implements IMediator {
 
     public void listen() {
         while (true) {
-            NetworkRequest networkRequest = networkServer.consumeRequest();
-            //System.out.println(networkRequest);
-            if (networkRequest != null)
-                handle(networkRequest);
+            try {
+                NetworkRequest networkRequest = networkServer.consumeRequest();
+                //System.out.println(networkRequest);
+                if (networkRequest != null)
+                    handle(networkRequest);
+            }
+            catch(Exception ex){
+                logger.log(Level.SEVERE, "Exception occured in mediator", ex);
+            }
         }
     }
 
-    private void handle(NetworkRequest networkRequest) {
+    private void handle(NetworkRequest networkRequest) throws Exception {
         if (networkRequest.getUrl().equals("/players/")) {
             handlePlayers(networkRequest);
 

@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerAdapter {
+    static Type playerListType = new TypeToken<List<Player>>() {}.getType();
 
     public static String toString(List<Player> players) {
-        return JsonAdapter.toString(players, List.class);
+        return JsonAdapter.toString(players, playerListType);
     }
 
     public static List<Player> toObjects(String input) {
-        Type playerListType = new TypeToken<List<Player>>() {}.getType();
         List<Player> list = (List<Player>) JsonAdapter.toObject(input, playerListType);
         return list;
     }
@@ -33,32 +33,4 @@ public class PlayerAdapter {
     public static Player toObject(String input) {
         return (Player) JsonAdapter.toObject(input, Player.class);
     }
-
-
-    /**
-     * Author Kamil Wasylkiewicz
-     *
-     * @param player the player that needs to be made sendable
-     * @return the reference to the player
-     */
-    public static Player makeSendable(Player player) {
-        Player tempPlayer = new Player(player.getUsername(), player.getIp());
-        tempPlayer.setTeam(new Team(player.getTeam().getName()));
-        return tempPlayer;
-    }
-
-    public static List<Player> makeSendable(List<Player> players) {
-        List<Player> tempPlayer = new ArrayList<>();
-        for (Player player : players) {
-            Player player1 = new Player(player.getUsername(), player.getIp());
-            Team team = new Team(player.getTeam().getName());
-            ArrayList<Player> players1 = new ArrayList<Player>();
-            players1.add(new Player("sda", "das"));
-            team.setPlayers(players1);
-            player1.setTeam(team);
-            tempPlayer.add(player1);
-        }
-        return tempPlayer;
-    }
-
 }

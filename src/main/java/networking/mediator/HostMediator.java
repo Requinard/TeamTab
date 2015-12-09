@@ -160,7 +160,7 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     @Override
-    public void handleTeams(NetworkRequest networkRequest) {
+    public void handleTeams(NetworkRequest networkRequest) throws Exception {
         log.log(Level.FINER, "handleTeams is called");
         if (networkRequest.getType() == RequestType.GET) {
             log.log(Level.FINER,"RequestType is GET");

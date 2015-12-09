@@ -148,7 +148,7 @@ public class NetworkServer {
      */
     public boolean send(String message, String receiver) {
         try {
-            Socket socket = new Socket(receiver, this.getPort());
+            Socket socket = new Socket(receiver.replaceAll("/", ""), this.getPort());
 
             // Get input streams
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());

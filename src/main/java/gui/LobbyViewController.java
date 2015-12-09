@@ -43,6 +43,8 @@ public class LobbyViewController implements Initializable {
     private Runnable runnable;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
+
+    private final double TICKRATE = 0.1;
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -70,7 +72,7 @@ public class LobbyViewController implements Initializable {
                 initiateLobby();
             }
         };
-        timerRefresh.schedule(timerTask, 0, 30);
+        timerRefresh.schedule(timerTask, 0, (long) ((1/TICKRATE)*1000));
     }
 
     /**
@@ -99,6 +101,12 @@ public class LobbyViewController implements Initializable {
                         playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
                     }
                 }
+            }
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });

@@ -178,7 +178,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
      * Author: david
      */
     public void getPlayers() {
-        NetworkRequest request = new NetworkRequest(RequestType.GET, "/players/", "");
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/players/", "t");
 
         networkServer.sendRequest(request, clientGame.getHostIP());
     }
@@ -188,7 +188,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
      * Author: David
      */
     public void getTeams() {
-        NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/", "");
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/", "t");
 
         networkServer.sendRequest(request, clientGame.getHostIP());
     }
@@ -198,7 +198,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
      * Author: David
      */
     public void getTeamAssignments() {
-        NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/players/", "");
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/players/", "t");
 
         networkServer.sendRequest(request, clientGame.getHostIP());
     }
