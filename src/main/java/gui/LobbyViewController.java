@@ -152,6 +152,7 @@ public class LobbyViewController implements Initializable {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -160,6 +161,7 @@ public class LobbyViewController implements Initializable {
      * @param mouseEvent Passes the view to the gameView
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
+
 
         view.stageController.clientGame.changePlayerStatus(true);
 
