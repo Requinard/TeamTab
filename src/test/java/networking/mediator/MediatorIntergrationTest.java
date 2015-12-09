@@ -40,7 +40,7 @@ public class MediatorIntergrationTest {
         hostGame.createTeam("b");
         clientGame.createPlayer("frank1", "127.0.0.1");
         Thread.sleep(1000);
-        while(true) {
+        while (true) {
             if ((hostGame.getPlayers().size() > 0))
                 break;
         }
@@ -199,7 +199,6 @@ public class MediatorIntergrationTest {
         assertEquals(1, aantal);
     }
 
-
     @Test
     public void playerGetTeam() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -227,6 +226,37 @@ public class MediatorIntergrationTest {
         }
         assertEquals(true, result);
     }
+
+    @Test
+    public void playerSetTeam() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+
+        Team team1 = hostGame.createTeam("Corleone");
+        while (true) {
+            if ((clientGame.getTeams().size() == 3))
+                break;
+        }
+        assertTrue(clientGame.getTeams().size() == 3);
+        clientGame.getPlayer("Vito").setTeam(team1);
+        Team team2 = null;
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getTeam().equals(team1))) {
+                team2 = clientGame.getPlayer("Vito").getTeam();
+                break;
+            }
+        }
+        assertEquals(team1, team2);
+    }
+
+
+
 
 
 
