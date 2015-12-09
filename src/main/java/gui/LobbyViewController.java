@@ -142,8 +142,11 @@ public class LobbyViewController implements Initializable {
 
         view.stageController.clientGame.changePlayerStatus(true);
 
-        if (view.stageController.clientGame.localPlayer.getPlayerStatus()) {
-            return;
+
+        for (Player player : view.stageController.clientGame.getPlayers()) {
+            if (!view.stageController.clientGame.localPlayer.getPlayerStatus()) {
+                return;
+            }
         }
 
 

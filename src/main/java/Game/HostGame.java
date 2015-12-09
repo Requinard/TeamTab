@@ -204,6 +204,16 @@ public class HostGame implements IGame {
      */
     @Override
     public HostGame startRound() {
+
+        if (players.size() <= 0) {
+            return null;
+        }
+
+        for (Player player : players) {
+            if (!player.getPlayerStatus())
+                return null;
+        }
+
         // iterate over all teams
         for (Team team : teams) {
             // give a team first a hard reset
