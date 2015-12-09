@@ -17,6 +17,24 @@ public class NetworkMessage {
         return priority;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean ret = false;
+        if (obj instanceof NetworkMessage) {
+            NetworkMessage newMessage = (NetworkMessage) obj;
+
+            String[] newPayload = newMessage.getText().split(" ", 3);
+            String[] oldPayload = this.getText().split(" ", 3);
+            if (newMessage.getSender().equals(this.getSender())
+                    && newPayload[0].equals(oldPayload[0])
+                    && newPayload[1].equals(oldPayload[1])) {
+                ret = true;
+            }
+        }
+
+        return ret;
+    }
+
     public boolean setHighPriority() {
         return priority = true;
     }

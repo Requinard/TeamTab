@@ -2,6 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -133,6 +134,7 @@ public class Team {
      * @param player
      */
     public Player addPlayer(Player player) {
+        if(players == null) players = new LinkedList<>();
         if (players.size() == 0 || !players.contains(player)) {
             players.add(player);
             player.setTeam(this);

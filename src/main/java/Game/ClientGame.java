@@ -104,19 +104,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-
-            for (String playerName : map.get(teamName)) {
-                Player player = this.getPlayer(playerName);
-                player.setTeam(team);
-
-                team.addPlayer(player);
-            }
-        }
-    }
-
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -130,7 +117,7 @@ public class ClientGame implements IGame {
         for (Team newTeam : teams) {
             boolean found = false;
 
-            for (Team oldTeam : teams) {
+            for (Team oldTeam : this.teams) {
                 if (oldTeam.getName().equals(newTeam.getName())) {
                     found = true;
                     // Update
@@ -140,6 +127,22 @@ public class ClientGame implements IGame {
             if (!found) {
                 // If not found, add the new team
                 this.teams.add(newTeam);
+            }
+        }
+    }
+
+    public synchronized void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+
+            if (team != null) {
+
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    player.setTeam(team);
+
+                    team.addPlayer(player);
+                }
             }
         }
     }

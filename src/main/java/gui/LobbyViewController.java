@@ -44,7 +44,7 @@ public class LobbyViewController implements Initializable {
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
 
-    private final double TICKRATE = 0.1;
+    private final double TICKRATE = 2;
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -87,7 +87,7 @@ public class LobbyViewController implements Initializable {
 
             for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
 
-                if (view.stageController.clientGame.getTeams().size() > 1) {
+                if (view.stageController.clientGame.getTeams().size() > 1 && currentPlayer.getTeam()!= null) {
                     team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
                     team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
                     if (!currentPlayer.getPlayerStatus()) {

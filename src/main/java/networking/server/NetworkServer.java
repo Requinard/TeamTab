@@ -21,7 +21,7 @@ public class NetworkServer {
 
     private PriorityBlockingQueue<NetworkMessage> messageQueue;
     private ExecutorService executorService = Executors.newFixedThreadPool(4);
-    private ServerSocket  socket;
+    private ServerSocket socket;
     /**
      * Port number
      */
@@ -29,8 +29,8 @@ public class NetworkServer {
 
     public NetworkServer(int port) {
         this.port = port;
-        Comparator comparator = new PriorityComparator();
-        messageQueue = new PriorityBlockingQueue<>(100, comparator);
+        Comparator<NetworkMessage> comparator = new PriorityComparator();
+        messageQueue = new PriorityBlockingQueue<NetworkMessage>(100, comparator);
     }
 
     public Queue<NetworkMessage> getMessageQueue() {
@@ -62,10 +62,13 @@ public class NetworkServer {
                     // Read it into an object
                     NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
 
-                    logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
-                    System.out.println(networkMessage);
+                    logger.log(Level.INFO, "Server received the following data:" + networkMessage.getText());
+
                     synchronized (this) {
-                        messageQueue.add(networkMessage);
+                        // Do not log duplicates
+                        if(!messageQueue.contains(networkMessage)) {
+                            messageQueue.add(networkMessage);
+                        }
                     }
                 }
             }
@@ -111,8 +114,8 @@ public class NetworkServer {
 
         // Initialize all variables
         executorService = Executors.newFixedThreadPool(THREADPOOLSIZE);
-        Comparator comparator = new PriorityComparator();
-        messageQueue = new PriorityBlockingQueue<>(100, comparator);
+        Comparator<NetworkMessage> comparator = new PriorityComparator();
+        messageQueue = new PriorityBlockingQueue<NetworkMessage>(100, comparator);
         socket = new ServerSocket(port);
 
         // Create runnable
@@ -147,6 +150,7 @@ public class NetworkServer {
      * @param receiver IP that a message will be sent to
      */
     public boolean send(String message, String receiver) {
+
         try {
             Socket socket = new Socket(receiver.replaceAll("/", ""), this.getPort());
 
@@ -163,6 +167,8 @@ public class NetworkServer {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        } finally {
+
         }
     }
 
