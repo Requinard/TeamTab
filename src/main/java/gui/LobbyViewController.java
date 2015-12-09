@@ -93,9 +93,9 @@ public class LobbyViewController implements Initializable {
                 if (view.stageController.clientGame.getTeams().size() > 1) {
                     team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
                     team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
-                    if (!currentPlayer.getPlayerStatus()) {
-                        //view.stageController.clientGame.changePlayerStatus(true);
-                    }
+                    //if (!currentPlayer.getPlayerStatus()) {
+                    //  view.stageController.clientGame.changePlayerStatus(true);
+                    //}
                     if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
 
                         playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
@@ -107,6 +107,10 @@ public class LobbyViewController implements Initializable {
 
 
             }
+
+            //for (Player player : view.stageController.clientGame.changePlayerStatus()){
+
+            //}
             //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
     }
@@ -143,19 +147,7 @@ public class LobbyViewController implements Initializable {
         }
 
 
-        runnable = () -> {
 
-
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    //StageController.chatAppDefusalSquad.closeChatApp();
-                    GameView gameView = new GameView((view.stageController));
-                    view.pass(gameView);
-                    log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
-                }
-            });
-        };
-        runnable.run();
     }
 
     /**

@@ -124,6 +124,11 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
     }
 
+    @Override
+    public void handlePlayersChangeStatus(NetworkRequest networkRequest) {
+
+    }
+
     public void createPlayer(Player player) {
         log.log(Level.FINER, "client createPlayer with player name: {0} has started", player.getUsername());
         NetworkRequest request = new NetworkRequest(RequestType.POST, "/players/", PlayerAdapter.toString(player));

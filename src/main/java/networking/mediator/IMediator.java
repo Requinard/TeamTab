@@ -19,5 +19,7 @@ public interface IMediator {
 
     void handleTeamsCreate(NetworkRequest networkRequest);
 
+    void handlePlayersChangeStatus(NetworkRequest networkRequest);
+
     Thread mediate();
 }

@@ -55,6 +55,7 @@ public class HostMediator extends BaseMediator implements IMediator {
      *
      * @param networkRequest the incoming request to change playerstatus
     */
+    @Override
     public void handlePlayersChangeStatus(NetworkRequest networkRequest) {
         log.log(Level.INFO, "handlePlayerChangeStatus is called");
         if (networkRequest.getType() == RequestType.POST) {

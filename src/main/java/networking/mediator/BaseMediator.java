@@ -69,6 +69,9 @@ public abstract class BaseMediator implements IMediator {
         } else if (networkRequest.getUrl().equals("/status/")) {
             handleStatus(networkRequest);
 
+        } else if (networkRequest.getUrl().equals("/players/changeStatus/")) {
+            handlePlayersChangeStatus(networkRequest);
+
         }
     }
 }

@@ -52,10 +52,9 @@ public class PlayerAdapter {
         for (Player player : players) {
             Player player1 = new Player(player.getUsername(), player.getIp());
             Team team = new Team(player.getTeam().getName());
-            ArrayList<Player> players1 = new ArrayList<Player>();
-            players1.add(new Player("sda", "das"));
-            team.setPlayers(players1);
+
             player1.setTeam(team);
+            player1.setPlayerStatus(player.getPlayerStatus());
             tempPlayer.add(player1);
         }
         return tempPlayer;
