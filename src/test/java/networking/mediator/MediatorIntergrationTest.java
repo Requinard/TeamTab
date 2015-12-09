@@ -1,5 +1,6 @@
 package networking.mediator;
 
+import Game.*;
 import Game.ClientGame;
 import Game.HostGame;
 import Game.Player;
@@ -7,7 +8,9 @@ import Game.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import sun.awt.windows.ThemeReader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -36,7 +39,6 @@ public class MediatorIntergrationTest {
 
     @Test
     public void joinGameTest() throws InterruptedException {
-        //hostGame.createTeam("appels");
 
         hostGame.createTeam("a");
         hostGame.createTeam("b");
@@ -46,13 +48,200 @@ public class MediatorIntergrationTest {
             if ((hostGame.getPlayers().size() > 0))
                 break;
         }
-
         assertTrue(hostGame.getPlayers().size() > 0);
+    }
 
-        //assertTrue(clientGame.getPlayers().size() > 0);
-        //assertTrue(clientGame.getTeams().size() > 0);
+    // ********************** PLAYER mediator integration test ***********************
+    @Test
+    public void playerSetUsername() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+        clientGame.getPlayer("Vito").setUsername("Vito2");
+        Player player = clientGame.getPlayer("Vito2");
+
+
+        while (true) {
+            if ((player.getUsername().contains("Vito2")))
+                break;
+        }
+        assertEquals("Vito2", player.getUsername());
+    }
+
+    @Test
+    public void playerGetUsername() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+        Player player = clientGame.getPlayer("Vito");
+        while (true) {
+            if ((player.getUsername().contains("Vito")))
+                break;
+        }
+        assertEquals("Vito", player.getUsername());
+    }
+
+    @Test
+    public void playerSetPlayerStatus() throws InterruptedException {
+        Player player = null;
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+        clientGame.getPlayer("Vito").setPlayerStatus(true);
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getPlayerStatus()))
+                player = clientGame.getPlayer("Vito");
+            break;
+        }
+        assertEquals(true, player.getPlayerStatus());
 
     }
+
+    @Test
+    public void playerGetPlayerStatus() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+        // default playerstatus is FALSE
+        boolean result = clientGame.getPlayer("Vito").getPlayerStatus();
+        while (true) {
+            if ((!result))
+                break;
+        }
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void playerGetIP() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+        String ip = clientGame.getPlayer("Vito").getIp();
+        while (true) {
+            if ((ip.equals("127.0.0.1")))
+                break;
+        }
+        assertEquals("127.0.0.1", ip);
+    }
+
+    @Test
+    public void playerGetPanels() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+
+        List<Panel> listPanels = new ArrayList<>();
+        Panel panel1 = new Panel(1, 1, 2, "test", PanelTypeEnum.HorizontalSlider);
+        listPanels.add(panel1);
+
+        hostGame.getPlayer("127.0.0.1").setPanels(listPanels);
+        int aantal = 0;
+
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getPanels().size() > 0)) {
+                aantal = clientGame.getPlayer("Vito").getPanels().size();
+                break;
+            }
+
+        }
+        assertEquals(1, aantal);
+    }
+
+    @Test
+    public void playersetPanels() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+
+        List<Panel> listPanels = new ArrayList<>();
+        Panel panel1 = new Panel(1, 1, 2, "test", PanelTypeEnum.HorizontalSlider);
+        listPanels.add(panel1);
+        hostGame.getPlayer("127.0.0.1").setPanels(listPanels);
+        int aantal = 0;
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getPanels().size() > 0)) {
+                aantal = clientGame.getPlayer("Vito").getPanels().size();
+                break;
+            }
+
+        }
+        assertEquals(1, aantal);
+    }
+
+
+    @Test
+    public void playerGetTeam() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+
+        List<Team> teamsList = clientGame.getTeams();
+        while (true) {
+            if ((teamsList.size() > 0)) {
+                break;
+            }
+        }
+        boolean result = false;
+        for (Team team : teamsList) {
+            for (Player player : team.getPlayers()) {
+                if (player.getIp().equals("127.0.0.1")) {
+                    result = true;
+                }
+            }
+        }
+        assertEquals(true, result);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /*
     Test if the teams are added to the hostgame and if they are received in the clientgame
