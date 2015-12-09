@@ -171,4 +171,35 @@ public class ClientMediator extends BaseMediator implements IMediator {
         networkServer.send(request.toString(), clientGame.getHostIP());
         log.log(Level.FINER, "client setPlayerStatus has ended, POST NetworkRequest has been send");
     }
+
+
+    /**
+     * Gets the newest set of players from the server
+     * Author: david
+     */
+    public void getPlayers() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/players/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
+    }
+
+    /**
+     * Gets the newest teams
+     * Author: David
+     */
+    public void getTeams() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
+    }
+
+    /**
+     * Gets the team assignments from the server
+     * Author: David
+     */
+    public void getTeamAssignments() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/players/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
+    }
 }

@@ -2,10 +2,7 @@ package Game;
 
 import networking.mediator.ClientMediator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IllegalFormatException;
-import java.util.List;
+import java.util.*;
 
 public class ClientGame implements IGame {
     public Player localPlayer;
@@ -17,6 +14,7 @@ public class ClientGame implements IGame {
     private List<Player> players;
     private List<Panel> panels;
     private String hostIP;
+    Timer timer;
 
     public ClientGame(int portnumber) {
         localPlayer = null;
@@ -26,6 +24,19 @@ public class ClientGame implements IGame {
         players = new ArrayList<>();
 
         mediatorThread = mediator.mediate();
+    }
+
+    public void scheduleRefresh() {
+        timer = new Timer("Client Update");
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+        };
+
+        timer.schedule(task, 0, 60);
     }
 
     public ClientGame() {
@@ -207,6 +218,16 @@ public class ClientGame implements IGame {
 
 
     /**
+     * Updates the game through the mediator
+     * Authir: David
+     */
+    public void update(){
+        mediator.getPlayers();
+        mediator.getTeams();
+        mediator.getTeamAssignments();
+    }
+
+    /**
      * Author Kaj
      * change the status of the player to show that he is ready to start the game
      * @param playerStatus true if the player is ready to start the game
@@ -241,5 +262,10 @@ public class ClientGame implements IGame {
                 team.addPlayer(player);
             }
         }
+    }
+
+    public void stopSchedule() {
+        timer.cancel();
+        timer.purge();
     }
 }
