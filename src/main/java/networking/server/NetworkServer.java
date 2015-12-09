@@ -155,6 +155,7 @@ public class NetworkServer {
 
             outputStream.writeBytes(message);
 
+            outputStream.flush();
             outputStream.close();
             socket.close();
 

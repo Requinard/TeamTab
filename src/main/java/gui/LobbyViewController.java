@@ -102,12 +102,6 @@ public class LobbyViewController implements Initializable {
                     }
                 }
             }
-
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
     }

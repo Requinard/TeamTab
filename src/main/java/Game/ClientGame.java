@@ -79,11 +79,18 @@ public class ClientGame implements IGame {
      * @param players The players that will be set
      */
     public synchronized void setPlayers(List<Player> players) {
-        if (!players.isEmpty() || players != null || players.size() != 0) {
-            this.players = players;
-
+        for (Player newPlayer : players) {
+            boolean found = false;
+            for (Player oldPlayer : this.players) {
+                if (newPlayer.getUsername().equals(oldPlayer.getUsername())) {
+                    //update
+                    found = true;
+                }
+            }
+            if (!found) {
+                this.players.add(newPlayer);
+            }
         }
-        System.out.println("size: " + players.size());
     }
 
     /**
@@ -117,7 +124,24 @@ public class ClientGame implements IGame {
      * @param teams The teams that will be set
      */
     public synchronized void setTeams(List<Team> teams) {
-        this.teams = teams;
+        if (this.teams == null)
+            teams = new LinkedList<>();
+
+        for (Team newTeam : teams) {
+            boolean found = false;
+
+            for (Team oldTeam : teams) {
+                if (oldTeam.getName().equals(newTeam.getName())) {
+                    found = true;
+                    // Update
+                }
+            }
+
+            if (!found) {
+                // If not found, add the new team
+                this.teams.add(newTeam);
+            }
+        }
     }
 
     /**
