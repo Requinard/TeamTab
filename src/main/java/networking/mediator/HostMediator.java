@@ -65,6 +65,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             for (Player player : hostGame.getPlayers()) {
                 if (incomingPlayer.getIp().equals(player.getIp())) {
                     player.setPlayerStatus(incomingPlayer.getPlayerStatus());
+                    hostGame.startRound();
                     log.log(Level.INFO, "The playerstatus in the hostgame player has changed");
                 }
             }
