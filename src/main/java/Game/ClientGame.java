@@ -17,6 +17,7 @@ public class ClientGame implements IGame {
     private List<Player> players;
     private List<Panel> panels;
     private String hostIP;
+    private String localIP;
 
     public ClientGame(int portnumber) {
         localPlayer = null;
@@ -42,6 +43,24 @@ public class ClientGame implements IGame {
         return hostIP;
     }
 
+    /**
+     * Author Frank Hartman
+     * Gets the local ip of the pc
+     * @return
+     */
+    public String getLocalIP() {return localIP;}
+
+    /**
+     * Author Frank Hartman
+     * Set the localip of the pc
+     * @param localIP
+     */
+    public void setLocalIP(String localIP) {
+        this.localIP = localIP;
+    }
+
+
+
     public void setHostIp(String hostIP) {
         this.hostIP = hostIP;
     }
@@ -65,6 +84,10 @@ public class ClientGame implements IGame {
         if (!players.isEmpty() || players != null || players.size() != 0) {
             this.players = players;
 
+            for (Player player: players) {
+                if (player.getIp().equals(localIP))
+                    localPlayer = player;
+            }
         }
         System.out.println("size: " + players.size());
     }

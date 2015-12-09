@@ -25,6 +25,8 @@ public class StageController {
     Thread gameThread;
     ClientGame clientGame;
     HostGame hostGame;
+
+
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
     //private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");

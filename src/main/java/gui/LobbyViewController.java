@@ -9,7 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -58,6 +60,9 @@ public class LobbyViewController implements Initializable {
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
         buttonChat.setOnMouseClicked(this::buttonChatOnClick);
 
+
+
+
         timerRefresh = new java.util.Timer();
         try {
             Thread.sleep(1);
@@ -99,6 +104,8 @@ public class LobbyViewController implements Initializable {
                         playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
                     }
                 }
+
+
             }
             //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
@@ -111,6 +118,15 @@ public class LobbyViewController implements Initializable {
      */
     public void setView(LobbyView lobbyView) {
         view = lobbyView;
+
+        InetAddress localhost = null;
+        try {
+            localhost = InetAddress.getLocalHost();
+            String ipAddress = localhost.getHostAddress();
+            view.stageController.clientGame.setLocalIP(ipAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -119,9 +135,17 @@ public class LobbyViewController implements Initializable {
      * @param mouseEvent Passes the view to the gameView
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
+
+        view.stageController.clientGame.changePlayerStatus(true);
+
+        if (view.stageController.clientGame.localPlayer.getPlayerStatus()) {
+            return;
+        }
+
+
         runnable = () -> {
-            view.stageController.clientGame.reset(true);
-            view.stageController.clientGame.startRound();
+
+
             Platform.runLater(new Runnable() {
                 public void run() {
                     //StageController.chatAppDefusalSquad.closeChatApp();
