@@ -85,13 +85,16 @@ public class LobbyViewController implements Initializable {
             log.log(Level.FINE, "Lobby is being initialized");
 
             for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
-                team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
-                team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
-                if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
-                    playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
-                }
-                if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
-                    playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
+
+                if (view.stageController.clientGame.getTeams().size() > 1) {
+                    team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
+                    team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
+                    if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
+                        playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
+                    }
+                    if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
+                        playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
+                    }
                 }
             }
             ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
