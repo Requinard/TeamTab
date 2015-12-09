@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +34,7 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class GameController implements Initializable {
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(GameController.class.getName());
     @FXML
     private Button buttonStart;
     @FXML
@@ -76,7 +75,7 @@ public class GameController implements Initializable {
     private TimerTask timerTask;
     private List<Panel> panelHolder;
     private boolean panelPushed;
-    private AudioPlayer audioPlayer;
+    //private AudioPlayer audioPlayer;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -106,7 +105,7 @@ public class GameController implements Initializable {
         URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep.mp3");
         log.log(Level.INFO, "Audiofile url set to: {0}", url.toString());
         try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
-            audioPlayer = new AudioPlayer(fileInputStream.toString());
+            //audioPlayer = new AudioPlayer(fileInputStream.toString());
             log.log(Level.INFO, "explosion audioplayer created");
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
@@ -258,7 +257,7 @@ public class GameController implements Initializable {
                 }
                 switch (levensTeam1) {
                     case 1:
-                        audioPlayer.play();
+                        // audioPlayer.play();
                         Team2Leven1.setVisible(false);
                         Team2Leven2.setVisible(true);
                         Team2Leven3.setVisible(true);
@@ -359,8 +358,8 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
         view.stageController.clientGame.processPanel(StageController.currentPlayer, panel);
         panelPushed = true;
-        audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
-        audioPlayer.play();
+        //audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
+        //audioPlayer.play();
         if (view.stageController.clientGame.hasGameEnded()) {
             timerTask.cancel();
             ScoreView scoreView = new ScoreView(view.stageController);

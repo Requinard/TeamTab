@@ -1,7 +1,6 @@
 package networking.RMI;
 
-import javassist.bytecode.stackmap.TypeData;
-
+import javax.swing.*;
 import java.rmi.RemoteException;
 import java.rmi.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
@@ -15,20 +14,18 @@ import java.util.logging.Logger;
 public class ChatAppDefusalSquad {
 
     // logger for events
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(ChatAppDefusalSquad.class.getName());
 
     // Set port number
     private static final int portNumber = 1099;
 
     // Set binding name for chat application
     private static final String bindingName = "chatApplication";
-
+    // reference to ip adress
+    private static String ipAddress;
     // References to registry and chatserver
     private Registry registry;
     private IChatServer chatServer;
-
-    // reference to ip adress
-    private String ipAddress;
     //reference to the Chat GUI
     private ChatUI chatUI;
 
@@ -42,6 +39,18 @@ public class ChatAppDefusalSquad {
     public ChatAppDefusalSquad() throws UnknownHostException, java.net.UnknownHostException {
         log.log(Level.INFO, "ChatAppDefusalSquad: initialized");
         log.log(Level.INFO, "ChatAppDefusalSquad: Portnumber for RMI is " + portNumber);
+        createAndBindRegistry();
+    }
+
+    public static void main(String[] args) throws UnknownHostException, java.net.UnknownHostException {
+        // Welcome message
+        System.out.println("SERVER USING REGISTRY");
+
+        // create server
+        ChatAppDefusalSquad chatAppDefusalSquad = new ChatAppDefusalSquad();
+        ipAddress = "172.16.141.147";
+        JOptionPane.showMessageDialog(null, "[System] Chat Server is ready on ip " + ipAddress);
+        ChatUI chatUI = new ChatUI(ipAddress);
     }
 
     /**
@@ -108,7 +117,7 @@ public class ChatAppDefusalSquad {
      * @return the ipaddress that is set
      */
     public String getIpAddress() {
-        return this.ipAddress;
+        return ipAddress;
     }
 
     /**
@@ -119,9 +128,7 @@ public class ChatAppDefusalSquad {
      */
     public void setIpAddress(String ipAddress) {
         log.log(Level.INFO, "ChatAppDefusalSquad: ipaddress is set to: " + ipAddress);
-        this.ipAddress = ipAddress;
+        ChatAppDefusalSquad.ipAddress = ipAddress;
     }
-
-
 }
 

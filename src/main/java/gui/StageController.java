@@ -27,7 +27,7 @@ public class StageController {
     HostGame hostGame;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
-    private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
+    //private AudioPlayer audioPlayer = new AudioPlayer("src/main/resources/audio/ThemeMusic.mp3");
 
     public StageController(Stage primaryStage) throws UnsupportedEncodingException, UnknownHostException, java.rmi.UnknownHostException {
 
@@ -40,7 +40,7 @@ public class StageController {
             @Override
             public void run() {
                 try {
-                    audioPlayer.play();
+                    //audioPlayer.play();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

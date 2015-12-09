@@ -34,8 +34,17 @@ public class PlayerAdapter {
         return (Player) JsonAdapter.toObject(input, Player.class);
     }
 
+
+    /**
+     * Author Kamil Wasylkiewicz
+     *
+     * @param player the player that needs to be made sendable
+     * @return the reference to the player
+     */
     public static Player makeSendable(Player player) {
-       return null;
+        Player tempPlayer = new Player(player.getUsername(), player.getIp());
+        tempPlayer.setTeam(new Team(player.getTeam().getName()));
+        return tempPlayer;
     }
 
     public static List<Player> makeSendable(List<Player> players) {
@@ -44,7 +53,6 @@ public class PlayerAdapter {
             Player player1 = new Player(player.getUsername(), player.getIp());
             player1.setTeam(new Team(player.getTeam().getName()));
             tempPlayer.add(player1);
-
         }
         return tempPlayer;
     }

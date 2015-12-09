@@ -1,7 +1,5 @@
 package networking.RMI;
 
-import javassist.bytecode.stackmap.TypeData;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
@@ -12,7 +10,7 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 30-11-2015.
  */
 public class ChatClient extends UnicastRemoteObject implements IChatClient {
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(ChatClient.class.getName());
 
     // the name of the client
     private String name;
@@ -36,10 +34,9 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
      *
      * @param chatUI the GUI that will be for the user
      */
-    public boolean setGUI(ChatUI chatUI) {
+    public void setGUI(ChatUI chatUI) {
         log.log(Level.INFO, "ChatClient: gui is set for user " + name);
         this.chatUI = chatUI;
-        return true;
     }
 
     /**
@@ -50,10 +47,9 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
     @Override
-    public boolean tell(String tell) throws RemoteException {
+    public void tell(String tell) throws RemoteException {
         log.log(Level.INFO, "ChatClient: " + name + " says " + tell);
         chatUI.writeMsg(tell);
-        return true;
     }
 
     /**
@@ -76,9 +72,9 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
     @Override
-    public boolean updateUsers(Vector newUser) throws RemoteException {
+    public void updateUsers(Vector newUser) throws RemoteException {
         log.log(Level.INFO, "ChatClient: user updated: " + newUser.toString());
         chatUI.updateUsers(newUser);
-        return true;
     }
 }
+

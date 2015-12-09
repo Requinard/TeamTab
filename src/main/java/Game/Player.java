@@ -1,6 +1,5 @@
 package Game;
 
-import javassist.bytecode.stackmap.TypeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.logging.Logger;
 
 public class Player {
 
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(Player.class.getName());
     private String username;
     private String ip;
     private List<Panel> panels;
@@ -31,8 +30,6 @@ public class Player {
         panels = new ArrayList<>();
     }
 
-    public Player() {
-    }
 
     /**
      * Author Qun

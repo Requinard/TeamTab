@@ -1,7 +1,5 @@
 package networking.RMI;
 
-import javassist.bytecode.stackmap.TypeData;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -23,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class ChatUI {
     // logger for the class
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(ChatUI.class.getName());
 
     // binding name for the RMI registry
     private static final String bindingName = "chatApplication";
@@ -86,10 +84,12 @@ public class ChatUI {
                 try {
                     registry = LocateRegistry.getRegistry(ipAddress, portNumber);
                     log.log(Level.INFO, "ChatUI: registry located on " + ipAddress + " portnumber " + portNumber);
+                    JOptionPane.showMessageDialog(frame, "Registry Located");
                 } catch (RemoteException ex) {
                     log.log(Level.INFO, "ChatUI: Cannot locate registry");
                     log.log(Level.INFO, "ChatUI: RemoteException: " + ex.getMessage());
                     registry = null;
+                    JOptionPane.showMessageDialog(frame, "Registry null");
                 }
 
                 // Bind student administration using registry
@@ -97,14 +97,18 @@ public class ChatUI {
                     try {
                         chatServer = (IChatServer) registry.lookup(bindingName);
                         log.log(Level.INFO, "ChatUI: chatserver is binded");
+                        JOptionPane.showMessageDialog(frame, "ChatServer bindend");
 
                     } catch (RemoteException ex) {
                         log.log(Level.INFO, "ChatUI: Cannot bind chat application");
                         log.log(Level.INFO, "ChatUI: RemoteException: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(frame, "ChatServer not binded remoteExecption");
+
                         return;
                     } catch (NotBoundException ex) {
                         log.log(Level.INFO, "ChatUI: Cannot bind chat application");
                         log.log(Level.INFO, "ChatUI: NotBoundException: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(frame, "ChatServer not bindend NotBoundException");
                         return;
                     }
                 }
@@ -125,6 +129,7 @@ public class ChatUI {
 
                 // set the boolean true because this player is connected
                 connected = true;
+                JOptionPane.showMessageDialog(frame, "ChatUI all good :)");
 
                 return;
             } catch (Exception e) {
@@ -177,13 +182,11 @@ public class ChatUI {
      *
      * @param st
      */
-    public boolean writeMsg(String st) {
+    public void writeMsg(String st) {
         log.log(Level.INFO, "ChatUI: writing " + st);
         try {
             tx.setText(tx.getText() + "\n" + st);
-            return true;
         } catch (Exception e) {
-            return false;
         }
 
     }
@@ -195,7 +198,7 @@ public class ChatUI {
      * @param vector the vector with all the clients
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
-    public boolean updateUsers(Vector vector) throws RemoteException {
+    public void updateUsers(Vector vector) throws RemoteException {
         DefaultListModel listModel = new DefaultListModel();
         if (vector != null) {
             log.log(Level.INFO, "ChatUI: updating users");
@@ -205,12 +208,10 @@ public class ChatUI {
                     listModel.addElement(tmp);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return false;
                 }
             }
         }
         lst.setModel(listModel);
-        return true;
     }
 
 
@@ -325,3 +326,4 @@ public class ChatUI {
         }
     }
 }
+

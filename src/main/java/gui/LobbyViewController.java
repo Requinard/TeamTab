@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javassist.bytecode.stackmap.TypeData;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class LobbyViewController implements Initializable {
 
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(LobbyViewController.class.getName());
     @FXML
     private Button buttonBack;
     @FXML
@@ -97,7 +96,7 @@ public class LobbyViewController implements Initializable {
                     }
                 }
             }
-            ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
+            //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
     }
 
@@ -121,7 +120,7 @@ public class LobbyViewController implements Initializable {
             view.stageController.clientGame.startRound();
             Platform.runLater(new Runnable() {
                 public void run() {
-                    StageController.chatAppDefusalSquad.closeChatApp();
+                    //StageController.chatAppDefusalSquad.closeChatApp();
                     GameView gameView = new GameView((view.stageController));
                     view.pass(gameView);
                     log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
@@ -154,7 +153,7 @@ public class LobbyViewController implements Initializable {
     private void buttonChatOnClick(MouseEvent mouseEvent) {
         log.log(Level.INFO, "Lobbyview: Chat app GUI is starting");
         runnable = () -> Platform.runLater(() -> {
-            StageController.chatAppDefusalSquad.startChatApp();
+            //StageController.chatAppDefusalSquad.startChatApp();
         });
         runnable.run();
     }

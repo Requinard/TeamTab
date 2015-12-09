@@ -1,5 +1,6 @@
 package networking.RMI;
 
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Vector;
@@ -26,7 +27,7 @@ public interface IChatServer extends Remote {
      * @param text that needs to be published     *
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
-    boolean publish(String text) throws RemoteException;
+    void publish(String text) throws RemoteException;
 
     /**
      * this method will connect a new vector to all the other connected vectors and return all the vectors
@@ -44,5 +45,5 @@ public interface IChatServer extends Remote {
      * @param chatClient that needs to be logged out
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
-    boolean logOut(IChatClient chatClient) throws RemoteException;
+    void logOut(IChatClient chatClient) throws RemoteException;
 }

@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javassist.bytecode.stackmap.TypeData;
 
 import javax.swing.*;
 import java.net.InetAddress;
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class StartViewController implements Initializable {
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(StartViewController.class.getName());
 
     private final String pattern = "[\n\r \t]+";
     @FXML
@@ -131,6 +130,7 @@ public class StartViewController implements Initializable {
                 //testData();
 
                 // create and start the RMI registry with hostgame IP
+
                 log.log(Level.INFO, "RMI chat loaded");
 
                 Platform.runLater(() -> {

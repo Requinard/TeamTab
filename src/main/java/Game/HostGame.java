@@ -1,6 +1,5 @@
 package Game;
 
-import javassist.bytecode.stackmap.TypeData;
 import networking.mediator.HostMediator;
 import networking.mediator.IMediator;
 import org.apache.commons.io.IOUtils;
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
 
 public class HostGame implements IGame {
 
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(HostGame.class.getName());
     private List<Player> players;
     private List<Team> teams;
     private List<Panel> panels;

@@ -29,15 +29,28 @@ public class TeamAdapter {
         return (List<Team>) JsonAdapter.toObject(input, teamListType);
     }
 
-
+    /**
+     * Author Kamil Wasylkiewicz
+     *
+     * @param team the team that needs to be made sendable
+     * @return a reference to the team
+     */
     public static Team makeSendable(Team team) {
-        return null;
+
+        Team tempTeam = new Team(team.getName(), team.getLives(), team.getTime(), team.getScore());
+        return tempTeam;
     }
 
+    /**
+     * Author Kamil Wasylkiewicz
+     * @param teams the teams that needs to be made sendable
+     * @return the list of references to the teams
+     */
     public static List<Team> makeSendable(List<Team> teams) {
         List<Team> tempTeam = new ArrayList<>();
+
         for (Team team : teams) {
-            tempTeam.add(new Team(team.getName()));
+            tempTeam.add(new Team(team.getName(), team.getLives(), team.getTime(), team.getScore()));
         }
         return tempTeam;
     }

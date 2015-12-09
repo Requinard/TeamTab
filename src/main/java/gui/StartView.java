@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javassist.bytecode.stackmap.TypeData;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class StartView extends AbstractView implements IView {
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(StartView.class.getName());
     private StartViewController startViewController;
 
     public StartView(StageController stageController){

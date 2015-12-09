@@ -115,7 +115,7 @@ public class NetworkServerTest extends TestCase {
         // Test to see if we received a message
 
         // sleep for a bit so that the connection is handled
-        Thread.sleep(200);
+        Thread.sleep(400);
 
         NetworkMessage message = networkServer.consumeMessage();
 

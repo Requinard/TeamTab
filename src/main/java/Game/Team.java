@@ -1,7 +1,5 @@
 package Game;
 
-import javassist.bytecode.stackmap.TypeData;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.logging.Logger;
 
 public class Team {
 
-    private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    private static final Logger log = Logger.getLogger(Team.class.getName());
     private final int STARTLIVES = 3;
     private final int STARTTIME = 9;
     private List<Player> players;
@@ -31,6 +29,26 @@ public class Team {
         panels = new ArrayList<Panel>();
         activeInstructions = new ArrayList<Instruction>();
     }
+
+    /**
+     * Second constructor for the adapters.teamadapter sendable method
+     * Author Kamil Wasylkiewicz
+     *
+     * @param name       the name of the team
+     * @param startLives the start lives of the team
+     * @param starTime   the starting time of the team
+     * @param score      the score of the team
+     */
+    public Team(String name, int startLives, int starTime, int score) {
+        this.name = name;
+        this.lives = startLives;
+        this.time = starTime;
+        this.score = score;
+        players = new ArrayList<Player>();
+        panels = new ArrayList<Panel>();
+        activeInstructions = new ArrayList<Instruction>();
+    }
+
 
     /**
      * Author Qun

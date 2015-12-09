@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
  * Created by frank on 30/11/2015.
  */
 public class MediatorIntergrationTest {
+
     HostGame hostGame;
     ClientGame clientGame;
 
@@ -36,7 +37,6 @@ public class MediatorIntergrationTest {
         hostGame.createTeam("b");
         Thread.sleep(2000);
         clientGame.createPlayer("frank1", "127.0.0.1");
-
         Thread.sleep(2000);
 
         while(true) {
@@ -45,7 +45,6 @@ public class MediatorIntergrationTest {
         }
 
         assertTrue(hostGame.getPlayers().size() > 0);
-
         Thread.sleep(2000);
 
         //assertTrue(clientGame.getPlayers().size() > 0);

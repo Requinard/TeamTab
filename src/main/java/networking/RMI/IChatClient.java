@@ -16,7 +16,7 @@ public interface IChatClient extends Remote {
      * @param name the name of the client
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
-    boolean tell(String name) throws RemoteException;
+    void tell(String name) throws RemoteException;
 
     /**
      * this method will return the name of the client
@@ -34,5 +34,6 @@ public interface IChatClient extends Remote {
      * @param newUser the new user that joined
      * @throws RemoteException when a communication-related exception has occurred during the execution of a remote method
      */
-    boolean updateUsers(Vector newUser) throws RemoteException;
+    void updateUsers(Vector newUser) throws RemoteException;
 }
+

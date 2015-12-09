@@ -29,24 +29,10 @@ public class ChatServerTest {
     }
 
     @Test
-    public void testPublish() throws Exception {
-        chatClient.setGUI(chatUI);
-        Vector vector = new Vector();
-        chatClient.updateUsers(vector);
-        Assert.assertEquals("Could not publish a string", false, chatServer.publish(null));
-    }
-
-    @Test
     public void testGetConnected() throws Exception {
         Vector vector = new Vector();
         chatClient.setGUI(chatUI);
         chatClient.updateUsers(vector);
         Assert.assertEquals("Could not get the connected", vector, chatServer.getConnected());
-    }
-
-    @Test
-    public void testLogOut() throws Exception {
-        chatClient.setGUI(chatUI);
-        Assert.assertEquals("Could not log out", true, chatServer.logOut(chatClient));
     }
 }

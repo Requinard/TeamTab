@@ -93,7 +93,7 @@ public class HostMediator extends BaseMediator implements IMediator {
 
                 json = PlayerAdapter.toString(PlayerAdapter.makeSendable(players));
                 send = new NetworkRequest(RequestType.SEND, "/players/", json);
-                networkServer.send(send.toString(), "192.168.223.10");
+                networkServer.send(send.toString(), "127.0.0.1");
                 //networkServer.send(send.toString(), "192.168.223.19");
                 log.log(Level.FINER, "network message is send");
             }

@@ -2,6 +2,7 @@ package Game.adapters;
 
 import Game.Panel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PanelAdapter {
@@ -34,12 +35,30 @@ public class PanelAdapter {
 
     }
 
+    /**
+     * Author Kamil Wasylkiewicz
+     *
+     * @param panel the panel that needs to be made sendable
+     * @return the reference to the panel
+     */
     public static Panel makeSendable(Panel panel) {
-        return null;
+        Panel tempPanel = new Panel(panel.getId(), panel.getMinimumValue(), panel.getMaximumValue(), panel.getText(), panel.getPanelType());
+
+        return tempPanel;
     }
 
+    /**
+     * Author Kamil Wasylkiewicz
+     * @param panels the list of panels that needs to be made sendable
+     * @return the reference to the panels
+     */
     public static List<Panel> makeSendable(List<Panel> panels) {
-        return null;
+        List<Panel> tempPanels = new ArrayList<>();
+        for (Panel panel : panels) {
+            Panel tempPanel = new Panel(panel.getId(), panel.getMinimumValue(), panel.getMaximumValue(), panel.getText(), panel.getPanelType());
+            tempPanels.add(tempPanel);
+        }
+        return tempPanels;
     }
 
 }
