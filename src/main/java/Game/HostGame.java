@@ -376,7 +376,6 @@ public class HostGame implements IGame {
         return scoreboard;
     }
     public void autoAssignTeam(Player player) {
-        System.out.println("sdafffffffggggfgfsffasfasffsgyuasfjhdfjafjkadfjkfjk");
         if (teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
             teams.get(0).addPlayer(player);
             for (Player p : players) {
