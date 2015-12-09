@@ -1,5 +1,6 @@
 package Game.adapters;
 
+import Game.Player;
 import Game.Team;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,8 +51,18 @@ public class TeamAdapter {
         List<Team> tempTeam = new ArrayList<>();
 
         for (Team team : teams) {
-            tempTeam.add(new Team(team.getName(), team.getLives(), team.getTime(), team.getScore()));
+            List<Player> tempPlayer = new ArrayList<>();
+            for (Player player : team.getPlayers()) {
+
+                Player player1 = new Player(player.getUsername(), player.getIp());
+                player1.setPanels(player.getPanels());
+                tempPlayer.add(player1);
+            }
+            Team team1 = new Team(team.getName(), team.getLives(), team.getTime(), team.getScore());
+            team1.setPlayers(tempPlayer);
+            tempTeam.add(team1);
         }
         return tempTeam;
     }
+
 }
