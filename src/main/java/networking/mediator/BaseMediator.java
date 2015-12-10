@@ -39,12 +39,12 @@ public abstract class BaseMediator implements IMediator {
     public void listen() {
         while (true) {
             try {
+                if (networkServer == null) networkServer = NetworkServerSingleton.getNetworkServer();
                 NetworkRequest networkRequest = networkServer.consumeRequest();
                 //System.out.println(networkRequest);
                 if (networkRequest != null)
                     handle(networkRequest);
-            }
-            catch(Exception ex){
+            } catch (Exception ex) {
                 logger.log(Level.SEVERE, "Exception occured in mediator", ex);
             }
         }

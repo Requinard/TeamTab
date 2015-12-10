@@ -78,6 +78,9 @@ public class ClientMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "client handleTeamPlayers map team contains: {0} teams", map.size());
             clientGame.setTeams(map);
             log.log(Level.FINER, "client handleTeamPlayers has ended, teams have been set");
+        } else {
+            log.log(Level.FINE, "Requeuing request");
+            networkServer.requeueRequest(networkRequest);
         }
     }
 

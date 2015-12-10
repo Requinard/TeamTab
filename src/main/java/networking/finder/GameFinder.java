@@ -12,8 +12,8 @@ import java.util.concurrent.Executors;
  * Created by Kevin on 30-11-2015.
  */
 public class GameFinder {
-    ExecutorService pool = Executors.newFixedThreadPool(10);
     private final int TIMEOUT = 10;
+    ExecutorService pool = Executors.newFixedThreadPool(10);
 
     /**
      * Finds all the hosts which are on the same subnet as the finder
@@ -26,7 +26,7 @@ public class GameFinder {
         ObservableList openServers = list;
         String localHost;
         try {
-            localHost = Inet4Address.getLocalHost().toString();
+            localHost = Inet4Address.getAllByName("").toString();
         } catch (UnknownHostException e) {
             localHost = "192.168.0.1";
         }

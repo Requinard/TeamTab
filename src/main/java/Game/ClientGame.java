@@ -8,7 +8,7 @@ public class ClientGame implements IGame {
     /*
     Updates per second
      */
-    private final double TICKRATE = 0.1;
+    private final double TICKRATE = 5;
     public Player localPlayer;
     //instruction of this player
     public Instruction localInstruction;
@@ -104,6 +104,22 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
+    public synchronized void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+
+            if (team != null) {
+
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    player.setTeam(team);
+
+                    team.addPlayer(player);
+                }
+            }
+        }
+    }
+
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -127,22 +143,6 @@ public class ClientGame implements IGame {
             if (!found) {
                 // If not found, add the new team
                 this.teams.add(newTeam);
-            }
-        }
-    }
-
-    public synchronized void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-
-            if (team != null) {
-
-                for (String playerName : map.get(teamName)) {
-                    Player player = this.getPlayer(playerName);
-                    player.setTeam(team);
-
-                    team.addPlayer(player);
-                }
             }
         }
     }

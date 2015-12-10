@@ -66,9 +66,9 @@ public class NetworkServer {
 
                     synchronized (this) {
                         // Do not log duplicates
-                        if(!messageQueue.contains(networkMessage)) {
+                        //       if(!messageQueue.contains(networkMessage)) {
                             messageQueue.add(networkMessage);
-                        }
+                        //     }
                     }
                 }
             }
