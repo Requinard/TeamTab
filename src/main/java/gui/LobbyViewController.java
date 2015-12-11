@@ -115,25 +115,21 @@ public class LobbyViewController implements Initializable {
                 }
                 if (allActive) {
                     StartGame();
+                    timerRefresh.cancel();
+                    timerRefresh.purge();
                 }
             }
-
             //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
     }
 
     public void StartGame() {
-        runnable = () -> {
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    //StageController.chatAppDefusalSquad.closeChatApp();
-                    GameView gameView = new GameView((view.stageController));
-                    view.pass(gameView);
-                    log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
-                }
-            });
-        };
-        runnable.run();
+        Platform.runLater(() -> {
+            //StageController.chatAppDefusalSquad.closeChatApp();
+            GameView gameView = new GameView((view.stageController));
+            view.pass(gameView);
+            log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
+        });
     }
 
     /**
@@ -152,6 +148,7 @@ public class LobbyViewController implements Initializable {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -160,6 +157,7 @@ public class LobbyViewController implements Initializable {
      * @param mouseEvent Passes the view to the gameView
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
+
 
         view.stageController.clientGame.changePlayerStatus(true);
 

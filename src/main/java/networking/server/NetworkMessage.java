@@ -30,7 +30,7 @@ public class NetworkMessage {
     }
 
     public String getSender() {
-        return this.sender;
+        return this.sender.substring(1);
     }
 
     public void setSender(String sender) {

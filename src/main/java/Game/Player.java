@@ -30,10 +30,10 @@ public class Player {
         panels = new ArrayList<>();
     }
 
-
     /**
      * Author Qun
      * gets the playerstatus from the player
+     *
      * @return
      */
     public boolean getPlayerStatus() {
@@ -120,6 +120,10 @@ public class Player {
      */
     public Instruction getActiveInstruction() {
         return this.activeInstruction;
+    }
+
+    public void setActiveInstruction(Instruction activeInstruction) {
+        this.activeInstruction = activeInstruction;
     }
 
     /**

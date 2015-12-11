@@ -143,7 +143,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             // Makes a player object from the inputstream
             Player player = PlayerAdapter.toObject(networkRequest.getPayload());
             log.log(Level.FINER, "networkRequest is translated to player: {0}", player.toString());
-            hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender().substring(1));
+            hostGame.createPlayer(player.getUsername(), networkRequest.getNetworkMessage().getSender());
             log.log(Level.FINER, "player is created in the hostgame");
             log.log(Level.FINER, "player has been auto-assigned to a team");
         } else {

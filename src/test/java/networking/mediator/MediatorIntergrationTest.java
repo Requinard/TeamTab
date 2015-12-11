@@ -44,7 +44,7 @@ public class MediatorIntergrationTest {
         hostGame.createTeam("b");
         clientGame.createPlayer("frank1", "127.0.0.1");
         Thread.sleep(1000);
-        while(true) {
+        while (true) {
             if ((hostGame.getPlayers().size() > 0))
                 break;
         }
@@ -52,6 +52,12 @@ public class MediatorIntergrationTest {
     }
 
     // ********************** PLAYER mediator integration test ***********************
+
+    /**
+     * Author Kamil Wasylkiewcz
+     *
+     * @throws InterruptedException
+     */
     @Test
     public void playerSetUsername() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -73,6 +79,10 @@ public class MediatorIntergrationTest {
         assertEquals("Vito2", player.getUsername());
     }
 
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playerGetUsername() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -91,6 +101,10 @@ public class MediatorIntergrationTest {
         assertEquals("Vito", player.getUsername());
     }
 
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playerSetPlayerStatus() throws InterruptedException {
         Player player = null;
@@ -112,6 +126,10 @@ public class MediatorIntergrationTest {
 
     }
 
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playerGetPlayerStatus() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -131,6 +149,10 @@ public class MediatorIntergrationTest {
         assertEquals(false, result);
     }
 
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playerGetIP() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -149,6 +171,10 @@ public class MediatorIntergrationTest {
         assertEquals("127.0.0.1", ip);
     }
 
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playerGetPanels() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -177,6 +203,10 @@ public class MediatorIntergrationTest {
         assertEquals(1, aantal);
     }
 
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playersetPanels() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -203,7 +233,10 @@ public class MediatorIntergrationTest {
         assertEquals(1, aantal);
     }
 
-
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
     @Test
     public void playerGetTeam() throws InterruptedException {
         hostGame.createTeam("Test1");
@@ -231,6 +264,102 @@ public class MediatorIntergrationTest {
         }
         assertEquals(true, result);
     }
+
+    /**
+     * Author Kamil Wasylkiewcz
+     * @throws InterruptedException
+     */
+    @Test
+    public void playerSetTeam() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+
+        Team team1 = hostGame.createTeam("Corleone");
+        while (true) {
+            if ((clientGame.getTeams().size() == 3))
+                break;
+        }
+        assertTrue(clientGame.getTeams().size() == 3);
+        clientGame.getPlayer("Vito").setTeam(team1);
+        Team team2 = null;
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getTeam().equals(team1))) {
+                team2 = clientGame.getPlayer("Vito").getTeam();
+                break;
+            }
+        }
+        assertEquals(team1, team2);
+    }
+
+    /**
+     * Author Kamil Wasylkiewcz
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void playerGeneratePanels() throws InterruptedException {
+        hostGame.createTeam("Test1");
+        hostGame.createTeam("Test2");
+        clientGame.createPlayer("Vito", "127.0.0.1");
+        while (true) {
+            if ((clientGame.getPlayers().size() > 0))
+                break;
+        }
+        assertTrue(clientGame.getPlayers().size() > 0);
+
+        List<Panel> listPanels = new ArrayList<>();
+        Panel panel1 = new Panel(1, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel2 = new Panel(2, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel3 = new Panel(3, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel4 = new Panel(4, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel5 = new Panel(5, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel6 = new Panel(6, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel7 = new Panel(7, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel8 = new Panel(8, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel9 = new Panel(9, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel10 = new Panel(10, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel11 = new Panel(11, 1, 1, "test", PanelTypeEnum.Button);
+        Panel panel12 = new Panel(12, 1, 1, "test", PanelTypeEnum.Button);
+        listPanels.add(panel1);
+        listPanels.add(panel2);
+        listPanels.add(panel3);
+        listPanels.add(panel4);
+        listPanels.add(panel5);
+        listPanels.add(panel6);
+        listPanels.add(panel7);
+        listPanels.add(panel8);
+        listPanels.add(panel9);
+        listPanels.add(panel10);
+        listPanels.add(panel11);
+        listPanels.add(panel12);
+
+        hostGame.getPlayer("127.0.0.1").setPanels(listPanels);
+        int aantal = 0;
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getPanels().size() > 0)) {
+                aantal = clientGame.getPlayer("Vito").getPanels().size();
+                break;
+            }
+        }
+        assertEquals(12, aantal);
+        clientGame.getPlayer("Vito").generatePanels(listPanels);
+        while (true) {
+            if ((clientGame.getPlayer("Vito").getPanels().size() > 0)) {
+                aantal = clientGame.getPlayer("Vito").getPanels().size();
+                break;
+            }
+        }
+        assertEquals(listPanels.size(), aantal);
+    }
+
+
+
 
 
 
