@@ -56,6 +56,7 @@ public class PlayerAdapter {
             player1.setTeam(team);
             player1.setPlayerStatus(player.getPlayerStatus());
             player1.setPanels(player.getPanels());
+            player1.setActiveInstruction(player.getActiveInstruction());
             tempPlayer.add(player1);
         }
         return tempPlayer;

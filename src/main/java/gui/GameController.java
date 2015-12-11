@@ -19,9 +19,6 @@ import javafx.scene.layout.GridPane;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +99,7 @@ public class GameController implements Initializable {
         };
         timerRefresh.schedule(timerTask, 0, 30);
 
+        /*
         URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep.mp3");
         log.log(Level.INFO, "Audiofile url set to: {0}", url.toString());
         try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
@@ -114,6 +112,7 @@ public class GameController implements Initializable {
             e1.printStackTrace();
             log.log(Level.SEVERE, e1.toString(), e1);
         }
+        */
     }
 
     /**
@@ -134,10 +133,10 @@ public class GameController implements Initializable {
     private void panelChecker() {
         Platform.runLater(() -> {
 
-            if (!StageController.currentPlayer.getPanels().equals(panelHolder)) {
-                panelHolder = StageController.currentPlayer.getPanels();
+            if (view.stageController.clientGame.localPlayer.getPanels().size() != panelHolder.size()) {
+                panelHolder = view.stageController.clientGame.localPlayer.getPanels();
                 fillGridWithPanels();
-                log.log(Level.INFO, "Gridview filled with {0} panels", StageController.currentPlayer.getPanels().size());
+                log.log(Level.INFO, "Gridview filled with {0} panels", view.stageController.clientGame.localPlayer.getPanels().size());
             }
         });
     }
@@ -168,7 +167,7 @@ public class GameController implements Initializable {
         gridPane.setAlignment(Pos.CENTER);
         log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
 
-        final ArrayList<Panel> panels = (ArrayList<Panel>) StageController.currentPlayer.getPanels();
+        final ArrayList<Panel> panels = (ArrayList<Panel>) view.stageController.clientGame.localPlayer.getPanels();
 
         int column = 0;
         int row = 0;
@@ -198,10 +197,10 @@ public class GameController implements Initializable {
     private void showPlayerInstruction() {
 
         Platform.runLater(() -> {
-            if (StageController.currentPlayer.getUsername() != null)
-                log.log(Level.FINE, "Retrieving instruction for player {0}", StageController.currentPlayer.getUsername());
-            instructionLabel.setText(StageController.currentPlayer.getActiveInstruction().getPanel().getText() + " to: " + StageController.currentPlayer.getActiveInstruction().getIntendedValue());
-            log.log(Level.FINE, "Instruction {0} is shown to player {0}", new Object[]{StageController.currentPlayer.getActiveInstruction().getPanel().getText(), StageController.currentPlayer.getUsername()});
+            if (view.stageController.clientGame.localPlayer != null)
+                log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localPlayer.getUsername());
+            instructionLabel.setText(view.stageController.clientGame.localPlayer.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localPlayer.getActiveInstruction().getIntendedValue());
+            //log.log(Level.FINE, "Instruction {0} is shown to player {0}", new Object[]{StageController.currentPlayer.getActiveInstruction().getPanel().getText(), StageController.currentPlayer.getUsername()});
         });
     }
 
@@ -211,10 +210,11 @@ public class GameController implements Initializable {
      */
     private void showTeamInstructionCount() {
         Platform.runLater(() -> {
-            if (StageController.currentPlayer.getUsername() != null)
-                log.log(Level.FINE, "Retrieving score for player {0}", StageController.currentPlayer.getUsername());
-            labelCorrectInstructions.setText(StageController.currentPlayer.getTeam().getScore() + "");
-            log.log(Level.FINE, "Team {0} has a scored {1} point", new Object[]{StageController.currentPlayer.getTeam().getName(), StageController.currentPlayer.getTeam().getScore()});
+            if (view.stageController.clientGame.localPlayer != null)
+                log.log(Level.FINE, "Retrieving score for player {0}", view.stageController.clientGame.localPlayer.getUsername());
+
+            labelCorrectInstructions.setText(view.stageController.clientGame.localPlayer.getTeam().getScore() + "");
+            //log.log(Level.FINE, "Team {0} has a scored {1} point", new Object[]{StageController.currentPlayer.getTeam().getName(), StageController.currentPlayer.getTeam().getScore()});
         });
     }
 
@@ -227,7 +227,7 @@ public class GameController implements Initializable {
             int levensTeam1;
             int levensTeam2;
 
-            if (StageController.currentPlayer.getUsername() != null) {
+            if (view.stageController.clientGame.localPlayer != null) {
                 levensTeam1 = view.stageController.clientGame.getTeams().get(0).getLives();
                 levensTeam2 = view.stageController.clientGame.getTeams().get(1).getLives();
 
@@ -289,9 +289,11 @@ public class GameController implements Initializable {
      * Sets the name of the teams that are playing
      */
     private void setTeamNames() {
-        lblTeamName1.setText(view.stageController.clientGame.getTeams().get(1).getName());
-        lblTeamName2.setText(view.stageController.clientGame.getTeams().get(0).getName());
-        log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.clientGame.getTeams().get(1).getName(), view.stageController.clientGame.getTeams().get(0).getName()});
+        Platform.runLater(() -> {
+            lblTeamName1.setText(view.stageController.clientGame.getTeams().get(1).getName());
+            lblTeamName2.setText(view.stageController.clientGame.getTeams().get(0).getName());
+        });
+        //log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.clientGame.getTeams().get(1).getName(), view.stageController.clientGame.getTeams().get(0).getName()});
     }
 
     /**
@@ -304,23 +306,23 @@ public class GameController implements Initializable {
         runnable = () -> {
             timer = new Timer(1000, new ActionListener() {
 
-                int counter = StageController.currentPlayer.getTeam().getTime();
+                int counter = view.stageController.clientGame.localPlayer.getTeam().getTime();
 
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
+                    log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{view.stageController.clientGame.localPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
                     counter--;
                     Platform.runLater(() -> {
                         //check if counter must be reset because a button or slider was used
                         if (correctIn()) {
-                            counter = StageController.currentPlayer.getTeam().getTime();
+                            counter = view.stageController.clientGame.localPlayer.getTeam().getTime();
                         }
                         progressBar.setProgress(counter * 0.1);
                         timeLabel.setText(Integer.toString(counter));
                     });
                     if (counter == 0) {
-                        view.stageController.clientGame.registerInvalidInstruction(StageController.currentPlayer.getActiveInstruction());
-                        Team team = StageController.currentPlayer.getTeam();
+                        view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localPlayer.getActiveInstruction());
+                        Team team = view.stageController.clientGame.localPlayer.getTeam();
                         counter = team.getTime();
                     }
                 }

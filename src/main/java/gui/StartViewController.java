@@ -74,7 +74,7 @@ public class StartViewController implements Initializable {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        view.stageController.clientGame.setHostIp(ipAddress);
+        view.stageController.clientGame.setHostIp(ipAddress.substring(1));
         view.stageController.resetGame();
     }
 
@@ -111,7 +111,7 @@ public class StartViewController implements Initializable {
                 view.stageController.clientGame.setHostIp(ipAddress);
                 log.log(Level.INFO, "Host ipaddress has been set to {0}", ipAddress);
 
-                view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
+                view.stageController.clientGame.createPlayer(StageController.playerName, clientGame.getHostIP());
 
                 //view.stageController.clientGame.assignTeam(player, currentTeam);
 

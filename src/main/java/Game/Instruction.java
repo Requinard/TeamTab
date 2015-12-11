@@ -5,7 +5,7 @@ public class Instruction {
     private Panel panel;
     private int intendedValue;
     private boolean wasExecutedCorrectly = false;
-    private Player player;
+    private transient Player player;
 
     /**
      * Constructor of a instruction

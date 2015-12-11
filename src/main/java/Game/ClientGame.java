@@ -102,6 +102,19 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+
+            for (String playerName : map.get(teamName)) {
+                Player player = this.getPlayer(playerName);
+                player.setTeam(team);
+
+                team.addPlayer(player);
+            }
+        }
+    }
+
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -197,6 +210,7 @@ public class ClientGame implements IGame {
         mediator.processPanel(panel);
         return false;
     }
+
     /**
      * Author Kaj
      * Check if the game has ended
@@ -228,15 +242,15 @@ public class ClientGame implements IGame {
         mediator.registerInvalidInstruction(instruction);
     }
 
-
     /**
      * Author Kaj
      * change the status of the player to show that he is ready to start the game
      * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
-        localPlayer.setPlayerStatus(playerStatus);
-        mediator.setPlayerStatus(localPlayer);
+        Player player = new Player(localPlayer.getUsername(), localPlayer.getIp());
+        player.setPlayerStatus(playerStatus);
+        mediator.setPlayerStatus(player);
     }
 
     public Team getTeam(String teamName){
@@ -251,18 +265,5 @@ public class ClientGame implements IGame {
             if(player.getUsername().equals(playerName)) return player;
         }
         return null;
-    }
-
-    public void setTeams(HashMap<String, List<String>> map) {
-        for(String teamName: map.keySet()){
-            Team team = getTeam(teamName);
-
-            for (String playerName : map.get(teamName)) {
-                Player player = this.getPlayer(playerName);
-                player.setTeam(team);
-
-                team.addPlayer(player);
-            }
-        }
     }
 }
