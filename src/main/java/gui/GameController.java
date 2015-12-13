@@ -199,7 +199,11 @@ public class GameController implements Initializable {
         Platform.runLater(() -> {
             if (view.stageController.clientGame.localPlayer != null)
                 log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localPlayer.getUsername());
-            instructionLabel.setText(view.stageController.clientGame.localPlayer.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localPlayer.getActiveInstruction().getIntendedValue());
+            if (view.stageController.clientGame.localPlayer.getActiveInstruction().getIntendedValue() == 0) {
+                instructionLabel.setText("Press the " + view.stageController.clientGame.localPlayer.getActiveInstruction().getPanel().getText() + " button");
+            } else {
+                instructionLabel.setText("Set " + view.stageController.clientGame.localPlayer.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localPlayer.getActiveInstruction().getIntendedValue());
+            }
             //log.log(Level.FINE, "Instruction {0} is shown to player {0}", new Object[]{StageController.currentPlayer.getActiveInstruction().getPanel().getText(), StageController.currentPlayer.getUsername()});
         });
     }
