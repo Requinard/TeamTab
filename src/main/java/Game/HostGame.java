@@ -237,7 +237,7 @@ public class HostGame implements IGame {
      * @return true if the pressed panel was correct
      */
     @Override
-    public boolean processPanel(Player player, Panel panel) {
+    public synchronized boolean processPanel(Player player, Panel panel) {
         Instruction correctInstruction;
         //check if the pressed panel was from an active instruction
         correctInstruction = validateInstruction(player, panel);
@@ -287,7 +287,7 @@ public class HostGame implements IGame {
      * @return true if instruction belongs to player and generates a new instruction
      */
     @Override
-    public void registerInvalidInstruction(Instruction instruction) {
+    public synchronized void registerInvalidInstruction(Instruction instruction) {
         for (Team team : teams) {
             for (Instruction instruction1 : team.getActiveInstructions()) {
                 if (instruction1.getPanel().getId() == instruction.getPanel().getId()) {

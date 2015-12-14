@@ -39,7 +39,7 @@ public class HostMediator extends BaseMediator implements IMediator {
                 handleAll();
             }
         };
-        timerRefresh1.schedule(timerTask1, 0, 10);
+        timerRefresh1.schedule(timerTask1, 0, 100);
     }
 
     public HostMediator(HostGame hostGame) {

@@ -44,7 +44,7 @@ public class Player {
      * Set the status of the player
      * Author Frank Hartman
      */
-    public void setPlayerStatus(boolean playerStatus) {
+    public synchronized void setPlayerStatus(boolean playerStatus) {
         this.playerStatus = playerStatus;
     }
 

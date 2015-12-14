@@ -28,7 +28,7 @@ public abstract class BaseMediator implements IMediator {
     }
 
     public Thread mediate() {
-        Thread thread = new Thread(() -> listen());
+        Thread thread = new Thread(() -> listen(), this.getClass().getName());
         thread.start();
 
         return thread;

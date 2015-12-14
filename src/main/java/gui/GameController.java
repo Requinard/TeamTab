@@ -323,7 +323,7 @@ public class GameController implements Initializable {
                         progressBar.setProgress(counter * 0.1);
                         timeLabel.setText(counter + "");
                     });
-                    if (counter == 3) {
+                    if (counter == 0) {
                         view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localPlayer.getActiveInstruction());
                         //Team team = view.stageController.clientGame.localPlayer.getTeam();
                         counter = view.stageController.clientGame.localTeam.getTime();
@@ -359,7 +359,7 @@ public class GameController implements Initializable {
      */
     public void checkInstruction(Panel panel, int sliderValue) {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
-        view.stageController.clientGame.processPanel(StageController.currentPlayer, panel);
+        view.stageController.clientGame.processPanel(view.stageController.clientGame.localPlayer, panel);
         panelPushed = true;
         //audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
         //audioPlayer.play();
