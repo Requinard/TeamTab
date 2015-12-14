@@ -307,7 +307,7 @@ public class GameController implements Initializable {
      */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
         buttonStartTimer.setVisible(false);
-        runnable = () -> {
+        Platform.runLater(() -> {
             timer = new Timer(1000, new ActionListener() {
 
                 int counter = view.stageController.clientGame.localTeam.getTime();
@@ -316,14 +316,14 @@ public class GameController implements Initializable {
                 public void actionPerformed(ActionEvent actionEvent) {
                     log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{view.stageController.clientGame.localPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
                     counter--;
-                    Platform.runLater(() -> {
+
                         //check if counter must be reset because a button or slider was used
                         if (correctIn()) {
                             counter = view.stageController.clientGame.localTeam.getTime();
                         }
                         progressBar.setProgress(counter * 0.1);
                         timeLabel.setText(Integer.toString(counter));
-                    });
+
                     if (counter == 0) {
                         view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localPlayer.getActiveInstruction());
                         Team team = view.stageController.clientGame.localPlayer.getTeam();
@@ -332,7 +332,7 @@ public class GameController implements Initializable {
                 }
             });
             timer.start();
-        };
+        });
         runnable.run();
     }
 
