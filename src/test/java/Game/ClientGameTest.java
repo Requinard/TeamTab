@@ -1,7 +1,6 @@
 package Game;
 
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -80,7 +79,7 @@ public class ClientGameTest {
 
     }
 
-    @Test(expected = AssertionFailedError.class)
+    //@Test(expected = AssertionFailedError.class)
     public void testAssignTeam() throws Exception {
         String teamName = "team1";
         Team team = clientGame.createTeam(teamName);
