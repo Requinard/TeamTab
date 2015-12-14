@@ -87,7 +87,8 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Start initializing the gamecontroller");
         panelFactory = new PanelFactory();
 
-        buttonStartTimer.setOnMouseClicked(this::buttonStartTimerOnClick);
+        //buttonStartTimer.setOnMouseClicked(this::buttonStartTimerOnClick);
+
 
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
@@ -152,6 +153,7 @@ public class GameController implements Initializable {
         fillGridWithPanels();
         showTeamLevens();
         setTeamNames();
+        buttonStartTimerOnClick(null);
         log.log(Level.FINER, "setView ended");
     }
 
@@ -216,7 +218,7 @@ public class GameController implements Initializable {
             if (view.stageController.clientGame.localPlayer != null)
                 log.log(Level.FINE, "Retrieving score for player {0}", view.stageController.clientGame.localPlayer.getUsername());
 
-            labelCorrectInstructions.setText(view.stageController.clientGame.localPlayer.getTeam().getScore() + "");
+            labelCorrectInstructions.setText(view.stageController.clientGame.localTeam.getScore() + "");
             //log.log(Level.FINE, "Team {0} has a scored {1} point", new Object[]{StageController.currentPlayer.getTeam().getName(), StageController.currentPlayer.getTeam().getScore()});
         });
     }
@@ -313,6 +315,7 @@ public class GameController implements Initializable {
 
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
+
                     //log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{view.stageController.clientGame.localPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
                     counter--;
                     //check if counter must be reset because a button or slider was used
