@@ -56,24 +56,41 @@ public class NetworkServer {
                 // Accept incoming connections
                 Socket clientSocket = this.socket.accept();
 
-                String full = recv(clientSocket);
-
-                if (!full.isEmpty()) {
-                    // Read it into an object
-                    NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
-
-                    logger.log(Level.INFO, "Server received the following data:" + networkMessage.getText());
-
-                    synchronized (this) {
-                        // Do not log duplicates
-                        //       if(!messageQueue.contains(networkMessage)) {
-                            messageQueue.add(networkMessage);
-                        //     }
-                    }
-                }
+                this.executorService.submit(() -> parseSocket(clientSocket));
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IO Exception on port", e);
+        }
+    }
+
+
+    /**
+     * Handles incoming data from a socket
+     * Author David
+     *
+     * @param clientSocket Socket that has incoming data
+     */
+    private void parseSocket(Socket clientSocket) {
+        String full = "";
+        try {
+            full = recv(clientSocket);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Failed to receive a string", ex);
+            return;
+        }
+
+        if (!full.isEmpty()) {
+            // Read it into an object
+            NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
+
+            logger.log(Level.INFO, "Server received the following data:" + networkMessage.getText());
+
+            synchronized (this) {
+                // Do not log duplicates
+                if (!messageQueue.contains(networkMessage)) {
+                    messageQueue.add(networkMessage);
+                }
+            }
         }
     }
 

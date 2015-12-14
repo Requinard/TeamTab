@@ -6,11 +6,33 @@ import gui.StageController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
-public class Main extends Application{
+public class Main extends Application {
+
+    private static boolean manageLogger() {
+        String filename = String.valueOf(System.currentTimeMillis());
+        Handler fh;
+
+        try {
+            File directory = new File("logs");
+            directory.mkdir();
+
+            fh = new FileHandler(filename.trim() + ".xml");
+        } catch (IOException e) {
+            System.out.println("Failed to acquire file lock!");
+            e.printStackTrace();
+            return false;
+        }
+
+        Logger.getLogger("").addHandler(fh);
+
+        return true;
+    }
 
     /**
      * The main entry point for all JavaFX applications.
@@ -29,8 +51,10 @@ public class Main extends Application{
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Handler fh = new FileHandler("log.xml");
-        Logger.getLogger("").addHandler(fh);
-        new StageController(primaryStage);
+        if (!manageLogger()) {
+            return;
+        } else {
+            new StageController(primaryStage);
+        }
     }
 }
