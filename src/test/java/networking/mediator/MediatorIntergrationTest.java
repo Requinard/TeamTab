@@ -1,10 +1,6 @@
 package networking.mediator;
 
 import Game.*;
-import Game.ClientGame;
-import Game.HostGame;
-import Game.Player;
-import Game.Team;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by frank on 30/11/2015.
  */
+
 public class MediatorIntergrationTest {
 
     HostGame hostGame;
@@ -235,7 +232,6 @@ public class MediatorIntergrationTest {
 
     /**
      * Author Kamil Wasylkiewcz
-     * TODO Werkend maken
      * @throws InterruptedException
      */
     @Test
@@ -249,10 +245,13 @@ public class MediatorIntergrationTest {
         }
         assertTrue(clientGame.getPlayers().size() > 0);
 
-        List<Team> teamsList = clientGame.getTeams();
+        List<Team> teamsList;
         while (true) {
-            if ((teamsList.size() > 0)) {
-                break;
+            if ((clientGame.getTeams().size() > 0)) {
+                teamsList = clientGame.getTeams();
+                if (teamsList.size() > 0) {
+                    break;
+                }
             }
         }
         boolean result = false;
@@ -260,6 +259,7 @@ public class MediatorIntergrationTest {
             for (Player player : team.getPlayers()) {
                 if (player.getIp().equals("127.0.0.1")) {
                     result = true;
+                    break;
                 }
             }
         }
@@ -358,20 +358,6 @@ public class MediatorIntergrationTest {
         }
         assertEquals(listPanels.size(), aantal);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /*
     Test if the teams are added to the hostgame and if they are received in the clientgame
