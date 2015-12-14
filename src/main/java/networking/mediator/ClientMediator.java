@@ -63,6 +63,8 @@ public class ClientMediator extends BaseMediator implements IMediator {
             clientGame.localInstruction = instruction;
             log.log(Level.FINER, "client handleInstruction has ended, instruction has been set");
         }
+
+
     }
 
     @Override
@@ -78,6 +80,10 @@ public class ClientMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "client handleTeamPlayers map team contains: {0} teams", map.size());
             clientGame.setTeams(map);
             log.log(Level.FINER, "client handleTeamPlayers has ended, teams have been set");
+        }
+
+        else {
+            networkServer.requeueRequest(networkRequest);
         }
     }
 
@@ -130,6 +136,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
     }
 
     public void createPlayer(Player player) {
+
         log.log(Level.FINER, "client createPlayer with player name: {0} has started", player.getUsername());
         NetworkRequest request = new NetworkRequest(RequestType.POST, "/players/", PlayerAdapter.toString(player));
 

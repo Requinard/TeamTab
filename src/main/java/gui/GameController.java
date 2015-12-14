@@ -310,7 +310,7 @@ public class GameController implements Initializable {
         runnable = () -> {
             timer = new Timer(1000, new ActionListener() {
 
-                int counter = view.stageController.clientGame.localPlayer.getTeam().getTime();
+                int counter = view.stageController.clientGame.localTeam.getTime();
 
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -319,7 +319,7 @@ public class GameController implements Initializable {
                     Platform.runLater(() -> {
                         //check if counter must be reset because a button or slider was used
                         if (correctIn()) {
-                            counter = view.stageController.clientGame.localPlayer.getTeam().getTime();
+                            counter = view.stageController.clientGame.localTeam.getTime();
                         }
                         progressBar.setProgress(counter * 0.1);
                         timeLabel.setText(Integer.toString(counter));

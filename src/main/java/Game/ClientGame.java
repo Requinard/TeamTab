@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ClientGame implements IGame {
     public Player localPlayer;
+    public Team localTeam;
     //instruction of this player
     public Instruction localInstruction;
     Thread mediatorThread;
@@ -84,10 +85,14 @@ public class ClientGame implements IGame {
         if (!players.isEmpty() || players != null || players.size() != 0) {
             this.players = players;
 
-            for (Player player: players) {
-                if (player.getIp().equals(localIP))
-                    localPlayer = player;
-            }
+
+                for(Player player : players) {
+                    if (player.getIp().equals(localIP)) {
+                        localPlayer = player;
+                    }
+                }
+
+
         }
         System.out.println("size: " + players.size());
     }
@@ -122,6 +127,14 @@ public class ClientGame implements IGame {
      */
     public synchronized void setTeams(List<Team> teams) {
         this.teams = teams;
+
+        for (Team team : teams) {
+            for(Player player : team.getPlayers()) {
+                if (player.getIp().equals(localIP)) {
+                    localTeam = team;
+                }
+            }
+        }
     }
 
     /**
