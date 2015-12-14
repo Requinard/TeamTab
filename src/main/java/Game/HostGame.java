@@ -288,6 +288,13 @@ public class HostGame implements IGame {
      */
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
+        for (Team team : teams) {
+            for (Instruction instruction1 : team.getActiveInstructions()) {
+                if (instruction1.getPanel().getId() == instruction.getPanel().getId()) {
+                    instruction = instruction1;
+                }
+            }
+        }
         log.log(Level.INFO, "registering invalid Instruction for " + instruction.getPlayer().getUsername() + " ,panel name " + instruction.getPanel().getText());
         Player player = instruction.getPlayer();
         Team team = player.getTeam();

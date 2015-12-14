@@ -1,7 +1,6 @@
 package gui;
 
 import Game.Panel;
-import Game.Team;
 import gui.panel.IPanel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -307,33 +306,31 @@ public class GameController implements Initializable {
      */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
         buttonStartTimer.setVisible(false);
-        Platform.runLater(() -> {
+
             timer = new Timer(1000, new ActionListener() {
 
                 int counter = view.stageController.clientGame.localTeam.getTime();
 
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{view.stageController.clientGame.localPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
+                    //log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{view.stageController.clientGame.localPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
                     counter--;
-
-                        //check if counter must be reset because a button or slider was used
-                        if (correctIn()) {
-                            counter = view.stageController.clientGame.localTeam.getTime();
-                        }
+                    //check if counter must be reset because a button or slider was used
+                    if (correctIn()) {
+                        counter = view.stageController.clientGame.localTeam.getTime();
+                    }
+                    Platform.runLater(() -> {
                         progressBar.setProgress(counter * 0.1);
-                        timeLabel.setText(Integer.toString(counter));
-
-                    if (counter == 0) {
+                        timeLabel.setText(counter + "");
+                    });
+                    if (counter == 3) {
                         view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localPlayer.getActiveInstruction());
-                        Team team = view.stageController.clientGame.localPlayer.getTeam();
-                        counter = team.getTime();
+                        //Team team = view.stageController.clientGame.localPlayer.getTeam();
+                        counter = view.stageController.clientGame.localTeam.getTime();
                     }
                 }
             });
             timer.start();
-        });
-        runnable.run();
     }
 
     /**
