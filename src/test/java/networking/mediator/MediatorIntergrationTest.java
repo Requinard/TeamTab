@@ -235,6 +235,7 @@ public class MediatorIntergrationTest {
 
     /**
      * Author Kamil Wasylkiewcz
+     * TODO Werkend maken
      * @throws InterruptedException
      */
     @Test
@@ -488,4 +489,92 @@ public class MediatorIntergrationTest {
         assertEquals(clientGame.getTeams().get(1).getPlayers().size(),0);
         assertEquals(clientGame.getTeams().get(0).getPlayers().size(),2);
     }
-}
+
+    /**
+     * Author Qun
+     * Creates 2 players and 2 teams
+     * After that the game starts
+     * And this method then tests if the panel
+     * the player pressed is proccessed correctly
+     *
+     * @throws InterruptedException If the connection is lost during the game
+     */
+    @Test
+    public void panelProcessPanel() throws InterruptedException {
+        ClientGame clientGame1 = new ClientGame();
+        Player player1 = new Player("Qun", "127.0.0.1");
+        Player player2 = new Player("Kamil", "127.0.0.1");
+        // Create team alpha and beta
+        hostGame.createTeam("Team beta");
+        hostGame.createTeam("Team alpha");
+
+        // Create player Qun and Kamil
+        clientGame.createPlayer(player1.getUsername(), player1.getIp());
+
+        //clientGame1.createPlayer(player2.getUsername(),player2.getIp());
+
+        clientGame.setLocalIP("localhost");
+        while (true) {
+            if (hostGame.getPlayers().size() > 0) {
+                break;
+            }
+        }
+
+        clientGame.changePlayerStatus(true);
+        //clientGame1.changePlayerStatus(true);
+        // The hostgame starts the game after all players are ready for the game
+        while (true) {
+            if (clientGame.getPlayer("Qun").getActiveInstruction().getPanel() != null) {
+                break;
+            }
+        }
+        //Client sends a correct panel with instruction to the host so it gets processed
+        clientGame.processPanel(player1, player1.getActiveInstruction().getPanel());
+        //Checks if after the right instruction is send to the hostgame, if the score of the team is set to 1
+        assertTrue("Score is not correct", player1.getTeam().getScore() > 0);
+        //OpponentTeam sends a correct panel with instruction to to the host
+        //clientGame1.processPanel(player2,player2.getActiveInstruction().getPanel());
+        //Checks if OpponentTeam score is set to 1
+        //assertTrue("Score is not correct", player2.getTeam().getScore() > 0);
+        // Test a wrong instruction for player1
+        clientGame.processPanel(player1, new Panel(51, 0, 1, "Press wrong", PanelTypeEnum.Button));
+        // Test if the teamtime is substracted by 1 second
+        assertTrue("Time is not subtracted by 1 second, and set to 8", player1.getTeam().getTime() == 8);
+    }
+
+    /**
+     * Author Qun
+     * If the player doesn't have anymore time to fill in an instruction
+     * then registerInvalidInstruction() will count it as an incorrect instruction
+     *
+     * @throws InterruptedException If the connection is lost during the game
+     */
+    @Test
+    public void InstructionRegisterInvalidInstruction() throws InterruptedException {
+        ClientGame clientGame1 = new ClientGame();
+        Player player1 = new Player("Qun", "127.0.0.1");
+        Player player2 = new Player("Kamil", "127.0.0.1");
+
+        // Create team alpha and beta
+        hostGame.createTeam("Team beta");
+        hostGame.createTeam("Team alpha");
+
+        // Create player Qun and Kamil
+        clientGame.createPlayer(player1.getUsername(), player1.getIp());
+        clientGame1.createPlayer(player2.getUsername(), player2.getIp());
+
+        clientGame.changePlayerStatus(true);
+        clientGame1.changePlayerStatus(true);
+        // The hostgame starts the game after all players are ready for the game
+        hostGame.startRound();
+        //checks if player1 gets an instruction from the server
+        while (true) {
+            if (clientGame.getPlayer("Qun").getActiveInstruction().getPanel() != null) {
+                break;
+            }
+        }
+
+        clientGame.registerInvalidInstruction(player1.getActiveInstruction());
+        //Checks if the Invalid Instruction is registered in the his team
+        assertTrue("Time is not subtracted by 1, and set to 8", player1.getTeam().getTime() == 8);
+}}
