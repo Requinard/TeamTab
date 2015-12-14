@@ -1,6 +1,6 @@
 #id,type,text,min,max
-1,1, "Detonate", 0, 1
-2,1, "Redwire", 0, 1
+1,0, "Detonate", 0, 1
+2,0, "Redwire", 0, 1
 3,0, "Yellow Button", 0, 1
 4,2, "Green slider", 2, 5
 5,2, "Yellow Slider", 2, 4
