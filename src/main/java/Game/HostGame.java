@@ -382,6 +382,7 @@ public class HostGame implements IGame {
 
         return scoreboard;
     }
+
     public void autoAssignTeam(Player player) {
         if (teams.get(0).getPlayers().size() < teams.get(1).getPlayers().size()) {
             teams.get(0).addPlayer(player);
@@ -399,6 +400,7 @@ public class HostGame implements IGame {
             }
         }
     }
+
     //gets player by IP
     public Player getPlayer(String ipadress) {
         Player returnPlayer = null;
