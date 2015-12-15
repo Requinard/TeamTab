@@ -4,9 +4,8 @@ import networking.mediator.HostMediator;
 import networking.mediator.IMediator;
 import org.apache.commons.io.IOUtils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -141,10 +140,10 @@ public class HostGame implements IGame {
      */
     private boolean loadPanelsFromFile() {
         log.log(Level.INFO, "Started loading panels");
-        URL location = this.getClass().getClassLoader().getResource("panels.csv");
 
-        try (FileInputStream fileInputStream = new FileInputStream(location.getPath().replace("%20", " "))) {
-            String full = IOUtils.toString(fileInputStream);
+
+        try (InputStream location = this.getClass().getClassLoader().getResourceAsStream("panels.csv")) {
+            String full = IOUtils.toString(location);
             log.log(Level.INFO, "loaded panels from {0}", location.toString());
 
             // go over each line
