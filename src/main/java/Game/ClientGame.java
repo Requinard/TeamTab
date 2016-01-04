@@ -60,19 +60,22 @@ public class ClientGame implements IGame {
     /**
      * Author Frank Hartman
      * Gets the local ip of the pc
+     *
      * @return
      */
-    public String getLocalIP() {return localIP;}
+    public String getLocalIP() {
+        return localIP;
+    }
 
     /**
      * Author Frank Hartman
      * Set the localip of the pc
+     *
      * @param localIP
      */
     public void setLocalIP(String localIP) {
         this.localIP = localIP;
     }
-
 
 
     public void setHostIp(String hostIP) {
@@ -82,6 +85,7 @@ public class ClientGame implements IGame {
     /**
      * Author Kaj
      * gets all the players in the game
+     *
      * @return the players in the game
      */
     @Override
@@ -92,27 +96,21 @@ public class ClientGame implements IGame {
     /**
      * Author Frank Hartman
      * Set the players in the game
-     * @param players The players that will be set
+     *
+     * @param remotePlayers The players that will be set
      */
-    public synchronized void setPlayers(List<Player> players) {
-        if (!players.isEmpty() || players != null || players.size() != 0) {
-            this.players = players;
-
-
-                for(Player player : players) {
-                    if (player.getIp().equals(localIP)) {
-                        localPlayer = player;
-                    }
-                }
-
-
+    public synchronized void setPlayers(List<Player> remotePlayers) {
+        for (Player remotePlayer : remotePlayers) {
+            Player localPlayer = this.getPlayer(remotePlayer.getUsername());
+            if (localPlayer == null) {
+                this.players.add(remotePlayer);
+            }
         }
-        System.out.println("size: " + players.size());
     }
-
     /**
      * Author Kaj
      * gets all the teams in the game
+     *
      * @return the teams in the game
      */
     @Override
@@ -123,12 +121,15 @@ public class ClientGame implements IGame {
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
+            if (team != null) {
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    if (player != null) {
+                        player.setTeam(team);
 
-            for (String playerName : map.get(teamName)) {
-                Player player = this.getPlayer(playerName);
-                player.setTeam(team);
-
-                team.addPlayer(player);
+                        team.addPlayer(player);
+                    }
+                }
             }
         }
     }
@@ -140,13 +141,13 @@ public class ClientGame implements IGame {
      * @param teams The teams that will be set
      */
     public synchronized void setTeams(List<Team> teams) {
-        this.teams = teams;
-
-        for (Team team : teams) {
-            for (Player player : team.getPlayers()) {
-                if (player.getIp().equals(localIP)) {
-                    localTeam = team;
-                }
+        for (Team remoteTeam : teams) {
+            Team localTeam = this.getTeam(remoteTeam.getName());
+            if (localTeam == null) {
+                this.teams.add(remoteTeam);
+            } else {
+                localTeam.changeLives(remoteTeam.getLives());
+                localTeam.changeTime(remoteTeam.getTime());
             }
         }
     }
@@ -154,6 +155,7 @@ public class ClientGame implements IGame {
     /**
      * Author Kaj
      * Gets all the panels in the game
+     *
      * @return the panels of the game
      */
     @Override
@@ -164,6 +166,7 @@ public class ClientGame implements IGame {
     /**
      * Author Kaj
      * sets the list of panels
+     *
      * @param panels list of panels of the game
      */
     public void setPanels(List<Panel> panels) {
@@ -173,6 +176,7 @@ public class ClientGame implements IGame {
     /**
      * Author Frank Hartman
      * Create a team in the game
+     *
      * @param name the name of the team
      * @return The team that was created
      */
@@ -186,6 +190,7 @@ public class ClientGame implements IGame {
     /**
      * Author Kaj
      * create a player in the game
+     *
      * @param username the username of the player
      * @param ip       the ip adres of the player
      */
@@ -200,6 +205,7 @@ public class ClientGame implements IGame {
     /**
      * Author Frank Hartman
      * Assign a player to a team in the game
+     *
      * @param player the player that will be assigned to the team
      * @param team   the team that will get the player
      */
@@ -211,6 +217,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
+     *
      * @param hard if true than hardreset
      */
     @Override
@@ -221,6 +228,7 @@ public class ClientGame implements IGame {
     /**
      * Author Kaj
      * not necessary
+     *
      * @return null not necessary
      */
     @Override
@@ -230,6 +238,7 @@ public class ClientGame implements IGame {
 
     /**
      * Author Frank Hartman
+     *
      * @param player the player of which the panel has been changed
      * @param panel  the panel that is pressed
      */
@@ -262,6 +271,7 @@ public class ClientGame implements IGame {
     /**
      * Author Frank Hartman
      * Register a invalid instruction when the player is running out of time
+     *
      * @param instruction the instruction that was to late
      */
     @Override
@@ -274,7 +284,7 @@ public class ClientGame implements IGame {
      * Updates the game through the mediator
      * Authir: David
      */
-    public void update(){
+    public void update() {
         if (gameState == GameStateEnum.LobbyView) {
             mediator.getPlayers();
             mediator.getTeams();
@@ -285,6 +295,7 @@ public class ClientGame implements IGame {
     /**
      * Author Kaj
      * change the status of the player to show that he is ready to start the game
+     *
      * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
@@ -293,16 +304,16 @@ public class ClientGame implements IGame {
         mediator.setPlayerStatus(player);
     }
 
-    public Team getTeam(String teamName){
-        for(Team team: this.teams){
-            if(team.getName().equals(teamName)) return team;
+    public Team getTeam(String teamName) {
+        for (Team team : this.teams) {
+            if (team.getName().equals(teamName)) return team;
         }
         return null;
     }
 
-    public Player getPlayer(String playerName){
-        for(Player player: players){
-            if(player.getUsername().equals(playerName)) return player;
+    public Player getPlayer(String playerName) {
+        for (Player player : players) {
+            if (player.getUsername().equals(playerName)) return player;
         }
         return null;
     }
