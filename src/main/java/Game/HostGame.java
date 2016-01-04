@@ -186,12 +186,11 @@ public class HostGame implements IGame {
      */
     @Override()
     public void reset(boolean hard) {
-
         log.log(Level.INFO, "Resetting teams");
         for (Team team : teams) {
+            System.out.println("Reseting teamssize: " + teams.size());
             team.reset(hard);
         }
-
     }
 
 

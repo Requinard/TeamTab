@@ -123,13 +123,14 @@ public class ClientGame implements IGame {
     /**
      * Author Frank Hartman
      * Set the teams in the game
+     *
      * @param teams The teams that will be set
      */
     public synchronized void setTeams(List<Team> teams) {
         this.teams = teams;
 
         for (Team team : teams) {
-            for(Player player : team.getPlayers()) {
+            for (Player player : team.getPlayers()) {
                 if (player.getIp().equals(localIP)) {
                     localTeam = team;
                 }
@@ -190,7 +191,6 @@ public class ClientGame implements IGame {
      */
     @Override
     public void assignTeam(Player player, Team team) {
-        //player.setTeam(team);
         mediator.assignTeam(team);
     }
 
