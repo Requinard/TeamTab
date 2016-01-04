@@ -1,7 +1,10 @@
 package gui;
 
 import Game.Player;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import javax.swing.text.html.ListView;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -32,9 +36,9 @@ public class LobbyViewController implements Initializable {
     @FXML
     private TextField team2Name;
     @FXML
-    private TextField playersTeam1Name;
+    private javafx.scene.control.ListView playersTeam1Names;
     @FXML
-    private TextField playersTeam2Names;
+    private javafx.scene.control.ListView playersTeam2Names;
     @FXML
     private Button buttonHaalTeamsOp;
     @FXML
@@ -45,7 +49,8 @@ public class LobbyViewController implements Initializable {
     private Runnable runnable;
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
-
+    private ObservableList playersTeam1;
+    private ObservableList playersTeam2;
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -61,6 +66,11 @@ public class LobbyViewController implements Initializable {
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
         buttonChat.setOnMouseClicked(this::buttonChatOnClick);
 
+         playersTeam1 = FXCollections.observableArrayList();
+         playersTeam2 = FXCollections.observableArrayList();
+
+        playersTeam1Names.setItems(playersTeam1);
+        playersTeam2Names.setItems(playersTeam2);
 
         timerRefresh = new java.util.Timer();
         try {
@@ -87,27 +97,32 @@ public class LobbyViewController implements Initializable {
 
             log.log(Level.FINE, "Lobby is being initialized");
 
-            for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
-
-                if (view.stageController.clientGame.getTeams().size() > 1) {
+            if(view.stageController.clientGame.getTeams().size() > 1) {
+                if(team1Name.getText().isEmpty()) {
                     team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
+                    log.log(Level.INFO, "Team1name has been set");
                     team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
-                    //if (!currentPlayer.getPlayerStatus()) {
-                    //  view.stageController.clientGame.changePlayerStatus(true);
-                    //}
-                    if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
+                    log.log(Level.INFO, "Team2Name has been set");
+                }
+                playersTeam1.clear();
+                playersTeam2.clear();
 
-                        playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
-                    }
-                    if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
-                        playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
+                if(view.stageController.clientGame.getPlayers().size() > 0) {
+                    for (Player player : view.stageController.clientGame.getPlayers()) {
+                        if (player.getTeam().getName() == team1Name.getText())
+                            playersTeam1.add(player.getUsername());
+                        else
+                            playersTeam2.add(player.getUsername());
                     }
                 }
 
-
             }
-            if (view.stageController.clientGame.getPlayers().size() > 0) {
-                boolean allActive = true;
+
+
+            boolean allActive = false;
+            if(view.stageController.clientGame.getPlayers().size() > 0)
+                 allActive = true;
+
                 for (Player player : view.stageController.clientGame.getPlayers()) {
                     if (!player.getPlayerStatus()) {
                         allActive = false;
@@ -118,8 +133,6 @@ public class LobbyViewController implements Initializable {
                     timerRefresh.cancel();
                     timerRefresh.purge();
                 }
-            }
-            //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
         });
     }
 
