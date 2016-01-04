@@ -12,8 +12,8 @@ public class Player {
     private static final Logger log = Logger.getLogger(Player.class.getName());
     private String username;
     private String ip;
-    private List<Panel> panels;
-    private Team team;
+    private transient List<Panel> panels;
+    private transient Team team;
     private Instruction activeInstruction;
 
     private boolean playerStatus = false;

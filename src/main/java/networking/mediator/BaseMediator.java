@@ -3,6 +3,7 @@ package networking.mediator;
 import networking.server.NetworkRequest;
 import networking.server.NetworkServer;
 import networking.server.NetworkServerSingleton;
+import tracker.JanitorSingleton;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,8 +29,12 @@ public abstract class BaseMediator implements IMediator {
     }
 
     public Thread mediate() {
-        Thread thread = new Thread(() -> listen(), this.getClass().getName());
+        Thread thread = new Thread(() -> {
+            listen();
+        }, this.getClass().getName());
         thread.start();
+
+        JanitorSingleton.getInstance().trackThread(thread);
 
         return thread;
     }
@@ -57,7 +62,7 @@ public abstract class BaseMediator implements IMediator {
             handleTeamsAssign(networkRequest);
 
             handleTeamsCreate(networkRequest);
-        }else if (networkRequest.getUrl().equals("/teams/players")){
+        } else if (networkRequest.getUrl().equals("/teams/players/")) {
             handleTeamPlayers(networkRequest);
 
         } else if (networkRequest.getUrl().equals("/teams/create/")) {

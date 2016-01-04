@@ -17,7 +17,7 @@ public class LobbyView extends AbstractView implements IView {
     private static final Logger log = Logger.getLogger(LobbyView.class.getName());
     private LobbyViewController lobbyViewController;
 
-    public LobbyView(StageController stageController){
+    public LobbyView(StageController stageController) {
         super(stageController);
         lobbyViewController = new LobbyViewController();
     }
@@ -26,6 +26,7 @@ public class LobbyView extends AbstractView implements IView {
      * {@inheritDoc}
      */
     public boolean load() {
+        stageController.clientGame.scheduleRefresh();
         log.log(Level.INFO, "Start loading LobbyView");
         Stage stage = new Stage();
         stage.setTitle("LobbyView");

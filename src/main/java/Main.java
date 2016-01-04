@@ -4,13 +4,36 @@
 
 import gui.StageController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import networking.server.NetworkServerSingleton;
+import tracker.JanitorSingleton;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
-public class Main extends Application{
+public class Main extends Application {
+
+    /**
+     * This method is called when the application should stop, and provides a
+     * convenient place to prepare for application exit and destroy resources.
+     * <p/>
+     * <p>
+     * The implementation of this method provided by the Application class does nothing.
+     * </p>
+     * <p/>
+     * <p>
+     * NOTE: This method is called on the JavaFX Application Thread.
+     * </p>
+     */
+    @Override
+    public void stop() throws Exception {
+        JanitorSingleton.getInstance().clean();
+        NetworkServerSingleton.stopAllServers();
+        Platform.exit();
+        System.exit(0);
+    }
 
     /**
      * The main entry point for all JavaFX applications.

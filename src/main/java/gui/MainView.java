@@ -26,6 +26,8 @@ public class MainView extends AbstractView implements IView {
      * {@inheritDoc}
      */
     public boolean load() {
+        if (stageController.clientGame != null)
+            stageController.clientGame.stopSchedule();
         log.log(Level.INFO, "Start loading MainView");
         Stage stage = new Stage();
         stage.setTitle("MainView");
@@ -46,7 +48,7 @@ public class MainView extends AbstractView implements IView {
         }
 
         mainController = loader.getController();
-       mainController.setView(this);
+        mainController.setView(this);
         log.log(Level.INFO, "Loaded MainView in view");
 
         return true;

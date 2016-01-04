@@ -11,10 +11,10 @@ public class Team {
     private static final Logger log = Logger.getLogger(Team.class.getName());
     private final int STARTLIVES = 3;
     private final int STARTTIME = 9;
-    private List<Player> players;
-    private List<Panel> panels;
+    private transient List<Player> players;
+    private transient List<Panel> panels;
     private String name;
-    private List<Instruction> activeInstructions;
+    private transient List<Instruction> activeInstructions;
     private int lives = STARTLIVES;
     private int time = STARTTIME;
     private int score;

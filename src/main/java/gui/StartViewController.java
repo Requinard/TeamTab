@@ -41,7 +41,7 @@ public class StartViewController implements Initializable {
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     * <p>
+     * <p/>
      * start audio
      *
      * @param location  The location used to resolve relative paths for the root object, or
