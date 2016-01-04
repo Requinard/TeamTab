@@ -5,7 +5,7 @@ import networking.mediator.ClientMediator;
 import java.util.*;
 
 public class ClientGame implements IGame {
-    private final double TICKRATE = 50;
+    private final double TICKRATE = 1;
     public Player localPlayer;
     public Team localTeam;
     //instruction of this player
@@ -118,22 +118,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-            if (team != null) {
-                for (String playerName : map.get(teamName)) {
-                    Player player = this.getPlayer(playerName);
-                    if (player != null) {
-                        player.setTeam(team);
-
-                        team.addPlayer(player);
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -148,6 +132,22 @@ public class ClientGame implements IGame {
             } else {
                 localTeam.changeLives(remoteTeam.getLives());
                 localTeam.changeTime(remoteTeam.getTime());
+            }
+        }
+    }
+
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+            if (team != null) {
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    if (player != null) {
+                        player.setTeam(team);
+
+                        team.addPlayer(player);
+                    }
+                }
             }
         }
     }
