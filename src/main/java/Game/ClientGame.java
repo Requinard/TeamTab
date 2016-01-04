@@ -2,10 +2,7 @@ package Game;
 
 import networking.mediator.ClientMediator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IllegalFormatException;
-import java.util.List;
+import java.util.*;
 
 public class ClientGame implements IGame {
     public Player localPlayer;
@@ -19,6 +16,7 @@ public class ClientGame implements IGame {
     private List<Panel> panels;
     private String hostIP;
     private String localIP;
+    Timer timer;
 
     public ClientGame(int portnumber) {
         localPlayer = null;
@@ -28,6 +26,19 @@ public class ClientGame implements IGame {
         players = new ArrayList<>();
 
         mediatorThread = mediator.mediate();
+    }
+
+    public void scheduleRefresh() {
+        timer = new Timer("Client Update");
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+        };
+
+        timer.schedule(task, 0, 60);
     }
 
     public ClientGame() {
@@ -255,6 +266,17 @@ public class ClientGame implements IGame {
         mediator.registerInvalidInstruction(instruction);
     }
 
+
+    /**
+     * Updates the game through the mediator
+     * Authir: David
+     */
+    public void update(){
+        mediator.getPlayers();
+        mediator.getTeams();
+        mediator.getTeamAssignments();
+    }
+
     /**
      * Author Kaj
      * change the status of the player to show that he is ready to start the game
@@ -278,5 +300,23 @@ public class ClientGame implements IGame {
             if(player.getUsername().equals(playerName)) return player;
         }
         return null;
+    }
+
+    public void setTeams(HashMap<String, List<String>> map) {
+        for(String teamName: map.keySet()){
+            Team team = getTeam(teamName);
+
+            for (String playerName : map.get(teamName)) {
+                Player player = this.getPlayer(playerName);
+                player.setTeam(team);
+
+                team.addPlayer(player);
+            }
+        }
+    }
+
+    public void stopSchedule() {
+        timer.cancel();
+        timer.purge();
     }
 }
