@@ -1,10 +1,10 @@
 package networking.finder;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,8 +12,8 @@ import java.util.concurrent.Executors;
  * Created by Kevin on 30-11-2015.
  */
 public class GameFinder {
-    ExecutorService pool = Executors.newFixedThreadPool(10);
     private final int TIMEOUT = 10;
+    ExecutorService pool = Executors.newFixedThreadPool(10);
 
     /**
      * Finds all the hosts which are on the same subnet as the finder
@@ -23,37 +23,57 @@ public class GameFinder {
      * @param list is the listview which will receive all the ip's of available games
      */
     public void findGames(ObservableList list) {
-        ObservableList openServers = list;
-        String localHost;
+        // Get network interfaces
+        Enumeration<NetworkInterface> networkInterfaces = null;
         try {
-            localHost = Inet4Address.getLocalHost().toString();
-        } catch (UnknownHostException e) {
-            localHost = "192.168.0.1";
+            networkInterfaces = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            e.printStackTrace();
         }
 
+        // Loop through network interfaces
+        while (networkInterfaces.hasMoreElements()) {
+            NetworkInterface networkInterface = networkInterfaces.nextElement();
 
-        // Prepare for subnetting
-        String[] nibbles = localHost.split("/")[1].split("\\.");
+            Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
 
-        localHost = String.format("%s.%s.%s",nibbles[0], nibbles[1], nibbles[2]);
+            // Loop through interface addresses
+            while (inetAddresses.hasMoreElements()) {
+                InetAddress address = inetAddresses.nextElement();
 
-        for (int i = 1; i <= 255; i++) {
-            String host = String.format("%s.%s", localHost, i);
-            pool.execute(() -> {
-                SocketAddress sockaddr = new InetSocketAddress(host, 8085);
-                Socket socket = new Socket();
-                try {
-                    socket.connect(sockaddr, TIMEOUT);
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            openServers.add(host);
+                // If adress is IPv6 we skip
+                if (address instanceof Inet6Address)
+                    continue;
+
+                String localHost;
+                localHost = address.getHostAddress();
+
+                // Prepare for subnetting
+                String[] nibbles = localHost.split("/")[0].split("\\.");
+
+                localHost = String.format("%s.%s.%s", nibbles[0], nibbles[1], nibbles[2]);
+
+                // Loop through all local subips
+                for (int i = 1; i <= 255; i++) {
+                    String host = String.format("%s.%s", localHost, i);
+
+                    // Prepare funtion to execute
+                    pool.execute(() -> {
+                        SocketAddress sockaddr = new InetSocketAddress(host, 8085);
+                        Socket socket = new Socket();
+                        try {
+                            socket.connect(sockaddr, TIMEOUT);
+
+                            // If we're not finding our localhost it should be fine
+                            if (!host.equals(address.getHostAddress().split("/")))
+                                list.add(host);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
                         }
                     });
-                } catch (IOException ex) {
-                    //unreachable host
                 }
-            });
+            }
+
         }
     }
 
