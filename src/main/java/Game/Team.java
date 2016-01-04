@@ -11,7 +11,7 @@ public class Team {
     private static final Logger log = Logger.getLogger(Team.class.getName());
     private final int STARTLIVES = 3;
     private final int STARTTIME = 9;
-    private List<Player> players;
+    private transient List<Player> players;
     private List<Panel> panels;
     private String name;
     private List<Instruction> activeInstructions;

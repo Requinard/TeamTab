@@ -13,7 +13,7 @@ public class Player {
     private String username;
     private String ip;
     private List<Panel> panels;
-    private Team team;
+    private transient Team team;
     private Instruction activeInstruction;
 
     private boolean playerStatus = false;
