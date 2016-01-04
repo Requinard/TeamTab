@@ -91,7 +91,8 @@ public class ScoreViewController implements Initializable {
      */
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
-            view.stageController.clientGame.reset(true);
+            view.stageController.hostGame.reset(true);
+            view.stageController.clientGame.changePlayerStatus(false);
             Platform.runLater(() -> {
                 LobbyView lobbyView = new LobbyView((view.stageController));
                 view.pass(lobbyView);

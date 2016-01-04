@@ -71,7 +71,6 @@ public class GameController implements Initializable {
     private TimerTask timerTask;
     private List<Panel> panelHolder;
     private boolean panelPushed;
-    //private AudioPlayer audioPlayer;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -87,9 +86,6 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Start initializing the gamecontroller");
         panelFactory = new PanelFactory();
 
-        //buttonStartTimer.setOnMouseClicked(this::buttonStartTimerOnClick);
-
-
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
             @Override
@@ -98,21 +94,6 @@ public class GameController implements Initializable {
             }
         };
         timerRefresh.schedule(timerTask, 0, 30);
-
-        /*
-        URL url = this.getClass().getClassLoader().getResource("audio/ExplosieMetBliep.mp3");
-        log.log(Level.INFO, "Audiofile url set to: {0}", url.toString());
-        try (FileInputStream fileInputStream = new FileInputStream(url.getPath())) {
-            //audioPlayer = new AudioPlayer(fileInputStream.toString());
-            log.log(Level.INFO, "explosion audioplayer created");
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-            log.log(Level.SEVERE, e1.toString(), e1);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-            log.log(Level.SEVERE, e1.toString(), e1);
-        }
-        */
     }
 
     /**
@@ -205,7 +186,6 @@ public class GameController implements Initializable {
             } else {
                 instructionLabel.setText("Set " + view.stageController.clientGame.localPlayer.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localPlayer.getActiveInstruction().getIntendedValue());
             }
-            //log.log(Level.FINE, "Instruction {0} is shown to player {0}", new Object[]{StageController.currentPlayer.getActiveInstruction().getPanel().getText(), StageController.currentPlayer.getUsername()});
         });
     }
 
@@ -219,7 +199,6 @@ public class GameController implements Initializable {
                 log.log(Level.FINE, "Retrieving score for player {0}", view.stageController.clientGame.localPlayer.getUsername());
 
             labelCorrectInstructions.setText(view.stageController.clientGame.localTeam.getScore() + "");
-            //log.log(Level.FINE, "Team {0} has a scored {1} point", new Object[]{StageController.currentPlayer.getTeam().getName(), StageController.currentPlayer.getTeam().getScore()});
         });
     }
 
@@ -262,7 +241,6 @@ public class GameController implements Initializable {
                 }
                 switch (levensTeam1) {
                     case 1:
-                        // audioPlayer.play();
                         Team2Leven1.setVisible(false);
                         Team2Leven2.setVisible(true);
                         Team2Leven3.setVisible(true);
@@ -298,7 +276,6 @@ public class GameController implements Initializable {
             lblTeamName1.setText(view.stageController.clientGame.getTeams().get(1).getName());
             lblTeamName2.setText(view.stageController.clientGame.getTeams().get(0).getName());
         });
-        //log.log(Level.INFO, "The names of team {0} and {1} are set ", new Object[]{view.stageController.clientGame.getTeams().get(1).getName(), view.stageController.clientGame.getTeams().get(0).getName()});
     }
 
     /**
@@ -316,7 +293,6 @@ public class GameController implements Initializable {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
 
-                    //log.log(Level.FINE, "Timer for player {0} is started. Player {1} has {2} seconds", new Object[]{view.stageController.clientGame.localPlayer.getUsername(), StageController.currentPlayer, StageController.currentPlayer.getTeam().getTime()});
                     counter--;
                     //check if counter must be reset because a button or slider was used
                     if (correctIn()) {
@@ -328,7 +304,6 @@ public class GameController implements Initializable {
                     });
                     if (counter == 0) {
                         view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localPlayer.getActiveInstruction());
-                        //Team team = view.stageController.clientGame.localPlayer.getTeam();
                         counter = view.stageController.clientGame.localTeam.getTime();
                     }
                 }
@@ -364,13 +339,12 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
         view.stageController.clientGame.processPanel(view.stageController.clientGame.localPlayer, panel);
         panelPushed = true;
-        //audioPlayer = new AudioPlayer("src/main/resources/audio/doorknippen+loskoppelen.mp3");
-        //audioPlayer.play();
         if (view.stageController.clientGame.hasGameEnded()) {
             timerTask.cancel();
-            ScoreView scoreView = new ScoreView(view.stageController);
-            view.pass(scoreView);
+            Platform.runLater(() -> {
+                ScoreView scoreView = new ScoreView(view.stageController);
+                view.pass(scoreView);
+            });
         }
-
     }
 }

@@ -264,6 +264,7 @@ public class Team {
         if (hard) {
             lives = STARTLIVES;
             score = 0;
+            System.out.println(lives + " " + score + " " + "playersize " + players.size());
         }
         time = STARTTIME;
         log.log(Level.INFO, String.format("Team: %s has been reset, hard reset = %s", name, hard));

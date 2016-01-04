@@ -63,8 +63,6 @@ public class StageController {
         currentView.deload();
 
         nextView.load();
-
-        refreshView();
     }
 
     public void loadScene(Scene scene) {
@@ -74,25 +72,6 @@ public class StageController {
         stage.show();
         stage.toFront();
     }
-
-    public void refreshView() {
-    }
-
-    public void resetGame(){
-        /*
-        this.game = new Game(this);
-           Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: er moet de methode aanageroepen worden van de clientgame die de game reset
-        */
-    }
-
-    /*
-    public void setExistingGame(Game game){
-        this.game = game;
-    }
-        Deze code is uitgecomment zodat we weten welke oude methode er stond
-                todo: de clientgame moet geset worden
-*/
 
     /**
      * @param clientGame

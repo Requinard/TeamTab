@@ -211,7 +211,6 @@ public class ClientGame implements IGame {
      */
     @Override
     public void assignTeam(Player player, Team team) {
-        //player.setTeam(team);
         mediator.assignTeam(team);
     }
 
