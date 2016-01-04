@@ -14,10 +14,11 @@
     <children>
         <ImageView layoutX="3.0">
             <image>
-                <Image url="@images/StartGame/StartGameV2.jpg" />
+                <Image url="@images/StartGame/StartGameV2.jpg"/>
             </image>
         </ImageView>
-        <TextField fx:id="team1" alignment="CENTER" layoutX="662.0" layoutY="223.0" opacity="0.22" prefHeight="77.0" prefWidth="434.0" promptText="Team 1">
+        <TextField fx:id="team1" alignment="CENTER" layoutX="662.0" layoutY="223.0" opacity="0.22" prefHeight="77.0"
+                   prefWidth="434.0" promptText="Team 1">
         <font>
             <Font size="36.0" />
         </font>
@@ -28,20 +29,25 @@
                 </mapData>
             </DisplacementMap>
         </effect></TextField>
-        <Button fx:id="buttonStart" ellipsisString="..." layoutX="642.0" layoutY="589.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="474.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
+        <Button fx:id="buttonStart" ellipsisString="..." layoutX="642.0" layoutY="589.0" mnemonicParsing="false"
+                prefHeight="90.0" prefWidth="474.0"
+                style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true"/>
 
-        <Button fx:id="buttonBack" ellipsisString="..." layoutX="14.0" layoutY="23.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="252.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
-      <TextField fx:id="team2" alignment="CENTER" layoutX="662.0" layoutY="381.0" opacity="0.22" prefHeight="77.0" prefWidth="434.0" promptText="Team 2">
-         <effect>
-            <DisplacementMap>
-               <mapData>
-                  <FloatMap />
-               </mapData>
-            </DisplacementMap>
-         </effect>
-         <font>
-            <Font size="36.0" />
-         </font>
-      </TextField>
+        <Button fx:id="buttonBack" ellipsisString="..." layoutX="14.0" layoutY="23.0" mnemonicParsing="false"
+                prefHeight="90.0" prefWidth="252.0"
+                style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true"/>
+        <TextField fx:id="team2" alignment="CENTER" layoutX="662.0" layoutY="381.0" opacity="0.22" prefHeight="77.0"
+                   prefWidth="434.0" promptText="Team 2">
+            <effect>
+                <DisplacementMap>
+                    <mapData>
+                        <FloatMap/>
+                    </mapData>
+                </DisplacementMap>
+            </effect>
+            <font>
+                <Font size="36.0"/>
+            </font>
+        </TextField>
     </children>
 </AnchorPane>
