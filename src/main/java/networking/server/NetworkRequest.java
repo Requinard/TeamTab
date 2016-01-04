@@ -38,8 +38,8 @@ public class NetworkRequest {
         this.networkMessage = networkMessage;
 
         // Parse the message
-        Pattern fullPattern = Pattern.compile("(GET|POST|SEND) ([\\w/]+) (.+)*");
-        Pattern halfPatter = Pattern.compile("(GET|POST|SEND) ([\\w/]+)");
+        final Pattern fullPattern = Pattern.compile("(GET|POST|SEND) ((?:/\\w+)+\\/?) (.*)");
+        final Pattern halfPatter = Pattern.compile("(GET|POST|SEND) ([\\w/]+)");
 
         Matcher matcher = fullPattern.matcher(networkMessage.getText());
 
@@ -48,8 +48,6 @@ public class NetworkRequest {
 
             if (!matcher.matches())
                 throw new UnknownFormatConversionException("Network request could not be parsed!");
-            // Rematch for partial
-
         }
 
 
