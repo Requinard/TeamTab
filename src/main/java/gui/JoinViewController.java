@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javassist.bytecode.stackmap.TypeData;
 import networking.finder.GameFinder;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,8 +23,8 @@ import java.util.logging.Logger;
  * Created by Vito Corleone on 6-10-2015.
  */
 public class JoinViewController implements Initializable {
-    GameFinder gameFinder;
     private static final Logger log = Logger.getLogger(TypeData.ClassName.class.getName());
+    GameFinder gameFinder;
     @FXML
     private Button buttonBack;
     @FXML
@@ -174,12 +173,24 @@ public class JoinViewController implements Initializable {
      */
     private void searchOneGame() {
         if (!tfCustomIP.getText().isEmpty()) {
-            if (gameFinder.findSingleGame(tfCustomIP.getText())) {
-                JOptionPane.showMessageDialog(null, "Game Found");
-                //naar de lobby van die game connecten
-            } else {
-                JOptionPane.showMessageDialog(null, "Game Not Found");
-            }
+            String hostIp = tfCustomIP.getText();
+            view.stageController.clientGame.setHostIp(hostIp);
+            log.log(Level.INFO, "Host ip on the client has been set to: {0}", hostIp);
+            view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+
+            Platform.runLater(new Runnable() {
+                public void run() {
+                    LobbyView lobbyView = new LobbyView(view.stageController);
+                    view.pass(lobbyView);
+                }
+            });
+
+//            if (gameFinder.findSingleGame()) {
+//                JOptionPane.showMessageDialog(null, "Game Found");
+//                //naar de lobby van die game connecten
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Game Not Found");
+//            }
         }
     }
 }

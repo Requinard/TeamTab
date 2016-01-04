@@ -1,6 +1,7 @@
 package networking.server;
 
 import org.jetbrains.annotations.NotNull;
+import tracker.JanitorSingleton;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -21,7 +22,7 @@ public class NetworkServer {
 
     private PriorityBlockingQueue<NetworkMessage> messageQueue;
     private ExecutorService executorService = Executors.newFixedThreadPool(4);
-    private ServerSocket  socket;
+    private ServerSocket socket;
     /**
      * Port number
      */
@@ -111,9 +112,13 @@ public class NetworkServer {
 
         // Initialize all variables
         executorService = Executors.newFixedThreadPool(THREADPOOLSIZE);
+
         Comparator comparator = new PriorityComparator();
         messageQueue = new PriorityBlockingQueue<>(100, comparator);
         socket = new ServerSocket(port);
+
+        // Register the threadpool
+        JanitorSingleton.getInstance().trackPool(executorService);
 
         // Create runnable
         Runnable worker = () -> listen();

@@ -26,5 +26,13 @@ public class NetworkServerSingleton {
     }
 
 
+    public static void stopAllServers() {
+        if (servers != null) {
+            for (NetworkServer server : servers.values()) {
+                server.stopListeners();
+            }
+        }
+    }
+
 
 }

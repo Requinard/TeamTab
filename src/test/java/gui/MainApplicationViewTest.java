@@ -2,18 +2,15 @@ package gui;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.junit.*;
+import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-import sun.applet.Main;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by david on 7-10-15.
  */
-public class MainViewTest extends ApplicationTest {
+public class MainApplicationViewTest extends ApplicationTest {
     private Stage stage;
     private StageController stageController;
 

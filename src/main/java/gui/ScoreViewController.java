@@ -64,17 +64,17 @@ public class ScoreViewController implements Initializable {
         System.out.println("OK");
         System.out.println(StageController.playerName);
 
-        /*
-        final List<String> scoreBoard = view.stageController.clientGame.getScoreboard();
+
+        //final List<String> scoreBoard = view.stageController.clientGame.localTeam.getScore();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                for (String score : scoreBoard) {
-                    scoreArea.appendText(score + "\n");
-                }
+                //for (String score : scoreBoard) {
+                scoreArea.appendText(view.stageController.clientGame.localTeam.getScore() + "");
+                //}
             }
         });
-        */
+
     }
 
     /**

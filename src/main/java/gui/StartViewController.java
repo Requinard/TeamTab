@@ -41,7 +41,7 @@ public class StartViewController implements Initializable {
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     * <p>
+     * <p/>
      * start audio
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -133,11 +133,9 @@ public class StartViewController implements Initializable {
 
                 log.log(Level.INFO, "RMI chat loaded");
 
-                Platform.runLater(() -> {
-                    LobbyView lobbyView = new LobbyView((view.stageController));
-                    view.pass(lobbyView);
-                    log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
-                });
+                LobbyView lobbyView = new LobbyView((view.stageController));
+                view.pass(lobbyView);
+                log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
             }
         };
         runnable.run();
