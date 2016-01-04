@@ -5,6 +5,7 @@ import networking.mediator.ClientMediator;
 import java.util.*;
 
 public class ClientGame implements IGame {
+    private final double TICKRATE = 50;
     public Player localPlayer;
     public Team localTeam;
     //instruction of this player
@@ -17,6 +18,7 @@ public class ClientGame implements IGame {
     private List<Panel> panels;
     private String hostIP;
     private String localIP;
+    private GameStateEnum gameState;
 
     public ClientGame(int portnumber) {
         localPlayer = null;
@@ -42,7 +44,7 @@ public class ClientGame implements IGame {
             }
         };
 
-        timer.schedule(task, 0, 60);
+        timer.schedule(task, 0, Math.round((1.0 / TICKRATE) * 1000));
     }
 
     /**
@@ -118,6 +120,19 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+
+            for (String playerName : map.get(teamName)) {
+                Player player = this.getPlayer(playerName);
+                player.setTeam(team);
+
+                team.addPlayer(player);
+            }
+        }
+    }
+
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -132,19 +147,6 @@ public class ClientGame implements IGame {
                 if (player.getIp().equals(localIP)) {
                     localTeam = team;
                 }
-            }
-        }
-    }
-
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-
-            for (String playerName : map.get(teamName)) {
-                Player player = this.getPlayer(playerName);
-                player.setTeam(team);
-
-                team.addPlayer(player);
             }
         }
     }
@@ -191,6 +193,7 @@ public class ClientGame implements IGame {
     public Player createPlayer(String username, String ip) {
         Player player = new Player(username, ip);
         mediator.createPlayer(player);
+        gameState = GameStateEnum.LobbyView;
         return player;
     }
 
@@ -272,9 +275,11 @@ public class ClientGame implements IGame {
      * Authir: David
      */
     public void update(){
-        mediator.getPlayers();
-        mediator.getTeams();
-        mediator.getTeamAssignments();
+        if (gameState == GameStateEnum.LobbyView) {
+            mediator.getPlayers();
+            mediator.getTeams();
+            mediator.getTeamAssignments();
+        }
     }
 
     /**
