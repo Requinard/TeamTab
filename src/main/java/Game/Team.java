@@ -133,6 +133,8 @@ public class Team {
      * @param player
      */
     public Player addPlayer(Player player) {
+        if (this.players == null)
+            this.players = new ArrayList<>();
         if (players.size() == 0 || !players.contains(player)) {
             players.add(player);
             player.setTeam(this);

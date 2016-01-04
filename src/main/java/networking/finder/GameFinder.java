@@ -53,6 +53,9 @@ public class GameFinder {
 
                 localHost = String.format("%s.%s.%s", nibbles[0], nibbles[1], nibbles[2]);
 
+                if (nibbles[0].equals("127"))
+                    continue;
+
                 // Loop through all local subips
                 for (int i = 1; i <= 255; i++) {
                     String host = String.format("%s.%s", localHost, i);

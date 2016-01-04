@@ -74,7 +74,7 @@ public class LobbyViewController implements Initializable {
                 initiateLobby();
             }
         };
-        timerRefresh.schedule(timerTask, 0, 30);
+        timerRefresh.schedule(timerTask, 0, 2000);
     }
 
     /**

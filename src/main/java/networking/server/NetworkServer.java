@@ -67,6 +67,10 @@ public class NetworkServer {
                     System.out.println(networkMessage);
                     synchronized (this) {
                         messageQueue.add(networkMessage);
+
+                        while (messageQueue.size() > 100) {
+                            messageQueue.remove();
+                        }
                     }
                 }
             }
@@ -215,6 +219,10 @@ public class NetworkServer {
         networkMessage.setHighPriority();
 
         messageQueue.add(networkMessage);
+
+        while (messageQueue.size() > 100) {
+            messageQueue.poll();
+        }
 
         return request;
     }
