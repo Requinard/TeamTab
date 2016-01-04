@@ -1,10 +1,6 @@
-package networking;
+package networking.server;
 
 import junit.framework.TestCase;
-import networking.server.NetworkMessage;
-import networking.server.NetworkRequest;
-import networking.server.NetworkServer;
-import networking.server.RequestType;
 
 import java.io.DataOutputStream;
 import java.net.Socket;

@@ -38,12 +38,20 @@ public class NetworkRequest {
         this.networkMessage = networkMessage;
 
         // Parse the message
-        Pattern p = Pattern.compile("(GET|POST|SEND) ([\\w/]+) (.+)");
+        Pattern fullPattern = Pattern.compile("(GET|POST|SEND) ([\\w/]+) (.+)*");
+        Pattern halfPatter = Pattern.compile("(GET|POST|SEND) ([\\w/]+)");
 
-        Matcher matcher = p.matcher(networkMessage.getText());
+        Matcher matcher = fullPattern.matcher(networkMessage.getText());
 
-        if (matcher.matches() == false)
-            throw new UnknownFormatConversionException("Network request could not be parsed!");
+        if (!matcher.matches()) {
+            matcher = halfPatter.matcher(networkMessage.getText());
+
+            if (!matcher.matches())
+                throw new UnknownFormatConversionException("Network request could not be parsed!");
+            // Rematch for partial
+
+        }
+
 
 
         switch (matcher.group(1)) {
@@ -59,7 +67,8 @@ public class NetworkRequest {
         }
 
         this.url = matcher.group(2);
-        this.payload = matcher.group(3);
+        if (matcher.groupCount() == 3)
+            this.payload = matcher.group(3);
     }
 
     public NetworkMessage getNetworkMessage() {

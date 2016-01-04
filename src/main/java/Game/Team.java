@@ -12,9 +12,9 @@ public class Team {
     private final int STARTLIVES = 3;
     private final int STARTTIME = 9;
     private transient List<Player> players;
-    private List<Panel> panels;
+    private transient List<Panel> panels;
     private String name;
-    private List<Instruction> activeInstructions;
+    private transient List<Instruction> activeInstructions;
     private int lives = STARTLIVES;
     private int time = STARTTIME;
     private int score;

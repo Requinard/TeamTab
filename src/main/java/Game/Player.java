@@ -12,7 +12,7 @@ public class Player {
     private static final Logger log = Logger.getLogger(Player.class.getName());
     private String username;
     private String ip;
-    private List<Panel> panels;
+    private transient List<Panel> panels;
     private transient Team team;
     private Instruction activeInstruction;
 
