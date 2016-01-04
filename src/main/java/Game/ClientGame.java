@@ -10,13 +10,13 @@ public class ClientGame implements IGame {
     //instruction of this player
     public Instruction localInstruction;
     Thread mediatorThread;
+    Timer timer;
     private ClientMediator mediator;
     private List<Team> teams;
     private List<Player> players;
     private List<Panel> panels;
     private String hostIP;
     private String localIP;
-    Timer timer;
 
     public ClientGame(int portnumber) {
         localPlayer = null;
@@ -26,6 +26,10 @@ public class ClientGame implements IGame {
         players = new ArrayList<>();
 
         mediatorThread = mediator.mediate();
+    }
+
+    public ClientGame() {
+        this(8085);
     }
 
     public void scheduleRefresh() {
@@ -39,10 +43,6 @@ public class ClientGame implements IGame {
         };
 
         timer.schedule(task, 0, 60);
-    }
-
-    public ClientGame() {
-        this(8085);
     }
 
     /**
@@ -118,6 +118,24 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        this.teams = teams;
+
+        for (Team team : teams) {
+            for (Player player : team.getPlayers()) {
+                if (player.getIp().equals(localIP)) {
+                    localTeam = team;
+                }
+            }
+        }
+    }
+
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
@@ -127,23 +145,6 @@ public class ClientGame implements IGame {
                 player.setTeam(team);
 
                 team.addPlayer(player);
-            }
-        }
-    }
-
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        this.teams = teams;
-
-        for (Team team : teams) {
-            for(Player player : team.getPlayers()) {
-                if (player.getIp().equals(localIP)) {
-                    localTeam = team;
-                }
             }
         }
     }
@@ -266,7 +267,6 @@ public class ClientGame implements IGame {
         mediator.registerInvalidInstruction(instruction);
     }
 
-
     /**
      * Updates the game through the mediator
      * Authir: David
@@ -300,19 +300,6 @@ public class ClientGame implements IGame {
             if(player.getUsername().equals(playerName)) return player;
         }
         return null;
-    }
-
-    public void setTeams(HashMap<String, List<String>> map) {
-        for(String teamName: map.keySet()){
-            Team team = getTeam(teamName);
-
-            for (String playerName : map.get(teamName)) {
-                Player player = this.getPlayer(playerName);
-                player.setTeam(team);
-
-                team.addPlayer(player);
-            }
-        }
     }
 
     public void stopSchedule() {
