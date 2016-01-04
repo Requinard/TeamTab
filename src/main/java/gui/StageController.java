@@ -61,7 +61,6 @@ public class StageController {
 
     public void loadScene(@NotNull IView nextView) {
         currentView.deload();
-
         nextView.load();
     }
 

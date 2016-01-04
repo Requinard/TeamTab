@@ -30,7 +30,9 @@ public class StartViewController implements Initializable {
     @FXML
     private Button buttonBack;
     @FXML
-    private TextField teamNameTextField;
+    private TextField team1;
+    @FXML
+    private TextField team2;
     private StartView view;
     private Runnable runnable;
     private HostGame hostGame;
@@ -84,16 +86,18 @@ public class StartViewController implements Initializable {
      */
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
-            if (teamNameTextField.getText().isEmpty()) {
+            if (team1.getText().isEmpty() || team2.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Kies een teamname");
-            } else if (teamNameTextField.getText().matches(pattern)) {
+            } else if (team1.getText().matches(pattern) || team2.getText().matches(pattern)) {
                 JOptionPane.showMessageDialog(null, "Je string bevat karakters die niet toegestaan zijn!");
             } else {
-                String teamName = teamNameTextField.getText();
-                System.out.println("StartView - Teamname is set to: " + teamName);
+                String teamName1 = team1.getText();
+                String teamName2 = team2.getText();
+                System.out.println("StartView - Team1 is set to: " + teamName1);
+                System.out.println("StartView - Team2 is set to: " + teamName2);
 
                 //Team is created
-                Team currentTeam = view.stageController.hostGame.createTeam(teamName);
+                Team currentTeam = view.stageController.hostGame.createTeam(teamName1);
                 Team otherTeam = view.stageController.hostGame.createTeam("Bots");
 
                 // get real ipaddress of player
@@ -112,8 +116,10 @@ public class StartViewController implements Initializable {
 
                 view.stageController.clientGame.createPlayer(StageController.playerName, clientGame.getHostIP());
 
+
                 log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
 
+                log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
                 Platform.runLater(() -> {
                     LobbyView lobbyView = new LobbyView((view.stageController));
                     view.pass(lobbyView);
