@@ -96,9 +96,9 @@ public class StartViewController implements Initializable {
                 System.out.println("StartView - Team1 is set to: " + teamName1);
                 System.out.println("StartView - Team2 is set to: " + teamName2);
 
-                //Team is created
-                Team currentTeam = view.stageController.hostGame.createTeam(teamName1);
-                Team otherTeam = view.stageController.hostGame.createTeam("Bots");
+                //Teams are being created
+                Team team1 = view.stageController.hostGame.createTeam(teamName1);
+                Team team2 = view.stageController.hostGame.createTeam(teamName2);
 
                 // get real ipaddress of player
                 InetAddress localhost = null;
@@ -117,7 +117,8 @@ public class StartViewController implements Initializable {
                 view.stageController.clientGame.createPlayer(StageController.playerName, clientGame.getHostIP());
 
 
-                log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
+                log.log(Level.INFO, "Team {0} is created", team1.getName());
+                log.log(Level.INFO, "Team {0} is created", team2.getName());
 
                 log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
                 Platform.runLater(() -> {
