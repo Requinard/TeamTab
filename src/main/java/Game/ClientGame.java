@@ -34,6 +34,10 @@ public class ClientGame implements IGame {
         this(8085);
     }
 
+    public void setGameState(GameStateEnum gameState) {
+        this.gameState = gameState;
+    }
+
     public void scheduleRefresh() {
         timer = new Timer("Client Update");
 
@@ -101,11 +105,11 @@ public class ClientGame implements IGame {
      */
     public synchronized void setPlayers(List<Player> remotePlayers) {
         for (Player remotePlayer : remotePlayers) {
-            Player localPlayer = this.getPlayer(remotePlayer.getUsername());
-            if (localPlayer == null) {
-                this.players.add(remotePlayer);
+            if (localPlayer.getIp().equals(remotePlayer.getIp())) {
+                localPlayer = remotePlayer;
             }
         }
+        players = remotePlayers;
     }
     /**
      * Author Kaj
@@ -198,6 +202,7 @@ public class ClientGame implements IGame {
     public Player createPlayer(String username, String ip) {
         Player player = new Player(username, ip);
         mediator.createPlayer(player);
+        localPlayer = player;
         gameState = GameStateEnum.LobbyView;
         return player;
     }
@@ -288,6 +293,10 @@ public class ClientGame implements IGame {
             mediator.getPlayers();
             mediator.getTeams();
             mediator.getTeamAssignments();
+        } else if (gameState == GameStateEnum.GameView) {
+            mediator.getPanels();
+            mediator.getTeams();
+            mediator.getInstruction();
         }
     }
 

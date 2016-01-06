@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import javassist.bytecode.stackmap.TypeData;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
-import tracker.JanitorSingleton;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -58,12 +57,14 @@ public class HostMediator extends BaseMediator implements IMediator {
             for (Player player : hostGame.getPlayers()) {
                 if (incomingPlayer.getIp().equals(player.getIp())) {
                     player.setPlayerStatus(incomingPlayer.getPlayerStatus());
+
                     hostGame.startRound();
                     log.log(Level.INFO, "The playerstatus in the hostgame player has changed");
                 }
             }
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
-
     }
 
     @Override

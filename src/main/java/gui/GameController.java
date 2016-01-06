@@ -101,6 +101,10 @@ public class GameController implements Initializable {
      */
     private void refreshView() {
         log.log(Level.FINER, "refreshView started");
+
+        while (view.stageController.clientGame.localPlayer.getPanels() == null)
+            Thread.yield();
+
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
