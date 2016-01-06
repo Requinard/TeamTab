@@ -84,7 +84,6 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
 
         Platform.runLater(() -> {
-
             log.log(Level.FINE, "Lobby is being initialized");
 
             for (Player currentPlayer : view.stageController.hostGame.getPlayers()) {
@@ -155,7 +154,7 @@ public class LobbyViewController implements Initializable {
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
 
-
+        System.out.println("aaaaaaaa");
         view.stageController.clientGame.changePlayerStatus(true);
 
 

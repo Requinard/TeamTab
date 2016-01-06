@@ -9,9 +9,7 @@ import javafx.stage.Stage;
 import networking.server.NetworkServerSingleton;
 import tracker.JanitorSingleton;
 
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class Main extends Application {
 
@@ -54,6 +52,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Handler fh = new FileHandler("log.xml");
         Logger.getLogger("").addHandler(fh);
+
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.INFO);
+        Logger.getGlobal().addHandler(consoleHandler);
         new StageController(primaryStage);
     }
 }

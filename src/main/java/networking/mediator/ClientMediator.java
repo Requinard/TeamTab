@@ -62,8 +62,9 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
             clientGame.localInstruction = instruction;
             log.log(Level.FINER, "client handleInstruction has ended, instruction has been set");
+        } else {
+            networkServer.requeueRequest(networkRequest);
         }
-
 
     }
 
@@ -80,9 +81,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "client handleTeamPlayers map team contains: {0} teams", map.size());
             clientGame.setTeams(map);
             log.log(Level.FINER, "client handleTeamPlayers has ended, teams have been set");
-        }
-
-        else {
+        } else {
             networkServer.requeueRequest(networkRequest);
         }
     }
@@ -117,22 +116,22 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
     @Override
     public void handleStatus(NetworkRequest networkRequest) {
-        return;
+        networkServer.requeueRequest(networkRequest);
     }
 
     @Override
     public void handleTeamsAssign(NetworkRequest networkRequest) {
-        return;
+        networkServer.requeueRequest(networkRequest);
     }
 
     @Override
     public void handleTeamsCreate(NetworkRequest networkRequest) {
-
+        networkServer.requeueRequest(networkRequest);
     }
 
     @Override
     public void handlePlayersChangeStatus(NetworkRequest networkRequest) {
-
+        networkServer.requeueRequest(networkRequest);
     }
 
     public void createPlayer(Player player) {
@@ -190,9 +189,11 @@ public class ClientMediator extends BaseMediator implements IMediator {
      * Author: david
      */
     public void getPlayers() {
+        log.log(Level.FINER, "client getPlayers has started");
         NetworkRequest request = new NetworkRequest(RequestType.GET, "/players/", "");
 
         networkServer.sendRequest(request, clientGame.getHostIP());
+        log.log(Level.FINER, "client getPlayers has ended");
     }
 
     /**
@@ -213,5 +214,11 @@ public class ClientMediator extends BaseMediator implements IMediator {
         NetworkRequest request = new NetworkRequest(RequestType.GET, "/teams/players/", "");
 
         networkServer.sendRequest(request, clientGame.getHostIP());
+    }
+
+    public void getPanels() {
+    }
+
+    public void getInstruction() {
     }
 }

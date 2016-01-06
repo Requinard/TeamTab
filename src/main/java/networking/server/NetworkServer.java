@@ -63,8 +63,7 @@ public class NetworkServer {
                     // Read it into an object
                     NetworkMessage networkMessage = new NetworkMessage(full, clientSocket.getInetAddress().toString(), clientSocket.getLocalSocketAddress().toString());
 
-                    logger.log(Level.INFO, "Server received the following data", networkMessage.getText());
-                    System.out.println(networkMessage);
+                    logger.log(Level.FINE, "Server received the following data", networkMessage.getText());
                     synchronized (this) {
                         messageQueue.add(networkMessage);
 

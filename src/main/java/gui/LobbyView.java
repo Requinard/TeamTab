@@ -1,5 +1,6 @@
 package gui;
 
+import Game.GameStateEnum;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -56,6 +57,8 @@ public class LobbyView extends AbstractView implements IView {
      * {@inheritDoc}
      */
     public boolean deload() {
+        stageController.clientGame.setGameState(GameStateEnum.GameView);
+
         return false;
     }
 
