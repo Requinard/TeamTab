@@ -29,10 +29,11 @@ public abstract class BaseMediator implements IMediator {
     }
 
     public Thread mediate() {
-        Thread thread = new Thread(() -> listen(), this.getClass().getName());
+        Thread thread = new Thread(() -> {
+            listen();
+        }, this.getClass().getName());
         thread.start();
 
-        // Register the thread
         JanitorSingleton.getInstance().trackThread(thread);
 
         return thread;
@@ -63,7 +64,7 @@ public abstract class BaseMediator implements IMediator {
             handleTeamsAssign(networkRequest);
 
             handleTeamsCreate(networkRequest);
-        } else if (networkRequest.getUrl().equals("/teams/players")) {
+        } else if (networkRequest.getUrl().equals("/teams/players/")) {
             handleTeamPlayers(networkRequest);
 
         } else if (networkRequest.getUrl().equals("/teams/create/")) {

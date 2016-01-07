@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import javassist.bytecode.stackmap.TypeData;
 import networking.server.NetworkRequest;
 import networking.server.RequestType;
-import tracker.JanitorSingleton;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -32,18 +31,7 @@ public class HostMediator extends BaseMediator implements IMediator {
     public HostMediator(HostGame hostGame, int port) {
         super(port);
         this.hostGame = hostGame;
-        log.log(Level.INFO, "hostgame set");
-        refreshTimer = new java.util.Timer("Hostgame Refresh Timer");
-        timerTask1 = new TimerTask() {
-            @Override
-            public void run() {
-                handleAll();
-            }
-        };
-        refreshTimer.schedule(timerTask1, 0, 100);
-
-        // Register the timer
-        JanitorSingleton.getInstance().trackTimer(refreshTimer);
+        log.log(Level.INFO,"hostgame set");
     }
 
     public HostMediator(HostGame hostGame) {
@@ -69,54 +57,13 @@ public class HostMediator extends BaseMediator implements IMediator {
             for (Player player : hostGame.getPlayers()) {
                 if (incomingPlayer.getIp().equals(player.getIp())) {
                     player.setPlayerStatus(incomingPlayer.getPlayerStatus());
+
                     hostGame.startRound();
                     log.log(Level.INFO, "The playerstatus in the hostgame player has changed");
                 }
             }
-        }
-
-    }
-
-    private void handleAll() {
-        log.log(Level.FINER, "handleAll is called");
-        List<Player> players = hostGame.getPlayers();
-        ArrayList<String> activeIp = new ArrayList<>();
-        for (Player player : players) {
-            activeIp.add(player.getIp());
-        }
-        log.log(Level.FINER, "hostgame contains {0} players", players.size());
-        List<Team> teams = hostGame.getTeams();
-        log.log(Level.INFO, "hostgame contains {0} teams", teams.size());
-        String json;
-        NetworkRequest send;
-
-        if (players.size() > 0 && teams.size() > 0) {
-
-            log.log(Level.FINER, "players and teams contains more than 0");
-
-            json = PlayerAdapter.toString(PlayerAdapter.makeSendable(players));
-            send = new NetworkRequest(RequestType.SEND, "/players/", json);
-            for (String ipAdress : activeIp) {
-                networkServer.send(send.toString(), ipAdress);
-            }
-            //networkServer.send(send.toString(), "192.168.223.19");
-            log.log(Level.FINER, "network message is send");
-
         } else {
-            log.log(Level.SEVERE, "Hostgame players or/and teams size is 0");
-        }
-        if (teams.size() > 0) {
-            // send the teams
-
-            json = TeamAdapter.toString(TeamAdapter.makeSendable(teams));
-            send = new NetworkRequest(RequestType.SEND, "/teams/", json);
-            for (String ipAdress : activeIp) {
-                networkServer.send(send.toString(), ipAdress);
-            }
-            //networkServer.send(send.toString(), "192.168.223.19");
-            log.log(Level.FINER, "networkRequest has been sent to {0}", "127.0.0.1");
-        } else {
-            log.log(Level.SEVERE, "Hostgame teams size is 0");
+            networkServer.requeueRequest(networkRequest);
         }
     }
 

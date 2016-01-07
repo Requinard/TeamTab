@@ -30,7 +30,9 @@ public class StartViewController implements Initializable {
     @FXML
     private Button buttonBack;
     @FXML
-    private TextField teamNameTextField;
+    private TextField team1;
+    @FXML
+    private TextField team2;
     private StartView view;
     private Runnable runnable;
     private HostGame hostGame;
@@ -75,7 +77,6 @@ public class StartViewController implements Initializable {
             e.printStackTrace();
         }
         view.stageController.clientGame.setHostIp(ipAddress.substring(1));
-        view.stageController.resetGame();
     }
 
     /**
@@ -85,17 +86,19 @@ public class StartViewController implements Initializable {
      */
     public void buttonStartOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
-            if (teamNameTextField.getText().isEmpty()) {
+            if (team1.getText().isEmpty() || team2.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Kies een teamname");
-            } else if (teamNameTextField.getText().matches(pattern)) {
+            } else if (team1.getText().matches(pattern) || team2.getText().matches(pattern)) {
                 JOptionPane.showMessageDialog(null, "Je string bevat karakters die niet toegestaan zijn!");
             } else {
-                String teamName = teamNameTextField.getText();
-                System.out.println("StartView - Teamname is set to: " + teamName);
+                String teamName1 = team1.getText();
+                String teamName2 = team2.getText();
+                System.out.println("StartView - Team1 is set to: " + teamName1);
+                System.out.println("StartView - Team2 is set to: " + teamName2);
 
-                //Team is created
-                Team currentTeam = view.stageController.hostGame.createTeam(teamName);
-                Team otherTeam = view.stageController.hostGame.createTeam("Bots");
+                //Teams are being created
+                Team team1 = view.stageController.hostGame.createTeam(teamName1);
+                Team team2 = view.stageController.hostGame.createTeam(teamName2);
 
                 // get real ipaddress of player
                 InetAddress localhost = null;
@@ -113,29 +116,16 @@ public class StartViewController implements Initializable {
 
                 view.stageController.clientGame.createPlayer(StageController.playerName, clientGame.getHostIP());
 
-                //view.stageController.clientGame.assignTeam(player, currentTeam);
 
-                log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
+                log.log(Level.INFO, "Team {0} is created", team1.getName());
+                log.log(Level.INFO, "Team {0} is created", team2.getName());
 
-
-                //Player is created
-                //StageController.currentPlayer = view.stageController.clientGame.createPlayer(StageController.playerName, ipAddress);
-                //log.log(Level.INFO, "Player {0} is created", StageController.currentPlayer.getUsername());
-
-                //Player gets assigned to the team
-                //view.stageController.clientGame.assignTeam(StageController.currentPlayer, currentTeam);
-                //eelog.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
-
-                //Testdata for second team is added
-                //testData();
-
-                // create and start the RMI registry with hostgame IP
-
-                log.log(Level.INFO, "RMI chat loaded");
-
-                LobbyView lobbyView = new LobbyView((view.stageController));
-                view.pass(lobbyView);
                 log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
+                Platform.runLater(() -> {
+                    LobbyView lobbyView = new LobbyView((view.stageController));
+                    view.pass(lobbyView);
+                    log.log(Level.INFO, "Going from TeamView to LobbyView succeeded");
+                });
             }
         };
         runnable.run();
@@ -148,7 +138,6 @@ public class StartViewController implements Initializable {
      */
     public void buttonBackOnClick(MouseEvent mouseEvent) {
         runnable = () -> {
-            // view.stageController.game.reset();
             hostGame = null;
             Platform.runLater(() -> {
                 MainView mainView = new MainView((view.stageController));
@@ -158,20 +147,4 @@ public class StartViewController implements Initializable {
         };
         runnable.run();
     }
-
-    /*
-    public void testData() {
-        log.log(Level.INFO, "Second team is being initialized");
-        //Team is created
-        Team currentTeam = view.stageController.clientGame.createTeam("Private");
-        log.log(Level.INFO, "Team {0} is created", currentTeam.getName());
-
-        //Player is created
-        Player player = view.stageController.clientGame.createPlayer("Ryan", "Private");
-        log.log(Level.INFO, "Player {0} is created", player.getUsername());
-        //Player gets assigned to the team
-        view.stageController.clientGame.assignTeam(player, currentTeam);
-        log.log(Level.INFO, "Player {0} is assigned to {1}", new Object[]{StageController.currentPlayer.getUsername(), StageController.currentPlayer.getTeam()});
-    }
-    */
 }

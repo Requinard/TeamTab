@@ -42,15 +42,4 @@ public class JsonAdapter {
     public static Object toObject(String json, Type t) {
         return new Gson().fromJson(json, t);
     }
-
-    /**
-     * Converts a Json string to a generic object
-     * author: David
-     *
-     * @param json Json string that needs conversion
-     * @return generic object representation of the JSON
-     */
-    public static Object toObject(String json) {
-        return new Gson().fromJson(json, Object.class);
-    }
 }

@@ -64,7 +64,7 @@ public class LobbyViewController implements Initializable {
 
         timerRefresh = new java.util.Timer();
         try {
-            Thread.sleep(1);
+            Thread.sleep(10);
         } catch (Exception e) {
 
         }
@@ -74,7 +74,7 @@ public class LobbyViewController implements Initializable {
                 initiateLobby();
             }
         };
-        timerRefresh.schedule(timerTask, 0, 30);
+        timerRefresh.schedule(timerTask, 0, 2000);
     }
 
     /**
@@ -84,17 +84,13 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
 
         Platform.runLater(() -> {
-
             log.log(Level.FINE, "Lobby is being initialized");
 
-            for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
+            for (Player currentPlayer : view.stageController.hostGame.getPlayers()) {
 
                 if (view.stageController.clientGame.getTeams().size() > 1) {
-                    team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
-                    team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
-                    //if (!currentPlayer.getPlayerStatus()) {
-                    //  view.stageController.clientGame.changePlayerStatus(true);
-                    //}
+                    team1Name.setText(view.stageController.hostGame.getTeams().get(0).getName());
+                    team2Name.setText(view.stageController.hostGame.getTeams().get(1).getName());
                     if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
 
                         playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
@@ -119,13 +115,13 @@ public class LobbyViewController implements Initializable {
                     timerRefresh.purge();
                 }
             }
-            //ipLabel.setText(StageController.chatAppDefusalSquad.getIpAddress());
+
         });
     }
 
     public void StartGame() {
         Platform.runLater(() -> {
-            //StageController.chatAppDefusalSquad.closeChatApp();
+
             GameView gameView = new GameView((view.stageController));
             view.pass(gameView);
             log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
@@ -158,7 +154,7 @@ public class LobbyViewController implements Initializable {
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
 
-
+        System.out.println("aaaaaaaa");
         view.stageController.clientGame.changePlayerStatus(true);
 
 
@@ -192,7 +188,6 @@ public class LobbyViewController implements Initializable {
     private void buttonChatOnClick(MouseEvent mouseEvent) {
         log.log(Level.INFO, "Lobbyview: Chat app GUI is starting");
         runnable = () -> Platform.runLater(() -> {
-            //StageController.chatAppDefusalSquad.startChatApp();
         });
         runnable.run();
     }
