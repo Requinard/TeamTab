@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import networking.server.NetworkServerSingleton;
 import tracker.JanitorSingleton;
 
+import java.io.File;
 import java.util.logging.*;
 
 public class Main extends Application {
@@ -50,7 +51,9 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Handler fh = new FileHandler("log.xml");
+        if (!(new File("logs").exists()))
+            new File("logs").mkdir();
+        Handler fh = new FileHandler(String.format("logs/%d.xml", System.currentTimeMillis()));
         Logger.getLogger("").addHandler(fh);
 
         ConsoleHandler consoleHandler = new ConsoleHandler();
