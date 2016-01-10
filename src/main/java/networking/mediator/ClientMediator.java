@@ -12,6 +12,7 @@ import networking.server.NetworkRequest;
 import networking.server.RequestType;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -104,9 +105,17 @@ public class ClientMediator extends BaseMediator implements IMediator {
     public void handlePanels(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.SEND) {
             log.log(Level.FINER, "client handlePanels has started, networkRequest type is SEND");
-            List<Panel> panels = PanelAdapter.toObjects(networkRequest.getPayload());
+            //List<Panel> panels = PanelAdapter.toObjects(networkRequest.getPayload());
+            Type t = new TypeToken<List<Integer>>() {
+            }.getType();
+            ArrayList<Integer> idPanels = new Gson().fromJson(networkRequest.getPayload(), t);
+            ArrayList<Panel> panels = new ArrayList<>();
+
+            for (int idPanel : idPanels) {
+                panels.add(clientGame.getPanels().get(idPanel - 1));
+            }
             log.log(Level.FINER, "client panels contains: {0} teams", panels.size());
-            clientGame.setPanels(panels);
+            clientGame.localPanels = panels;
             log.log(Level.FINER, "client handlePanels has ended, panels have been set");
         } else {
             networkServer.requeueRequest(networkRequest);
@@ -216,9 +225,33 @@ public class ClientMediator extends BaseMediator implements IMediator {
         networkServer.sendRequest(request, clientGame.getHostIP());
     }
 
+    /**
+     * Gets the newest panels of the player
+     * Author: Kaj
+     */
     public void getPanels() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/panels/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
     }
 
+    /**
+     * Gets the newest instruction
+     * Author: Kaj
+     */
     public void getInstruction() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/instruction/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
+    }
+
+    /**
+     * Gets the list of instructions for scoreView
+     * Author: Kaj
+     */
+    public void getInstructions() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/instructions/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
     }
 }

@@ -1,5 +1,6 @@
 package gui;
 
+import Game.GameStateEnum;
 import Game.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -122,6 +123,7 @@ public class LobbyViewController implements Initializable {
     public void StartGame() {
         Platform.runLater(() -> {
 
+            view.stageController.clientGame.setGameState(GameStateEnum.GameView);
             GameView gameView = new GameView((view.stageController));
             view.pass(gameView);
             log.log(Level.INFO, "Going from LobbyView to GameView succeeded");
@@ -154,9 +156,7 @@ public class LobbyViewController implements Initializable {
      */
     private void buttonReadyOnClick(MouseEvent mouseEvent) {
 
-        System.out.println("aaaaaaaa");
         view.stageController.clientGame.changePlayerStatus(true);
-
 
         for (Player player : view.stageController.clientGame.getPlayers()) {
             if (!view.stageController.clientGame.localPlayer.getPlayerStatus()) {

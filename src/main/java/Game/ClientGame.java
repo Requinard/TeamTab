@@ -1,13 +1,17 @@
 package Game;
 
 import networking.mediator.ClientMediator;
+import org.apache.commons.io.IOUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class ClientGame implements IGame {
     private final double TICKRATE = 1;
     public Player localPlayer;
     public Team localTeam;
+    public List<Panel> localPanels;
     //instruction of this player
     public Instruction localInstruction;
     Thread mediatorThread;
@@ -22,12 +26,14 @@ public class ClientGame implements IGame {
 
     public ClientGame(int portnumber) {
         localPlayer = null;
+        localPanels = new ArrayList<>();
         mediator = new ClientMediator(this);
         teams = new ArrayList<>();
         panels = new ArrayList<>();
         players = new ArrayList<>();
 
         mediatorThread = mediator.mediate();
+        loadPanelsFromFile();
     }
 
     public ClientGame() {
@@ -65,7 +71,7 @@ public class ClientGame implements IGame {
      * Author Frank Hartman
      * Gets the local ip of the pc
      *
-     * @return
+     * @return IP of the client
      */
     public String getLocalIP() {
         return localIP;
@@ -75,7 +81,7 @@ public class ClientGame implements IGame {
      * Author Frank Hartman
      * Set the localip of the pc
      *
-     * @param localIP
+     * @param localIP IP of the client
      */
     public void setLocalIP(String localIP) {
         this.localIP = localIP;
@@ -130,12 +136,9 @@ public class ClientGame implements IGame {
      */
     public synchronized void setTeams(List<Team> teams) {
         for (Team remoteTeam : teams) {
-            Team localTeam = this.getTeam(remoteTeam.getName());
-            if (localTeam == null) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
                 this.teams.add(remoteTeam);
-            } else {
-                localTeam.changeLives(remoteTeam.getLives());
-                localTeam.changeTime(remoteTeam.getTime());
             }
         }
     }
@@ -150,6 +153,9 @@ public class ClientGame implements IGame {
                         player.setTeam(team);
 
                         team.addPlayer(player);
+                        if (localPlayer.getIp().equals(player.getIp())) {
+                            localTeam = team;
+                        }
                     }
                 }
             }
@@ -296,7 +302,8 @@ public class ClientGame implements IGame {
         } else if (gameState == GameStateEnum.GameView) {
             mediator.getPanels();
             mediator.getTeams();
-            mediator.getInstruction();
+        } else if (gameState == GameStateEnum.ScoreView) {
+            mediator.getInstructions();
         }
     }
 
@@ -329,5 +336,36 @@ public class ClientGame implements IGame {
     public void stopSchedule() {
         timer.cancel();
         timer.purge();
+    }
+
+    private boolean loadPanelsFromFile() {
+        try (InputStream location = this.getClass().getClassLoader().getResourceAsStream("panels.csv")) {
+            String full = IOUtils.toString(location);
+
+            // go over each line
+            for (String s : full.split("\n")) {
+                // If we start with a hashtag the line is commented and we skip it
+                if (s.startsWith("#") || s.equals("\r"))
+                    continue;
+                // get the individual lines
+                String[] split = s.split(",");
+
+                // Parse the strings
+                int id = Integer.parseInt(split[0].trim());
+                int type = Integer.parseInt(split[1].trim());
+                String text = split[2];
+                int min = Integer.parseInt(split[3].trim());
+                int max = Integer.parseInt(split[4].trim());
+
+                // Create the panels
+                Panel panel = new Panel(id, min, max, text, PanelTypeEnum.values()[type]);
+
+                panels.add(panel);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return panels.size() > 0;
     }
 }

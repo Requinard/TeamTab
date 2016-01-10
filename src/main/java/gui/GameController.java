@@ -70,6 +70,7 @@ public class GameController implements Initializable {
     private java.util.Timer timerRefresh;
     private TimerTask timerTask;
     private List<Panel> panelHolder;
+    private boolean newPanels;
     private boolean panelPushed;
 
     /**
@@ -85,6 +86,7 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         log.log(Level.INFO, "Start initializing the gamecontroller");
         panelFactory = new PanelFactory();
+        newPanels = true;
 
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
@@ -101,14 +103,17 @@ public class GameController implements Initializable {
      */
     private void refreshView() {
         log.log(Level.FINER, "refreshView started");
-
-        while (view.stageController.clientGame.localPlayer.getPanels() == null)
+        while (view == null)
             Thread.yield();
 
+        while (view.stageController.clientGame.localPanels.isEmpty())
+            Thread.yield();
+
+        panelChecker();
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
-        panelChecker();
+
         log.log(Level.FINER, "refreshView ended");
     }
 
@@ -118,10 +123,10 @@ public class GameController implements Initializable {
     private void panelChecker() {
         Platform.runLater(() -> {
 
-            if (view.stageController.clientGame.localPlayer.getPanels().size() != panelHolder.size()) {
-                panelHolder = view.stageController.clientGame.localPlayer.getPanels();
+            if (panelHolder == null || (view.stageController.clientGame.localPanels.size() != panelHolder.size())) {
+                panelHolder = view.stageController.clientGame.localPanels;
                 fillGridWithPanels();
-                log.log(Level.INFO, "Gridview filled with {0} panels", view.stageController.clientGame.localPlayer.getPanels().size());
+                log.log(Level.INFO, "Gridview filled with {0} panels", view.stageController.clientGame.localPanels.size());
             }
         });
     }
@@ -135,7 +140,6 @@ public class GameController implements Initializable {
     public void setView(GameView gameView) {
         log.log(Level.FINER, "setView started");
         view = gameView;
-        fillGridWithPanels();
         showTeamLevens();
         setTeamNames();
         buttonStartTimerOnClick(null);
@@ -153,7 +157,7 @@ public class GameController implements Initializable {
         gridPane.setAlignment(Pos.CENTER);
         log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
 
-        final ArrayList<Panel> panels = (ArrayList<Panel>) view.stageController.clientGame.localPlayer.getPanels();
+        final ArrayList<Panel> panels = (ArrayList<Panel>) view.stageController.clientGame.localPanels;
 
         int column = 0;
         int row = 0;
@@ -174,6 +178,7 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Loaded {0} panels in the gridPane", panels.size());
         panelHolder = new ArrayList<>();
         panelHolder.addAll(panels);
+        newPanels = false;
     }
 
     /**
@@ -296,6 +301,9 @@ public class GameController implements Initializable {
 
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
+
+                    while (view.stageController.clientGame.localPanels.isEmpty())
+                        Thread.yield();
 
                     counter--;
                     //check if counter must be reset because a button or slider was used
