@@ -131,6 +131,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
                 panels.add(clientGame.getPanels().get(idPanel - 1));
             }
             log.log(Level.FINER, "client panels contains: {0} teams", panels.size());
+            clientGame.localGame.setPanels(panels);
             log.log(Level.FINER, "client handlePanels has ended, panels have been set");
         } else {
             networkServer.requeueRequest(networkRequest);
