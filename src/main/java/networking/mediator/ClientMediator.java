@@ -61,7 +61,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
             Instruction instruction = InstructionAdapter.toObject(networkRequest.getPayload());
             log.log(Level.FINER, "client instruction contains panel text: {0}", instruction.getPanel().getText());
 
-            clientGame.localInstruction = instruction;
+            clientGame.localGame.setInstruction(instruction);
             log.log(Level.FINER, "client handleInstruction has ended, instruction has been set");
         } else {
             networkServer.requeueRequest(networkRequest);
@@ -128,7 +128,6 @@ public class ClientMediator extends BaseMediator implements IMediator {
                 panels.add(clientGame.getPanels().get(idPanel - 1));
             }
             log.log(Level.FINER, "client panels contains: {0} teams", panels.size());
-            clientGame.localPanels = panels;
             log.log(Level.FINER, "client handlePanels has ended, panels have been set");
         } else {
             networkServer.requeueRequest(networkRequest);

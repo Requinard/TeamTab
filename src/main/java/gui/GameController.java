@@ -106,7 +106,7 @@ public class GameController implements Initializable {
         while (view == null)
             Thread.yield();
 
-        while (view.stageController.clientGame.localPanels.isEmpty())
+        while (view.stageController.clientGame.localGame.panels.isEmpty())
             Thread.yield();
 
         panelChecker();
@@ -123,10 +123,10 @@ public class GameController implements Initializable {
     private void panelChecker() {
         Platform.runLater(() -> {
 
-            if (panelHolder == null || (view.stageController.clientGame.localPanels.size() != panelHolder.size())) {
-                panelHolder = view.stageController.clientGame.localPanels;
+            if (panelHolder == null || (view.stageController.clientGame.localGame.panels.size() != panelHolder.size())) {
+                panelHolder = view.stageController.clientGame.localGame.panels;
                 fillGridWithPanels();
-                log.log(Level.INFO, "Gridview filled with {0} panels", view.stageController.clientGame.localPanels.size());
+                log.log(Level.INFO, "Gridview filled with {0} panels", view.stageController.clientGame.localGame.panels.size());
             }
         });
     }
@@ -157,7 +157,7 @@ public class GameController implements Initializable {
         gridPane.setAlignment(Pos.CENTER);
         log.log(Level.INFO, "gridPane children cleared, minsize set and alignment set");
 
-        final ArrayList<Panel> panels = (ArrayList<Panel>) view.stageController.clientGame.localPanels;
+        final ArrayList<Panel> panels = (ArrayList<Panel>) view.stageController.clientGame.localGame.panels;
 
         int column = 0;
         int row = 0;
@@ -188,12 +188,12 @@ public class GameController implements Initializable {
     private void showPlayerInstruction() {
 
         Platform.runLater(() -> {
-            if (view.stageController.clientGame.LocalPlayer != null)
-                log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.LocalPlayer.getUsername());
-            if (view.stageController.clientGame.LocalPlayer.getActiveInstruction().getIntendedValue() == 0) {
-                instructionLabel.setText("Press the " + view.stageController.clientGame.LocalPlayer.getActiveInstruction().getPanel().getText() + " button");
+            if (view.stageController.clientGame.localGame.player != null)
+                log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localGame.player.getUsername());
+            if (view.stageController.clientGame.localGame.player.getActiveInstruction().getIntendedValue() == 0) {
+                instructionLabel.setText("Press the " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " button");
             } else {
-                instructionLabel.setText("Set " + view.stageController.clientGame.LocalPlayer.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.LocalPlayer.getActiveInstruction().getIntendedValue());
+                instructionLabel.setText("Set " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localGame.player.getActiveInstruction().getIntendedValue());
             }
         });
     }
@@ -204,10 +204,10 @@ public class GameController implements Initializable {
      */
     private void showTeamInstructionCount() {
         Platform.runLater(() -> {
-            if (view.stageController.clientGame.LocalPlayer != null)
-                log.log(Level.FINE, "Retrieving score for player {0}", view.stageController.clientGame.LocalPlayer.getUsername());
+            if (view.stageController.clientGame.localGame.player != null)
+                log.log(Level.FINE, "Retrieving score for player {0}", view.stageController.clientGame.localGame.player.getUsername());
 
-            labelCorrectInstructions.setText(view.stageController.clientGame.LocalTeam.getScore() + "");
+            labelCorrectInstructions.setText(view.stageController.clientGame.localGame.team.getScore() + "");
         });
     }
 
@@ -220,7 +220,7 @@ public class GameController implements Initializable {
             int levensTeam1;
             int levensTeam2;
 
-            if (view.stageController.clientGame.LocalPlayer != null) {
+            if (view.stageController.clientGame.localGame.player != null) {
                 levensTeam1 = view.stageController.clientGame.getTeams().get(0).getLives();
                 levensTeam2 = view.stageController.clientGame.getTeams().get(1).getLives();
 
@@ -293,33 +293,33 @@ public class GameController implements Initializable {
      * @param mouseEvent starts the timer for the game
      */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
-        while (view.stageController.clientGame.LocalTeam == null)
+        while (view.stageController.clientGame.localGame.team == null)
             Thread.yield();
 
         buttonStartTimer.setVisible(false);
 
             timer = new Timer(1000, new ActionListener() {
 
-                int counter = view.stageController.clientGame.LocalTeam.getTime();
+                int counter = view.stageController.clientGame.localGame.team.getTime();
 
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
 
-                    while (view.stageController.clientGame.localPanels.isEmpty())
+                    while (view.stageController.clientGame.localGame.panels.isEmpty())
                         Thread.yield();
 
                     counter--;
                     //check if counter must be reset because a button or slider was used
                     if (correctIn()) {
-                        counter = view.stageController.clientGame.LocalTeam.getTime();
+                        counter = view.stageController.clientGame.localGame.team.getTime();
                     }
                     Platform.runLater(() -> {
                         progressBar.setProgress(counter * 0.1);
                         timeLabel.setText(counter + "");
                     });
                     if (counter == 0) {
-                        view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.LocalPlayer.getActiveInstruction());
-                        counter = view.stageController.clientGame.LocalTeam.getTime();
+                        view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localGame.player.getActiveInstruction());
+                        counter = view.stageController.clientGame.localGame.team.getTime();
                     }
                 }
             });
@@ -352,7 +352,7 @@ public class GameController implements Initializable {
      */
     public void checkInstruction(Panel panel, int sliderValue) {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
-        view.stageController.clientGame.processPanel(view.stageController.clientGame.LocalPlayer, panel);
+        view.stageController.clientGame.processPanel(view.stageController.clientGame.localGame.player, panel);
         panelPushed = true;
         if (view.stageController.clientGame.hasGameEnded()) {
             timerTask.cancel();

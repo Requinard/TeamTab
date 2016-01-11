@@ -9,9 +9,7 @@ import java.util.*;
 
 public class ClientGame implements IGame {
     private final double TICKRATE = 1;
-    public Player LocalPlayer;
-    public Team LocalTeam;
-    public List<Panel> localPanels = new LinkedList<>();
+    public LocalGame localGame = new LocalGame();
     //instruction of this player
     public Instruction localInstruction;
     Thread mediatorThread;
@@ -20,13 +18,12 @@ public class ClientGame implements IGame {
     private List<Team> teams = new LinkedList<>();
     private List<Player> players = new LinkedList<>();
     private List<Panel> panels = new LinkedList<>();
-    private String hostIP = "";
-    private String localIP = "";
+
     private GameStateEnum gameState = GameStateEnum.LobbyView;
 
     public ClientGame(int portnumber) {
-        LocalPlayer = null;
-        localPanels = new ArrayList<>();
+        localGame.setPlayer(null);
+        localGame.setPanels(new ArrayList<>());
         mediator = new ClientMediator(this);
         teams = new ArrayList<>();
         panels = new ArrayList<>();
@@ -64,7 +61,7 @@ public class ClientGame implements IGame {
      * @return the IP of the host
      */
     public String getHostIP() {
-        return hostIP;
+        return localGame.getHostIP();
     }
 
     /**
@@ -74,7 +71,7 @@ public class ClientGame implements IGame {
      * @return IP of the client
      */
     public String getLocalIP() {
-        return localIP;
+        return localGame.getLocalIP();
     }
 
     /**
@@ -84,12 +81,12 @@ public class ClientGame implements IGame {
      * @param localIP IP of the client
      */
     public void setLocalIP(String localIP) {
-        this.localIP = localIP;
+        this.localGame.setLocalIP(localIP);
     }
 
 
     public void setHostIp(String hostIP) {
-        this.hostIP = hostIP;
+        this.localGame.setHostIP(hostIP);
     }
 
     /**
@@ -111,8 +108,8 @@ public class ClientGame implements IGame {
      */
     public synchronized void setPlayers(List<Player> remotePlayers) {
         for (Player remotePlayer : remotePlayers) {
-            if (LocalPlayer != null && LocalPlayer.getUsername().equals(remotePlayer.getUsername())) {
-                LocalPlayer = remotePlayer;
+            if (localGame.getPlayer() != null && localGame.getPlayer().getUsername().equals(remotePlayer.getUsername())) {
+                localGame.setPlayer(remotePlayer);
             }
         }
         players = remotePlayers;
@@ -129,25 +126,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-            if (team != null) {
-                for (String playerName : map.get(teamName)) {
-                    Player player = this.getPlayer(playerName);
-                    if (player != null) {
-                        player.setTeam(team);
-
-                        team.addPlayer(player);
-                        if (LocalPlayer.getIp().equals(player.getIp())) {
-                            LocalTeam = team;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -159,6 +137,25 @@ public class ClientGame implements IGame {
             Team team = this.getTeam(remoteTeam.getName());
             if (team == null) {
                 this.teams.add(remoteTeam);
+            }
+        }
+    }
+
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+            if (team != null) {
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    if (player != null) {
+                        player.setTeam(team);
+
+                        team.addPlayer(player);
+                        if (localGame.getPlayer().getIp().equals(player.getIp())) {
+                            localGame.setTeam(team);
+                        }
+                    }
+                }
             }
         }
     }
@@ -209,7 +206,7 @@ public class ClientGame implements IGame {
     public Player createPlayer(String username, String ip) {
         Player player = new Player(username, ip);
         mediator.createPlayer(player);
-        LocalPlayer = player;
+        localGame.setPlayer(player);
         gameState = GameStateEnum.LobbyView;
         return player;
     }
@@ -287,7 +284,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
-        instruction = LocalPlayer.getActiveInstruction();
+        instruction = localGame.getPlayer().getActiveInstruction();
         if (instruction != null)
             mediator.registerInvalidInstruction(instruction);
     }
@@ -310,7 +307,7 @@ public class ClientGame implements IGame {
     }
 
     public void setLocalPlayer(Player localPlayer) {
-        LocalPlayer = localPlayer;
+        localGame.setPlayer(localPlayer);
     }
 
     /**
@@ -320,8 +317,8 @@ public class ClientGame implements IGame {
      * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
-        LocalPlayer.setPlayerStatus(playerStatus);
-        mediator.setPlayerStatus(LocalPlayer);
+        localGame.getPlayer().setPlayerStatus(playerStatus);
+        mediator.setPlayerStatus(localGame.getPlayer());
     }
 
     public Team getTeam(String teamName) {
