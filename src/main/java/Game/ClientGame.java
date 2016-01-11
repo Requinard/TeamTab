@@ -129,21 +129,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     *
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        for (Team remoteTeam : teams) {
-            Team team = this.getTeam(remoteTeam.getName());
-            if (team == null) {
-                this.teams.add(remoteTeam);
-            }
-        }
-    }
-
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
@@ -159,6 +144,21 @@ public class ClientGame implements IGame {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        for (Team remoteTeam : teams) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
+                this.teams.add(remoteTeam);
             }
         }
     }
@@ -288,7 +288,8 @@ public class ClientGame implements IGame {
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
         instruction = LocalPlayer.getActiveInstruction();
-        mediator.registerInvalidInstruction(instruction);
+        if (instruction != null)
+            mediator.registerInvalidInstruction(instruction);
     }
 
     /**
@@ -308,6 +309,10 @@ public class ClientGame implements IGame {
         }
     }
 
+    public void setLocalPlayer(Player localPlayer) {
+        LocalPlayer = localPlayer;
+    }
+
     /**
      * Author Kaj
      * change the status of the player to show that he is ready to start the game
@@ -315,9 +320,8 @@ public class ClientGame implements IGame {
      * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
-        Player player = new Player(LocalPlayer.getUsername(), LocalPlayer.getIp());
-        player.setPlayerStatus(playerStatus);
-        mediator.setPlayerStatus(player);
+        LocalPlayer.setPlayerStatus(playerStatus);
+        mediator.setPlayerStatus(LocalPlayer);
     }
 
     public Team getTeam(String teamName) {
