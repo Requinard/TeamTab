@@ -11,18 +11,18 @@ public class ClientGame implements IGame {
     private final double TICKRATE = 1;
     public Player LocalPlayer;
     public Team LocalTeam;
-    public List<Panel> localPanels;
+    public List<Panel> localPanels = new LinkedList<>();
     //instruction of this player
     public Instruction localInstruction;
     Thread mediatorThread;
     Timer timer;
     private ClientMediator mediator;
-    private List<Team> teams;
-    private List<Player> players;
-    private List<Panel> panels;
-    private String hostIP;
-    private String localIP;
-    private GameStateEnum gameState;
+    private List<Team> teams = new LinkedList<>();
+    private List<Player> players = new LinkedList<>();
+    private List<Panel> panels = new LinkedList<>();
+    private String hostIP = "";
+    private String localIP = "";
+    private GameStateEnum gameState = GameStateEnum.LobbyView;
 
     public ClientGame(int portnumber) {
         LocalPlayer = null;
@@ -117,6 +117,7 @@ public class ClientGame implements IGame {
         }
         players = remotePlayers;
     }
+
     /**
      * Author Kaj
      * gets all the teams in the game

@@ -2,6 +2,7 @@ package Game;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -12,7 +13,7 @@ public class Player {
     private static final Logger log = Logger.getLogger(Player.class.getName());
     private String username;
     private String ip;
-    private transient List<Panel> panels;
+    private transient List<Panel> panels = new LinkedList<>();
     private transient Team team;
     private Instruction activeInstruction;
 
@@ -21,6 +22,7 @@ public class Player {
     /**
      * Constructor of the player
      * author Frank Hartman
+     *
      * @param username the username of the player
      * @param ip       the ip address of the player
      */
@@ -158,9 +160,11 @@ public class Player {
     /**
      * Author Kamil Wasylkiewicz
      * Check if the player currently has the exact same panel as parameter
+     *
      * @param panel The panel to be set
      */
     public boolean hasPanel(Panel panel) {
+        if (panels == null) panels = new LinkedList<>();
         return panels.contains(panel);
     }
 

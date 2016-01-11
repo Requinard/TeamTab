@@ -2,6 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,10 +12,10 @@ public class Team {
     private static final Logger log = Logger.getLogger(Team.class.getName());
     private final int STARTLIVES = 3;
     private final int STARTTIME = 9;
-    private transient List<Player> players;
-    private transient List<Panel> panels;
+    private transient List<Player> players = new LinkedList<>();
+    private transient List<Panel> panels = new LinkedList<>();
     private String name;
-    private transient List<Instruction> activeInstructions;
+    private transient List<Instruction> activeInstructions = new LinkedList<>();
     private int lives = STARTLIVES;
     private int time = STARTTIME;
     private int score;
@@ -25,9 +26,6 @@ public class Team {
     public Team(String name) {
         this.name = name;
         this.score = 0;
-        players = new ArrayList<Player>();
-        panels = new ArrayList<Panel>();
-        activeInstructions = new ArrayList<Instruction>();
     }
 
     /**
@@ -44,9 +42,6 @@ public class Team {
         this.lives = startLives;
         this.time = starTime;
         this.score = score;
-        players = new ArrayList<Player>();
-        panels = new ArrayList<Panel>();
-        activeInstructions = new ArrayList<Instruction>();
     }
 
 
@@ -187,6 +182,7 @@ public class Team {
 
     /**
      * Give the player a new instruction and remove his old instruction from the active instruction
+     *
      * @param player The player that will get a new instruction
      * @return true if the player has the new instruction
      */
@@ -274,6 +270,7 @@ public class Team {
      * Checks if the panel belongs to a active instruction
      * if so, score + 1, remove the instruction from the active list and return true
      * Author Kaj
+     *
      * @param panel the pressed panel
      * @return true if the pressed panel was a active instruction
      */

@@ -8,15 +8,19 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by frank on 23/11/2015.
  */
 public class ClientGameTest {
     private ClientGame clientGame;
+    private HostGame hostGame;
 
     @Before
     public void setUp() throws Exception {
         clientGame = new ClientGame();
+        hostGame = new HostGame();
     }
 
     @Test
@@ -77,7 +81,11 @@ public class ClientGameTest {
 
     @Test
     public void testCreatePlayer() throws Exception {
+        clientGame.createTeam("test team");
+        clientGame.createPlayer("test", "test");
 
+        Thread.sleep(1000);
+        assertTrue(clientGame.getPlayers().size() > 0);
     }
 
     @Test(expected = AssertionFailedError.class)
