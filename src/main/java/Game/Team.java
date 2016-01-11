@@ -52,6 +52,7 @@ public class Team {
      * @return List containing all players of the team
      */
     public List<Player> getPlayers() {
+        if (players == null) players = new ArrayList<>();
         return this.players;
     }
 
@@ -149,14 +150,17 @@ public class Team {
      * @param player
      */
     public Player removePlayer(Player player) {
-        if (players.contains(player)) {
-            players.remove(player);
-            log.log(Level.INFO, "Player is removed from the team");
-        } else {
-            player = null;
-            log.log(Level.INFO, "Player is not removed from the team");
+        for (Player teamPlayers : players) {
+            if (teamPlayers.getIp().equals(player.getIp())) {
+                players.remove(player);
+                log.log(Level.INFO, "Player " + teamPlayers.getUsername() + " is removed from the team");
+            } else {
+                player = null;
+                log.log(Level.INFO, "Player is not removed from the team");
+            }
+            return player;
         }
-        return player;
+        return null;
     }
 
     /**

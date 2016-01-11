@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="1024.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8">
     <children>
         <ImageView>
             <image>
@@ -50,5 +48,7 @@
         <Button fx:id="buttonBack" ellipsisString="..." layoutX="36.0" layoutY="15.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="306.0" style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true" />
         <Button fx:id="buttonChat" layoutX="1077.0" layoutY="89.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="137.0" text="Chat" />
         <Label fx:id="ipLabel" layoutX="1073.0" layoutY="42.0" text="-" textAlignment="RIGHT" textFill="WHITE" />
+        <Button fx:id="buttonSwapTeam" layoutX="1079.0" layoutY="857.0" mnemonicParsing="false" prefHeight="39.0"
+                prefWidth="131.0" text="Swap Team"/>
     </children>
 </AnchorPane>

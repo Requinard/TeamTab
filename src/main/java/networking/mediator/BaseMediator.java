@@ -40,11 +40,16 @@ public abstract class BaseMediator implements IMediator {
     }
 
     public void listen() {
-        while (!Thread.currentThread().isInterrupted()) {
+        while (true) {
             NetworkRequest networkRequest = networkServer.consumeRequest();
             if (networkRequest != null) {
                 System.out.println(networkRequest);
                 handle(networkRequest);
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             Thread.yield();

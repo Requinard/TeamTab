@@ -77,7 +77,7 @@ public class Janitor {
      * will interrupt all threads and threadpools
      */
     public void clean() {
-        threads.stream().forEach((Thread t) -> t.interrupt());
+        threads.stream().forEach((Thread t) -> t.stop());
         pools.stream().forEach((ExecutorService e) -> e.shutdown());
         timers.stream().forEach((Timer t) -> t.cancel());
     }

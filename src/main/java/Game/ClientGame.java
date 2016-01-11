@@ -143,16 +143,16 @@ public class ClientGame implements IGame {
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
+
+
             if (team != null) {
+                team.getPlayers().clear();
                 for (String playerName : map.get(teamName)) {
                     Player player = this.getPlayer(playerName);
-                    if (player != null) {
-                        player.setTeam(team);
-
+                    if (player != null)
                         team.addPlayer(player);
-                        if (localGame.getPlayer().getIp().equals(player.getIp())) {
-                            localGame.setTeam(team);
-                        }
+                    if (localGame.getPlayer().getIp().equals(player.getIp())) {
+                        localGame.setTeam(team);
                     }
                 }
             }

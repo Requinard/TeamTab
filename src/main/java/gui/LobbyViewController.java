@@ -2,6 +2,7 @@ package gui;
 
 import Game.GameStateEnum;
 import Game.Player;
+import Game.Team;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,6 +43,8 @@ public class LobbyViewController implements Initializable {
     private Button buttonChat;
     @FXML
     private Label ipLabel;
+    @FXML
+    private Button buttonSwapTeam;
     private LobbyView view;
     private Runnable runnable;
     private java.util.Timer timerRefresh;
@@ -61,7 +64,7 @@ public class LobbyViewController implements Initializable {
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
         buttonChat.setOnMouseClicked(this::buttonChatOnClick);
-
+        buttonSwapTeam.setOnMouseClicked(this::buttonSwapTeamClick);
 
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
@@ -96,8 +99,8 @@ public class LobbyViewController implements Initializable {
                     team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
                     if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
                         playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
-                    }
-                    if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
+                    } else if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
+
                         playersTeam2Names.setText(currentPlayer.getUsername() + "\n");
                     }
                 }
@@ -192,5 +195,42 @@ public class LobbyViewController implements Initializable {
         runnable = () -> Platform.runLater(() -> {
         });
         runnable.run();
+    }
+
+    /**
+     * When this button is clicked the player will be moved to a different team
+     * This methods works only with two teams
+     * Author Kamil Wasylkiewicz
+     *
+     * @param mouseEvent
+     */
+    private void buttonSwapTeamClick(MouseEvent mouseEvent) {
+        log.log(Level.INFO, "Lobbyview: Player will be swapped to another team");
+        Player currentPlayer = view.stageController.clientGame.getPlayer(view.stageController.clientGame.localGame.getPlayer().getUsername());
+        Team playersTeam = null;
+        Team oppositeTeam = null;
+
+        // get the playersTeam
+        for (Team team : view.stageController.hostGame.getTeams()) {
+            for (Player player : team.getPlayers()) {
+                if (player.getIp().equals(currentPlayer.getIp())) {
+                    playersTeam = team;
+                    break;
+                }
+            }
+        }
+
+        // get the opposite team
+        for (Team team : view.stageController.hostGame.getTeams()) {
+            if (!team.equals(playersTeam)) {
+                oppositeTeam = team;
+                if (oppositeTeam != null) {
+                    view.stageController.clientGame.assignTeam(currentPlayer, oppositeTeam);
+                    playersTeam1Name.clear();
+                    playersTeam2Names.clear();
+                    break;
+                }
+            }
+        }
     }
 }

@@ -53,7 +53,7 @@ public class NetworkServer {
      */
     private void listen() {
         try {
-            while (!Thread.currentThread().isInterrupted()) {
+            while (true) {
                 // Accept incoming connections
                 Socket clientSocket = this.socket.accept();
 
@@ -72,14 +72,10 @@ public class NetworkServer {
                         }
                     }
                 }
-
-                Thread.yield();
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IO Exception on port", e);
         }
-
-        stopListeners();
     }
 
     /**
@@ -219,11 +215,9 @@ public class NetworkServer {
     public NetworkRequest requeueRequest(NetworkRequest request) {
         NetworkMessage networkMessage = request.getNetworkMessage();
 
-        if (!networkMessage.isPriority()) {
-            networkMessage.setHighPriority();
+        networkMessage.setHighPriority();
 
-            messageQueue.add(networkMessage);
-        }
+        messageQueue.add(networkMessage);
 
         while (messageQueue.size() > 100) {
             messageQueue.poll();

@@ -116,12 +116,13 @@ public class HostGame implements IGame {
     @Override
     public synchronized void assignTeam(Player player, Team team) {
         log.log(Level.INFO, "assigning player: {0} to team started", player.getUsername());
-        for (Team currentTeam : teams) {
-            if (currentTeam.getPlayers().contains(player)) {
-                currentTeam.removePlayer(player);
+        for (Team gameTeam : teams) {
+            if (gameTeam.getName().equals(team.getName())) {
+                team.addPlayer(player);
+            } else {
+                gameTeam.removePlayer(player);
             }
         }
-        team.addPlayer(player);
         log.log(Level.INFO, "assign player to team ended, Player assigned to team: {0}", team.getName());
     }
 
