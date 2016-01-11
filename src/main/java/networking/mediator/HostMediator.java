@@ -97,7 +97,6 @@ public class HostMediator extends BaseMediator implements IMediator {
             networkServer.requeueRequest(networkRequest);
             log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
-        //handleAll();
     }
 
     @Override
@@ -125,7 +124,6 @@ public class HostMediator extends BaseMediator implements IMediator {
             networkServer.requeueRequest(networkRequest);
             log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
-        //handleAll();
     }
 
     @Override
@@ -180,7 +178,6 @@ public class HostMediator extends BaseMediator implements IMediator {
             networkServer.requeueRequest(networkRequest);
             log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
-        //handleAll();
     }
 
     /**
@@ -195,11 +192,15 @@ public class HostMediator extends BaseMediator implements IMediator {
         log.log(Level.FINER, "handlePanels is called");
         if (networkRequest.getType() == RequestType.GET) {
             log.log(Level.FINER, "RequestType is GET");
+
             // Retrieve panels
-            List<Panel> panels = hostGame.getPanels();
+            List<Panel> panels = hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()).getPanels();
+            ArrayList<Integer> idPanels = new ArrayList<>();
+            for (Panel panel : panels) {
+                idPanels.add(panel.getId());
+            }
+            String json = new Gson().toJson(idPanels).toString();
             log.log(Level.FINER, "hostGame panels has {} panels", panels.size());
-            // JSONify panels
-            String json = PanelAdapter.toString(panels);
 
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
 
@@ -221,7 +222,6 @@ public class HostMediator extends BaseMediator implements IMediator {
             networkServer.requeueRequest(networkRequest);
             log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");
         }
-        //handleAll();
     }
 
     @Override
@@ -231,7 +231,6 @@ public class HostMediator extends BaseMediator implements IMediator {
         } else {
             networkServer.requeueRequest(networkRequest);
         }
-        //handleAll();
     }
 
     public void handleTeamsCreate(NetworkRequest networkRequest) {
@@ -240,7 +239,6 @@ public class HostMediator extends BaseMediator implements IMediator {
         log.log(Level.INFO, "team `{0}` is made from networkRequestPayload", team.getName());
         hostGame.createTeam(team.getName());
         log.log(Level.INFO, "Team `{0}` added to the hostGame", team.getName());
-        //handleAll();
     }
 
     public void handleTeamsAssign(NetworkRequest networkRequest) {
@@ -248,11 +246,10 @@ public class HostMediator extends BaseMediator implements IMediator {
         Team teamRequest = TeamAdapter.toObject(networkRequest.getPayload());
         log.log(Level.INFO, "team `{0}` is made from networkRequestPayload", teamRequest.getName());
         for (Team team : hostGame.getTeams()) {
-            if (team.getName() == teamRequest.getName()) {
+            if (team.getName().equals(teamRequest.getName())) {
                 hostGame.assignTeam(hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()), team);
                 log.log(Level.INFO, "Team `{0}` assigned to hostGame", team.getName());
             }
         }
-        //handleAll();
     }
 }
