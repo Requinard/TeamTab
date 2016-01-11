@@ -293,6 +293,9 @@ public class GameController implements Initializable {
      * @param mouseEvent starts the timer for the game
      */
     private void buttonStartTimerOnClick(MouseEvent mouseEvent) {
+        while (view.stageController.clientGame.LocalTeam == null)
+            Thread.yield();
+
         buttonStartTimer.setVisible(false);
 
             timer = new Timer(1000, new ActionListener() {

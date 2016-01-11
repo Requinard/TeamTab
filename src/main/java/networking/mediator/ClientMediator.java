@@ -70,6 +70,19 @@ public class ClientMediator extends BaseMediator implements IMediator {
     }
 
     @Override
+    public void handleInstructions(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.SEND) {
+            log.log(Level.FINER, "client handleInstructions has started, networkRequest type is SEND");
+            List<Instruction> instructions = InstructionAdapter.toObjects(networkRequest.getPayload());
+
+            clientGame.fillScoreView(instructions);
+            log.log(Level.FINER, "client handleInstruction has ended, instruction has been set");
+        } else {
+            networkServer.requeueRequest(networkRequest);
+        }
+    }
+
+    @Override
     public void handleTeamPlayers(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.SEND) {
             log.log(Level.FINER, "client handleTeamPlayers has started, networkRequest type is SEND");
@@ -231,16 +244,6 @@ public class ClientMediator extends BaseMediator implements IMediator {
      */
     public void getPanels() {
         NetworkRequest request = new NetworkRequest(RequestType.GET, "/panels/", "");
-
-        networkServer.sendRequest(request, clientGame.getHostIP());
-    }
-
-    /**
-     * Gets the newest instruction
-     * Author: Kaj
-     */
-    public void getInstruction() {
-        NetworkRequest request = new NetworkRequest(RequestType.GET, "/instruction/", "");
 
         networkServer.sendRequest(request, clientGame.getHostIP());
     }

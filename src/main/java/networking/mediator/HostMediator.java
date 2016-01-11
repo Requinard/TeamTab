@@ -127,6 +127,25 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     @Override
+    public void handleInstructions(NetworkRequest networkRequest) {
+        if (networkRequest.getType() == RequestType.GET) {
+            log.log(Level.FINER, "networkRequset type is GET");
+            String ip = networkRequest.getNetworkMessage().getSender();
+            List<Instruction> Instructions = hostGame.getInstructions();
+            log.log(Level.FINER, "latest instruction of the player is:{0}", Instructions.toString());
+            //JSonify instruction
+            String json = InstructionAdapter.toString(Instructions);
+            log.log(Level.FINER, "instruction got jsonified");
+            NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
+
+            networkServer.send(response.toString(), ip);
+            log.log(Level.FINER, "networkRequest has been send");
+        } else {
+            networkServer.requeueRequest(networkRequest);
+        }
+    }
+
+    @Override
     public void handleTeamPlayers(NetworkRequest networkRequest) {
         log.log(Level.FINER, "handleTeamPlayers is called");
         if (networkRequest.getType() == RequestType.GET) {

@@ -85,7 +85,7 @@ public class LobbyViewController implements Initializable {
     private void initiateLobby() {
 
         Platform.runLater(() -> {
-            log.log(Level.FINE, "Lobby is being initialized");
+
 
             for (Player currentPlayer : view.stageController.hostGame.getPlayers()) {
 
@@ -116,6 +116,7 @@ public class LobbyViewController implements Initializable {
                     timerRefresh.purge();
                 }
             }
+            log.log(Level.FINE, "Lobby is being initialized");
 
         });
     }
