@@ -1,10 +1,12 @@
 package networking.server;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.Queue;
+import java.util.UnknownFormatConversionException;
 
 /**
  * Created by David on 11/16/2015.
@@ -48,12 +50,13 @@ public class NetworkServerTest extends TestCase {
         assertNotNull(message1);
     }
 
+    @Test(expected = UnknownFormatConversionException.class)
     public void testConsumeMessage() throws Exception {
         // Test for no messages in queue
         assertNull("Object appeared in queue", networkServer.consumeMessage());
 
         // Test for message in queue
-        NetworkMessage message = new NetworkMessage("Testing consumption", "sender", "receiver");
+        NetworkMessage message = new NetworkMessage("GET /test/", "sender", "receiver");
         networkServer.getMessageQueue().add(message);
 
         NetworkMessage consumedMessage = networkServer.consumeMessage();

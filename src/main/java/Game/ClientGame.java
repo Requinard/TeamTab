@@ -111,7 +111,7 @@ public class ClientGame implements IGame {
      */
     public synchronized void setPlayers(List<Player> remotePlayers) {
         for (Player remotePlayer : remotePlayers) {
-            if (LocalPlayer.getIp().equals(remotePlayer.getIp())) {
+            if (LocalPlayer != null && LocalPlayer.getIp().equals(remotePlayer.getIp())) {
                 LocalPlayer = remotePlayer;
             }
         }
@@ -126,6 +126,21 @@ public class ClientGame implements IGame {
     @Override
     public synchronized List<Team> getTeams() {
         return this.teams;
+    }
+
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        for (Team remoteTeam : teams) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
+                this.teams.add(remoteTeam);
+            }
+        }
     }
 
     public void setTeams(HashMap<String, List<String>> map) {
@@ -143,21 +158,6 @@ public class ClientGame implements IGame {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     *
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        for (Team remoteTeam : teams) {
-            Team team = this.getTeam(remoteTeam.getName());
-            if (team == null) {
-                this.teams.add(remoteTeam);
             }
         }
     }
