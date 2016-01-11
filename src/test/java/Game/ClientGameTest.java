@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by frank on 23/11/2015.
  */
@@ -141,5 +144,84 @@ public class ClientGameTest {
     public void testChangePlayerStatus() throws Exception {
         clientGame.setLocalPlayer(new Player("test", "test"));
         clientGame.changePlayerStatus(true);
+    }
+
+    @Test
+    public void testSetGameState() throws Exception {
+        clientGame.setGameState(GameStateEnum.GameView);
+    }
+
+    @Test
+    public void testScheduleRefresh() throws Exception {
+        clientGame.scheduleRefresh();
+    }
+
+    @Test
+    public void testGetLocalIP() throws Exception {
+        testSetLocalIP();
+        clientGame.getLocalIP();
+    }
+
+    @Test
+    public void testSetLocalIP() throws Exception {
+        clientGame.setLocalIP("127.0.0.1");
+    }
+
+    @Test
+    public void testSetHostIp() throws Exception {
+        clientGame.setHostIp("127.0.0.2");
+    }
+
+    @Test
+    public void testSetPanels() throws Exception {
+        clientGame.setPanels(new LinkedList<>());
+
+        assertTrue(clientGame.getPanels().size() == 0);
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        clientGame.setGameState(GameStateEnum.LobbyView);
+        clientGame.update();
+        clientGame.setGameState(GameStateEnum.GameView);
+        clientGame.update();
+        clientGame.setGameState(GameStateEnum.ScoreView);
+        clientGame.update();
+    }
+
+    @Test
+    public void testSetLocalPlayer() throws Exception {
+        clientGame.setLocalPlayer(new Player("p", "1"));
+    }
+
+    @Test
+    public void testGetTeam() throws Exception {
+        List<Team> teams = new LinkedList<>();
+        teams.add(new Team("test"));
+        clientGame.setTeams(teams);
+        Team t = clientGame.getTeam("test");
+
+        assertNotNull(t);
+    }
+
+    @Test
+    public void testGetPlayer() throws Exception {
+        List<Player> players = new LinkedList<>();
+        players.add(new Player("p", "1"));
+        clientGame.setPlayers(players);
+        Player p = clientGame.getPlayer("p");
+
+        assertNotNull(p);
+    }
+
+    @Test
+    public void testStopSchedule() throws Exception {
+        clientGame.scheduleRefresh();
+        clientGame.stopSchedule();
+    }
+
+    @Test
+    public void testFillScoreView() throws Exception {
+        clientGame.fillScoreView(new LinkedList<>());
     }
 }
