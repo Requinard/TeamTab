@@ -64,11 +64,6 @@ public class LobbyViewController implements Initializable {
 
 
         timerRefresh = new java.util.Timer();
-        try {
-            Thread.sleep(10);
-        } catch (Exception e) {
-
-        }
         timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -86,14 +81,15 @@ public class LobbyViewController implements Initializable {
 
         Platform.runLater(() -> {
 
+            while (view.stageController.clientGame.getPlayers().isEmpty() || view.stageController.clientGame.LocalTeam == null)
+                Thread.yield();
 
-            for (Player currentPlayer : view.stageController.hostGame.getPlayers()) {
+            for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
 
                 if (view.stageController.clientGame.getTeams().size() > 1) {
-                    team1Name.setText(view.stageController.hostGame.getTeams().get(0).getName());
-                    team2Name.setText(view.stageController.hostGame.getTeams().get(1).getName());
+                    team1Name.setText(view.stageController.clientGame.getTeams().get(0).getName());
+                    team2Name.setText(view.stageController.clientGame.getTeams().get(1).getName());
                     if (currentPlayer.getTeam().getName().equals(team1Name.getText())) {
-
                         playersTeam1Name.setText(currentPlayer.getUsername() + "\n");
                     }
                     if (currentPlayer.getTeam().getName().equals(team2Name.getText())) {
