@@ -5,7 +5,6 @@ import Game.HostGame;
 import Game.Player;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import networking.RMI.ChatAppDefusalSquad;
 import org.jetbrains.annotations.NotNull;
 import tracker.JanitorSingleton;
 
@@ -20,7 +19,6 @@ public class StageController {
 
     static String playerName;
     static Player currentPlayer;
-    static ChatAppDefusalSquad chatAppDefusalSquad;
     Stage stage;
     IView currentView;
     Thread gameThread;
@@ -37,7 +35,6 @@ public class StageController {
         stage = primaryStage;
         currentView = new MainView(this);
         currentView.load();
-        chatAppDefusalSquad = new ChatAppDefusalSquad();
         timerRefresh = new java.util.Timer();
         timerTask = new TimerTask() {
             @Override

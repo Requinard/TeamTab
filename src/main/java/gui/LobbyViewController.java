@@ -40,8 +40,6 @@ public class LobbyViewController implements Initializable {
     @FXML
     private Button buttonHaalTeamsOp;
     @FXML
-    private Button buttonChat;
-    @FXML
     private Label ipLabel;
     @FXML
     private Button buttonSwapTeam;
@@ -63,7 +61,6 @@ public class LobbyViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonBack.setOnMouseClicked(this::buttonBackOnClick);
         buttonReady.setOnMouseClicked(this::buttonReadyOnClick);
-        buttonChat.setOnMouseClicked(this::buttonChatOnClick);
         buttonSwapTeam.setOnMouseClicked(this::buttonSwapTeamClick);
 
         timerRefresh = new java.util.Timer();
@@ -184,18 +181,6 @@ public class LobbyViewController implements Initializable {
         runnable.run();
     }
 
-    /**
-     * when the buttons is clicked it will start the chatApp GUI
-     * Author Kamil Wasylkiewicz
-     *
-     * @param mouseEvent
-     */
-    private void buttonChatOnClick(MouseEvent mouseEvent) {
-        log.log(Level.INFO, "Lobbyview: Chat app GUI is starting");
-        runnable = () -> Platform.runLater(() -> {
-        });
-        runnable.run();
-    }
 
     /**
      * When this button is clicked the player will be moved to a different team
