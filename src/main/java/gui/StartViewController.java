@@ -70,13 +70,7 @@ public class StartViewController implements Initializable {
         view.stageController.setHostGame(hostGame);
         view.stageController.setClientGame(clientGame);
         InetAddress localhost = null;
-        try {
-            localhost = InetAddress.getLocalHost();
-            ipAddress = localhost.getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        view.stageController.clientGame.setHostIp(ipAddress.substring(1));
+
     }
 
     /**

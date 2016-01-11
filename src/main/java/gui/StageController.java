@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import networking.RMI.ChatAppDefusalSquad;
 import org.jetbrains.annotations.NotNull;
+import tracker.JanitorSingleton;
 
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
@@ -48,6 +49,8 @@ public class StageController {
                 }
             }
         };
+
+        JanitorSingleton.getInstance().trackTimer(timerRefresh);
         timerRefresh.schedule(timerTask, 0, 20000);
     }
 

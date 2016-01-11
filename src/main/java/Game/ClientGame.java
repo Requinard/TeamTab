@@ -9,8 +9,8 @@ import java.util.*;
 
 public class ClientGame implements IGame {
     private final double TICKRATE = 1;
-    public Player localPlayer;
-    public Team localTeam;
+    public Player LocalPlayer;
+    public Team LocalTeam;
     public List<Panel> localPanels;
     //instruction of this player
     public Instruction localInstruction;
@@ -25,7 +25,7 @@ public class ClientGame implements IGame {
     private GameStateEnum gameState;
 
     public ClientGame(int portnumber) {
-        localPlayer = null;
+        LocalPlayer = null;
         localPanels = new ArrayList<>();
         mediator = new ClientMediator(this);
         teams = new ArrayList<>();
@@ -111,8 +111,8 @@ public class ClientGame implements IGame {
      */
     public synchronized void setPlayers(List<Player> remotePlayers) {
         for (Player remotePlayer : remotePlayers) {
-            if (localPlayer.getIp().equals(remotePlayer.getIp())) {
-                localPlayer = remotePlayer;
+            if (LocalPlayer.getIp().equals(remotePlayer.getIp())) {
+                LocalPlayer = remotePlayer;
             }
         }
         players = remotePlayers;
@@ -128,6 +128,25 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+            if (team != null) {
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    if (player != null) {
+                        player.setTeam(team);
+
+                        team.addPlayer(player);
+                        if (LocalPlayer.getIp().equals(player.getIp())) {
+                            LocalTeam = team;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -139,25 +158,6 @@ public class ClientGame implements IGame {
             Team team = this.getTeam(remoteTeam.getName());
             if (team == null) {
                 this.teams.add(remoteTeam);
-            }
-        }
-    }
-
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-            if (team != null) {
-                for (String playerName : map.get(teamName)) {
-                    Player player = this.getPlayer(playerName);
-                    if (player != null) {
-                        player.setTeam(team);
-
-                        team.addPlayer(player);
-                        if (localPlayer.getIp().equals(player.getIp())) {
-                            localTeam = team;
-                        }
-                    }
-                }
             }
         }
     }
@@ -208,7 +208,7 @@ public class ClientGame implements IGame {
     public Player createPlayer(String username, String ip) {
         Player player = new Player(username, ip);
         mediator.createPlayer(player);
-        localPlayer = player;
+        LocalPlayer = player;
         gameState = GameStateEnum.LobbyView;
         return player;
     }
@@ -286,7 +286,7 @@ public class ClientGame implements IGame {
      */
     @Override
     public void registerInvalidInstruction(Instruction instruction) {
-        instruction = localPlayer.getActiveInstruction();
+        instruction = LocalPlayer.getActiveInstruction();
         mediator.registerInvalidInstruction(instruction);
     }
 
@@ -314,7 +314,7 @@ public class ClientGame implements IGame {
      * @param playerStatus true if the player is ready to start the game
      */
     public void changePlayerStatus(boolean playerStatus) {
-        Player player = new Player(localPlayer.getUsername(), localPlayer.getIp());
+        Player player = new Player(LocalPlayer.getUsername(), LocalPlayer.getIp());
         player.setPlayerStatus(playerStatus);
         mediator.setPlayerStatus(player);
     }
