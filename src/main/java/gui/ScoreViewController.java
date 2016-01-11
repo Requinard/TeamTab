@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javassist.bytecode.stackmap.TypeData;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -46,14 +47,16 @@ public class ScoreViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonBackLobby.setOnMouseClicked(this::buttonBackLobbyOnClick);
 
-        timerRefresh = new java.util.Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                fillScoreBoard();
-            }
-        };
-        timerRefresh.schedule(timerTask, 500);
+        fillScoreBoard();
+
+        //timerRefresh = new java.util.Timer();
+        //timerTask = new TimerTask() {
+        //@Override
+        //public void run() {
+        //fillScoreBoard();
+        //}
+        //};
+        //timerRefresh.schedule(timerTask, 500);
     }
 
     /**
@@ -61,17 +64,17 @@ public class ScoreViewController implements Initializable {
      * Prints the score of the players in TextArea
      */
     private void fillScoreBoard(){
-        System.out.println("OK");
-        System.out.println(StageController.playerName);
+        while (view.stageController.clientGame.localGame.getScoreBoard().isEmpty())
+            Thread.yield();
 
 
-        //final List<String> scoreBoard = view.stageController.clientGame.team.getScore();
+        final List<String> scoreBoard = view.stageController.clientGame.localGame.getScoreBoard();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //for (String score : scoreBoard) {
-                scoreArea.appendText(view.stageController.clientGame.localGame.team.getScore() + "");
-                //}
+                for (String score : scoreBoard) {
+                    scoreArea.appendText(score);
+                }
             }
         });
 

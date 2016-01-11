@@ -11,7 +11,7 @@ public interface IMediator {
     void handlePlayers(NetworkRequest networkRequest);
     void handleInstruction(NetworkRequest networkRequest);
 
-    void handleInstructions(NetworkRequest networkRequest);
+    void handleScoreBoard(NetworkRequest networkRequest);
     void handleTeamPlayers(NetworkRequest networkRequest);
     void handleTeams(NetworkRequest networkRequest);
     void handlePanels(NetworkRequest networkRequest);

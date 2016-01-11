@@ -78,11 +78,13 @@ public class LobbyViewController implements Initializable {
      * With a the list of all players in the team
      */
     private void initiateLobby() {
+        while (view == null)
+            Thread.yield();
+
+        while (view.stageController.clientGame.getPlayers().isEmpty() || view.stageController.clientGame.localGame.getTeam() == null)
+            Thread.yield();
 
         Platform.runLater(() -> {
-
-            while (view.stageController.clientGame.getPlayers().isEmpty() || view.stageController.clientGame.LocalTeam == null)
-                Thread.yield();
 
             for (Player currentPlayer : view.stageController.clientGame.getPlayers()) {
 

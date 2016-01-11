@@ -220,8 +220,4 @@ public class ClientGameTest {
         clientGame.stopSchedule();
     }
 
-    @Test
-    public void testFillScoreView() throws Exception {
-        clientGame.fillScoreView(new LinkedList<>());
-    }
 }

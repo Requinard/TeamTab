@@ -13,14 +13,14 @@ public class LocalGame {
     private String hostIP = "";
     private String localIP = "";
     private Instruction instruction;
-    private List<Instruction> instructions;
+    private List<String> scoreBoard = new LinkedList<>();
 
-    public List<Instruction> getInstructions() {
-        return instructions;
+    public List<String> getScoreBoard() {
+        return scoreBoard;
     }
 
-    public void setInstructions(List<Instruction> instructions) {
-        this.instructions = instructions;
+    public void setScoreBoard(List<String> scoreBoard) {
+        this.scoreBoard = scoreBoard;
     }
 
     public Instruction getInstruction() {

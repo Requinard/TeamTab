@@ -127,14 +127,14 @@ public class HostMediator extends BaseMediator implements IMediator {
     }
 
     @Override
-    public void handleInstructions(NetworkRequest networkRequest) {
+    public void handleScoreBoard(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.GET) {
             log.log(Level.FINER, "networkRequset type is GET");
             String ip = networkRequest.getNetworkMessage().getSender();
-            List<Instruction> Instructions = hostGame.getInstructions();
-            log.log(Level.FINER, "latest instruction of the player is:{0}", Instructions.toString());
+            List<String> scoreboard = hostGame.getScoreboard();
+            log.log(Level.FINER, "latest instruction of the player is:{0}", scoreboard.toString());
             //JSonify instruction
-            String json = InstructionAdapter.toString(Instructions);
+            String json = new Gson().toJson(scoreboard).toString();
             log.log(Level.FINER, "instruction got jsonified");
             NetworkRequest response = new NetworkRequest(RequestType.SEND, networkRequest.getUrl(), json);
 

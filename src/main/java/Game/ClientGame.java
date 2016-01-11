@@ -11,7 +11,6 @@ public class ClientGame implements IGame {
     private final double TICKRATE = 1;
     public LocalGame localGame = new LocalGame();
     //instruction of this player
-    public Instruction localInstruction;
     Thread mediatorThread;
     Timer timer;
     private ClientMediator mediator;
@@ -338,10 +337,6 @@ public class ClientGame implements IGame {
     public void stopSchedule() {
         timer.cancel();
         timer.purge();
-    }
-
-    public void fillScoreView(List<Instruction> instructions) {
-
     }
 
     private boolean loadPanelsFromFile() {
