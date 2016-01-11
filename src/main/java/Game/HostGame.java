@@ -42,6 +42,11 @@ public class HostGame implements IGame {
         return this.players;
     }
 
+
+    public List<Instruction> getInstructions() {
+        return instructions;
+    }
+
     public List<Team> getTeams() {
         return this.teams;
     }
