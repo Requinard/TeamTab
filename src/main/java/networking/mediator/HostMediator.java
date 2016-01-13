@@ -83,9 +83,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
             log.log(Level.FINER, "networkRequest is sent to {0}", networkRequest.getNetworkMessage().getSender());
 
-        }
-
-        if (networkRequest.getType() == RequestType.POST) {
+        } else if (networkRequest.getType() == RequestType.POST) {
             log.log(Level.FINER, "networkRequest type is POST");
             // Makes a player object from the inputstream
             Player player = PlayerAdapter.toObject(networkRequest.getPayload());

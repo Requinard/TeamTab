@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.*;
 
 public class ClientGame implements IGame {
-    private final double TICKRATE = 1;
+    private final double TICKRATE = 4;
     public LocalGame localGame = new LocalGame();
     //instruction of this player
     Thread mediatorThread;
@@ -46,11 +46,13 @@ public class ClientGame implements IGame {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+
                 update();
             }
         };
 
         timer.schedule(task, 0, Math.round((1.0 / TICKRATE) * 1000));
+
     }
 
     /**
@@ -125,21 +127,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     *
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        for (Team remoteTeam : teams) {
-            Team team = this.getTeam(remoteTeam.getName());
-            if (team == null) {
-                this.teams.add(remoteTeam);
-            }
-        }
-    }
-
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
@@ -155,6 +142,21 @@ public class ClientGame implements IGame {
                         localGame.setTeam(team);
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        for (Team remoteTeam : teams) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
+                this.teams.add(remoteTeam);
             }
         }
     }
