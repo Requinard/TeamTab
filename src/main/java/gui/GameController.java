@@ -97,7 +97,7 @@ public class GameController implements Initializable {
                 refreshView();
             }
         };
-        timerRefresh.schedule(timerTask, 0, 30);
+        timerRefresh.schedule(timerTask, 0, 500);
     }
 
     /**
@@ -110,6 +110,10 @@ public class GameController implements Initializable {
 
         while (view.stageController.clientGame.localGame.panels.isEmpty())
             Thread.yield();
+
+        while (view.stageController.clientGame.localGame.getInstruction() == null) {
+            Thread.yield();
+        }
 
         panelChecker();
         checkForNewPanels();
@@ -217,7 +221,7 @@ public class GameController implements Initializable {
         Platform.runLater(() -> {
             if (view.stageController.clientGame.localGame.player != null)
                 log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localGame.player.getUsername());
-            if (view.stageController.clientGame.localGame.player.getActiveInstruction().getIntendedValue() == 0) {
+            if (view.stageController.clientGame.localGame.getInstruction().getIntendedValue() == 0) {
                 instructionLabel.setText("Press the " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " button");
             } else {
                 instructionLabel.setText("Set " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localGame.player.getActiveInstruction().getIntendedValue());

@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.util.*;
 
 public class ClientGame implements IGame {
-    private final double TICKRATE = 4;
     public LocalGame localGame = new LocalGame();
     //instruction of this player
     Thread mediatorThread;
@@ -46,13 +45,11 @@ public class ClientGame implements IGame {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
                 update();
             }
         };
 
-        timer.schedule(task, 0, Math.round((1.0 / TICKRATE) * 1000));
-
+        timer.schedule(task, 0, 500);
     }
 
     /**
@@ -127,25 +124,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-
-
-            if (team != null) {
-                team.getPlayers().clear();
-                for (String playerName : map.get(teamName)) {
-                    Player player = this.getPlayer(playerName);
-                    if (player != null)
-                        team.addPlayer(player);
-                    if (localGame.getPlayer().getIp().equals(player.getIp())) {
-                        localGame.setTeam(team);
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -157,6 +135,27 @@ public class ClientGame implements IGame {
             Team team = this.getTeam(remoteTeam.getName());
             if (team == null) {
                 this.teams.add(remoteTeam);
+            }
+        }
+    }
+
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+
+
+            if (team != null) {
+                team.getPlayers().clear();
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    if (player != null)
+                        team.addPlayer(player);
+                    if (localGame.getPlayer() != null && player != null) {
+                        if (localGame.getPlayer().getIp().equals(player.getIp())) {
+                            localGame.setTeam(team);
+                        }
+                    }
+                }
             }
         }
     }
@@ -300,6 +299,7 @@ public class ClientGame implements IGame {
             mediator.getTeams();
             mediator.getTeamAssignments();
         } else if (gameState == GameStateEnum.GameView) {
+            mediator.getInstruction();
             mediator.getPanels();
             mediator.getTeams();
         } else if (gameState == GameStateEnum.ScoreView) {

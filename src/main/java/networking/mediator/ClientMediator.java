@@ -260,4 +260,10 @@ public class ClientMediator extends BaseMediator implements IMediator {
 
         networkServer.sendRequest(request, clientGame.getHostIP());
     }
+
+    public void getInstruction() {
+        NetworkRequest request = new NetworkRequest(RequestType.GET, "/instruction/", "");
+
+        networkServer.sendRequest(request, clientGame.getHostIP());
+    }
 }
