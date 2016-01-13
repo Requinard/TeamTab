@@ -72,6 +72,8 @@ public class GameController implements Initializable {
     private List<Panel> panelHolder;
     private boolean newPanels;
     private boolean panelPushed;
+    private int levenTeam1 = 3;
+    private int levenTeam2 = 3;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -110,6 +112,7 @@ public class GameController implements Initializable {
             Thread.yield();
 
         panelChecker();
+        checkForNewPanels();
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
@@ -122,7 +125,6 @@ public class GameController implements Initializable {
      */
     private void panelChecker() {
         Platform.runLater(() -> {
-
             if (panelHolder == null || (view.stageController.clientGame.localGame.panels.size() != panelHolder.size())) {
                 panelHolder = view.stageController.clientGame.localGame.panels;
                 fillGridWithPanels();
@@ -182,6 +184,31 @@ public class GameController implements Initializable {
     }
 
     /**
+     * Author Kamil Wasylkiewicz
+     * This method is uses to check whether a team has lost a life and the system needs to give new panels.
+     */
+    private void checkForNewPanels() {
+        // deze methode in de timer laten draaien
+        // controleren hoeveel levens een team heeft
+        // zodra deze wijzigen dan de fill grid with panels aanroepen
+
+        int levensTeam1 = 0;
+        int levensTeam2 = 0;
+
+        if (view.stageController.clientGame.localGame.player != null) {
+            levensTeam1 = view.stageController.clientGame.getTeams().get(0).getLives();
+            levensTeam2 = view.stageController.clientGame.getTeams().get(1).getLives();
+        }
+
+        if (this.levenTeam1 != levensTeam1) {
+            this.panelHolder.clear();
+        }
+        if (this.levenTeam2 != levensTeam2) {
+            this.panelHolder.clear();
+        }
+    }
+
+    /**
      * Shows the player Instruction in instructionLabel
      * refreshes ever 30 ms
      */
@@ -224,52 +251,60 @@ public class GameController implements Initializable {
                 levensTeam1 = view.stageController.clientGame.getTeams().get(0).getLives();
                 levensTeam2 = view.stageController.clientGame.getTeams().get(1).getLives();
 
-                switch (levensTeam2) {
+                switch (levensTeam1) {
                     case 1:
                         Team1Leven1.setVisible(false);
                         Team1Leven2.setVisible(true);
                         Team1Leven3.setVisible(true);
+                        this.levenTeam1 = 2;
                         break;
                     case 2: {
                         Team1Leven1.setVisible(false);
                         Team1Leven2.setVisible(false);
                         Team1Leven3.setVisible(true);
+                        this.levenTeam1 = 1;
                         break;
                     }
                     case 3: {
                         Team1Leven3.setVisible(false);
                         Team1Leven2.setVisible(false);
                         Team1Leven1.setVisible(false);
+                        this.levenTeam1 = 3;
                         break;
                     }
                     default:
                         Team1Leven1.setVisible(true);
                         Team1Leven2.setVisible(true);
                         Team1Leven3.setVisible(true);
+                        this.levenTeam1 = 0;
                         break;
                 }
-                switch (levensTeam1) {
+                switch (levensTeam2) {
                     case 1:
                         Team2Leven1.setVisible(false);
                         Team2Leven2.setVisible(true);
                         Team2Leven3.setVisible(true);
+                        this.levenTeam1 = 2;
                         break;
                     case 2: {
                         Team2Leven2.setVisible(false);
                         Team2Leven1.setVisible(false);
                         Team2Leven3.setVisible(true);
+                        this.levenTeam1 = 1;
                         break;
                     }
                     case 3: {
                         Team2Leven3.setVisible(false);
                         Team2Leven2.setVisible(false);
                         Team2Leven1.setVisible(false);
+                        this.levenTeam1 = 3;
                         break;
                     }
                     default:
                         Team2Leven1.setVisible(true);
                         Team2Leven2.setVisible(true);
                         Team2Leven3.setVisible(true);
+                        this.levenTeam1 = 0;
                         break;
                 }
             }
