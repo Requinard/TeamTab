@@ -73,7 +73,7 @@ public class ClientMediator extends BaseMediator implements IMediator {
     public void handleScoreBoard(NetworkRequest networkRequest) {
         if (networkRequest.getType() == RequestType.SEND) {
             log.log(Level.FINER, "client handleInstructions has started, networkRequest type is SEND");
-            Type t = new TypeToken<HashMap<String, List<String>>>() {
+            Type t = new TypeToken<List<String>>() {
             }.getType();
 
             List<String> scoreBoard = new Gson().fromJson(networkRequest.getPayload(), t);

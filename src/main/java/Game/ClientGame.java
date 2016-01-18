@@ -49,7 +49,7 @@ public class ClientGame implements IGame {
             }
         };
 
-        timer.schedule(task, 0, 100);
+        timer.schedule(task, 0, 1000);
     }
 
     /**
@@ -124,6 +124,24 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        for (Team remoteTeam : teams) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
+                this.teams.add(remoteTeam);
+            } else {
+                team.changeLives(remoteTeam.getLives() - team.getLives());
+                team.changeTime(remoteTeam.getTime() - team.getTime());
+            }
+        }
+    }
+
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
@@ -141,24 +159,6 @@ public class ClientGame implements IGame {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     *
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        for (Team remoteTeam : teams) {
-            Team team = this.getTeam(remoteTeam.getName());
-            if (team == null) {
-                this.teams.add(remoteTeam);
-            } else {
-                team.changeLives(remoteTeam.getLives() - team.getLives());
-                team.changeTime(remoteTeam.getTime() - team.getTime());
             }
         }
     }
@@ -286,11 +286,13 @@ public class ClientGame implements IGame {
      * @param instruction the instruction that was to late
      */
     @Override
-    public void registerInvalidInstruction(Instruction instruction) {
+    public Instruction registerInvalidInstruction(Instruction instruction) {
         instruction = localGame.getPlayer().getActiveInstruction();
         if (instruction.getPlayer() == null) instruction.setPlayer(localGame.player);
         if (instruction != null)
             mediator.registerInvalidInstruction(instruction);
+
+        return null;
     }
 
     /**
@@ -303,9 +305,12 @@ public class ClientGame implements IGame {
             mediator.getTeams();
             mediator.getTeamAssignments();
         } else if (gameState == GameStateEnum.GameView) {
-            mediator.getInstruction();
-            mediator.getPanels();
-            mediator.getTeams();
+            if (localGame.getInstruction() == null)
+                mediator.getInstruction();
+            if (localGame.getPanels().isEmpty())
+                mediator.getPanels();
+            if (getTeams().isEmpty())
+                mediator.getTeams();
         } else if (gameState == GameStateEnum.ScoreView) {
             mediator.getInstructions();
         }

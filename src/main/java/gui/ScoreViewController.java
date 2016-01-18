@@ -37,7 +37,7 @@ public class ScoreViewController implements Initializable {
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
-     *
+     * <p/>
      * Starts a timer for fillScoreBoard
      *
      * @param location  The location used to resolve relative paths for the root object, or
@@ -47,7 +47,12 @@ public class ScoreViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonBackLobby.setOnMouseClicked(this::buttonBackLobbyOnClick);
 
-        fillScoreBoard();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                fillScoreBoard();
+            }
+        });
 
         //timerRefresh = new java.util.Timer();
         //timerTask = new TimerTask() {
@@ -63,26 +68,22 @@ public class ScoreViewController implements Initializable {
      * Shows if the team has won or lost
      * Prints the score of the players in TextArea
      */
-    private void fillScoreBoard(){
+
+    private void fillScoreBoard() {
         while (view.stageController.clientGame.localGame.getScoreBoard().isEmpty())
             Thread.yield();
 
-
         final List<String> scoreBoard = view.stageController.clientGame.localGame.getScoreBoard();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                for (String score : scoreBoard) {
-                    scoreArea.appendText(score);
-                }
-            }
-        });
+        for (String score : scoreBoard) {
+            scoreArea.appendText(score + "\n");
+        }
 
     }
 
     /**
      * Sets the scoreView
-     * @param scoreView     View where the player can see the score
+     *
+     * @param scoreView View where the player can see the score
      */
     public void setView(ScoreView scoreView) {
         view = scoreView;
@@ -90,7 +91,8 @@ public class ScoreViewController implements Initializable {
 
     /**
      * When button back to lobby is pressed, game hardReset and change to LobbyView
-     * @param mouseEvent       This mouseEvent brings the player back to the MainView
+     *
+     * @param mouseEvent This mouseEvent brings the player back to the MainView
      */
     private void buttonBackLobbyOnClick(MouseEvent mouseEvent) {
         runnable = () -> {

@@ -1,5 +1,6 @@
 package gui;
 
+import Game.GameStateEnum;
 import Game.Panel;
 import Game.PanelTypeEnum;
 import gui.panel.IPanel;
@@ -135,6 +136,7 @@ public class GameController implements Initializable {
             if (panelHolder == null || (view.stageController.clientGame.localGame.panels.size() != panelHolder.size())) {
                 panelHolder = view.stageController.clientGame.localGame.panels;
                 fillGridWithPanels();
+                //view.stageController.clientGame.localGame.setPanels(new ArrayList<Panel>());
                 log.log(Level.INFO, "Gridview filled with {0} panels", view.stageController.clientGame.localGame.panels.size());
             }
         });
@@ -210,10 +212,12 @@ public class GameController implements Initializable {
         if (this.levensTeam1 != levensTeam1) {
             this.panelHolder.clear();
             this.levensTeam1 = levensTeam1;
+            view.stageController.clientGame.localGame.setPanels(new ArrayList<Panel>());
         }
         if (this.levensTeam2 != levensTeam2) {
             this.panelHolder.clear();
             this.levensTeam2 = levensTeam2;
+            view.stageController.clientGame.localGame.setPanels(new ArrayList<Panel>());
         }
     }
 
@@ -224,6 +228,8 @@ public class GameController implements Initializable {
     private void showPlayerInstruction() {
 
         Platform.runLater(() -> {
+            while (view.stageController.clientGame.localGame.getInstruction() == null)
+                Thread.yield();
             if (view.stageController.clientGame.localGame.player != null)
                 log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localGame.player.getUsername());
             if (view.stageController.clientGame.localGame.getInstruction().getPanel().getPanelType() == PanelTypeEnum.Button) {
@@ -362,6 +368,7 @@ public class GameController implements Initializable {
                         timeLabel.setText(counter + "");
                     });
                     if (counter == 0) {
+                        view.stageController.clientGame.localGame.setInstruction(null);
                         view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localGame.player.getActiveInstruction());
                         counter = view.stageController.clientGame.localGame.team.getTime();
                     }
@@ -396,11 +403,13 @@ public class GameController implements Initializable {
      */
     public void checkInstruction(Panel panel, int sliderValue) {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
+        view.stageController.clientGame.localGame.setInstruction(null);
         view.stageController.clientGame.processPanel(view.stageController.clientGame.localGame.player, panel);
         panelPushed = true;
         if (view.stageController.clientGame.hasGameEnded()) {
             timerTask.cancel();
             Platform.runLater(() -> {
+                view.stageController.clientGame.setGameState(GameStateEnum.ScoreView);
                 ScoreView scoreView = new ScoreView(view.stageController);
                 view.pass(scoreView);
             });

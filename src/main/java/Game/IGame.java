@@ -55,6 +55,6 @@ public interface IGame {
 	 *
 	 * @param instruction the instruction that was to late
 	 */
-	void registerInvalidInstruction(Instruction instruction);
+	Instruction registerInvalidInstruction(Instruction instruction);
 
 }

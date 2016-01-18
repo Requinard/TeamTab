@@ -47,7 +47,7 @@ public class HostGame implements IGame {
         return instructions;
     }
 
-    public List<Team> getTeams() {
+    public synchronized List<Team> getTeams() {
         return this.teams;
     }
 
@@ -301,11 +301,11 @@ public class HostGame implements IGame {
      * @return true if instruction belongs to player and generates a new instruction
      */
     @Override
-    public synchronized void registerInvalidInstruction(Instruction instruction) {
+    public synchronized Instruction registerInvalidInstruction(Instruction instruction) {
         for (Team team : teams) {
-            for (Instruction instruction1 : team.getActiveInstructions()) {
-                if (instruction1.getPanel().getId() == instruction.getPanel().getId()) {
-                    instruction = instruction1;
+            for (Player player : team.getPlayers()) {
+                if (player.getActiveInstruction().getPanel().getId() == instruction.getPanel().getId()) {
+                    instruction = player.getActiveInstruction();
                 }
             }
         }
@@ -317,7 +317,7 @@ public class HostGame implements IGame {
         instructions.add(instruction);
         changeTimeForTeam(team, -1);
         // Generate new instruction for the player
-        team.generateInstructionForPlayer(player);
+        return team.generateInstructionForPlayer(player);
     }
 
     /**
@@ -383,6 +383,11 @@ public class HostGame implements IGame {
 
         for (Player player : players) {
             int playerScore = 0;
+            if (instructions.isEmpty()) {
+                scoreboard.add("Team: " + player.getTeam().getName());
+                scoreboard.add(player.getUsername() + " Score: " + playerScore);
+                return scoreboard;
+            }
             for (Instruction instruction : instructions) {
                 // Increase the score of the player if the instruction was executed correctly
                 if (instruction.getPlayer().equals(player) && instruction.getWasExecutedCorrectly())
@@ -391,7 +396,7 @@ public class HostGame implements IGame {
                     playerScore--;
             }
             // Add the team with the player and his score to the list
-            scoreboard.add(player.getTeam().getName() + " - " + player.getUsername() + " : " + playerScore);
+            scoreboard.add("Team: " + player.getTeam().getName() + " Name- " + player.getUsername() + " Score: " + playerScore);
         }
 
         return scoreboard;
