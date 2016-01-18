@@ -48,6 +48,10 @@ public class Instruction {
         return player;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     /**
      * Check if the instruction was executed correctly
      * author Frank Hartman
@@ -60,6 +64,7 @@ public class Instruction {
     /**
      * Set the value of the executed instruction
      * author Frank Hartman
+     *
      * @param wasExecutedCorrectly True if the instruction was executed correctly
      */
     public void setWasExecutedCorrectly(boolean wasExecutedCorrectly) {

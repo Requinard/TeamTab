@@ -116,6 +116,7 @@ public class HostMediator extends BaseMediator implements IMediator {
             //todo In de api kijken of het hier om gaat
             log.log(Level.FINER, "networkRequest type is POST");
             Instruction expiredInstruction = InstructionAdapter.toObject(networkRequest.getPayload());
+            expiredInstruction.setPlayer(hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()));
             log.log(Level.FINER, "expiredInstruction is {0}", expiredInstruction.toString());
             hostGame.registerInvalidInstruction(expiredInstruction);
         } else {
@@ -228,13 +229,12 @@ public class HostMediator extends BaseMediator implements IMediator {
             // converting the incoming json to panel
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
             log.log(Level.FINER, "panel {0} is created from the networkRequestPayload", panel.toString());
-            for (Player player : hostGame.getPlayers()) {
-                //Processes the panel, it check which player it is by checking his IP adress
-                if (player.getIp().equals(networkRequest.getNetworkMessage().getSender())) {
-                    hostGame.processPanel(player, panel);
-                    log.log(Level.FINER, "panel is processed for player {0}", player.getUsername());
-                }
-            }
+            Instruction newInstruction = hostGame.processPanel(hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()), panel);
+            //if(newInstruction != null){
+            //String json = InstructionAdapter.toString(newInstruction);
+            //NetworkRequest response = new NetworkRequest(RequestType.SEND, "/instruction/", json);
+            //networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
+            //}
         } else {
             networkServer.requeueRequest(networkRequest);
             log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");

@@ -23,7 +23,7 @@ public class LocalGame {
         this.scoreBoard = scoreBoard;
     }
 
-    public Instruction getInstruction() {
+    public synchronized Instruction getInstruction() {
         return instruction;
     }
 

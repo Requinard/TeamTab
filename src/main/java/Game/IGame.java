@@ -47,7 +47,7 @@ public interface IGame {
 	 * @param player the player of which the panel has been changed
 	 * @param panel the panel that is pressed
 	 */
-	boolean processPanel(Player player, Panel panel);
+	Instruction processPanel(Player player, Panel panel);
 
 	boolean hasGameEnded();
 

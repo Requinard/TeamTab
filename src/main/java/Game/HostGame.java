@@ -250,24 +250,25 @@ public class HostGame implements IGame {
      * @return true if the pressed panel was correct
      */
     @Override
-    public synchronized boolean processPanel(Player player, Panel panel) {
-        Instruction correctInstruction;
+    public synchronized Instruction processPanel(Player player, Panel panel) {
+        Instruction currentInstruction;
+        Instruction newInstruction = null;
         //check if the pressed panel was from an active instruction
-        correctInstruction = validateInstruction(player, panel);
+        currentInstruction = validateInstruction(player, panel);
 
-        if (correctInstruction != null) {
+        if (currentInstruction != null) {
             //check if there is a win streak
             changeTimeForTeam(player.getTeam(), 0);
             //list of correct instructions
-            correctInstruction.setWasExecutedCorrectly(true);
-            instructions.add(correctInstruction);
+            currentInstruction.setWasExecutedCorrectly(true);
+            instructions.add(currentInstruction);
             //gives the player that had the instruction (not necessarily the one that pressed the panel) a new instruction
-            player.getTeam().generateInstructionForPlayer(correctInstruction.getPlayer());
+            newInstruction = player.getTeam().generateInstructionForPlayer(currentInstruction.getPlayer());
         } else {
             changeTimeForTeam(player.getTeam(), -1);
         }
 
-        return correctInstruction != null;
+        return newInstruction;// != null;
     }
 
     /**
@@ -328,7 +329,7 @@ public class HostGame implements IGame {
      * @param panel  Panel control that was clicked
      * @return instruction that was correctly performed, else null
      */
-    private Instruction validateInstruction(Player player, Panel panel) {
+    private synchronized Instruction validateInstruction(Player player, Panel panel) {
         log.log(Level.INFO, "validating instruction for panel: {0} started", panel.getText());
         return player.getTeam().validateInstruction(panel);
     }
@@ -341,7 +342,7 @@ public class HostGame implements IGame {
      * @param time The time amount of time
      * @return true if the given team lost a life
      */
-    private boolean changeTimeForTeam(Team team, int time) {
+    private synchronized boolean changeTimeForTeam(Team team, int time) {
         log.log(Level.INFO, "staring chang time for team");
         team.changeTime(time);
         //win streak of 3, your team gets one second plus

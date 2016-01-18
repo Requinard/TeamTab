@@ -96,7 +96,7 @@ public class Team {
      *
      * @return The amount of lives the team has
      */
-    public int getLives() {
+    public synchronized int getLives() {
         return this.lives;
     }
 
@@ -106,7 +106,7 @@ public class Team {
      *
      * @return The time the team has
      */
-    public int getTime() {
+    public synchronized int getTime() {
         return this.time;
     }
 
@@ -190,21 +190,21 @@ public class Team {
      * @param player The player that will get a new instruction
      * @return true if the player has the new instruction
      */
-    public boolean generateInstructionForPlayer(Player player) {
+    public synchronized Instruction generateInstructionForPlayer(Player player) {
         Instruction oldInstruction = player.getActiveInstruction();
 
+        // Generate a new instruction for the player and add this instruction to the active instruction
+        Instruction instruction = player.generateInstruction();
+        player.setActiveInstruction(instruction);
+        activeInstructions.add(instruction);
+
         if (oldInstruction != null) {
-            // Remove the current instruction from the active instructions
+            //Remove the current instruction from the active instructions
             activeInstructions.remove(player.getActiveInstruction());
             log.log(Level.INFO, "Removed the old instruction from the active instructions");
         }
 
-
-        // Generate a new instruction for the player and add this instruction to the active instruction
-        Instruction instruction = player.generateInstruction();
-        activeInstructions.add(instruction);
-
-        return instruction == player.getActiveInstruction();
+        return instruction;// == player.getActiveInstruction();
     }
 
     /**
@@ -213,7 +213,7 @@ public class Team {
      *
      * @param amount amount may be positive or negative
      */
-    public void changeLives(int amount) {
+    public synchronized void changeLives(int amount) {
         lives += amount;
     }
 
@@ -223,7 +223,7 @@ public class Team {
      *
      * @param amount amount may be positive or negative
      */
-    public int changeTime(int amount) {
+    public synchronized int changeTime(int amount) {
         return time += amount;
     }
 
@@ -278,13 +278,13 @@ public class Team {
      * @param panel the pressed panel
      * @return true if the pressed panel was a active instruction
      */
-    public Instruction validateInstruction(Panel panel) {
+    public synchronized Instruction validateInstruction(Panel panel) {
         Instruction correctInstruction = null;
         for (Instruction instruction : activeInstructions) {
             if (instruction.getPanel().getId() == (panel.getId())) {
                 score++;
                 correctInstruction = instruction;
-                activeInstructions.remove(instruction);
+                //activeInstructions.remove(instruction);
                 log.log(Level.INFO, "validating instruction ended, panel: {0} was correct", panel.getText());
                 return correctInstruction;
             }

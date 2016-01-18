@@ -1,6 +1,7 @@
 package gui;
 
 import Game.Panel;
+import Game.PanelTypeEnum;
 import gui.panel.IPanel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -74,6 +75,8 @@ public class GameController implements Initializable {
     private boolean panelPushed;
     private int levenTeam1 = 3;
     private int levenTeam2 = 3;
+    private int levensTeam1 = 3;
+    private int levensTeam2 = 3;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -204,11 +207,13 @@ public class GameController implements Initializable {
             levensTeam2 = view.stageController.clientGame.getTeams().get(1).getLives();
         }
 
-        if (this.levenTeam1 != levensTeam1) {
+        if (this.levensTeam1 != levensTeam1) {
             this.panelHolder.clear();
+            this.levensTeam1 = levensTeam1;
         }
-        if (this.levenTeam2 != levensTeam2) {
+        if (this.levensTeam2 != levensTeam2) {
             this.panelHolder.clear();
+            this.levensTeam2 = levensTeam2;
         }
     }
 
@@ -221,7 +226,7 @@ public class GameController implements Initializable {
         Platform.runLater(() -> {
             if (view.stageController.clientGame.localGame.player != null)
                 log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localGame.player.getUsername());
-            if (view.stageController.clientGame.localGame.getInstruction().getIntendedValue() == 0) {
+            if (view.stageController.clientGame.localGame.getInstruction().getPanel().getPanelType() == PanelTypeEnum.Button) {
                 instructionLabel.setText("Press the " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " button");
             } else {
                 instructionLabel.setText("Set " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localGame.player.getActiveInstruction().getIntendedValue());

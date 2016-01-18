@@ -205,7 +205,7 @@ public class HostGameTest {
         game.startRound();
 
         //check if the active instuction panel for player 1 is a correct panel
-        Assert.assertTrue("players instruction is not a active instuction", game.processPanel(player1, player1.getActiveInstruction().getPanel()));
+        Assert.assertNotNull("players instruction is not a active instuction", game.processPanel(player1, player1.getActiveInstruction().getPanel()));
     }
 
     //todo: @Test

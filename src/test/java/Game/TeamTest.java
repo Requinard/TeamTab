@@ -281,6 +281,6 @@ public class TeamTest {
         team.addPlayer(player2);
         team.generatePanels(listPanels);
 
-        Assert.assertTrue(team.generateInstructionForPlayer(player1));
+        Assert.assertNotNull(team.generateInstructionForPlayer(player1));
     }
 }

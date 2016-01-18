@@ -173,7 +173,7 @@ public class Player {
      *
      * @return a new made instruction
      */
-    public Instruction generateInstruction() {
+    public synchronized Instruction generateInstruction() {
         Random random = new Random();
         // Get all the team panels
         List<Panel> teamPanels = (List<Panel>) team.getPanels();
@@ -186,7 +186,12 @@ public class Player {
         // suppose example panel has minimal 2 and maximal 8 value
         // random.nextint(8-2)+2
         // this will always produce a random number from minimal 2 and maximal 8
-        int intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
+        int intendedValue;
+        if (instructionPanel.getPanelType() == PanelTypeEnum.Button) {
+            intendedValue = 1;
+        } else {
+            intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
+        }
         // new instruction is made
         activeInstruction = new Instruction(instructionPanel, intendedValue, this);
         if (team.getActiveInstructions().contains(activeInstruction)) {
