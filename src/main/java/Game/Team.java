@@ -172,6 +172,7 @@ public class Team {
      * @return panels       this is a list of panels that is given to a team
      */
     public List<Panel> generatePanels(List<Panel> gamePanels) {
+        panels.clear();
         List<Panel> gamePanelsCopy = new ArrayList<Panel>();
         gamePanelsCopy.addAll(gamePanels);
         List<Panel> panelsGivenToPlayer;
