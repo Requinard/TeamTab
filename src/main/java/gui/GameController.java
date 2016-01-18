@@ -233,9 +233,9 @@ public class GameController implements Initializable {
             if (view.stageController.clientGame.localGame.player != null)
                 log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localGame.player.getUsername());
             if (view.stageController.clientGame.localGame.getInstruction().getPanel().getPanelType() == PanelTypeEnum.Button) {
-                instructionLabel.setText("Press the " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " button");
+                instructionLabel.setText("Press the " + view.stageController.clientGame.localGame.getInstruction().getPanel().getText() + " button"); //player.getActiveInstruction().getPanel().getText() + " button");
             } else {
-                instructionLabel.setText("Set " + view.stageController.clientGame.localGame.player.getActiveInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localGame.player.getActiveInstruction().getIntendedValue());
+                instructionLabel.setText("Set " + view.stageController.clientGame.localGame.getInstruction().getPanel().getText() + " to: " + view.stageController.clientGame.localGame.getInstruction().getIntendedValue());
             }
         });
     }
@@ -368,8 +368,9 @@ public class GameController implements Initializable {
                         timeLabel.setText(counter + "");
                     });
                     if (counter == 0) {
-                        view.stageController.clientGame.localGame.setInstruction(null);
+
                         view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localGame.player.getActiveInstruction());
+                        view.stageController.clientGame.localGame.setInstruction(null);
                         counter = view.stageController.clientGame.localGame.team.getTime();
                     }
                 }

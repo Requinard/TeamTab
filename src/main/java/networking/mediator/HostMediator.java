@@ -243,18 +243,30 @@ public class HostMediator extends BaseMediator implements IMediator {
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
             log.log(Level.FINER, "panel {0} is created from the networkRequestPayload", panel.toString());
             Instruction newInstruction = hostGame.processPanel(hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()), panel);
-            if (newInstruction != null) {
-                String json = InstructionAdapter.toString(newInstruction);
-                NetworkRequest response = new NetworkRequest(RequestType.SEND, "/instruction/", json);
-                networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
-            }
 
             List<Team> teams = hostGame.getTeams();
-            log.log(Level.FINER, "hostGame teams has {0} teams", teams.size());
-            String json = TeamAdapter.toString(teams);
+            String json1 = TeamAdapter.toString(teams);
+            NetworkRequest response1 = new NetworkRequest(RequestType.SEND, "/teams/", json1);
+            if (newInstruction != null) {
+                //new instruction to correct player
+                String json = InstructionAdapter.toString(newInstruction);
+                NetworkRequest response = new NetworkRequest(RequestType.SEND, "/instruction/", json);
+                networkServer.send(response.toString(), newInstruction.getPlayer().getIp());
+                //team update for this player
 
-            NetworkRequest response = new NetworkRequest(RequestType.SEND, "/teams/", json);
-            networkServer.send(response.toString(), networkRequest.getNetworkMessage().getSender());
+                log.log(Level.FINER, "hostGame teams has {0} teams", teams.size());
+
+
+                networkServer.send(response1.toString(), newInstruction.getPlayer().getIp());
+            } else {
+                //team update for sender
+                log.log(Level.FINER, "hostGame teams has {0} teams", teams.size());
+
+                //NetworkRequest response = new NetworkRequest(RequestType.SEND, "/teams/", json1);
+                networkServer.send(response1.toString(), networkRequest.getNetworkMessage().getSender());
+            }
+
+
         } else {
             networkServer.requeueRequest(networkRequest);
             log.log(Level.FINE, "else statement reached, requeueRequest uitgevoerd");

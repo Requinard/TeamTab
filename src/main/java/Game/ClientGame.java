@@ -18,6 +18,7 @@ public class ClientGame implements IGame {
     private List<Panel> panels = new LinkedList<>();
 
     private GameStateEnum gameState = GameStateEnum.LobbyView;
+    private int a = 1;
 
     public ClientGame(int portnumber) {
         localGame.setPlayer(null);
@@ -82,7 +83,6 @@ public class ClientGame implements IGame {
         this.localGame.setLocalIP(localIP);
     }
 
-
     public void setHostIp(String hostIP) {
         this.localGame.setHostIP(hostIP);
     }
@@ -124,24 +124,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     *
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        for (Team remoteTeam : teams) {
-            Team team = this.getTeam(remoteTeam.getName());
-            if (team == null) {
-                this.teams.add(remoteTeam);
-            } else {
-                team.changeLives(remoteTeam.getLives() - team.getLives());
-                team.changeTime(remoteTeam.getTime() - team.getTime());
-            }
-        }
-    }
-
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
@@ -159,6 +141,24 @@ public class ClientGame implements IGame {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        for (Team remoteTeam : teams) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
+                this.teams.add(remoteTeam);
+            } else {
+                team.changeLives(remoteTeam.getLives() - team.getLives());
+                team.changeTime(remoteTeam.getTime() - team.getTime());
             }
         }
     }
@@ -305,8 +305,11 @@ public class ClientGame implements IGame {
             mediator.getTeams();
             mediator.getTeamAssignments();
         } else if (gameState == GameStateEnum.GameView) {
-            if (localGame.getInstruction() == null)
+            if (a == 1) {//localGame.getInstruction() == null)
                 mediator.getInstruction();
+                a++;
+            }
+
             if (localGame.getPanels().isEmpty())
                 mediator.getPanels();
             if (getTeams().isEmpty())

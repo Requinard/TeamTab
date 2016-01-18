@@ -194,6 +194,7 @@ public class Player {
         }
         // new instruction is made
         activeInstruction = new Instruction(instructionPanel, intendedValue, this);
+        System.out.println(activeInstruction.toString());
         if (team.getActiveInstructions().contains(activeInstruction)) {
             generateInstruction();
         }
