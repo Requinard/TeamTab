@@ -22,9 +22,9 @@
          <Image url="@images/ScoreScreen/ButtonBack.jpg" />
        </image>
      </ImageView>
-       <Button fx:id="buttonBackLobby" ellipsisString="..." layoutX="433.0" layoutY="684.0" mnemonicParsing="false"
+       <Button fx:id="buttonBackLobby" ellipsisString="..." layoutX="433.0" layoutY="689.0" mnemonicParsing="false"
                prefHeight="250.0" prefWidth="440.0"
-               style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" text="" visible="true"/>
+               style="-fx-background-size: 100% 100%;&#10;-fx-background-color: transparent;" visible="true"/>
       <TextField fx:id="scoreField" alignment="TOP_LEFT" editable="false" layoutX="252.0" layoutY="243.0" opacity="0.22" prefHeight="428.0" prefWidth="784.0">
          <font>
             <Font size="48.0" />

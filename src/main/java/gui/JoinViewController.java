@@ -4,7 +4,6 @@ import Game.ClientGame;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -53,27 +52,11 @@ public class JoinViewController implements Initializable {
      */
     public void initialize(URL location, ResourceBundle resources) {
         gameFinder = new GameFinder();
-        buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonBackOnClick(event);
-            }
-        });
-        buttonJoin.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonJoinOnClick(event);
-            }
-        });
+        buttonBack.setOnMouseClicked(event -> buttonBackOnClick(event));
+        buttonJoin.setOnMouseClicked(event -> buttonJoinOnClick(event));
 
-        buttonSearch.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                buttonSearchOnClick(event);
-            }
-        });
-        btnJoinCustom.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-            btnJoinCustom(event);
-            }
-        });
+        buttonSearch.setOnMouseClicked(event -> buttonSearchOnClick(event));
+        btnJoinCustom.setOnMouseClicked(event -> btnJoinCustom(event));
         clientGame = new ClientGame();
     }
 
@@ -82,11 +65,7 @@ public class JoinViewController implements Initializable {
      * @param mouseEvent
      */
     private void btnJoinCustom(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-                searchOneGame();
-            }
-        };
+        runnable = () -> searchOneGame();
         runnable.run();
     }
     /**
@@ -94,11 +73,7 @@ public class JoinViewController implements Initializable {
      * @param mouseEvent
      */
     private void buttonSearchOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-            searchAllGames();
-            }
-        };
+        runnable = () -> searchAllGames();
         runnable.run();
 
     }
@@ -116,17 +91,15 @@ public class JoinViewController implements Initializable {
      * @param mouseEvent
      */
     private void buttonBackOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-                clientGame = null;
-                view.stageController.setClientGame(null);
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        MainView mainView = new MainView(view.stageController);
-                        view.pass(mainView);
-                    }
-                });
-            }
+        runnable = () -> {
+            clientGame = null;
+            view.stageController.setClientGame(null);
+            Platform.runLater(new Runnable() {
+                public void run() {
+                    MainView mainView = new MainView(view.stageController);
+                    view.pass(mainView);
+                }
+            });
         };
         runnable.run();
     }
@@ -136,20 +109,16 @@ public class JoinViewController implements Initializable {
      * @param mouseEvent
      */
     private void buttonJoinOnClick(MouseEvent mouseEvent) {
-        runnable = new Runnable() {
-            public void run() {
-                String hostIp = listGames.getSelectionModel().getSelectedItem().toString();
-                view.stageController.clientGame.setHostIp(hostIp);
-                log.log(Level.INFO, "Host ip on the client has been set to: {0}", hostIp );
-                view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
+        runnable = () -> {
+            String hostIp = listGames.getSelectionModel().getSelectedItem().toString();
+            view.stageController.clientGame.setHostIp(hostIp);
+            log.log(Level.INFO, "Host ip on the client has been set to: {0}", hostIp);
+            view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
 
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        LobbyView lobbyView = new LobbyView(view.stageController);
-                        view.pass(lobbyView);
-                    }
-                });
-            }
+            Platform.runLater(() -> {
+                LobbyView lobbyView = new LobbyView(view.stageController);
+                view.pass(lobbyView);
+            });
         };
         runnable.run();
     }
@@ -178,19 +147,11 @@ public class JoinViewController implements Initializable {
             log.log(Level.INFO, "Host ip on the client has been set to: {0}", hostIp);
             view.stageController.clientGame.createPlayer(StageController.playerName, "127.0.0.1");
 
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    LobbyView lobbyView = new LobbyView(view.stageController);
-                    view.pass(lobbyView);
-                }
+            Platform.runLater(() -> {
+                LobbyView lobbyView = new LobbyView(view.stageController);
+                view.pass(lobbyView);
             });
 
-//            if (gameFinder.findSingleGame()) {
-//                JOptionPane.showMessageDialog(null, "Game Found");
-//                //naar de lobby van die game connecten
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Game Not Found");
-//            }
         }
     }
 }

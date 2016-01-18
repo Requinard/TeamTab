@@ -16,7 +16,6 @@ public class Player {
     private transient List<Panel> panels = new LinkedList<>();
     private transient Team team;
     private Instruction activeInstruction;
-
     private boolean playerStatus = false;
 
     /**

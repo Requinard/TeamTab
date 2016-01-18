@@ -130,6 +130,7 @@ public class StartViewController implements Initializable {
      * @param mouseEvent Brings back player from startview to mainview
      */
     public void buttonBackOnClick(MouseEvent mouseEvent) {
+
         runnable = () -> {
             hostGame = null;
             Platform.runLater(() -> {

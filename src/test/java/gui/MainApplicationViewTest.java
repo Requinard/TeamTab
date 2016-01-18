@@ -3,14 +3,13 @@ package gui;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
 
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by david on 7-10-15.
  */
-public class MainApplicationViewTest extends ApplicationTest {
+public class MainApplicationViewTest {
     private Stage stage;
     private StageController stageController;
 
@@ -18,11 +17,9 @@ public class MainApplicationViewTest extends ApplicationTest {
     public void testLoad() throws Exception {
         final MainView mainView = new MainView(stageController);
 
-        Platform.runLater(new Runnable() {
-            public void run() {
-                boolean load = mainView.load();
-                assertTrue(load);
-            }
+        Platform.runLater(() -> {
+            boolean load = mainView.load();
+            assertTrue(load);
         });
     }
 
@@ -30,11 +27,9 @@ public class MainApplicationViewTest extends ApplicationTest {
     public void testDeload() throws Exception {
         final MainView mainView = new MainView(stageController);
 
-        Platform.runLater(new Runnable() {
-            public void run() {
-                boolean deload = mainView.deload();
-                assertTrue(deload);
-            }
+        Platform.runLater(() -> {
+            boolean deload = mainView.deload();
+            assertTrue(deload);
         });
     }
 
@@ -42,21 +37,14 @@ public class MainApplicationViewTest extends ApplicationTest {
     public void testPass() throws Exception {
         final MainView mainView = new MainView(stageController);
 
-        Platform.runLater(new Runnable() {
-            public void run() {
-                IView nextView = new LobbyView(stageController);
+        Platform.runLater(() -> {
+            IView nextView = new LobbyView(stageController);
 
-                boolean pass = mainView.pass(nextView);
+            boolean pass = mainView.pass(nextView);
 
-                assertTrue(pass);
-            }
+            assertTrue(pass);
         });
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        this.stage = stage;
 
-        this.stageController = new StageController(stage);
-    }
 }

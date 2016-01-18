@@ -26,9 +26,9 @@ public class HostGame implements IGame {
     }
 
     public HostGame(int port) {
-        players = new ArrayList<Player>();
-        teams = new ArrayList<Team>();
-        panels = new ArrayList<Panel>();
+        players = new ArrayList<>();
+        teams = new ArrayList<>();
+        panels = new ArrayList<>();
         instructions = new ArrayList<Instruction>();
 
         loadPanelsFromFile();
@@ -79,6 +79,15 @@ public class HostGame implements IGame {
         teams.add(team);
         log.log(Level.INFO, "team: " + name + " added to list teams");
         return team;
+    }
+
+    /**
+     * Author Qun
+     * made this method so when you want to change the teamname
+     * it resets the teams so it can create new teams
+     */
+    public void resetTeamName() {
+        teams.clear();
     }
 
     /**

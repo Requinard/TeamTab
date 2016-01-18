@@ -173,6 +173,7 @@ public class LobbyViewController implements Initializable {
      * @param mouseEvent Returns the player from lobbyview to startview
      */
     private void buttonBackOnClick(MouseEvent mouseEvent) {
+        view.stageController.hostGame.resetTeamName();
         runnable = () -> Platform.runLater(() -> {
             StartView startView = new StartView((view.stageController));
             view.pass(startView);
