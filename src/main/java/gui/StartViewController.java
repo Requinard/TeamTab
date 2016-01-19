@@ -70,7 +70,6 @@ public class StartViewController implements Initializable {
         view.stageController.setHostGame(hostGame);
         view.stageController.setClientGame(clientGame);
         InetAddress localhost = null;
-
     }
 
     /**
@@ -134,6 +133,7 @@ public class StartViewController implements Initializable {
         runnable = () -> {
             hostGame = null;
             Platform.runLater(() -> {
+
                 MainView mainView = new MainView((view.stageController));
                 view.pass(mainView);
                 log.log(Level.INFO, "Going from TeamView to StartView succeeded");

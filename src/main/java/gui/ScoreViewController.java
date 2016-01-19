@@ -53,15 +53,6 @@ public class ScoreViewController implements Initializable {
                 fillScoreBoard();
             }
         });
-
-        //timerRefresh = new java.util.Timer();
-        //timerTask = new TimerTask() {
-        //@Override
-        //public void run() {
-        //fillScoreBoard();
-        //}
-        //};
-        //timerRefresh.schedule(timerTask, 500);
     }
 
     /**
