@@ -119,11 +119,11 @@ public class Player {
      *
      * @return The instruction of the player
      */
-    public Instruction getActiveInstruction() {
+    public synchronized Instruction getActiveInstruction() {
         return this.activeInstruction;
     }
 
-    public void setActiveInstruction(Instruction activeInstruction) {
+    public synchronized void setActiveInstruction(Instruction activeInstruction) {
         this.activeInstruction = activeInstruction;
     }
 
@@ -186,18 +186,15 @@ public class Player {
         // suppose example panel has minimal 2 and maximal 8 value
         // random.nextint(8-2)+2
         // this will always produce a random number from minimal 2 and maximal 8
-        int intendedValue;
-        if (instructionPanel.getPanelType() == PanelTypeEnum.Button) {
-            intendedValue = 1;
-        } else {
-            intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
-        }
+        int intendedValue = random.nextInt(instructionPanel.getMaximumValue() - instructionPanel.getMinimumValue()) + instructionPanel.getMinimumValue();
+        instructionPanel.setValue(intendedValue);
         // new instruction is made
-        activeInstruction = new Instruction(instructionPanel, intendedValue, this);
-        System.out.println(activeInstruction.toString());
-        if (team.getActiveInstructions().contains(activeInstruction)) {
+        Instruction newInstruction = new Instruction(instructionPanel, intendedValue, this);
+        //System.out.println(activeInstruction.toString());
+        if (team.getActiveInstructions().contains(newInstruction)) {
             generateInstruction();
         }
+        activeInstruction = newInstruction;
         log.log(Level.INFO, "Instruction " + activeInstruction.getPanel().getText() + " set to " + activeInstruction.getIntendedValue());
 
         return activeInstruction;

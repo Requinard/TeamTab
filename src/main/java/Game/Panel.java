@@ -7,6 +7,7 @@ public class Panel {
     private int minimumValue = 0;
     private int maximumValue = 1;
     private String text;
+    private int value;
 
     /**
      * The constructor of a panel
@@ -24,6 +25,14 @@ public class Panel {
         this.maximumValue = maximumValue;
         this.text = text;
         this.panelType = panelType;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     /**

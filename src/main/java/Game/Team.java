@@ -201,7 +201,7 @@ public class Team {
 
         if (oldInstruction != null) {
             //Remove the current instruction from the active instructions
-            activeInstructions.remove(player.getActiveInstruction());
+            activeInstructions.remove(oldInstruction);
             log.log(Level.INFO, "Removed the old instruction from the active instructions");
         }
 
@@ -282,7 +282,12 @@ public class Team {
     public synchronized Instruction validateInstruction(Panel panel) {
         Instruction correctInstruction = null;
         for (Instruction instruction : activeInstructions) {
-            if (instruction.getPanel().getId() == (panel.getId())) {
+            if (instruction.getPanel().getId() == panel.getId()) {
+                if (panel.getPanelType() == PanelTypeEnum.HorizontalSlider || panel.getPanelType() == PanelTypeEnum.VerticalSlider) {
+                    if (instruction.getPanel().getValue() != panel.getValue()) {
+                        return correctInstruction;
+                    }
+                }
                 score++;
                 correctInstruction = instruction;
                 //activeInstructions.remove(instruction);

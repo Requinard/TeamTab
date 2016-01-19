@@ -241,8 +241,10 @@ public class HostMediator extends BaseMediator implements IMediator {
             log.log(Level.FINER, "RequestType is POST");
             // converting the incoming json to panel
             Panel panel = PanelAdapter.toObjectsSinglePanel(networkRequest.getPayload());
+
             log.log(Level.FINER, "panel {0} is created from the networkRequestPayload", panel.toString());
             Instruction newInstruction = hostGame.processPanel(hostGame.getPlayer(networkRequest.getNetworkMessage().getSender()), panel);
+
 
             List<Team> teams = hostGame.getTeams();
             String json1 = TeamAdapter.toString(teams);
@@ -256,13 +258,11 @@ public class HostMediator extends BaseMediator implements IMediator {
 
                 log.log(Level.FINER, "hostGame teams has {0} teams", teams.size());
 
-
                 networkServer.send(response1.toString(), newInstruction.getPlayer().getIp());
             } else {
                 //team update for sender
                 log.log(Level.FINER, "hostGame teams has {0} teams", teams.size());
 
-                //NetworkRequest response = new NetworkRequest(RequestType.SEND, "/teams/", json1);
                 networkServer.send(response1.toString(), networkRequest.getNetworkMessage().getSender());
             }
 

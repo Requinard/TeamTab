@@ -429,6 +429,7 @@ public class GameController implements Initializable {
     public void checkInstruction(Panel panel, int sliderValue) {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
         view.stageController.clientGame.localGame.setInstruction(null);
+        panel.setValue(sliderValue);
         view.stageController.clientGame.processPanel(view.stageController.clientGame.localGame.player, panel);
         Platform.runLater(() -> {
             try {

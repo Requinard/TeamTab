@@ -255,7 +255,6 @@ public class HostGame implements IGame {
         Instruction newInstruction = null;
         //check if the pressed panel was from an active instruction
         currentInstruction = validateInstruction(player, panel);
-
         if (currentInstruction != null) {
             //check if there is a win streak
             changeTimeForTeam(player.getTeam(), 0);
@@ -264,6 +263,7 @@ public class HostGame implements IGame {
             instructions.add(currentInstruction);
             //gives the player that had the instruction (not necessarily the one that pressed the panel) a new instruction
             newInstruction = player.getTeam().generateInstructionForPlayer(currentInstruction.getPlayer());
+            return newInstruction;
         } else {
             changeTimeForTeam(player.getTeam(), -1);
         }
