@@ -134,9 +134,11 @@ public class ClientGame implements IGame {
             Team team = this.getTeam(remoteTeam.getName());
             if (team == null) {
                 this.teams.add(remoteTeam);
-            } else {
+            }
+            else {
                 team.changeLives(remoteTeam.getLives() - team.getLives());
                 team.changeTime(remoteTeam.getTime() - team.getTime());
+                localGame.score = remoteTeam.getScore();
             }
         }
     }

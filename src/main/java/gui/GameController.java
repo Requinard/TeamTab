@@ -265,7 +265,7 @@ public class GameController implements Initializable {
             if (view.stageController.clientGame.localGame.player != null)
                 log.log(Level.FINE, "Retrieving score for player {0}", view.stageController.clientGame.localGame.player.getUsername());
 
-            labelCorrectInstructions.setText(view.stageController.clientGame.localGame.team.getScore() + "");
+            labelCorrectInstructions.setText(view.stageController.clientGame.localGame.score + "");
         });
     }
 

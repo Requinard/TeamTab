@@ -10,6 +10,7 @@ public class LocalGame {
     public Player player;
     public Team team;
     public List<Panel> panels = new LinkedList<>();
+    public int score = 0;
     private String hostIP = "";
     private String localIP = "";
     private Instruction instruction;
@@ -69,5 +70,9 @@ public class LocalGame {
 
     public void setPanels(List<Panel> panels) {
         this.panels = panels;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
