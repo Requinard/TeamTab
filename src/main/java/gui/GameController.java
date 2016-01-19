@@ -124,8 +124,22 @@ public class GameController implements Initializable {
         showTeamLevens();
         showTeamInstructionCount();
         showPlayerInstruction();
-
+        checkDeath();
         log.log(Level.FINER, "refreshView ended");
+    }
+
+    /**
+     * checks if teams has died.
+     */
+    private void checkDeath() {
+        if (view.stageController.clientGame.hasGameEnded()) {
+            timerTask.cancel();
+            Platform.runLater(() -> {
+                view.stageController.clientGame.setGameState(GameStateEnum.ScoreView);
+                ScoreView scoreView = new ScoreView(view.stageController);
+                view.pass(scoreView);
+            });
+        }
     }
 
     /**
@@ -228,8 +242,10 @@ public class GameController implements Initializable {
     private void showPlayerInstruction() {
 
         Platform.runLater(() -> {
-            while (view.stageController.clientGame.localGame.getInstruction() == null)
+            while (view.stageController.clientGame.localGame.getInstruction() == null) {
                 Thread.yield();
+            }
+
             if (view.stageController.clientGame.localGame.player != null)
                 log.log(Level.FINE, "Retrieving instruction for player {0}", view.stageController.clientGame.localGame.player.getUsername());
             if (view.stageController.clientGame.localGame.getInstruction().getPanel().getPanelType() == PanelTypeEnum.Button) {
@@ -369,9 +385,17 @@ public class GameController implements Initializable {
                     });
                     if (counter == 0) {
 
-                        view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localGame.player.getActiveInstruction());
+                        view.stageController.clientGame.registerInvalidInstruction(view.stageController.clientGame.localGame.getInstruction());
                         view.stageController.clientGame.localGame.setInstruction(null);
                         counter = view.stageController.clientGame.localGame.team.getTime();
+                        Platform.runLater(() -> {
+                            try {
+                                instructionLabel.setText("Processing");
+                                Thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
                     }
                 }
             });
@@ -406,14 +430,14 @@ public class GameController implements Initializable {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
         view.stageController.clientGame.localGame.setInstruction(null);
         view.stageController.clientGame.processPanel(view.stageController.clientGame.localGame.player, panel);
+        Platform.runLater(() -> {
+            try {
+                instructionLabel.setText("Processing");
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
         panelPushed = true;
-        if (view.stageController.clientGame.hasGameEnded()) {
-            timerTask.cancel();
-            Platform.runLater(() -> {
-                view.stageController.clientGame.setGameState(GameStateEnum.ScoreView);
-                ScoreView scoreView = new ScoreView(view.stageController);
-                view.pass(scoreView);
-            });
-        }
     }
 }
