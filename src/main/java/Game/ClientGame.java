@@ -159,7 +159,8 @@ public class ClientGame implements IGame {
             else {
                 team.changeLives(remoteTeam.getLives() - team.getLives());
                 team.changeTime(remoteTeam.getTime() - team.getTime());
-                localGame.score = remoteTeam.getScore();
+                if (team.getName().equals(localGame.team.getName()))
+                    localGame.score = remoteTeam.getScore();
             }
         }
     }
