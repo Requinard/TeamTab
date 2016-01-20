@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -34,9 +35,9 @@ public class LobbyViewController implements Initializable {
     @FXML
     private TextField team2Name;
     @FXML
-    private TextField playersTeam1Name;
+    private TextArea playersTeam1Name;
     @FXML
-    private TextField playersTeam2Names;
+    private TextArea playersTeam2Names;
     @FXML
     private Button buttonHaalTeamsOp;
     @FXML
