@@ -377,6 +377,8 @@ public class GameController implements Initializable {
                     counter--;
                     //check if counter must be reset because a button or slider was used
                     if (correctIn()) {
+                        //counter = view.stageController.clientGame.localGame.team.getTime()
+                        System.out.println(view.stageController.clientGame.localGame.team.getTime());
                         counter = view.stageController.clientGame.localGame.team.getTime();
                     }
                     Platform.runLater(() -> {
@@ -428,6 +430,7 @@ public class GameController implements Initializable {
      */
     public void checkInstruction(Panel panel, int sliderValue) {
         log.log(Level.INFO, "Processing the panel for {0}", panel.getText());
+        panelPushed = true;
         view.stageController.clientGame.localGame.setInstruction(null);
         panel.setValue(sliderValue);
         view.stageController.clientGame.processPanel(view.stageController.clientGame.localGame.player, panel);
@@ -439,6 +442,6 @@ public class GameController implements Initializable {
                 e.printStackTrace();
             }
         });
-        panelPushed = true;
+
     }
 }

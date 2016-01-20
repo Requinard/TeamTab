@@ -111,7 +111,7 @@ public class HostGame implements IGame {
         autoAssignTeam(player);
         // Add the player to the players in the game
         players.add(player);
-
+        System.out.println(username + "  " + ip);
         log.log(Level.INFO, "player: " + username + " added to list players");
         return player;
     }

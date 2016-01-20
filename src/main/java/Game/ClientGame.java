@@ -49,7 +49,7 @@ public class ClientGame implements IGame {
             }
         };
 
-        timer.schedule(task, 0, 1000);
+        timer.schedule(task, 0, 2000);
     }
 
     /**
@@ -123,27 +123,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    public void setTeams(HashMap<String, List<String>> map) {
-        for (String teamName : map.keySet()) {
-            Team team = getTeam(teamName);
-
-
-            if (team != null) {
-                team.getPlayers().clear();
-                for (String playerName : map.get(teamName)) {
-                    Player player = this.getPlayer(playerName);
-                    if (player != null)
-                        team.addPlayer(player);
-                    if (localGame.getPlayer() != null && player != null) {
-                        if (localGame.getPlayer().getIp().equals(player.getIp())) {
-                            localGame.setTeam(team);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Author Frank Hartman
      * Set the teams in the game
@@ -161,6 +140,27 @@ public class ClientGame implements IGame {
                 if (localGame.team != null) {
                     if (team.getName().equals(localGame.team.getName()))
                         localGame.score = remoteTeam.getScore();
+                }
+            }
+        }
+    }
+
+    public void setTeams(HashMap<String, List<String>> map) {
+        for (String teamName : map.keySet()) {
+            Team team = getTeam(teamName);
+
+
+            if (team != null) {
+                team.getPlayers().clear();
+                for (String playerName : map.get(teamName)) {
+                    Player player = this.getPlayer(playerName);
+                    if (player != null)
+                        team.addPlayer(player);
+                    if (localGame.getPlayer() != null && player != null) {
+                        if (localGame.getPlayer().getIp().equals(player.getIp())) {
+                            localGame.setTeam(team);
+                        }
+                    }
                 }
             }
         }

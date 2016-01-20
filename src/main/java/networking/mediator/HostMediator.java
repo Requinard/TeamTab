@@ -53,6 +53,7 @@ public class HostMediator extends BaseMediator implements IMediator {
         if (networkRequest.getType() == RequestType.POST) {
             // Makes a player object from the inputstream
             Player incomingPlayer = PlayerAdapter.toObject(networkRequest.getPayload());
+            System.out.println(incomingPlayer.getUsername() + incomingPlayer.getPlayerStatus());
             log.log(Level.INFO, "networkRequest is translated to player {0}", incomingPlayer.toString());
             for (Player player : hostGame.getPlayers()) {
                 if (incomingPlayer.getIp().equals(player.getIp())) {
