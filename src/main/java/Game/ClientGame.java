@@ -123,26 +123,6 @@ public class ClientGame implements IGame {
         return this.teams;
     }
 
-    /**
-     * Author Frank Hartman
-     * Set the teams in the game
-     *
-     * @param teams The teams that will be set
-     */
-    public synchronized void setTeams(List<Team> teams) {
-        for (Team remoteTeam : teams) {
-            Team team = this.getTeam(remoteTeam.getName());
-            if (team == null) {
-                this.teams.add(remoteTeam);
-            } else {
-                team.changeLives(remoteTeam.getLives() - team.getLives());
-                team.changeTime(remoteTeam.getTime() - team.getTime());
-                if (team.getName().equals(localGame.team.getName()))
-                    localGame.score = remoteTeam.getScore();
-            }
-        }
-    }
-
     public void setTeams(HashMap<String, List<String>> map) {
         for (String teamName : map.keySet()) {
             Team team = getTeam(teamName);
@@ -159,6 +139,28 @@ public class ClientGame implements IGame {
                             localGame.setTeam(team);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * Author Frank Hartman
+     * Set the teams in the game
+     *
+     * @param teams The teams that will be set
+     */
+    public synchronized void setTeams(List<Team> teams) {
+        for (Team remoteTeam : teams) {
+            Team team = this.getTeam(remoteTeam.getName());
+            if (team == null) {
+                this.teams.add(remoteTeam);
+            } else {
+                team.changeLives(remoteTeam.getLives() - team.getLives());
+                team.changeTime(remoteTeam.getTime() - team.getTime());
+                if (localGame.team != null) {
+                    if (team.getName().equals(localGame.team.getName()))
+                        localGame.score = remoteTeam.getScore();
                 }
             }
         }
